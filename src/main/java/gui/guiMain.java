@@ -8,19 +8,19 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
+import layouts.BaseLayout;
+
+
+
 public class guiMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //stupid
-        primaryStage.setTitle("Quiz");
-        StackPane layout = new StackPane();
-        Question a = QuestionBuilder.questionFromJSON(Requests.getRandQuestion());
-        Label label = new Label(a.getQuestion());
-        layout.getChildren().add(label);
 
-        Scene scene = new Scene(layout, 500, 500);
+        primaryStage.setTitle("Quiz");
+        BaseLayout layout = new BaseLayout(QuestionBuilder.questionFromJSON(Requests.getQuestion(1)));
+
+        Scene scene = new Scene(layout.getBaseLayout(), 500, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

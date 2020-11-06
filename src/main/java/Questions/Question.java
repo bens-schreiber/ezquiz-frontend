@@ -1,11 +1,5 @@
 package Questions;
 
-import apis.Requests;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
 public class Question {
     private final String type;
     private final String subject;
@@ -26,4 +20,5 @@ public class Question {
     public String getSubject() {return this.subject;}
     public String getOptions() {return this.options;}
     public String getQuestion() {return this.question;}
+    public int getID() {return this.id;}
 }
