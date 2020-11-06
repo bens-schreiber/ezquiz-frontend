@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 
 
 public class BaseLayout {
-    private BorderPane layout;
+    private final BorderPane layout;
 
     public BaseLayout(Question question) {
         layout = new BorderPane();
@@ -29,8 +29,9 @@ public class BaseLayout {
 
     }
 
-    public BorderPane getBaseLayout() {
+    public BorderPane getLayout() {
         return this.layout;
     }
 
 }
+
