@@ -1,11 +1,15 @@
 package layouts;
 
+import org.json.JSONException;
 import questions.Question;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import quiz.QuizController;
+
+import java.io.IOException;
 
 
 public class Layout<submitButton> {
@@ -13,10 +17,6 @@ public class Layout<submitButton> {
 
     public Layout(Question question) {
         this.question = question;
-    }
-
-    private static void handle(MouseEvent e) {
-        MultipleChoice.submitButton();
     }
 
     public BorderPane getLayout() {
@@ -35,7 +35,13 @@ public class Layout<submitButton> {
         layout.setCenter(LayoutHelper.getNodeFromQuestion(question));
         layout.setBottom(hbox);
 
-
+        submitButton.setOnMouseClicked(e -> {
+            try {
+                QuizController.checkAnswers();
+            } catch (IOException | JSONException ioException) {
+                ioException.printStackTrace();
+            }
+        });
 
         return layout;
     }

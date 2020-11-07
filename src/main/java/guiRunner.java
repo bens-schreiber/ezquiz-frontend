@@ -11,7 +11,7 @@ import layouts.Layout;
 import java.util.List;
 
 
-public class guiMain extends Application {
+public class guiRunner extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {

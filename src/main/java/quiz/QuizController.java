@@ -13,10 +13,10 @@ import apis.Requests;
 import org.json.JSONException;
 
 public class QuizController {
-    public static HashMap<Integer, String> responses = new HashMap<Integer, String>();
+    public static HashMap<Integer, String> responses = new HashMap<>();
 
     public static List<Question> getQuestions() throws IOException, JSONException {
-        List<Question> questions = new ArrayList<Question>();
+        List<Question> questions = new ArrayList<>();
 
         questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(1)));
         return questions;
@@ -30,12 +30,13 @@ public class QuizController {
             Integer id = entry.getKey();
             String response = entry.getValue();
             try {
-                if (Requests.getQuestionAnswer(id).get("answer") == response) points++;
+                if (Requests.getQuestionAnswer(id).get("answer").equals(response)) points++;
 
             } catch (JSONException | IOException e) {
                 e.printStackTrace();
             }
         }
+        System.out.println(points);
         return points;
     }
 

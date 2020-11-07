@@ -1,5 +1,6 @@
 package layouts;
 
+import javafx.scene.control.Button;
 import questions.Question;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -21,26 +22,27 @@ class MultipleChoice{
         ToggleGroup mChoice = new ToggleGroup(); //Make buttons only have 1 toggle at a time.
         for (RadioButton radioButton : Arrays.asList(radio1, radio2, radio3, radio4)) {
             radioButton.setToggleGroup(mChoice);
+
+            radioButton.setOnMouseClicked(e -> {
+                if (QuizController.responses.containsKey(question.getID())) {
+                    QuizController.responses.remove(question.getID());
+                }
+                QuizController.addResponse(question.getID(), radioButton.getText());
+            });
         }
 
         vbox.getChildren().addAll(radio1, radio2, radio3, radio4);
 
 
 
-        if (radio1.isSelected()) {
-            QuizController.addResponse(question.getID(), radio1.getText());
-            System.out.println(radio1.getText());
-        }
-        
-//        submitButton.setOnMouseClicked(e -> {
-//                    RadioButton selectedRadioButton = (RadioButton) mChoice.getSelectedToggle();
-//                    QuizController.addResponse(question.getID(), selectedRadioButton.getText());
-//        });
+
+//            RadioButton selectedRadioButton = (RadioButton) mChoice.getSelectedToggle();
+//            QuizController.addResponse(question.getID(), selectedRadioButton.getText());
+//        }
+//        else
+
 
 
         return vbox;
-    }
-
-    public static void submitButton() {
     }
 }
