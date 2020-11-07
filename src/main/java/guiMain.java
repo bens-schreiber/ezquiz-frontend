@@ -1,25 +1,28 @@
-package gui;
 
-import Questions.Question;
-import Questions.QuestionBuilder;
-import apis.Requests;
+
+import questions.Question;
+
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import layouts.MultipleChoice;
+import layouts.Layout;
+
+import java.util.List;
 
 
 public class guiMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         primaryStage.setTitle("Quiz");
-        BorderPane layout = MultipleChoice.getLayout((QuestionBuilder.questionFromJSON(Requests.getQuestion(1))));
 
-        Scene scene = new Scene(layout, 500, 500);
+        List<Question> questions = quiz.QuizController.getQuestions();
+
+        Layout layout = new Layout(questions.get(0));
+
+
+        Scene scene = new Scene(layout.getLayout(), 500, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

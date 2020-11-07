@@ -1,5 +1,5 @@
 package apis;
-import Questions.Question;
+import questions.Question;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,9 +19,14 @@ public class Requests {
     }
 
 
-    public static JSONObject getQuestionAnswerByID(Question question) throws IOException, JSONException {
-        return (JSONObject) JsonReader.readJsonFromUrl("http://localhost:7080/api/database/questions/answer"
+    public static JSONObject getQuestionAnswer(Question question) throws IOException, JSONException {
+        return (JSONObject) JsonReader.readJsonFromUrl("http://localhost:7080/api/database/questions/answer/"
                 + question.getID()).get("obj0");
+    }
+
+    public static JSONObject getQuestionAnswer(int id) throws IOException, JSONException {
+        return (JSONObject) JsonReader.readJsonFromUrl("http://localhost:7080/api/database/questions/answer/"
+                + id).get("obj0");
     }
 
 
