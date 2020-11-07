@@ -3,26 +3,18 @@ package quiz;
 import questions.Question;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import questions.*;
 import apis.Requests;
 import org.json.JSONException;
 
 public class QuizController {
-    public static HashMap<Integer, String> responses = new HashMap<>();
+    public static HashMap<Integer, List<String>> responses = new HashMap<>();
 
     public static List<Question> getQuestions() throws IOException, JSONException {
         List<Question> questions = new ArrayList<>();
-
-        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(1)));
-        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(2)));
-        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(11)));
-
-
+        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(5)));
         return questions;
 
     }
@@ -30,22 +22,29 @@ public class QuizController {
     public static int checkAnswers() throws IOException, JSONException {
         int points = 0;
 
-        for (Map.Entry<Integer, String> entry : responses.entrySet()) {
+        for (Map.Entry<Integer, List<String>> entry : responses.entrySet()) {
             Integer id = entry.getKey();
-            String response = entry.getValue();
-            try {
-                if (Requests.getQuestionAnswer(id).get("answer").equals(response)) points++;
+            List<String> response = entry.getValue();
 
-            } catch (JSONException | IOException e) {
-                e.printStackTrace();
+            if (response.size() == 1) {
+                if (response.get(0) == Requests.getQuestionAnswer(id).get("answer")) {
+                    points++;
+                }
             }
+
+            else {
+                if (QuestionBuilder.answerFromJSON(Requests.getQuestionAnswer(id))
+                        .containsAll(response))
+                    points++;
+            }
+
         }
         System.out.println(points);
         return points;
     }
 
-    public static void addResponse(int id, String response) {
-        responses.put(id,response);
+    public static void addResponse(int id, List<String> response) {
+        responses.put(id, response);
     }
 
 

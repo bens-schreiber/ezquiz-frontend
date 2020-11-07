@@ -5,6 +5,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 
 public class QuestionBuilder {
@@ -22,11 +24,19 @@ public class QuestionBuilder {
         if (json.has("options")) {
                 options = new ArrayList<>(Arrays.asList(json.get("options").toString()
                     .split(", ")));
+                Collections.shuffle(options); //Make order random
         }
         else options = null;
 
 
         return new Question(type, subject, options, question, id);
 
+    }
+
+    public static List<String> answerFromJSON(JSONObject json) throws JSONException {
+        List<String> answer = new ArrayList<>(Arrays.asList(json.get("answer").toString()
+                .split(", ")));
+
+        return answer;
     }
 }

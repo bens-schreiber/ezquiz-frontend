@@ -1,4 +1,4 @@
-package layouts;
+package layouts.nodes;
 
 import javafx.scene.control.Button;
 import questions.Question;
@@ -8,11 +8,12 @@ import javafx.scene.layout.VBox;
 import quiz.QuizController;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-class MultipleChoice{
+
+public class MultipleChoice{
     public static VBox getNode(Question question) {
-        VBox vbox = new VBox();
-
         RadioButton radio1 = new RadioButton(question.getOptions().get(0));
         RadioButton radio2 = new RadioButton(question.getOptions().get(1));
         RadioButton radio3 = new RadioButton(question.getOptions().get(2));
@@ -24,25 +25,13 @@ class MultipleChoice{
             radioButton.setToggleGroup(mChoice);
 
             radioButton.setOnMouseClicked(e -> {
-                if (QuizController.responses.containsKey(question.getID())) {
-                    QuizController.responses.remove(question.getID());
-                }
-                QuizController.addResponse(question.getID(), radioButton.getText());
+                QuizController.responses.remove(question.getID());
+                QuizController.addResponse(question.getID(), List.of(radioButton.getText()));
             });
         }
 
+        VBox vbox = new VBox();
         vbox.getChildren().addAll(radio1, radio2, radio3, radio4);
-
-
-
-
-//            RadioButton selectedRadioButton = (RadioButton) mChoice.getSelectedToggle();
-//            QuizController.addResponse(question.getID(), selectedRadioButton.getText());
-//        }
-//        else
-
-
-
         return vbox;
     }
 }

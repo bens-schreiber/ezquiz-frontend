@@ -1,5 +1,6 @@
 package layouts;
 
+import javafx.scene.control.Alert;
 import org.json.JSONException;
 import questions.Question;
 import javafx.scene.control.Button;
@@ -39,20 +40,24 @@ public class Layout {
         layout.setBottom(hbox);
 
         submitButton.setOnMouseClicked(e -> {
-            try {
-                QuizController.checkAnswers();
-            } catch (IOException | JSONException ioException) {
-                ioException.printStackTrace();
-            }
+            if (QuizController.responses.size() == question.size()) {
+                AlertBox.display("Are you sure you want to submit?");
+            } else AlertBox.display("Some answers are unfinished. Are sure you want to submit?");
         });
 
+
+        backButton.setDisable(true);
         nextButton.setOnMouseClicked(e -> {
             if (currQuestion < question.size() - 1) {
                 currQuestion++;
                 layout.setCenter(LayoutHelper.getNodeFromQuestion(question.get(currQuestion)));
                 label.setText(question.get(currQuestion).getQuestion());
                 }
+
+            if (currQuestion != 0) backButton.setDisable(false);
+            if (currQuestion == question.size() - 1) nextButton.setDisable(true);
         });
+
 
         backButton.setOnMouseClicked(e -> {
             if (currQuestion > 0) {
@@ -60,7 +65,11 @@ public class Layout {
                 layout.setCenter(LayoutHelper.getNodeFromQuestion(question.get(currQuestion)));
                 label.setText(question.get(currQuestion).getQuestion());
             }
+
+            if (currQuestion == 0) backButton.setDisable(true);
+            if (currQuestion != question.size() - 1 && nextButton.isDisable()) nextButton.setDisable(false);
         });
+
 
 
 
