@@ -19,6 +19,10 @@ public class QuizController {
         List<Question> questions = new ArrayList<>();
 
         questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(1)));
+        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(2)));
+        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(11)));
+
+
         return questions;
 
     }

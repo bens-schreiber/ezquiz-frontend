@@ -10,19 +10,22 @@ import javafx.scene.layout.HBox;
 import quiz.QuizController;
 
 import java.io.IOException;
+import java.util.List;
 
 
-public class Layout<submitButton> {
-    private final Question question;
+public class Layout {
+    private final List<Question> question;
+    private static int currQuestion = 0;
 
-    public Layout(Question question) {
+
+    public Layout(List<Question> question) {
         this.question = question;
     }
 
     public BorderPane getLayout() {
         BorderPane layout = new BorderPane();
 
-        Label label = new Label(question.getQuestion());
+        Label label = new Label(question.get(currQuestion).getQuestion());
 
         Button nextButton = new Button("Next");
         Button backButton = new Button("Back");
@@ -32,7 +35,7 @@ public class Layout<submitButton> {
         hbox.getChildren().addAll(backButton, nextButton, submitButton);
 
         layout.setTop(label);
-        layout.setCenter(LayoutHelper.getNodeFromQuestion(question));
+        layout.setCenter(LayoutHelper.getNodeFromQuestion(question.get(currQuestion)));
         layout.setBottom(hbox);
 
         submitButton.setOnMouseClicked(e -> {
@@ -42,6 +45,24 @@ public class Layout<submitButton> {
                 ioException.printStackTrace();
             }
         });
+
+        nextButton.setOnMouseClicked(e -> {
+            if (currQuestion < question.size() - 1) {
+                currQuestion++;
+                layout.setCenter(LayoutHelper.getNodeFromQuestion(question.get(currQuestion)));
+                label.setText(question.get(currQuestion).getQuestion());
+                }
+        });
+
+        backButton.setOnMouseClicked(e -> {
+            if (currQuestion > 0) {
+                currQuestion--;
+                layout.setCenter(LayoutHelper.getNodeFromQuestion(question.get(currQuestion)));
+                label.setText(question.get(currQuestion).getQuestion());
+            }
+        });
+
+
 
         return layout;
     }

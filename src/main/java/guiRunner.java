@@ -19,7 +19,7 @@ public class guiRunner extends Application {
 
         List<Question> questions = quiz.QuizController.getQuestions();
 
-        Layout layout = new Layout(questions.get(0));
+        Layout layout = new Layout(questions);
 
 
         Scene scene = new Scene(layout.getLayout(), 500, 500);
