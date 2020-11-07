@@ -14,7 +14,12 @@ public class QuizController {
 
     public static List<Question> getQuestions() throws IOException, JSONException {
         List<Question> questions = new ArrayList<>();
+        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(1)));
+        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(3)));
         questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(5)));
+        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(11)));
+        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(15)));
+        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(17)));
         return questions;
 
     }
@@ -27,7 +32,7 @@ public class QuizController {
             List<String> response = entry.getValue();
 
             if (response.size() == 1) {
-                if (response.get(0) == Requests.getQuestionAnswer(id).get("answer")) {
+                if (response.get(0).equals(Requests.getQuestionAnswer(id).get("answer"))) {
                     points++;
                 }
             }
@@ -39,6 +44,7 @@ public class QuizController {
             }
 
         }
+
         System.out.println(points);
         return points;
     }
