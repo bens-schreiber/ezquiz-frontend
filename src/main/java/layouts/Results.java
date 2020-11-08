@@ -16,7 +16,7 @@ import java.util.List;
 public class Results {
     public static void display() throws IOException, JSONException {
         List<Question> missedQuestions = QuizController.checkAnswers();
-        int points = QuizController.responses.size() - missedQuestions.size();
+//        int points = QuizController.responses.size() - missedQuestions.size();
 
         VBox vbox = new VBox();
         for (Question question : missedQuestions) {

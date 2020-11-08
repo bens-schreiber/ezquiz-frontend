@@ -1,4 +1,4 @@
-package layouts.nodes;
+package layouts.questiontype;
 
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -14,6 +14,8 @@ public class TrueOrFalse {
         RadioButton radio1 = new RadioButton("true");
         RadioButton radio2 = new RadioButton("false");
 
+        findPreviousAnswer(question, radio1, radio2);
+
         ToggleGroup buttons = new ToggleGroup();
         for (RadioButton radioButton : Arrays.asList(radio1, radio2)) {
             radioButton.setToggleGroup(buttons);
@@ -24,9 +26,23 @@ public class TrueOrFalse {
             });
         }
 
+
         VBox vbox = new VBox();
         vbox.getChildren().addAll(radio1, radio2);
         return vbox;
+    }
+
+    private static void findPreviousAnswer(Question question, RadioButton radio1, RadioButton radio2) {
+        if (QuizController.responses.containsKey(question.getID())) {
+            String prevAnswer = (QuizController.responses.get(question.getID())).get(0);
+            for (RadioButton radioButton : Arrays.asList(radio1, radio2)) {
+
+                if (radioButton.getText().equals(prevAnswer)) {
+                    radioButton.setSelected(true);
+                    break;
+                }
+            }
+        }
     }
 
 }

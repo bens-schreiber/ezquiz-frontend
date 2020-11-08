@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Requests {
 
     public static JSONObject getQuestion() throws IOException, JSONException {
-        return getQuestion(getRandomID(0, 50));
+        return getQuestion(getRandomID(0, 41));
     }
 
 
@@ -31,7 +31,7 @@ public class Requests {
 
 
     public static JSONObject getQuestionByType(String type) throws IOException, JSONException {
-        return getQuestionByType(type, getRandomID(0, 9));
+        return getQuestionByType(type, getRandomID(0, 10));
     }
 
 
@@ -42,7 +42,7 @@ public class Requests {
 
 
     public static JSONObject getQuestionBySubject(String subject) throws IOException, JSONException {
-        return getQuestionBySubject(subject, getRandomID(0, 4));
+        return getQuestionBySubject(subject, getRandomID(0, 8));
     }
 
 
