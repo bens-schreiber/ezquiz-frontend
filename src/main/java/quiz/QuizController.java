@@ -14,12 +14,12 @@ public class QuizController {
 
     public static List<Question> getQuestions() throws IOException, JSONException {
         List<Question> questions = new ArrayList<>();
+//        Question test = new Question("5", "math", Arrays.asList("1,2,3,4".split(",")), "Get number 4", 100);
         questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(1)));
+        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(2)));
         questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(3)));
+        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(4)));
         questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(5)));
-        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(11)));
-        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(15)));
-        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(17)));
         return questions;
 
     }
@@ -42,10 +42,7 @@ public class QuizController {
                         .containsAll(response))
                     points++;
             }
-
         }
-
-        System.out.println(points);
         return points;
     }
 

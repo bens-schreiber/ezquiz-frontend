@@ -1,10 +1,6 @@
 
-
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
-import javafx.stage.StageStyle;
+import layouts.Results;
 import questions.Question;
-
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -20,7 +16,7 @@ public class guiRunner extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         List<Question> questions = quiz.QuizController.getQuestions();
-        Layout layout = new Layout(questions);
+        Layout layout = new Layout(questions, primaryStage);
 
         /*
         * Change this to fullscreen and size of screen
@@ -35,6 +31,7 @@ public class guiRunner extends Application {
         Scene scene = new Scene(layout.getLayout(), 500, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {

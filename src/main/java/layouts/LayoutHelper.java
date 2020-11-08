@@ -23,6 +23,10 @@ class LayoutHelper {
             return UserInput.getNode(question);
         }
 
+        if (question.getType().equals("5")) {
+            return Matching.getNode(question);
+        }
+
 
         return null;
     }

@@ -3,21 +3,17 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.json.JSONException;
-import quiz.QuizController;
-
-import java.io.IOException;
 
 
-public class AlertBox {
-    public static void display(String alertMessage) {
+
+public class ConfirmBox {
+    static boolean answer;
+    public static boolean display(String alertMessage) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Alert");
@@ -28,13 +24,13 @@ public class AlertBox {
 
         Button denyButton = new Button("No");
         Button confirmButton = new Button("Yes");
-        denyButton.setOnMouseClicked(e -> window.close());
+        denyButton.setOnMouseClicked(e -> {
+            ConfirmBox.answer = false;
+            window.close();
+        });
+
         confirmButton.setOnMouseClicked(e -> {
-            try {
-                QuizController.checkAnswers();
-            } catch (IOException | JSONException ioException) {
-                ioException.printStackTrace();
-            }
+            ConfirmBox.answer = true;
             window.close();
         });
 
@@ -51,5 +47,6 @@ public class AlertBox {
         window.setScene(scene);
         window.showAndWait();
 
+        return answer;
     }
 }

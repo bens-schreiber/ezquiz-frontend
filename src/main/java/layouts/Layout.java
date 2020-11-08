@@ -1,11 +1,11 @@
 package layouts;
 
-import javafx.scene.control.Alert;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import org.json.JSONException;
 import questions.Question;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import quiz.QuizController;
@@ -17,11 +17,16 @@ import java.util.List;
 public class Layout {
     private final List<Question> question;
     private static int currQuestion = 0;
+    private final Stage primaryStage;
 
 
-    public Layout(List<Question> question) {
+
+    public Layout(List<Question> question, Stage primaryStage) {
         this.question = question;
+        this.primaryStage = primaryStage;
+
     }
+
 
     public BorderPane getLayout() {
         BorderPane layout = new BorderPane();
@@ -39,12 +44,7 @@ public class Layout {
         layout.setCenter(LayoutHelper.getNodeFromQuestion(question.get(currQuestion)));
         layout.setBottom(hbox);
 
-        submitButton.setOnMouseClicked(e -> {
-            if (QuizController.responses.size() == question.size()) {
-                AlertBox.display("Are you sure you want to submit?");
-            } else AlertBox.display("Some answers are unfinished. Are sure you want to submit?");
-        });
-
+        submitButton.setOnMouseClicked(this::handle);
 
         backButton.setDisable(true);
         nextButton.setOnMouseClicked(e -> {
@@ -71,11 +71,25 @@ public class Layout {
         });
 
 
-
-
         return layout;
     }
 
+    private void handle(MouseEvent e) {
+        try {
+            if (QuizController.responses.size() == question.size()) {
+                if (ConfirmBox.display("Are you sure you want to submit?")) {
+                    primaryStage.close();
+                    Results.display();
+                }
 
+            } else if (ConfirmBox.display("Some answers are unfinished. Are sure you want to submit?")) {
+                    primaryStage.close();
+                    Results.display();
+            }
+            }
+        catch (IOException | JSONException ioException) {
+            ioException.printStackTrace();
+            }
+        }
 }
 
