@@ -5,8 +5,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import questions.Question;
 import quiz.QuizController;
-
-import java.util.Collections;
 import java.util.List;
 
 public class UserInput {

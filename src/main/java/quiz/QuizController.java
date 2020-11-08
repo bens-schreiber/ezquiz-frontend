@@ -4,16 +4,16 @@ import questions.Question;
 
 import java.io.IOException;
 import java.util.*;
-
 import questions.*;
 import apis.Requests;
 import org.json.JSONException;
 
 public class QuizController {
     public static HashMap<Integer, List<String>> responses = new HashMap<>();
+    public static List<Question> questions = new ArrayList<>();
 
+    //TODO: Make this into a method to grab x amount of questions. Figure out drag and drop or replace db with supported Matching node questions
     public static List<Question> getQuestions() throws IOException, JSONException {
-        List<Question> questions = new ArrayList<>();
 //        Question test = new Question("5", "math", Arrays.asList("1,2,3,4".split(",")), "Get number 4", 100);
         questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(1)));
         questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(2)));
@@ -24,26 +24,27 @@ public class QuizController {
 
     }
 
-    public static int checkAnswers() throws IOException, JSONException {
-        int points = 0;
+    public static List<Question> checkAnswers() throws IOException, JSONException {
+        List<Question> missedQuestions = new ArrayList<>();
 
+        for (Question q : questions) { //If question key is not in responses, the question is blank, and incorrect.
+            if (!responses.containsKey(q.getID())) missedQuestions.add(q);
+        }
+
+        int quizQuestNum = 0; //Iterate through questions along with hashmap, so it doesn't make unneeded requests
         for (Map.Entry<Integer, List<String>> entry : responses.entrySet()) {
             Integer id = entry.getKey();
             List<String> response = entry.getValue();
 
-            if (response.size() == 1) {
-                if (response.get(0).equals(Requests.getQuestionAnswer(id).get("answer"))) {
-                    points++;
-                }
+            if (!QuestionBuilder.answerFromJSON(Requests.getQuestionAnswer(id))
+                    .containsAll(response)) {//Answer may be larger than one, so .containsAll is used
+                missedQuestions.add(questions.get(quizQuestNum));
             }
 
-            else {
-                if (QuestionBuilder.answerFromJSON(Requests.getQuestionAnswer(id))
-                        .containsAll(response))
-                    points++;
-            }
+            quizQuestNum++;
         }
-        return points;
+
+        return missedQuestions;
     }
 
     public static void addResponse(int id, List<String> response) {

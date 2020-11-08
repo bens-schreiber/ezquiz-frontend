@@ -1,14 +1,12 @@
 package layouts.nodes;
 
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import questions.Question;
 import quiz.QuizController;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class TrueOrFalse {

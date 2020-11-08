@@ -31,7 +31,7 @@ public class Layout {
     public BorderPane getLayout() {
         BorderPane layout = new BorderPane();
 
-        Label label = new Label(question.get(currQuestion).getQuestion());
+        Label label = new Label(question.get(currQuestion).getPrompt());
 
         Button nextButton = new Button("Next");
         Button backButton = new Button("Back");
@@ -51,7 +51,7 @@ public class Layout {
             if (currQuestion < question.size() - 1) {
                 currQuestion++;
                 layout.setCenter(LayoutHelper.getNodeFromQuestion(question.get(currQuestion)));
-                label.setText(question.get(currQuestion).getQuestion());
+                label.setText(question.get(currQuestion).getPrompt());
                 }
 
             if (currQuestion != 0) backButton.setDisable(false);
@@ -63,7 +63,7 @@ public class Layout {
             if (currQuestion > 0) {
                 currQuestion--;
                 layout.setCenter(LayoutHelper.getNodeFromQuestion(question.get(currQuestion)));
-                label.setText(question.get(currQuestion).getQuestion());
+                label.setText(question.get(currQuestion).getPrompt());
             }
 
             if (currQuestion == 0) backButton.setDisable(true);

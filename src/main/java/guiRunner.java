@@ -1,5 +1,3 @@
-
-import layouts.Results;
 import questions.Question;
 
 import javafx.application.Application;
@@ -18,10 +16,7 @@ public class guiRunner extends Application {
         List<Question> questions = quiz.QuizController.getQuestions();
         Layout layout = new Layout(questions, primaryStage);
 
-        /*
-        * Change this to fullscreen and size of screen
-        * Doesn't quite work on Ubuntu.
-        * */
+        //TODO: Implement this to work (correctly) on ubuntu
 
 //        Rectangle2D visualBounds= Screen.getPrimary().getVisualBounds(); //Get the screen size
 //        Scene scene = new Scene(layout.getLayout(), visualBounds.getWidth(), visualBounds.getHeight());
