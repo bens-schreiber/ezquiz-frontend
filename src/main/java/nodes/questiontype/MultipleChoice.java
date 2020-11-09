@@ -1,10 +1,10 @@
-package layouts.questiontype;
+package nodes.questiontype;
 
 import questions.Question;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
-import quiz.QuizController;
+import quiz.Quiz;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,8 +27,8 @@ public class MultipleChoice{
             radioButton.setToggleGroup(mChoice);
 
             radioButton.setOnMouseClicked(e -> {
-                QuizController.responses.remove(question.getID());
-                QuizController.addResponse(question.getID(), List.of(radioButton.getText()));
+                Quiz.responses.remove(question.getID());
+                Quiz.addResponse(question.getID(), List.of(radioButton.getText()));
             });
 
         }
@@ -40,8 +40,8 @@ public class MultipleChoice{
     }
 
     private static void findPreviousAnswer(Question question, RadioButton radio1, RadioButton radio2, RadioButton radio3, RadioButton radio4) {
-        if (QuizController.responses.containsKey(question.getID())) {
-            String prevAnswer = (QuizController.responses.get(question.getID())).get(0);
+        if (Quiz.responses.containsKey(question.getID())) {
+            String prevAnswer = (Quiz.responses.get(question.getID())).get(0);
             for (RadioButton radioButton : Arrays.asList(radio1, radio2, radio3, radio4)) {
 
                 if (radioButton.getText().equals(prevAnswer)) {

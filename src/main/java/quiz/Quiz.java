@@ -10,26 +10,25 @@ import questions.*;
 import apis.Requests;
 import org.json.JSONException;
 
-public class QuizController {
+public class Quiz {
     public static HashMap<Integer, List<String>> responses = new HashMap<>();
-    public static List<Question> questions = new ArrayList<>();
+    private static List<Question> questions = new ArrayList<>();
+    private static int currQuestion = 0;
 
 
-    public static List<Question> getQuestions() throws IOException, JSONException {
-        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(7)));
-        questions.add(QuestionBuilder.questionFromJSON(Requests.getQuestion(8)));
-        return questions;
+    public static void getQuestions() throws IOException, JSONException {
+        getQuestions(5);
     }
 
-//    public static List<Question> getQuestions(int amount) throws IOException, JSONException {
-//        for (int i = 0; i <= amount; i++) {
-//            Question q = QuestionBuilder.questionFromJSON(Requests.getQuestion());
-//            if (!questions.contains(q)) questions.add(q);
-//        }
-//
-//        return questions;
-//
-//    }
+    public static List<Question> getQuestions(int amount) throws IOException, JSONException {
+        for (int i = 0; i <= amount; i++) {
+            Question q = QuestionBuilder.questionFromJSON(Requests.getQuestion());
+            if (!questions.contains(q)) questions.add(q);
+        }
+
+        return questions;
+
+    }
 
     public static List<Question> checkAnswers() throws IOException, JSONException {
         List<Question> missedQuestions = new ArrayList<>();
@@ -78,6 +77,25 @@ public class QuizController {
         responses.put(id, response);
     }
 
+    public static int getCurrNum() {
+        return currQuestion;
+    }
+
+    public static Question getCurrQuestion() {
+        return questions.get(currQuestion);
+    }
+
+    public static int getQuestionAmount() {
+        return questions.size();
+    }
+
+    public static void nextQuestion() {
+        currQuestion++;
+    }
+
+    public static void prevQuestion() {
+        currQuestion--;
+    }
 
 }
 

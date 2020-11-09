@@ -1,4 +1,4 @@
-package layouts;
+package stages;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.json.JSONException;
 import questions.Question;
-import quiz.QuizController;
+import quiz.Quiz;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Results {
     public static void display() throws IOException, JSONException {
-        List<Question> missedQuestions = QuizController.checkAnswers();
+        List<Question> missedQuestions = Quiz.checkAnswers();
 //        int points = QuizController.responses.size() - missedQuestions.size();
 
         VBox vbox = new VBox();

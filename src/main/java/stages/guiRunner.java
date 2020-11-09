@@ -1,29 +1,29 @@
-import questions.Question;
+package stages;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import layouts.Layout;
-
-import java.util.List;
+import quiz.Quiz;
 
 
 public class guiRunner extends Application {
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        List<Question> questions = quiz.QuizController.getQuestions();
-        Layout layout = new Layout(questions, primaryStage);
-
-        //TODO: Implement this to work (correctly) on ubuntu
+        Quiz.getQuestions();
 
 //        Rectangle2D visualBounds= Screen.getPrimary().getVisualBounds(); //Get the screen size
 //        Scene scene = new Scene(layout.getLayout(), visualBounds.getWidth(), visualBounds.getHeight());
 //        primaryStage.setAlwaysOnTop(true);
 //        primaryStage.initStyle(StageStyle.UNDECORATED);
 
-        Scene scene = new Scene(layout.getLayout(), 500, 500);
+        Parent root = FXMLLoader.load(getClass().getResource("/test.fxml"));
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
 
