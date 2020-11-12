@@ -12,30 +12,24 @@ import org.json.JSONException;
 
 public class Quiz {
     public static HashMap<Integer, List<String>> responses = new HashMap<>();
-    private static List<Question> questions = new ArrayList<>();
+    private static final List<Question> questions = new ArrayList<>();
     private static int currQuestion = 0;
 
 
-    public static void getQuestions() throws IOException, JSONException {
-        getQuestions(5);
+    public static void loadQuestions() throws IOException, JSONException {
+        loadQuestions(5);
     }
 
-    public static List<Question> getQuestions(int amount) throws IOException, JSONException {
-        for (int i = 0; i <= amount; i++) {
+    public static void loadQuestions(int amount) throws IOException, JSONException {
+        for (int i = 0; i < amount; i++) {
             Question q = QuestionBuilder.questionFromJSON(Requests.getQuestion());
             if (!questions.contains(q)) questions.add(q);
         }
 
-        return questions;
-
     }
 
     public static List<Question> checkAnswers() throws IOException, JSONException {
-        List<Question> missedQuestions = new ArrayList<>();
-
-        for (Question q : questions) { //If question key is not in responses, the question is blank, and incorrect.
-            if (!responses.containsKey(q.getID())) missedQuestions.add(q);
-        }
+        List<Question> correctQuestions = new ArrayList<>();
 
         int quizQuestNum = 0; //Iterate through questions along with hashmap, so it doesn't make unneeded requests
         for (Map.Entry<Integer, List<String>> entry : responses.entrySet()) {
@@ -43,22 +37,21 @@ public class Quiz {
             List<String> response = entry.getValue();
             List<String> answers = QuestionBuilder.answerFromJSON(Requests.getQuestionAnswer(id));
 
-            //user input type questions might be capitalized or spaced wrong
+            //user input type questions might be capitalized or spaced wrong. handle differently
             if (questions.get(quizQuestNum).getType().equals("4"))
-                userInputAnswerHandle(response, answers, missedQuestions, quizQuestNum);
+                userInputAnswerHandle(response, answers, correctQuestions, quizQuestNum);
 
 
-            else if (!answers.containsAll(response)) {//Answer may be larger than one, so .containsAll is used
-                missedQuestions.add(questions.get(quizQuestNum));
-            }
+            else if (answers.containsAll(response)) //Answer may be larger than one, so .containsAll is used
+                correctQuestions.add(questions.get(quizQuestNum));
 
             quizQuestNum++;
         }
 
-        return missedQuestions;
+        return correctQuestions;
     }
 
-    private static void userInputAnswerHandle(List<String> response, List<String> answers, List<Question> missedQuestions, int quizQuestNum) {
+    private static void userInputAnswerHandle(List<String> response, List<String> answers, List<Question> correctQuestions, int quizQuestNum) {
         response = response.stream()
                 .map(String::toLowerCase)
                 .map(str -> str.replaceAll("\\s", ""))
@@ -70,7 +63,7 @@ public class Quiz {
                 .collect(Collectors.toList());
 
         //Answer may be larger than one, so .containsAll is used
-        if (!answers.containsAll(response)) missedQuestions.add(questions.get(quizQuestNum));
+        if (answers.containsAll(response)) correctQuestions.add(questions.get(quizQuestNum));
     }
 
     public static void addResponse(int id, List<String> response) {

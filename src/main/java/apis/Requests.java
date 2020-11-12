@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Requests {
 
@@ -31,7 +32,7 @@ public class Requests {
 
 
     public static JSONObject getQuestionByType(String type) throws IOException, JSONException {
-        return getQuestionByType(type, getRandomID(0, 10));
+        return getQuestionByType(type, getRandomID(0, 9));
     }
 
 
@@ -42,7 +43,7 @@ public class Requests {
 
 
     public static JSONObject getQuestionBySubject(String subject) throws IOException, JSONException {
-        return getQuestionBySubject(subject, getRandomID(0, 8));
+        return getQuestionBySubject(subject, getRandomID(0, 7));
     }
 
 
@@ -53,6 +54,6 @@ public class Requests {
 
 
     private static int getRandomID(int lower, int upper) {
-        return lower + (int)(Math.random() * ((upper - lower) + 1));
+        return ThreadLocalRandom.current().nextInt(lower, upper + 1);
     }
 }
