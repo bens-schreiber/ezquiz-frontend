@@ -1,4 +1,4 @@
-package questions;
+package quiz.questions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class QuestionBuilder {
+public class QuestionHelper {
 
     public static Question questionFromJSON(JSONObject json) throws JSONException {
         String type = json.get("type_id").toString();
@@ -24,7 +24,6 @@ public class QuestionBuilder {
         if (json.has("options")) {
                 options = new ArrayList<>(Arrays.asList(json.get("options").toString()
                     .split(", ")));
-                Collections.shuffle(options); //Make order random
         }
         else options = null;
 

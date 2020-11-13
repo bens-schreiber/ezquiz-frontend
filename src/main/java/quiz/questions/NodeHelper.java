@@ -1,7 +1,6 @@
-package nodes;
+package quiz.questions;
 
-import nodes.questiontype.*;
-import questions.Question;
+import quiz.questions.nodes.questiontype.*;
 import javafx.scene.layout.VBox;
 
 public class NodeHelper {
@@ -22,10 +21,6 @@ public class NodeHelper {
         if (question.getType().equals("4")) {
             return UserInput.getNode(question);
         }
-
-//        if (question.getType().equals("5")) {
-//            return DragAndDrop.getNode(question);
-//        }
 
 
         return null;

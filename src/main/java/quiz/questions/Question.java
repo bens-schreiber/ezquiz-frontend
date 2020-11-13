@@ -1,5 +1,6 @@
-package questions;
+package quiz.questions;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Question {
@@ -18,11 +19,22 @@ public class Question {
     }
 
 
-    public String getType() {return this.type;}
-    public String getSubject() {return this.subject;}
+    public String getType() {
+        return this.type;
+    }
+
+    public String getSubject() {
+        return this.subject;
+    }
 
     public List<String> getOptions() {
         return this.options;
+    }
+
+    public void shuffleOptions() {
+        if (!this.type.equals("4") && !this.type.equals("2")) {
+            Collections.shuffle(options);
+        }
     }
 
     public String getPrompt() {

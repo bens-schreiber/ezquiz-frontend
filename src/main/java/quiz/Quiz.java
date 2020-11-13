@@ -1,13 +1,13 @@
 package quiz;
 
-import questions.Question;
+import quiz.questions.Question;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import questions.*;
-import apis.Requests;
+import quiz.questions.*;
+import database.Requests;
 import org.json.JSONException;
 
 public class Quiz {
@@ -22,8 +22,13 @@ public class Quiz {
 
     public static void loadQuestions(int amount) throws IOException, JSONException {
         for (int i = 0; i < amount; i++) {
-            Question q = QuestionBuilder.questionFromJSON(Requests.getQuestion());
+            Question q = QuestionHelper.questionFromJSON(Requests.getQuestion());
             if (!questions.contains(q)) questions.add(q);
+
+            for (Question question : questions) {
+                question.shuffleOptions();
+            }
+            //Have to shuffle options AFTER instantiation, or cannot check for duplicates.
         }
 
     }
@@ -31,13 +36,13 @@ public class Quiz {
     public static List<Question> checkAnswers() throws IOException, JSONException {
         List<Question> correctQuestions = new ArrayList<>();
 
-        int quizQuestNum = 0; //Iterate through questions along with hashmap, so it doesn't make unneeded requests
+        int quizQuestNum = 0; //Iterate through quiz.questions along with hashmap, so it doesn't make unneeded requests
         for (Map.Entry<Integer, List<String>> entry : responses.entrySet()) {
             Integer id = entry.getKey();
             List<String> response = entry.getValue();
-            List<String> answers = QuestionBuilder.answerFromJSON(Requests.getQuestionAnswer(id));
+            List<String> answers = QuestionHelper.answerFromJSON(Requests.getQuestionAnswer(id));
 
-            //user input type questions might be capitalized or spaced wrong. handle differently
+            //user input type quiz.questions might be capitalized or spaced wrong. handle differently
             if (questions.get(quizQuestNum).getType().equals("4"))
                 userInputAnswerHandle(response, answers, correctQuestions, quizQuestNum);
 

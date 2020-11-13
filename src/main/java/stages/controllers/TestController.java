@@ -13,9 +13,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import javafx.stage.Stage;
-import nodes.ConfirmBox;
+import quiz.questions.nodes.ConfirmBox;
 import quiz.Quiz;
-import nodes.NodeHelper;
+import quiz.questions.NodeHelper;
 
 import java.io.IOException;
 import java.net.URL;

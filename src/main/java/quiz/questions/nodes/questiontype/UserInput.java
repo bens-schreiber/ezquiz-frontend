@@ -1,9 +1,9 @@
-package nodes.questiontype;
+package quiz.questions.nodes.questiontype;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import questions.Question;
+import quiz.questions.Question;
 import quiz.Quiz;
 
 import java.util.List;

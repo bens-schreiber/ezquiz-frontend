@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import org.json.JSONException;
-import questions.Question;
+import quiz.questions.Question;
 import quiz.Quiz;
 
 import java.io.IOException;

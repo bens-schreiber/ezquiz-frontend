@@ -1,8 +1,8 @@
-package nodes.questiontype;
+package quiz.questions.nodes.questiontype;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
-import questions.Question;
+import quiz.questions.Question;
 import quiz.Quiz;
 
 import java.util.ArrayList;

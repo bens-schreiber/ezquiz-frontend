@@ -1,6 +1,6 @@
-package nodes.questiontype;
+package quiz.questions.nodes.questiontype;
 
-import questions.Question;
+import quiz.questions.Question;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;

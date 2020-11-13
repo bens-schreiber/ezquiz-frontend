@@ -1,5 +1,6 @@
-package apis;
-import questions.Question;
+package database;
+
+import quiz.questions.Question;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Requests {
 
     public static JSONObject getQuestion() throws IOException, JSONException {
-        return getQuestion(getRandomID(0, 41));
+        return getQuestion(getRandomID(0, 40));
     }
 
 
