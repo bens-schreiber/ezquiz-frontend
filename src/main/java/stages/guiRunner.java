@@ -1,14 +1,11 @@
 package stages;
 
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import quiz.Quiz;
 
 
@@ -18,7 +15,7 @@ public class guiRunner extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Quiz.loadQuestions();
+        Quiz.loadQuestions(5);
 
 
         Parent root = FXMLLoader.load(getClass().getResource("/test.fxml"));

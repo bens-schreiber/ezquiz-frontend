@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Requests {
 
     public static JSONObject getQuestion() throws IOException, JSONException {
-        return getQuestion(getRandomID(0, 40));
+        return getQuestion(getRandomID(1, 40));
     }
 
 

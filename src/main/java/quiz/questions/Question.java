@@ -9,6 +9,7 @@ public class Question {
     private final List<String> options;
     private final String prompt;
     private final int id;
+    private List<String> answer;
 
     public Question(String type, String subject, List<String> options, String prompt, int id) {
         this.type = type;
@@ -16,6 +17,7 @@ public class Question {
         this.options = options;
         this.prompt = prompt;
         this.id = id;
+        answer = null;
     }
 
 
@@ -31,17 +33,25 @@ public class Question {
         return this.options;
     }
 
-    public void shuffleOptions() {
-        if (!this.type.equals("4") && !this.type.equals("2")) {
-            Collections.shuffle(options);
-        }
-    }
-
     public String getPrompt() {
         return this.prompt;
     }
 
     public int getID() {
         return this.id;
+    }
+
+    public List<String> getAnswer() {
+        return this.answer;
+    }
+
+    public void setAnswer(List<String> answer) {
+        this.answer = answer;
+    }
+
+    public void shuffleOptions() {
+        if (!this.type.equals("4") && !this.type.equals("2")) {
+            Collections.shuffle(options);
+        }
     }
 }

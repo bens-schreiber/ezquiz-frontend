@@ -1,5 +1,6 @@
 package stages.controllers;
 
+import database.Requests;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -37,7 +38,11 @@ public class ResultsController implements Initializable {
             points.setText(points.getText() + String.valueOf(correctQuestions.size()));
 
             for (Question correctQuestion : correctQuestions) {
-                resultsArea.setText(resultsArea.getText() + "\n" + correctQuestion.getPrompt());
+                resultsArea.setText(
+                        resultsArea.getText() + "\n"
+                                + correctQuestion.getPrompt() + " " + correctQuestion.getAnswer().toString()
+                );
+
             }
         }
 
