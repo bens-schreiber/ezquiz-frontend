@@ -1,5 +1,6 @@
 package quiz;
 
+import etc.Constants;
 import quiz.questions.Question;
 
 import java.io.IOException;
@@ -16,21 +17,67 @@ public class Quiz {
     private static int currQuestion = 0;
 
 
-    public static void loadQuestions() throws IOException, JSONException {
-        loadQuestions(5);
-    }
-
     public static void loadQuestions(int amount) throws IOException, JSONException {
-        for (int i = 0; i < amount; i++) {
-            Question q = QuestionHelper.questionFromJSON(Requests.getQuestion());
-            if (!questions.contains(q)) questions.add(q);
-
-            for (Question question : questions) {
-                question.shuffleOptions();
-            }
-            //Have to shuffle options AFTER instantiation, or cannot check for duplicates.
+        List<Integer> idPool = new ArrayList<>();
+        for (int i = 1; i < Constants.dbSize; i++) {
+            idPool.add(i);
         }
+        Collections.shuffle(idPool);
+
+        for (int i = 0; i < amount; i++) {
+            int id = idPool.get(0);
+            idPool.remove(0);
+            questions.add(QuestionHelper.questionFromJSON(Requests.getQuestion(id)));
+        }
+        for (Question question : questions) question.shuffleOptions();
     }
+
+    public static void loadQuestions(int amount, String subject) throws IOException, JSONException {
+        List<Integer> idPool = new ArrayList<>();
+        for (int i = 0; i < 7; i++) { //TODO: make constant
+            idPool.add(i);
+        }
+        Collections.shuffle(idPool);
+
+        for (int i = 0; i < amount; i++) {
+            int id = idPool.get(0);
+            idPool.remove(0);
+            questions.add(QuestionHelper.questionFromJSON(Requests.getQuestionBySubject(subject, id)));
+        }
+
+        for (Question question : questions) question.shuffleOptions();
+    }
+
+    public static void loadQuestions(String type, int amount) throws IOException, JSONException { //this is dumb
+        List<Integer> idPool = new ArrayList<>();
+        for (int i = 0; i < 3; i++) { //TODO: make constant
+            idPool.add(i);
+        }
+
+        for (int i = 0; i < amount; i++) {
+            int id = idPool.get(0);
+            idPool.remove(0);
+            questions.add(QuestionHelper.questionFromJSON(Requests.getQuestionBySubject(type, id)));
+        }
+
+        for (Question question : questions) question.shuffleOptions();
+    }
+
+    public static void loadQuestions(String subject, String type, int amount) throws IOException, JSONException {
+        List<Integer> idPool = new ArrayList<>();
+        for (int i = 0; i < 2; i++) { //TODO: make constant
+            idPool.add(i);
+        }
+
+        for (int i = 0; i < amount; i++) {
+            int id = idPool.get(0);
+            idPool.remove(0);
+            questions.add(QuestionHelper.questionFromJSON(Requests.getQuestionBySubjectAndType(subject, type, id)));
+        }
+
+        for (Question question : questions) question.shuffleOptions();
+    }
+
 
     public static List<Question> checkAnswers() throws IOException, JSONException {
         List<Question> correctQuestions = new ArrayList<>();

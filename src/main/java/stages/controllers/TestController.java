@@ -74,23 +74,22 @@ public class TestController implements Initializable {
             if (Quiz.responses.size() == Quiz.getQuestionAmount()) {
                 if (ConfirmBox.display("Are you sure you want to submit?")) {
                     exit(mouseEvent);
-                    displayResults(mouseEvent);
+                    displayResults();
                 }
 
             } else if (ConfirmBox.display("Some answers are unfinished. Are sure you want to submit?")) {
                 exit(mouseEvent);
-                displayResults(mouseEvent);
+                displayResults();
             }
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
     }
 
-    private void displayResults(MouseEvent mouseEvent) throws IOException {
+    private void displayResults() throws IOException {
         Parent results = FXMLLoader.load(getClass().getResource("/results.fxml"));
         Scene scene = new Scene(results);
-        Node source = (Node) mouseEvent.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
+        Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
 
