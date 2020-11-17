@@ -1,12 +1,11 @@
 package stages.controllers;
 
-import database.Requests;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import org.json.JSONException;
 import quiz.questions.Question;
-import quiz.Quiz;
+import quiz.QuizController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,7 +25,7 @@ public class ResultsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         List<Question> correctQuestions = null;
         try {
-            correctQuestions = Quiz.checkAnswers();
+            correctQuestions = QuizController.checkAnswers();
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }

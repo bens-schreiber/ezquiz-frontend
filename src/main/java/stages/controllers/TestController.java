@@ -14,11 +14,13 @@ import javafx.scene.layout.VBox;
 
 import javafx.stage.Stage;
 import quiz.questions.nodes.ConfirmBox;
-import quiz.Quiz;
+import quiz.QuizController;
 import quiz.questions.NodeHelper;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class TestController implements Initializable {
@@ -30,48 +32,56 @@ public class TestController implements Initializable {
     @FXML
     Label questionPrompt;
     @FXML
+    Label questionDirections;
+    @FXML
     VBox questionArea;
     @FXML
     AnchorPane mainAnchor;
+    @FXML
+    Button notePadButton;
+    @FXML
+    Button calculatorButton;
+    @FXML
+    Button drawingPadButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        notePadButton.setVisible(QuizController.preferences.get("Notepad"));
+        calculatorButton.setVisible(QuizController.preferences.get("Calculator"));
+        drawingPadButton.setVisible(QuizController.preferences.get("Drawing Pad"));
+
+        displayNewQuestion();
         backButton.setDisable(true);
-        questionPrompt.setText(Quiz.getCurrQuestion().getPrompt());
-        questionArea.getChildren().add(NodeHelper.getNodeFromQuestion(Quiz.getCurrQuestion()));
     }
 
 
     public void onNextButton(MouseEvent mouseEvent) {
 
-        if (Quiz.getCurrNum() < Quiz.getQuestionAmount() - 1) {
-            Quiz.nextQuestion();
-            questionArea.getChildren().clear();
-            questionArea.getChildren().add(NodeHelper.getNodeFromQuestion(Quiz.getCurrQuestion()));
-            questionPrompt.setText(Quiz.getCurrQuestion().getPrompt());
+        if (QuizController.getCurrNum() < QuizController.getQuestionAmount() - 1) {
+            QuizController.nextQuestion();
+            displayNewQuestion();
         }
 
-        if (Quiz.getCurrNum() != 0) backButton.setDisable(false);
-        if (Quiz.getCurrNum() == Quiz.getQuestionAmount() - 1) nextButton.setDisable(true);
+        if (QuizController.getCurrNum() != 0) backButton.setDisable(false);
+        if (QuizController.getCurrNum() == QuizController.getQuestionAmount() - 1) nextButton.setDisable(true);
     }
 
 
     public void onBackButton(MouseEvent mouseEvent) {
-        if (Quiz.getCurrNum() > 0) {
-            Quiz.prevQuestion();
-            questionArea.getChildren().clear();
-            questionArea.getChildren().add(NodeHelper.getNodeFromQuestion(Quiz.getCurrQuestion()));
-            questionPrompt.setText(Quiz.getCurrQuestion().getPrompt());
+        if (QuizController.getCurrNum() > 0) {
+            QuizController.prevQuestion();
+            displayNewQuestion();
         }
 
-        if (Quiz.getCurrNum() == 0) backButton.setDisable(true);
-        if (Quiz.getCurrNum() != Quiz.getQuestionAmount() - 1 && nextButton.isDisable()) nextButton.setDisable(false);
+        if (QuizController.getCurrNum() == 0) backButton.setDisable(true);
+        if (QuizController.getCurrNum() != QuizController.getQuestionAmount() - 1 && nextButton.isDisable())
+            nextButton.setDisable(false);
     }
 
 
     public void onSubmitButton(MouseEvent mouseEvent) {
         try {
-            if (Quiz.responses.size() == Quiz.getQuestionAmount()) {
+            if (QuizController.responses.size() == QuizController.getQuestionAmount()) {
                 if (ConfirmBox.display("Are you sure you want to submit?")) {
                     exit(mouseEvent);
                     displayResults();
@@ -84,6 +94,13 @@ public class TestController implements Initializable {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
+    }
+
+    private void displayNewQuestion() {
+        questionArea.getChildren().clear();
+        questionArea.getChildren().add(NodeHelper.getNodeFromQuestion(QuizController.getCurrQuestion()));
+        questionPrompt.setText(QuizController.getCurrQuestion().getPrompt());
+        questionDirections.setText(QuizController.getCurrQuestion().getDirections());
     }
 
     private void displayResults() throws IOException {

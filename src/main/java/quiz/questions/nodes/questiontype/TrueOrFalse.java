@@ -4,7 +4,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import quiz.questions.Question;
-import quiz.Quiz;
+import quiz.QuizController;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,8 +21,8 @@ public class TrueOrFalse {
             radioButton.setToggleGroup(buttons);
 
             radioButton.setOnMouseClicked(e -> {
-                Quiz.responses.remove(question.getID());
-                Quiz.addResponse(question.getID(), List.of(radioButton.getText()));
+                QuizController.responses.remove(question.getID());
+                QuizController.addResponse(question.getID(), List.of(radioButton.getText()));
             });
         }
 
@@ -33,8 +33,8 @@ public class TrueOrFalse {
     }
 
     private static void findPreviousAnswer(Question question, RadioButton radio1, RadioButton radio2) {
-        if (Quiz.responses.containsKey(question.getID())) {
-            String prevAnswer = (Quiz.responses.get(question.getID())).get(0);
+        if (QuizController.responses.containsKey(question.getID())) {
+            String prevAnswer = (QuizController.responses.get(question.getID())).get(0);
             for (RadioButton radioButton : Arrays.asList(radio1, radio2)) {
 
                 if (radioButton.getText().equals(prevAnswer)) {

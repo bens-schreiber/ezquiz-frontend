@@ -1,82 +1,56 @@
 package quiz;
 
 import etc.Constants;
+import org.jetbrains.annotations.Nullable;
+import org.json.JSONObject;
 import quiz.questions.Question;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import quiz.questions.*;
 import database.Requests;
 import org.json.JSONException;
 
-public class Quiz {
+import javax.security.auth.Subject;
+
+
+public class QuizController {
+    public static final HashMap<String, Boolean> preferences = new HashMap<>();
     public static LinkedHashMap<Integer, List<String>> responses = new LinkedHashMap<>();
     private static final List<Question> questions = new ArrayList<>();
     private static int currQuestion = 0;
 
 
-    public static void loadQuestions(int amount) throws IOException, JSONException {
-        List<Integer> idPool = new ArrayList<>();
-        for (int i = 1; i < Constants.dbSize; i++) {
-            idPool.add(i);
-        }
+    public static void loadQuestions(int amount, @Nullable String subject, @Nullable String type) throws IOException, JSONException {
+        List<Integer> idPool = IntStream.range(0, determineSize(subject, type))
+                .boxed()
+                .collect(Collectors.toList());
         Collections.shuffle(idPool);
 
+        JSONObject requestData;
         for (int i = 0; i < amount; i++) {
             int id = idPool.get(0);
+
+            if (subject == null && type == null) {
+                requestData = Requests.getQuestion(id);
+            } else if (subject != null && type != null) {
+                requestData = Requests.getQuestionBySubjectAndType(subject, type, id);
+            } else if (subject == null) {
+                requestData = Requests.getQuestionByType(type, id);
+            } else {
+                requestData = Requests.getQuestionBySubject(subject, id);
+            }
+
             idPool.remove(0);
-            questions.add(QuestionHelper.questionFromJSON(Requests.getQuestion(id)));
-        }
-        for (Question question : questions) question.shuffleOptions();
-    }
-
-    public static void loadQuestions(int amount, String subject) throws IOException, JSONException {
-        List<Integer> idPool = new ArrayList<>();
-        for (int i = 0; i < 7; i++) { //TODO: make constant
-            idPool.add(i);
-        }
-        Collections.shuffle(idPool);
-
-        for (int i = 0; i < amount; i++) {
-            int id = idPool.get(0);
-            idPool.remove(0);
-            questions.add(QuestionHelper.questionFromJSON(Requests.getQuestionBySubject(subject, id)));
-        }
-
-        for (Question question : questions) question.shuffleOptions();
-    }
-
-    public static void loadQuestions(String type, int amount) throws IOException, JSONException { //this is dumb
-        List<Integer> idPool = new ArrayList<>();
-        for (int i = 0; i < 3; i++) { //TODO: make constant
-            idPool.add(i);
-        }
-
-        for (int i = 0; i < amount; i++) {
-            int id = idPool.get(0);
-            idPool.remove(0);
-            questions.add(QuestionHelper.questionFromJSON(Requests.getQuestionBySubject(type, id)));
+            questions.add(QuestionHelper.questionFromJSON(requestData));
         }
 
         for (Question question : questions) question.shuffleOptions();
     }
 
-    public static void loadQuestions(String subject, String type, int amount) throws IOException, JSONException {
-        List<Integer> idPool = new ArrayList<>();
-        for (int i = 0; i < 2; i++) { //TODO: make constant
-            idPool.add(i);
-        }
-
-        for (int i = 0; i < amount; i++) {
-            int id = idPool.get(0);
-            idPool.remove(0);
-            questions.add(QuestionHelper.questionFromJSON(Requests.getQuestionBySubjectAndType(subject, type, id)));
-        }
-
-        for (Question question : questions) question.shuffleOptions();
-    }
 
 
     public static List<Question> checkAnswers() throws IOException, JSONException {
@@ -122,6 +96,16 @@ public class Quiz {
         }
     }
 
+    private static int determineSize(String subject, String type) {
+        if (subject == null && type == null) return Constants.dbSize;
+
+        if (subject != null && type != null) return Constants.subjectAndTypeQuestionAmount;
+
+        if (subject == null) return Constants.typeQuestionAmount;
+
+        return Constants.subjectQuestionAmount;
+    }
+
     public static void addResponse(int id, List<String> response) {
         responses.put(id, response);
     }
@@ -136,6 +120,10 @@ public class Quiz {
 
     public static int getQuestionAmount() {
         return questions.size();
+    }
+
+    public static void addPref(String pref, boolean val) {
+        preferences.put(pref, val);
     }
 
     public static void nextQuestion() {

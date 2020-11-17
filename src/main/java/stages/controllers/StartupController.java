@@ -9,15 +9,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.json.JSONException;
-import quiz.Quiz;
+import quiz.QuizController;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class StartupController implements Initializable {
@@ -27,18 +29,24 @@ public class StartupController implements Initializable {
     private ChoiceBox<String> subjectList;
     @FXML
     private ChoiceBox<String> typeList;
+    @FXML
+    private CheckBox calcPref;
+    @FXML
+    private CheckBox drawPref;
+    @FXML
+    private CheckBox notePadPref;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
         ObservableList<String> subjectListItems = FXCollections
                 .observableArrayList("Math", "Science", "English", "History", "VideoGames");
-
-        subjectList.setItems(subjectListItems);
-
         ObservableList<String> typeListItems = FXCollections
                 .observableArrayList("input", "t_f", "checkbox", "multiple");
 
+        subjectList.setItems(subjectListItems);
         typeList.setItems(typeListItems);
     }
 
@@ -49,21 +57,16 @@ public class StartupController implements Initializable {
             questionAmount = Integer.parseInt(questionAmountField.getText());
         } else questionAmount = Constants.defaultQuestionAmount;
 
-
-        if (subjectList.getValue() != null && typeList.getValue() != null) {
-            Quiz.loadQuestions(subjectList.getValue(), typeList.getValue(), questionAmount);
-        } else if (subjectList.getValue() != null) {
-            Quiz.loadQuestions(questionAmount, subjectList.getValue().toLowerCase());
-        } else if (typeList.getValue() != null) {
-            Quiz.loadQuestions(typeList.getValue(), questionAmount);
-        } else {
-            Quiz.loadQuestions(questionAmount);
+        for (CheckBox checkBox : Arrays.asList(calcPref, notePadPref, drawPref)) {
+            QuizController.addPref(checkBox.getText(), checkBox.isSelected());
         }
 
+        QuizController.loadQuestions(questionAmount, subjectList.getValue(), typeList.getValue());
         exit(mouseEvent);
         displayTest();
 
     }
+
 
     private void displayTest() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/test.fxml"));

@@ -3,7 +3,7 @@ package quiz.questions.nodes.questiontype;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 import quiz.questions.Question;
-import quiz.Quiz;
+import quiz.QuizController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,8 +22,8 @@ public class CheckBoxType {
         for (CheckBox checkBox : Arrays.asList(box1, box2, box3, box4)) {
 
             checkBox.setOnMouseClicked(e -> {
-                Quiz.responses.remove(question.getID());
-                Quiz.addResponse(question.getID(),
+                QuizController.responses.remove(question.getID());
+                QuizController.addResponse(question.getID(),
                         handleOptions(List.of(box1, box2, box3, box4)));
             });
 
@@ -46,8 +46,8 @@ public class CheckBoxType {
     }
 
     private static void findPreviousAnswer(Question question, CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3, CheckBox checkBox4) {
-        if (Quiz.responses.containsKey(question.getID())) {
-            List<String> prevAnswer = (Quiz.responses.get(question.getID()));
+        if (QuizController.responses.containsKey(question.getID())) {
+            List<String> prevAnswer = (QuizController.responses.get(question.getID()));
 
             for (CheckBox checkBox : Arrays.asList(checkBox1, checkBox2, checkBox3, checkBox4)) {
                 if (prevAnswer.contains(checkBox.getText())) checkBox.setSelected(true);

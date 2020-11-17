@@ -14,6 +14,7 @@ public class QuestionHelper {
         String type = json.get("type_id").toString();
         String subject = json.get("subjects").toString();
         String question = json.get("question").toString();
+        String questionDirections = json.get("directions").toString();
 
         int id = Integer.parseInt(
                 json.get("question_num").toString()
@@ -27,7 +28,7 @@ public class QuestionHelper {
         else options = null;
 
 
-        return new Question(type, subject, options, question, id);
+        return new Question(type, subject, options, question, questionDirections, id);
 
     }
 

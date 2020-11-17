@@ -8,15 +8,17 @@ public class Question {
     private final String subject;
     private final List<String> options;
     private final String prompt;
+    private final String directions;
     private final int id;
     private List<String> answer;
 
-    public Question(String type, String subject, List<String> options, String prompt, int id) {
+    public Question(String type, String subject, List<String> options, String prompt, String directions, int id) {
         this.type = type;
         this.subject = subject;
         this.options = options;
         this.prompt = prompt;
         this.id = id;
+        this.directions = directions;
         answer = null;
     }
 
@@ -35,6 +37,10 @@ public class Question {
 
     public String getPrompt() {
         return this.prompt;
+    }
+
+    public String getDirections() {
+        return this.directions;
     }
 
     public int getID() {
