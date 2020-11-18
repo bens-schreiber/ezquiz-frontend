@@ -1,4 +1,4 @@
-import stages.guiRunner;
+import gui.guiRunner;
 
 public class Main {
     public static void main(String[] args) {

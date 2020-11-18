@@ -6,24 +6,19 @@ import javafx.scene.layout.VBox;
 public class NodeHelper {
 
     public static VBox getNodeFromQuestion(Question question) {
-        if (question.getType().equals("1")) {
-            return MultipleChoice.getNode(question);
-        }
 
-        if (question.getType().equals("2")) {
-            return TrueOrFalse.getNode(question);
-        }
+        return switch (question.getType()) {
 
-        if (question.getType().equals("3")) {
-            return CheckBoxType.getNode(question);
-        }
+            case "1" -> MultipleChoice.getNode(question);
 
-        if (question.getType().equals("4")) {
-            return UserInput.getNode(question);
-        }
+            case "2" -> TrueOrFalse.getNode(question);
 
+            case "3" -> CheckBoxType.getNode(question);
 
-        return null;
+            case "4" -> UserInput.getNode(question);
+
+            default -> null;
+        };
     }
 
 }

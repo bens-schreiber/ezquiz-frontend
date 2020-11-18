@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #829AB1;"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.controllers.StartController">
+    <children>
+        <AnchorPane layoutX="21.0" layoutY="25.0" prefHeight="351.0" prefWidth="559.0"
+                    style="-fx-background-color: #BDBDBD;">
+            <children>
+                <Button layoutX="212.0" layoutY="137.0" mnemonicParsing="false" onMouseClicked="#onDefaultButton"
+                        prefWidth="136.0" text="Take Default Test"/>
+                <Button layoutX="212.0" layoutY="176.0" mnemonicParsing="false" onMouseClicked="#onCustomButton"
+                        prefHeight="26.0" prefWidth="136.0" text="Customize Test"/>
+                <ImageView fitHeight="105.0" fitWidth="186.0" layoutX="194.0" layoutY="14.0">
+                    <image>
+                        <Image url="@../../../../../Pictures/FBLA-Color-web.png"/>
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

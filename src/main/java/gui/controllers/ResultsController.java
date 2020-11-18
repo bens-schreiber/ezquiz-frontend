@@ -1,4 +1,4 @@
-package stages.controllers;
+package gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,31 +12,38 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ResultsController implements Initializable {
-    @FXML
-    Label resultsArea;
+public class ResultsController implements Initializable, Exitable {
 
     @FXML
-    Label points;
-
-    @FXML
+    private Label resultsArea, points;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         List<Question> correctQuestions = null;
-        try {
+
+        try { //Attempt to check answers.
+
             correctQuestions = QuizController.checkAnswers();
+
         } catch (IOException | JSONException e) {
+
             e.printStackTrace();
+
         }
 
-        if (correctQuestions == null) resultsArea.setText("No correct answers.");
+        if (correctQuestions == null) {//If no correct answers, display it.
 
-        else {
+            resultsArea.setText("No correct answers.");
+
+        } else {
+
             resultsArea.setText("");
-            points.setText(points.getText() + String.valueOf(correctQuestions.size()));
 
-            for (Question correctQuestion : correctQuestions) {
+            points.setText(points.getText() + correctQuestions.size());
+
+            for (Question correctQuestion : correctQuestions) {//Format the text to display.
+
                 resultsArea.setText(
                         resultsArea.getText() + "\n"
                                 + correctQuestion.getPrompt() + " " + correctQuestion.getAnswer().toString()

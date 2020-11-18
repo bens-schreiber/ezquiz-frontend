@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #829AB1;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="stages.controllers.ResultsController">
+            fx:controller="gui.controllers.ResultsController">
    <children>
       <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="380.0" prefWidth="580.0"
                   style="-fx-background-color: #BDBDBD;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"

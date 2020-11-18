@@ -1,4 +1,4 @@
-package stages;
+package gui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,16 +10,18 @@ import javafx.stage.Stage;
 
 public class guiRunner extends Application {
 
-
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        Parent root = FXMLLoader.load(getClass().getResource("/start.fxml")); //Display the start page.
 
-        Parent root = FXMLLoader.load(getClass().getResource("/startup.fxml"));
         Scene scene = new Scene(root);
+
 //        primaryStage.setAlwaysOnTop(true);
 //        primaryStage.initStyle(StageStyle.UNDECORATED);
+
         primaryStage.setScene(scene);
+
         primaryStage.show();
 
     }
