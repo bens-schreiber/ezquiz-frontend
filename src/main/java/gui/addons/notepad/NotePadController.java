@@ -39,7 +39,7 @@ public class NotePadController implements Initializable {
             return c;
         }; //Limit how much text can be typed.
 
-        notepadText.setTextFormatter(new TextFormatter(modifyChange));
+        notepadText.setTextFormatter(new TextFormatter<Object>(modifyChange));
 
         notepadText.setText(NotePadHelper.getSavedText());
     }
