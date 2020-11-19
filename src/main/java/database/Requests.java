@@ -7,6 +7,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+/**
+ * Request methods for getting data from RestServer
+ */
+
 public class Requests {
 
     public static JSONObject getQuestion(int id) throws IOException, JSONException {

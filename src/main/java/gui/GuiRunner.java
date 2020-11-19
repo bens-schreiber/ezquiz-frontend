@@ -6,8 +6,10 @@ import javafx.scene.Parent;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
+/**
+ * Run the initial Start menu
+ */
 
 public class GuiRunner extends Application {
 

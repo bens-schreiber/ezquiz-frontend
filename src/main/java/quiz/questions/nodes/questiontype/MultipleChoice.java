@@ -9,8 +9,12 @@ import quiz.QuizManager;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * VBox containing the multiple choice question node
+ */
 
-public class MultipleChoice{
+
+public class MultipleChoice {
     public static VBox getNode(Question question) {
 
         RadioButton radio1 = new RadioButton(question.getOptions().get(0));

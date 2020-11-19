@@ -12,6 +12,10 @@ import java.nio.charset.StandardCharsets;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Reads json from url and returns JSONObject
+ */
+
 public class JsonReader {
 
     private static String readAll(Reader rd) throws IOException {

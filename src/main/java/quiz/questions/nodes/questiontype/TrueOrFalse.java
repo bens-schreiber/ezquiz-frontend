@@ -9,6 +9,10 @@ import quiz.QuizManager;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * VBox containing the TrueOrFalse question node
+ */
+
 public class TrueOrFalse {
     public static VBox getNode(Question question) {
 

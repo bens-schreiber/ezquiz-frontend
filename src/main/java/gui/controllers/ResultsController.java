@@ -12,10 +12,16 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
+/**
+ * Results page controller
+ */
+
 public class ResultsController implements Initializable, Exitable {
 
     @FXML
     private Label resultsArea, points;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * VBox containing the checkbox question type
+ */
+
 public class CheckBoxType {
 
     public static VBox getNode(Question question) {

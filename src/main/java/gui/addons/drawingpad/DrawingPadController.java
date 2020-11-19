@@ -25,6 +25,9 @@ public class DrawingPadController implements Initializable {
     @FXML
     private ColorPicker colorPicker;
 
+    /**
+     * Drawing pad options controller
+     */
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

@@ -1,5 +1,9 @@
 package etc;
 
+/**
+ * Contains constants for use across the program
+ */
+
 public class Constants {
 
     public static int defaultQuestionAmount = 5;

@@ -3,6 +3,10 @@ package quiz.questions;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Question object, stores all values for a certain question
+ */
+
 public class Question {
 
     private final String type;
@@ -33,6 +37,7 @@ public class Question {
 
         this.directions = directions;
 
+        //Answer is not queried until required
         answer = null;
     }
 
@@ -44,6 +49,10 @@ public class Question {
 
         }
     }
+
+    /**
+     * Getters
+     */
 
     public String getType() {
         return this.type;
@@ -72,6 +81,10 @@ public class Question {
     public List<String> getAnswer() {
         return this.answer;
     }
+
+    /**
+     * Setters
+     */
 
     public void setAnswer(List<String> answer) {
         this.answer = answer;

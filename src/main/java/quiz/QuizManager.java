@@ -27,6 +27,9 @@ public class QuizManager {
     private static int currQuestion = 0;
 
 
+    /**
+     * Load questions into QuizManager.questions
+     */
     public static void loadQuestions(int amount, @Nullable String subject, @Nullable String type) throws IOException, JSONException {
 
         //Create a pool of question id's in the specific size of how many questions available
@@ -66,7 +69,7 @@ public class QuizManager {
 
             }
 
-            questions.add(QuestionHelper.questionFromJSON(requestData)); //Make request.
+            questions.add(QuestionBuilder.questionFromJSON(requestData)); //Make request.
 
         }
 
@@ -74,6 +77,9 @@ public class QuizManager {
     }
 
 
+    /**
+     * Grab all answers to questions from responses with Requests.getQuestionAnswer
+     */
     public static List<Question> checkAnswers() throws IOException, JSONException {
 
         List<Question> correctQuestions = new ArrayList<>();
@@ -87,7 +93,7 @@ public class QuizManager {
             List<String> response = entry.getValue();
 
             //Request for the answer based off the id in responses
-            List<String> answer = QuestionHelper.answerFromJSON(Requests.getQuestionAnswer(entry.getKey()));
+            List<String> answer = QuestionBuilder.answerFromJSON(Requests.getQuestionAnswer(entry.getKey()));
 
             //user input type might be capitalized or spaced wrong. handle differently
             if (questions.get(quizQuestNum).getType().equals("4")) {
@@ -170,6 +176,10 @@ public class QuizManager {
 
     }
 
+    /**
+     * Getters
+     */
+
     public static int getCurrNum() {
 
         return currQuestion;
@@ -187,6 +197,11 @@ public class QuizManager {
         return questions.size();
 
     }
+
+
+    /**
+     * Setters
+     */
 
     public static void addPref(String pref, String val) {
 

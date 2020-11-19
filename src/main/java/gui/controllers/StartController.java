@@ -14,6 +14,10 @@ import java.io.IOException;
 
 public class StartController implements Exitable {
 
+    /**
+     * Start screen button controller
+     */
+
     public void onDefaultButton(MouseEvent mouseEvent) throws IOException, JSONException {
 
         QuizManager.loadQuestions(Constants.defaultQuestionAmount, null, null); //Load default test.

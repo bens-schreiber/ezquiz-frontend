@@ -3,6 +3,10 @@ package quiz.questions;
 import quiz.questions.nodes.questiontype.*;
 import javafx.scene.layout.VBox;
 
+/**
+ * Contains method for getting a question node from a question objects type value
+ */
+
 public class NodeHelper {
 
     public static VBox getNodeFromQuestion(Question question) {

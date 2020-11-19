@@ -25,6 +25,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Main controller for test.
+ */
+
 public class TestController implements Initializable, Exitable {
 
     @FXML
@@ -39,6 +43,7 @@ public class TestController implements Initializable, Exitable {
     @FXML
     AnchorPane questionPane;
 
+    //Drawing pad canvas is apart of test stage, utilized by DrawingPadController
     @FXML
     Canvas paintCanvas;
 
@@ -50,7 +55,6 @@ public class TestController implements Initializable, Exitable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
 
         //Load all preferences if any
         loadPrefs();
@@ -72,7 +76,6 @@ public class TestController implements Initializable, Exitable {
     /**
      * FXML Button Methods
      */
-
 
     //When next button is clicked
     public void onNextButton() {

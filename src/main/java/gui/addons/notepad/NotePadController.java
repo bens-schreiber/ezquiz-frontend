@@ -18,9 +18,14 @@ public class NotePadController implements Initializable {
     @FXML
     Button saveButton;
 
+    /**
+     * Notepad Controller
+     */
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        //Limit how much text can be typed.
         UnaryOperator<TextFormatter.Change> modifyChange = c -> {
             if (c.isContentChange()) {
                 int newLength = c.getControlNewText().length();
@@ -35,16 +40,18 @@ public class NotePadController implements Initializable {
                 }
             }
             return c;
-        }; //Limit how much text can be typed.
-
+        };
         notepadText.setTextFormatter(new TextFormatter<Object>(modifyChange));
 
+        //Put the saved text on the notepad
         notepadText.setText(NotePadHelper.getSavedText());
 
     }
 
+    //Save the text
     public void onSaveButton() {
 
         NotePadHelper.setSavedText(notepadText.getText());
+
     }
 }

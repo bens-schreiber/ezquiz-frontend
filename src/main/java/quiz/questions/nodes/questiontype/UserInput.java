@@ -8,6 +8,10 @@ import quiz.QuizManager;
 
 import java.util.List;
 
+/**
+ * Vbox containing the UserInput question node
+ */
+
 public class UserInput {
     public static VBox getNode(Question question) {
 

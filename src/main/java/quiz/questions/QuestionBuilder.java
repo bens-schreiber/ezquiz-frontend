@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Contains method to create a question object from its initial json
+ */
 
-public class QuestionHelper {
+public class QuestionBuilder {
 
     public static Question questionFromJSON(JSONObject json) throws JSONException {
 
