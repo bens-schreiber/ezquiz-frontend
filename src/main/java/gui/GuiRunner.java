@@ -6,9 +6,10 @@ import javafx.scene.Parent;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
-public class guiRunner extends Application {
+public class GuiRunner extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -19,6 +20,7 @@ public class guiRunner extends Application {
 
 //        primaryStage.setAlwaysOnTop(true);
 //        primaryStage.initStyle(StageStyle.UNDECORATED);
+
 
         primaryStage.setScene(scene);
 

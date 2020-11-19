@@ -18,6 +18,7 @@ public class NodeHelper {
             case "4" -> UserInput.getNode(question);
 
             default -> null;
+
         };
     }
 

@@ -4,9 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ResourceBundle;
-
-import javafx.application.Platform;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,7 +22,7 @@ public class CalculatorController implements Initializable {
     TextArea textOutput;
 
     // Stores values
-    private ArrayList<String> values = new ArrayList<>();
+    private final ArrayList<String> values = new ArrayList<>();
 
     // Reset
     private boolean reset = true;
@@ -38,7 +35,6 @@ public class CalculatorController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        CalculatorHelper.setDisplaying(true);
     }
 
     // On key press
@@ -141,7 +137,7 @@ public class CalculatorController implements Initializable {
         // If we did not press equal; Add operator to operator variable 
         if (!"=".equals(operator)) {
             // If an operator has previously been assigned, ignore key press
-            if (values.size() == 0 || isOperator(values.get(values.size() - 1).toString())) {
+            if (values.size() == 0 || isOperator(values.get(values.size() - 1))) {
                 return;
             }
 
@@ -188,7 +184,7 @@ public class CalculatorController implements Initializable {
 
         try {
             // If an operator has previously been assigned, ignore key press
-            if (values.size() == 0 || isOperator(values.get(values.size() - 1).toString()) || !hasOperator) {
+            if (values.size() == 0 || isOperator(values.get(values.size() - 1)) || !hasOperator) {
                 return;
             }
 

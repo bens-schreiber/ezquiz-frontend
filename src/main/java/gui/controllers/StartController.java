@@ -46,7 +46,7 @@ public class StartController implements Exitable {
 
         Parent root = FXMLLoader.load(getClass().getResource("/custom.fxml"));
 
-        Scene scene = new Scene(root, 1980, 1080);
+        Scene scene = new Scene(root);
 
         Stage stage = new Stage();
 

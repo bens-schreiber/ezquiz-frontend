@@ -21,8 +21,6 @@ public class NotePadController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        NotePadHelper.setDisplaying(true);
-
         UnaryOperator<TextFormatter.Change> modifyChange = c -> {
             if (c.isContentChange()) {
                 int newLength = c.getControlNewText().length();
@@ -42,6 +40,7 @@ public class NotePadController implements Initializable {
         notepadText.setTextFormatter(new TextFormatter<Object>(modifyChange));
 
         notepadText.setText(NotePadHelper.getSavedText());
+
     }
 
     public void onSaveButton() {
