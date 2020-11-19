@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import quiz.questions.nodes.ConfirmBox;
-import quiz.QuizController;
+import quiz.QuizManager;
 import quiz.questions.NodeHelper;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class TestController implements Initializable, Exitable {
     Button backButton, nextButton, notePadButton, calculatorButton, drawingPadButton;
 
     @FXML
-    Label questionPrompt, questionDirections;
+    Label questionPrompt, questionDirections, quizName, quizTimer, currQuestionLabel;
 
     @FXML
     VBox questionArea;
@@ -44,47 +44,53 @@ public class TestController implements Initializable, Exitable {
 
     private static GraphicsContext gc;
 
+    /**
+     * Initial run method
+     */
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        if (!QuizController.preferences.isEmpty()) {//Get preferences and apply them, if any.
 
-            notePadButton.setVisible(QuizController.preferences.get("Notepad"));
+        //Load all preferences if any
+        loadPrefs();
 
-            calculatorButton.setVisible(QuizController.preferences.get("Calculator"));
+        //Display the new question.
+        displayNewQuestion();
 
-            drawingPadButton.setVisible(QuizController.preferences.get("Drawing Pad"));
+        //Disable back button by default.
+        backButton.setDisable(true);
 
-        }
-
-        displayNewQuestion(); //Display the new question.
-
-
-        backButton.setDisable(true); //Disable back button by default.
-
-        paintCanvas.setDisable(true); //Disable canvas addon
-
-        gc = paintCanvas.getGraphicsContext2D(); //Establish canvas properties
+        //Establish canvas properties
+        paintCanvas.setDisable(true);
+        gc = paintCanvas.getGraphicsContext2D();
+        gc.setStroke(Color.WHITE);
 
     }
+
+
+    /**
+     * FXML Button Methods
+     */
+
 
     //When next button is clicked
     public void onNextButton() {
 
-        if (QuizController.getCurrNum() < QuizController.getQuestionAmount() - 1) {
+        if (QuizManager.getCurrNum() < QuizManager.getQuestionAmount() - 1) {
 
-            QuizController.nextQuestion(); //Change to the next question.
+            QuizManager.nextQuestion(); //Change to the next question.
 
             displayNewQuestion(); //Display the new question.
         }
 
-        if (QuizController.getCurrNum() != 0) {
+        if (QuizManager.getCurrNum() != 0) {
 
             backButton.setDisable(false); //Enable the back button if not on first question.
 
         }
 
-        if (QuizController.getCurrNum() == QuizController.getQuestionAmount() - 1) {
+        if (QuizManager.getCurrNum() == QuizManager.getQuestionAmount() - 1) {
 
             nextButton.setDisable(true); //Disable next button if on last
 
@@ -95,21 +101,21 @@ public class TestController implements Initializable, Exitable {
     //When back button is clicked
     public void onBackButton() {
 
-        if (QuizController.getCurrNum() > 0) {
+        if (QuizManager.getCurrNum() > 0) {
 
-            QuizController.prevQuestion(); //Goto previous question.
+            QuizManager.prevQuestion(); //Goto previous question.
 
             displayNewQuestion(); //Load previous question.
 
         }
 
-        if (QuizController.getCurrNum() == 0) {
+        if (QuizManager.getCurrNum() == 0) {
 
             backButton.setDisable(true); //Disable back button if on last question.
 
         }
 
-        if (QuizController.getCurrNum() != QuizController.getQuestionAmount() - 1 && nextButton.isDisable()) {
+        if (QuizManager.getCurrNum() != QuizManager.getQuestionAmount() - 1 && nextButton.isDisable()) {
 
             nextButton.setDisable(false); //Enable next button if not on last question.
 
@@ -120,11 +126,13 @@ public class TestController implements Initializable, Exitable {
     public void onSubmitButton(MouseEvent mouseEvent) {
         try {
 
-            if (QuizController.responses.size() == QuizController.getQuestionAmount()) { //If all questions are answered.
+            if (QuizManager.responses.size() == QuizManager.getQuestionAmount()) { //If all questions are answered.
 
                 if (ConfirmBox.display("Are you sure you want to submit?")) {
 
                     exit(mouseEvent); //Exit this page.
+
+                    GuiHelper.closeAll(); //Close all addons
 
                     displayResults(); //Create results page.
 
@@ -133,6 +141,8 @@ public class TestController implements Initializable, Exitable {
             } else if (ConfirmBox.display("Some answers are unfinished. Are sure you want to submit?")) {//If all questions aren't answered
 
                 exit(mouseEvent); //Exit this page.
+
+                GuiHelper.closeAll(); //Close all addons
 
                 displayResults(); //Create results page.
 
@@ -143,24 +153,6 @@ public class TestController implements Initializable, Exitable {
 
         }
 
-    }
-
-    //When pressing mouse
-    public void canvasOnPressed(MouseEvent e) {
-        //begin drawing
-        gc.beginPath();
-
-        gc.lineTo(e.getX(), e.getY());
-
-        gc.stroke();
-    }
-
-    //When dragging mouse
-    public void canvasOnDragged(MouseEvent event) {
-
-        gc.lineTo(event.getX(), event.getY());
-
-        gc.stroke();
     }
 
     //When the calculator button is clicked
@@ -271,15 +263,26 @@ public class TestController implements Initializable, Exitable {
     }
 
 
+    /**
+     * void helper methods
+     */
+
+
     private void displayNewQuestion() {
 
         questionArea.getChildren().clear(); //Clear previous question from questionArea
 
-        questionArea.getChildren().add(NodeHelper.getNodeFromQuestion(QuizController.getCurrQuestion())); //Add new question
+        questionArea.getChildren().add(NodeHelper.getNodeFromQuestion(QuizManager.getCurrQuestion())); //Add new question
 
-        questionPrompt.setText(QuizController.getCurrQuestion().getPrompt()); // Set prompt
+        questionPrompt.setText(QuizManager.getCurrQuestion().getPrompt()); // Set prompt
 
-        questionDirections.setText(QuizController.getCurrQuestion().getDirections()); //Set directions
+        questionDirections.setText(QuizManager.getCurrQuestion().getDirections()); //Set directions
+
+        //Change label to current question num / question amount
+        currQuestionLabel.setText((QuizManager.getCurrNum() + 1)
+                + "/"
+                + QuizManager.getQuestionAmount()
+        );
 
     }
 
@@ -295,6 +298,57 @@ public class TestController implements Initializable, Exitable {
 
         stage.show();
 
+    }
+
+    private void loadPrefs() {
+        if (!QuizManager.preferences.isEmpty()) {
+
+            //Get preferences and apply them, if any.
+            notePadButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Notepad")));
+
+            calculatorButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Calculator")));
+
+            drawingPadButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Drawing Pad")));
+
+            quizName.setText(QuizManager.preferences.get("Quiz Name"));
+
+        } else {
+
+            //Set default quiz name.
+            quizName.setText("FBLA - Default 5 Question Quiz");
+
+        }
+    }
+
+
+    /**
+     * Test Timer
+     */
+    private void startTimer() {
+        //TODO: timer
+    }
+
+    /**
+     * Paint Canvas Properties
+     */
+
+
+    //When pressing mouse
+    public void canvasOnPressed(MouseEvent e) {
+        //begin drawing
+        gc.beginPath();
+
+        gc.lineTo(e.getX(), e.getY());
+
+        gc.stroke();
+    }
+
+    //When dragging mouse
+    public void canvasOnDragged(MouseEvent event) {
+
+        gc.lineTo(event.getX(), event.getY());
+
+        gc.stroke();
     }
 
     public static void changeColor(Color color) {

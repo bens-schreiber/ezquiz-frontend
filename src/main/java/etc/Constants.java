@@ -14,4 +14,6 @@ public class Constants {
 
     public static int notepadTextAmount = 250;
 
+    public static int brushMaxSize = 1;
+
 }

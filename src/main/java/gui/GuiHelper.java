@@ -3,6 +3,8 @@ package gui;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GuiHelper {
 
@@ -27,6 +29,12 @@ public class GuiHelper {
 
         //Remove from openedWindows
         openedWindows.remove(name);
+    }
+
+    public static void closeAll() {
+        for (Map.Entry<String, Stage> entry : openedWindows.entrySet()) {
+            entry.getValue().close();
+        }
     }
 
 }

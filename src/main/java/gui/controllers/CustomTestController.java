@@ -13,8 +13,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.JSONException;
-import quiz.QuizController;
+import quiz.QuizManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +24,7 @@ import java.util.ResourceBundle;
 
 public class CustomTestController implements Initializable, Exitable {
     @FXML
-    private TextField questionAmountField;
+    private TextField questionAmountField, testNameField;
 
     @FXML
     private ChoiceBox<String> subjectList, typeList;
@@ -45,27 +46,38 @@ public class CustomTestController implements Initializable, Exitable {
         typeList.setItems(typeListItems); //Establish dropdown menu items
     }
 
+    //Setup all preferences and begin custom test
     public void onStartButton(MouseEvent mouseEvent) throws IOException, JSONException {
 
         int questionAmount;
 
-        if (!questionAmountField.getText().equals("")) {//If questionAmountField has a value
-
-            questionAmount = Integer.parseInt(questionAmountField.getText()); //Set value to questionAmount
-
-        } else {
+        if (questionAmountField.getText().equals("")) {
 
             questionAmount = Constants.defaultQuestionAmount; //If no value, use the default.
 
-        }
+        } else {//If questionAmountField has a value
 
-        for (CheckBox checkBox : Arrays.asList(calcPref, notePadPref, drawPref)) {//Put the preferences in
-
-            QuizController.addPref(checkBox.getText(), checkBox.isSelected());
+            questionAmount = Integer.parseInt(questionAmountField.getText()); //Set value to questionAmount
 
         }
 
-        QuizController.loadQuestions(questionAmount, subjectList.getValue(), typeList.getValue()); //Load question
+        if (testNameField.getText().equals("")) {
+
+            QuizManager.addPref("Quiz Name", "Custom Exam");
+
+        } else {
+
+            QuizManager.addPref("Quiz Name", testNameField.getText());
+
+        }
+
+        for (CheckBox checkBox : Arrays.asList(calcPref, notePadPref, drawPref)) {//Put addon prefs in
+
+            QuizManager.addPref(checkBox.getText(), String.valueOf(checkBox.isSelected()));
+
+        }
+
+        QuizManager.loadQuestions(questionAmount, subjectList.getValue(), typeList.getValue()); //Load question
 
         exit(mouseEvent); //Close this page
 
@@ -77,9 +89,13 @@ public class CustomTestController implements Initializable, Exitable {
 
         Parent root = FXMLLoader.load(getClass().getResource("/test.fxml")); //Grab the test fxml
 
-        Scene scene = new Scene(root, 1980, 1080);
+        Scene scene = new Scene(root);
 
         Stage stage = new Stage();
+
+        stage.setAlwaysOnTop(true);
+
+        stage.initStyle(StageStyle.UNDECORATED);
 
         stage.setScene(scene);
 

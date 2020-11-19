@@ -6,8 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.JSONException;
-import quiz.QuizController;
+import quiz.QuizManager;
 
 import java.io.IOException;
 
@@ -15,7 +16,7 @@ public class StartController implements Exitable {
 
     public void onDefaultButton(MouseEvent mouseEvent) throws IOException, JSONException {
 
-        QuizController.loadQuestions(Constants.defaultQuestionAmount, null, null); //Load default test.
+        QuizManager.loadQuestions(Constants.defaultQuestionAmount, null, null); //Load default test.
 
         exit(mouseEvent);
 
@@ -33,9 +34,13 @@ public class StartController implements Exitable {
 
         Parent root = FXMLLoader.load(getClass().getResource("/test.fxml"));
 
-        Scene scene = new Scene(root, 1980, 1080);
+        Scene scene = new Scene(root);
 
         Stage stage = new Stage();
+
+        stage.setAlwaysOnTop(true);
+
+        stage.initStyle(StageStyle.UNDECORATED);
 
         stage.setScene(scene);
 

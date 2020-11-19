@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import org.json.JSONException;
 import quiz.questions.Question;
-import quiz.QuizController;
+import quiz.QuizManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +24,7 @@ public class ResultsController implements Initializable, Exitable {
 
         try { //Attempt to check answers.
 
-            correctQuestions = QuizController.checkAnswers();
+            correctQuestions = QuizManager.checkAnswers();
 
         } catch (IOException | JSONException e) {
 

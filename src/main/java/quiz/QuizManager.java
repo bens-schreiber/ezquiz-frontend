@@ -16,9 +16,9 @@ import org.json.JSONException;
 
 
 
-public class QuizController {
+public class QuizManager {
 
-    public static final HashMap<String, Boolean> preferences = new HashMap<>();
+    public static final HashMap<String, String> preferences = new HashMap<>();
 
     public static LinkedHashMap<Integer, List<String>> responses = new LinkedHashMap<>();
 
@@ -31,7 +31,7 @@ public class QuizController {
 
         //Create a pool of question id's in the specific size of how many questions available
         List<Integer> idPool = IntStream
-                .range(0, determineSize(subject, type))
+                .range(1, determineSize(subject, type))
                 .boxed()
                 .collect(Collectors.toList());
 
@@ -46,6 +46,7 @@ public class QuizController {
 
             //Remove the element and grab its value
             id = idPool.remove(0);
+            System.out.println(id);
 
             if (subject == null && type == null) {//If subject and type are null, request based on all items in db.
 
@@ -187,7 +188,7 @@ public class QuizController {
 
     }
 
-    public static void addPref(String pref, boolean val) {
+    public static void addPref(String pref, String val) {
 
         preferences.put(pref, val);
 

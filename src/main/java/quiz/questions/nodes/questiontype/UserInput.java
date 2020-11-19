@@ -4,7 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import quiz.questions.Question;
-import quiz.QuizController;
+import quiz.QuizManager;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ public class UserInput {
 
         textField.setOnKeyTyped(e -> {
 
-            QuizController.responses.remove(question.getID());
+            QuizManager.responses.remove(question.getID());
 
-            QuizController.addResponse(question.getID(), List.of(textField.getText()));
+            QuizManager.addResponse(question.getID(), List.of(textField.getText()));
 
         });
 
@@ -38,9 +38,9 @@ public class UserInput {
 
     private static void findPreviousAnswer(Question question, TextField textField) {
 
-        if (QuizController.responses.containsKey(question.getID())) {
+        if (QuizManager.responses.containsKey(question.getID())) {
 
-            String prevAnswer = (QuizController.responses.get(question.getID())).get(0);
+            String prevAnswer = (QuizManager.responses.get(question.getID())).get(0);
 
             textField.setText(prevAnswer);
 
