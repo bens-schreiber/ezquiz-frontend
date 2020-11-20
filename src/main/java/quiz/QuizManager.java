@@ -49,7 +49,6 @@ public class QuizManager {
 
             //Remove the element and grab its value
             id = idPool.remove(0);
-            System.out.println(id);
 
             if (subject == null && type == null) {//If subject and type are null, request based on all items in db.
 
@@ -198,6 +197,10 @@ public class QuizManager {
 
     }
 
+    public static Question getQuestion(int index) {
+        return questions.get(index);
+    }
+
 
     /**
      * Setters
@@ -218,6 +221,12 @@ public class QuizManager {
     public static void prevQuestion() {
 
         currQuestion--;
+
+    }
+
+    public static void setCurrNum(int num) {
+
+        currQuestion = num;
 
     }
 

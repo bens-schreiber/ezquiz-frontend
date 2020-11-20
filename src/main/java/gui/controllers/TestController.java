@@ -4,6 +4,7 @@ import gui.GuiHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -12,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import javafx.scene.paint.Color;
@@ -23,7 +25,9 @@ import quiz.questions.NodeHelper;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
+import java.util.stream.IntStream;
 
 /**
  * Main controller for test.
@@ -43,6 +47,9 @@ public class TestController implements Initializable, Exitable {
     @FXML
     AnchorPane questionPane;
 
+    @FXML
+    HBox questionHBox;
+
     //Drawing pad canvas is apart of test stage, utilized by DrawingPadController
     @FXML
     Canvas paintCanvas;
@@ -59,6 +66,9 @@ public class TestController implements Initializable, Exitable {
         //Load all preferences if any
         loadPrefs();
 
+        //Load the individual question buttons
+        loadIndividualQuestionButtons();
+
         //Display the new question.
         displayNewQuestion();
 
@@ -69,6 +79,9 @@ public class TestController implements Initializable, Exitable {
         paintCanvas.setDisable(true);
         gc = paintCanvas.getGraphicsContext2D();
         gc.setStroke(Color.WHITE);
+
+        //Color the hbox that is currently selected
+        colorCurrentBox();
 
     }
 
@@ -87,17 +100,12 @@ public class TestController implements Initializable, Exitable {
             displayNewQuestion(); //Display the new question.
         }
 
-        if (QuizManager.getCurrNum() != 0) {
+        //Disable/enable next and back based on position
+        backButton.setDisable(QuizManager.getCurrNum() == 0);
+        nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuestionAmount());
 
-            backButton.setDisable(false); //Enable the back button if not on first question.
-
-        }
-
-        if (QuizManager.getCurrNum() == QuizManager.getQuestionAmount() - 1) {
-
-            nextButton.setDisable(true); //Disable next button if on last
-
-        }
+        //Color the hbox that is currently selected
+        colorCurrentBox();
 
     }
 
@@ -112,17 +120,13 @@ public class TestController implements Initializable, Exitable {
 
         }
 
-        if (QuizManager.getCurrNum() == 0) {
+        //Disable/enable next and back based on position
+        backButton.setDisable(QuizManager.getCurrNum() == 0);
+        nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuestionAmount());
 
-            backButton.setDisable(true); //Disable back button if on last question.
+        //Color the hbox that is currently selected
+        colorCurrentBox();
 
-        }
-
-        if (QuizManager.getCurrNum() != QuizManager.getQuestionAmount() - 1 && nextButton.isDisable()) {
-
-            nextButton.setDisable(false); //Enable next button if not on last question.
-
-        }
     }
 
     //When submit button is clicked
@@ -157,6 +161,31 @@ public class TestController implements Initializable, Exitable {
         }
 
     }
+
+    //On an individual question clicked
+    private void individualQuestionClicked(MouseEvent mouseEvent) {
+
+        //Grab the spot of the question
+        int questionSpot = questionHBox.getChildren().indexOf(mouseEvent.getSource());
+
+        //Set current question to the spot
+        QuizManager.setCurrNum(questionSpot);
+
+        //Display the current question.
+        displayNewQuestion();
+
+        //Color the hbox that is currently selected
+        colorCurrentBox();
+
+        backButton.setDisable(questionSpot == 0);
+        nextButton.setDisable(questionSpot + 1 == QuizManager.getQuestionAmount());
+
+
+    }
+
+    /**
+     * addon button methods
+     */
 
     //When the calculator button is clicked
     public void onCalculatorButton() throws IOException {
@@ -270,6 +299,35 @@ public class TestController implements Initializable, Exitable {
      * void helper methods
      */
 
+    private void colorCurrentBox() {
+
+        questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(
+                "-fx-background-color: #d60338;"
+        );
+    }
+
+    private void loadIndividualQuestionButtons() {
+
+        //Establish x amount of buttons in the hbox
+        IntStream.range(0, QuizManager.getQuestionAmount())
+                .forEach(e -> {
+
+                    Button button = new Button();
+
+                    button.setStyle("-fx-background-color: #c32148;");
+
+                    button.setPrefSize(35, 35);
+
+                    questionHBox.getChildren().add(button);
+
+                    button.setOnMouseClicked(this::individualQuestionClicked);
+
+                });
+
+        questionHBox.setSpacing(4);
+
+    }
+
 
     private void displayNewQuestion() {
 
@@ -285,6 +343,10 @@ public class TestController implements Initializable, Exitable {
         currQuestionLabel.setText((QuizManager.getCurrNum() + 1)
                 + "/"
                 + QuizManager.getQuestionAmount()
+        );
+
+        questionHBox.getChildren().forEach(button ->
+                button.setStyle("-fx-background-color: #c32148; -fx-border-color: #000000; -fx-border-width: 0px;")
         );
 
     }
