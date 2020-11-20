@@ -126,7 +126,7 @@ public class QuizManager {
                 .map(str -> str.replaceAll("\\s", ""))
                 .collect(Collectors.toList());
 
-        //TODO: Change answer in db to lowercase and no spaces, this is unneeded
+        //TODO: Change answers in db to lowercase and no spaces
         answer = answer
                 .stream()
                 .map(String::toLowerCase)

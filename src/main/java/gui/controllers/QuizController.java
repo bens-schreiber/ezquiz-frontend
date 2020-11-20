@@ -383,11 +383,13 @@ public class QuizController implements Initializable {
 
                     Button button = new Button();
 
-                    button.setStyle("-fx-background-color: #c32148;");
+                    button.setStyle("-fx-background-color: #829AB1;");
 
                     button.setPrefSize(35, 35);
 
                     questionHBox.getChildren().add(button);
+
+                    button.setText(String.valueOf(questionHBox.getChildren().size()));
 
                     button.setOnMouseClicked(this::individualQuestionClicked);
 
@@ -416,8 +418,8 @@ public class QuizController implements Initializable {
 
         //If the button is not flagged
         questionHBox.getChildren().forEach(button -> {
-            if (button.getStyle().equals("-fx-background-color: #c32148;") || button.getStyle().equals("-fx-background-color: #FF0000;")) {
-                button.setStyle("-fx-background-color: #c32148;");
+            if (button.getStyle().equals("-fx-background-color: #829AB1;") || button.getStyle().equals("-fx-background-color: #56ea63;")) {
+                button.setStyle("-fx-background-color: #829AB1;");
             }
         });
 
@@ -442,7 +444,7 @@ public class QuizController implements Initializable {
     private void colorCurrentBox() {
 
         questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(
-                "-fx-background-color: #FF0000;"
+                "-fx-background-color: #56ea63;"
         );
     }
 
