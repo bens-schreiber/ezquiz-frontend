@@ -3,7 +3,6 @@ package gui;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,7 +11,7 @@ import java.util.Map;
 
 public class GuiHelper {
 
-    private static HashMap<String, Stage> openedWindows = new HashMap<>();
+    private static final HashMap<String, Stage> openedWindows = new HashMap<>();
 
     public static void addWindow(String name, Stage stage) {
 

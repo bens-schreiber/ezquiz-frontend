@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-public class CustomTestController implements Initializable {
+public class CustomQuizController implements Initializable {
     @FXML
     private TextField questionAmountField, testNameField, testTimeField;
 
@@ -99,7 +99,7 @@ public class CustomTestController implements Initializable {
 
     private void displayTest() throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/test.fxml")); //Grab the test fxml
+        Parent root = FXMLLoader.load(getClass().getResource("/quiz.fxml")); //Grab the test fxml
 
         Scene scene = new Scene(root);
 

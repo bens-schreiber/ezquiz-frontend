@@ -3,10 +3,10 @@ package gui.controllers;
 import gui.GuiHelper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -37,7 +37,7 @@ import java.util.stream.IntStream;
  * Main controller for test.
  */
 
-public class TestController implements Initializable {
+public class QuizController implements Initializable {
 
     @FXML
     Button backButton, nextButton, notePadButton, calculatorButton, drawingPadButton;
@@ -61,7 +61,7 @@ public class TestController implements Initializable {
     private static GraphicsContext gc;
 
     //Default test is 30 minutes
-    private Integer seconds = 5;
+    private Integer seconds = 1800;
 
 
     /**
@@ -286,6 +286,9 @@ public class TestController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("/drawingpad.fxml")); //Grab calculator
 
             Scene scene = new Scene(root);
+
+            GuiHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.CROSSHAIR);
+
             Stage stage = new Stage();
             stage.setScene(scene);
 
@@ -295,11 +298,16 @@ public class TestController implements Initializable {
 
             GuiHelper.addWindow("drawingpad", stage); //Add this to current stages
 
-            stage.setOnCloseRequest(e -> { //Make sure if X is pressed it removes from stages, clears drawings
+            //Make sure if X is pressed it removes from stages, clears drawings
+            stage.setOnCloseRequest(e -> {
 
-                paintCanvas.setDisable(true); //Disable canvas so other parts can be used
+                //Disable canvas so other parts can be used
+                paintCanvas.setDisable(true);
 
                 gc.clearRect(0, 0, 1920, 1080); //Clear canvas
+
+                //Change cursor back to default
+                GuiHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.DEFAULT);
 
                 GuiHelper.closeWindow("drawingpad");
 
@@ -313,6 +321,9 @@ public class TestController implements Initializable {
 
             //If already open, close all.
             paintCanvas.setDisable(true);
+
+            //Change cursor back to default
+            GuiHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.DEFAULT);
 
             gc.clearRect(0, 0, 1920, 1080);
 

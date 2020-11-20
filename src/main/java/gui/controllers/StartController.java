@@ -12,7 +12,6 @@ import javafx.stage.StageStyle;
 import org.json.JSONException;
 import quiz.QuizManager;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class StartController {
@@ -23,11 +22,12 @@ public class StartController {
 
     public void onDefaultButton(MouseEvent mouseEvent) throws IOException, JSONException {
 
-        QuizManager.loadQuestions(Constants.defaultQuestionAmount, null, null); //Load default test.
+        QuizManager.loadQuestions(Constants.defaultQuestionAmount, null, null); //Load default quiz.
+
 
         GuiHelper.closeWindow("Start");
 
-        displayTest();
+        displayQuiz();
     }
 
     public void onCustomButton(MouseEvent mouseEvent) throws IOException {
@@ -41,9 +41,9 @@ public class StartController {
         Platform.exit();
     }
 
-    private void displayTest() throws IOException {
+    private void displayQuiz() throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/test.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/quiz.fxml"));
 
         Scene scene = new Scene(root);
 
@@ -58,11 +58,13 @@ public class StartController {
         stage.show();
 
         GuiHelper.addWindow("Quiz", stage);
+
+
     }
 
     private void displayCustomOptions() throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/custom.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/customquiz.fxml"));
 
         Scene scene = new Scene(root);
 

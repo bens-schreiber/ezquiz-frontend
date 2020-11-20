@@ -1,7 +1,7 @@
 package gui.addons.drawingpad;
 
 import etc.Constants;
-import gui.controllers.TestController;
+import gui.controllers.QuizController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -36,20 +36,20 @@ public class DrawingPadController implements Initializable {
 
         colorPicker.setOnAction(e -> {
 
-            TestController.changeColor(colorPicker.getValue());
+            QuizController.changeColor(colorPicker.getValue());
 
         });
 
         brushSize.setOnKeyTyped(e -> {
 
             if (!brushSize.getText().equals("")) {
-                TestController.changeWidth(Double.parseDouble(brushSize.getText()));
+                QuizController.changeWidth(Double.parseDouble(brushSize.getText()));
             }
 
         });
 
         eraser.setOnAction(event -> {
-            TestController.changeColor(Color.rgb(158, 158, 158));
+            QuizController.changeColor(Color.rgb(158, 158, 158));
         });
 
 

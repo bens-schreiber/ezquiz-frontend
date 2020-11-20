@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #BDBDBD;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.controllers.CustomTestController">
+            fx:controller="gui.controllers.CustomQuizController">
     <children>
         <TextField id="questionAmountTextField" fx:id="questionAmountField" layoutX="108.0" layoutY="158.0"
                    prefHeight="26.0" prefWidth="150.0"/>
