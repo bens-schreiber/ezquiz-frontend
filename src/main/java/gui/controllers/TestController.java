@@ -4,7 +4,7 @@ import gui.GuiHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -26,6 +26,7 @@ import quiz.questions.NodeHelper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
 
@@ -55,6 +56,7 @@ public class TestController implements Initializable, Exitable {
     Canvas paintCanvas;
 
     private static GraphicsContext gc;
+
 
     /**
      * Initial run method
@@ -104,7 +106,7 @@ public class TestController implements Initializable, Exitable {
         backButton.setDisable(QuizManager.getCurrNum() == 0);
         nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuestionAmount());
 
-        //Color the hbox that is currently selected
+        //Color the question button that is currently selected
         colorCurrentBox();
 
     }
@@ -124,43 +126,11 @@ public class TestController implements Initializable, Exitable {
         backButton.setDisable(QuizManager.getCurrNum() == 0);
         nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuestionAmount());
 
-        //Color the hbox that is currently selected
+        //Color the question button that is currently selected
         colorCurrentBox();
 
     }
 
-    //When submit button is clicked
-    public void onSubmitButton(MouseEvent mouseEvent) {
-        try {
-
-            if (QuizManager.responses.size() == QuizManager.getQuestionAmount()) { //If all questions are answered.
-
-                if (ConfirmBox.display("Are you sure you want to submit?")) {
-
-                    exit(mouseEvent); //Exit this page.
-
-                    GuiHelper.closeAll(); //Close all addons
-
-                    displayResults(); //Create results page.
-
-                }
-
-            } else if (ConfirmBox.display("Some answers are unfinished. Are sure you want to submit?")) {//If all questions aren't answered
-
-                exit(mouseEvent); //Exit this page.
-
-                GuiHelper.closeAll(); //Close all addons
-
-                displayResults(); //Create results page.
-
-            }
-        } catch (IOException ioException) {
-
-            ioException.printStackTrace();
-
-        }
-
-    }
 
     //On an individual question clicked
     private void individualQuestionClicked(MouseEvent mouseEvent) {
@@ -180,8 +150,81 @@ public class TestController implements Initializable, Exitable {
         backButton.setDisable(questionSpot == 0);
         nextButton.setDisable(questionSpot + 1 == QuizManager.getQuestionAmount());
 
+    }
+
+    //On Flag Question clicked
+    public void onFlagQuestion() {
+
+        questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(
+                "-fx-background-color: #fb8804;"
+        );
 
     }
+
+    //When submit button is clicked
+    public void onSubmitButton(MouseEvent mouseEvent) {
+
+        //Determine if any questions have been flagged
+        boolean flaggedQuestions = false;
+        for (Node node : questionHBox.getChildren()) {
+
+            if (node.getStyle().equals("-fx-background-color: #fb8804;")) {
+                flaggedQuestions = true;
+                break;
+            }
+
+        }
+
+        try {
+
+            //If any questions are flagged
+            if (flaggedQuestions) {
+
+                if (ConfirmBox.display("Some questions are flagged. Are you sure you want to submit?")) {
+
+                    exit(mouseEvent); //Exit this page.
+
+                    GuiHelper.closeAll(); //Close all addons
+
+                    displayResults(); //Create results page.
+
+                }
+
+            }
+
+            //If all questions are answered.
+            else if (QuizManager.responses.size() == QuizManager.getQuestionAmount()) {
+
+                if (ConfirmBox.display("Are you sure you want to submit?")) {
+
+                    exit(mouseEvent); //Exit this page.
+
+                    GuiHelper.closeAll(); //Close all addons
+
+                    displayResults(); //Create results page.
+
+                }
+
+            }
+
+            //If all questions aren't answered
+            else if (ConfirmBox.display("Some answers are unfinished. Are sure you want to submit?")) {
+
+                exit(mouseEvent); //Exit this page.
+
+                GuiHelper.closeAll(); //Close all addons
+
+                displayResults(); //Create results page.
+
+            }
+        } catch (IOException ioException) {
+
+            ioException.printStackTrace();
+
+        }
+
+    }
+
 
     /**
      * addon button methods
@@ -296,16 +339,31 @@ public class TestController implements Initializable, Exitable {
 
 
     /**
-     * void helper methods
+     * void help methods
      */
 
-    private void colorCurrentBox() {
+    //Load all preferences
+    private void loadPrefs() {
+        if (!QuizManager.preferences.isEmpty()) {
 
-        questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(
-                "-fx-background-color: #d60338;"
-        );
+            //Get preferences and apply them, if any.
+            notePadButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Notepad")));
+
+            calculatorButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Calculator")));
+
+            drawingPadButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Drawing Pad")));
+
+            quizName.setText(QuizManager.preferences.get("Quiz Name"));
+
+        } else {
+
+            //Set default quiz name.
+            quizName.setText("FBLA - Default 5 Question Quiz");
+
+        }
     }
 
+    //Load all question buttons
     private void loadIndividualQuestionButtons() {
 
         //Establish x amount of buttons in the hbox
@@ -328,7 +386,7 @@ public class TestController implements Initializable, Exitable {
 
     }
 
-
+    //Display the new question
     private void displayNewQuestion() {
 
         questionArea.getChildren().clear(); //Clear previous question from questionArea
@@ -345,12 +403,16 @@ public class TestController implements Initializable, Exitable {
                 + QuizManager.getQuestionAmount()
         );
 
-        questionHBox.getChildren().forEach(button ->
-                button.setStyle("-fx-background-color: #c32148; -fx-border-color: #000000; -fx-border-width: 0px;")
-        );
+        //If the button is not flagged
+        questionHBox.getChildren().forEach(button -> {
+            if (button.getStyle().equals("-fx-background-color: #c32148;") || button.getStyle().equals("-fx-background-color: #FF0000;")) {
+                button.setStyle("-fx-background-color: #c32148;");
+            }
+        });
 
     }
 
+    //Display results
     private void displayResults() throws IOException {
 
         Parent results = FXMLLoader.load(getClass().getResource("/results.fxml")); //Grab results fxml
@@ -365,24 +427,12 @@ public class TestController implements Initializable, Exitable {
 
     }
 
-    private void loadPrefs() {
-        if (!QuizManager.preferences.isEmpty()) {
+    //Color box to show it is selected
+    private void colorCurrentBox() {
 
-            //Get preferences and apply them, if any.
-            notePadButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Notepad")));
-
-            calculatorButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Calculator")));
-
-            drawingPadButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Drawing Pad")));
-
-            quizName.setText(QuizManager.preferences.get("Quiz Name"));
-
-        } else {
-
-            //Set default quiz name.
-            quizName.setText("FBLA - Default 5 Question Quiz");
-
-        }
+        questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(
+                "-fx-background-color: #FF0000;"
+        );
     }
 
 
