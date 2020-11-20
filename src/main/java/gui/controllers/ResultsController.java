@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * Results page controller
  */
 
-public class ResultsController implements Initializable, Exitable {
+public class ResultsController implements Initializable {
 
     @FXML
     private Label resultsArea, points;

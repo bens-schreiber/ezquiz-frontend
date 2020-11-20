@@ -1,6 +1,9 @@
 package gui.controllers;
 
 import gui.GuiHelper;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,22 +22,22 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import quiz.questions.nodes.ConfirmBox;
 import quiz.QuizManager;
 import quiz.questions.NodeHelper;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
+
 
 /**
  * Main controller for test.
  */
 
-public class TestController implements Initializable, Exitable {
+public class TestController implements Initializable {
 
     @FXML
     Button backButton, nextButton, notePadButton, calculatorButton, drawingPadButton;
@@ -56,6 +59,9 @@ public class TestController implements Initializable, Exitable {
     Canvas paintCanvas;
 
     private static GraphicsContext gc;
+
+    //Default test is 30 minutes
+    private Integer seconds = 5;
 
 
     /**
@@ -82,8 +88,11 @@ public class TestController implements Initializable, Exitable {
         gc = paintCanvas.getGraphicsContext2D();
         gc.setStroke(Color.WHITE);
 
-        //Color the hbox that is currently selected
+        //Color the question that is currently selected
         colorCurrentBox();
+
+        //Begin the test timer
+        startTimer();
 
     }
 
@@ -175,53 +184,29 @@ public class TestController implements Initializable, Exitable {
 
         }
 
-        try {
+        //If any questions are flagged
+        if (flaggedQuestions) {
 
-            //If any questions are flagged
-            if (flaggedQuestions) {
-
-                if (ConfirmBox.display("Some questions are flagged. Are you sure you want to submit?")) {
-
-                    exit(mouseEvent); //Exit this page.
-
-                    GuiHelper.closeAll(); //Close all addons
-
-                    displayResults(); //Create results page.
-
-                }
-
+            if (ConfirmBox.display("Some questions are flagged. Are you sure you want to submit?")) {
+                endTest();
             }
-
-            //If all questions are answered.
-            else if (QuizManager.responses.size() == QuizManager.getQuestionAmount()) {
-
-                if (ConfirmBox.display("Are you sure you want to submit?")) {
-
-                    exit(mouseEvent); //Exit this page.
-
-                    GuiHelper.closeAll(); //Close all addons
-
-                    displayResults(); //Create results page.
-
-                }
-
-            }
-
-            //If all questions aren't answered
-            else if (ConfirmBox.display("Some answers are unfinished. Are sure you want to submit?")) {
-
-                exit(mouseEvent); //Exit this page.
-
-                GuiHelper.closeAll(); //Close all addons
-
-                displayResults(); //Create results page.
-
-            }
-        } catch (IOException ioException) {
-
-            ioException.printStackTrace();
 
         }
+
+        //If all questions are answered.
+        else if (QuizManager.responses.size() == QuizManager.getQuestionAmount()) {
+
+            if (ConfirmBox.display("Are you sure you want to submit?")) {
+                endTest();
+            }
+
+        }
+
+        //If all questions aren't answered
+        else if (ConfirmBox.display("Some answers are unfinished. Are sure you want to submit?")) {
+            endTest();
+        }
+
 
     }
 
@@ -342,6 +327,19 @@ public class TestController implements Initializable, Exitable {
      * void help methods
      */
 
+    //Ends the entire test and begins the results page
+    private void endTest() {
+
+        GuiHelper.closeAll(); //Close all addons
+
+        try {
+            displayResults(); //Create results page.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     //Load all preferences
     private void loadPrefs() {
         if (!QuizManager.preferences.isEmpty()) {
@@ -354,6 +352,8 @@ public class TestController implements Initializable, Exitable {
             drawingPadButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Drawing Pad")));
 
             quizName.setText(QuizManager.preferences.get("Quiz Name"));
+
+            seconds = Integer.parseInt(QuizManager.preferences.get("seconds"));
 
         } else {
 
@@ -439,9 +439,44 @@ public class TestController implements Initializable, Exitable {
     /**
      * Test Timer
      */
+
+
     private void startTimer() {
-        //TODO: timer
+
+        Timeline time = new Timeline();
+
+        time.setCycleCount(Timeline.INDEFINITE);
+
+        KeyFrame frame = new KeyFrame(Duration.seconds(1), event -> {
+
+            if (seconds == -1) {
+
+                time.stop();
+
+                endTest();
+
+
+            } else {
+
+                int hours;
+                int minutes;
+                int second;
+                hours = seconds / 3600;
+                minutes = (seconds % 3600) / 60;
+                second = seconds % 60;
+
+                //Format in hours:minutes:seconds
+                quizTimer.setText(String.format("%02d:%02d:%02d", hours, minutes, second));
+            }
+
+            seconds--;
+
+        });
+
+        time.getKeyFrames().add(frame);
+        time.playFromStart();
     }
+
 
     /**
      * Paint Canvas Properties

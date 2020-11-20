@@ -1,6 +1,7 @@
 package gui.controllers;
 
 import etc.Constants;
+import gui.GuiHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,9 +23,9 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-public class CustomTestController implements Initializable, Exitable {
+public class CustomTestController implements Initializable {
     @FXML
-    private TextField questionAmountField, testNameField;
+    private TextField questionAmountField, testNameField, testTimeField;
 
     @FXML
     private ChoiceBox<String> subjectList, typeList;
@@ -61,6 +62,16 @@ public class CustomTestController implements Initializable, Exitable {
 
         }
 
+        if (!testTimeField.getText().equals("")) {
+
+            QuizManager.addPref("seconds", String.valueOf(
+                    Integer.parseInt
+                            (testTimeField.getText())
+                            * 60)
+            );
+
+        }
+
         if (testNameField.getText().equals("")) {
 
             QuizManager.addPref("Quiz Name", "Custom Exam");
@@ -77,9 +88,10 @@ public class CustomTestController implements Initializable, Exitable {
 
         }
 
+
         QuizManager.loadQuestions(questionAmount, subjectList.getValue(), typeList.getValue()); //Load question
 
-        exit(mouseEvent); //Close this page
+        GuiHelper.closeWindow("Custom"); //Close this page
 
         displayTest(); //Initialize the test.
 
@@ -100,6 +112,8 @@ public class CustomTestController implements Initializable, Exitable {
         stage.setScene(scene);
 
         stage.show();
+
+        GuiHelper.addWindow("Quiz", stage);
     }
 
 }

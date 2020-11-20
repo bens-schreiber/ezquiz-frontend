@@ -28,6 +28,8 @@ public class GuiRunner extends Application {
 
         primaryStage.show();
 
+        GuiHelper.addWindow("Start", primaryStage);
+
     }
 
     public static void main(String[] args) {
