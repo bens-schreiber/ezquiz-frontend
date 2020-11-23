@@ -13,11 +13,11 @@ import java.util.List;
  */
 
 public class UserInput {
-    public static VBox getNode(Question question) {
+    public static VBox getNode() {
 
         TextField textField = new TextField();
 
-        findPreviousAnswer(question, textField);
+        findPreviousAnswer(textField);
 
         textField.setMaxSize(115, 10);
 
@@ -26,9 +26,13 @@ public class UserInput {
 
         textField.setOnKeyTyped(e -> {
 
-            QuizManager.responses.remove(question.getID());
+            if (QuizManager.getResponses().size() > QuizManager.getCurrNum()) {
+                QuizManager.removeResponse(QuizManager.getCurrNum());
+            }
 
-            QuizManager.addResponse(question.getID(), List.of(textField.getText()));
+            QuizManager.addResponse(
+                    QuizManager.getCurrNum(),
+                    List.of(textField.getText()));
 
         });
 
@@ -40,15 +44,17 @@ public class UserInput {
 
     }
 
-    private static void findPreviousAnswer(Question question, TextField textField) {
+    private static void findPreviousAnswer(TextField textField) {
 
-        if (QuizManager.responses.containsKey(question.getID())) {
+        if (QuizManager.getCurrNum() < QuizManager.getResponses().size()) {
+            if (!QuizManager.getResponses().get(QuizManager.getCurrNum()).isEmpty()) {
 
-            String prevAnswer = (QuizManager.responses.get(question.getID())).get(0);
+                String prevAnswer = (QuizManager.getResponses().get(QuizManager.getCurrNum())).get(0);
 
-            textField.setText(prevAnswer);
+                textField.setText(prevAnswer);
 
 
+            }
         }
     }
 

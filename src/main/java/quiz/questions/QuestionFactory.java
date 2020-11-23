@@ -11,11 +11,12 @@ import java.util.List;
  * Contains method to create a question object from its initial json
  */
 
-public class QuestionBuilder {
+public class QuestionFactory {
 
+    //Factory method
     public static Question questionFromJSON(JSONObject json) throws JSONException {
 
-        int id;
+        //TODO: make a validation method
 
         String type = json.get("type_id").toString();
 
@@ -23,15 +24,14 @@ public class QuestionBuilder {
 
         String question = json.get("question").toString();
 
+        int id = Integer.parseInt(
+                json.get("question_num").toString()
+        );
+
         String directions;
 
         ArrayList<String> options;
 
-        id = Integer.parseInt(
-
-                json.get("question_num").toString()
-
-        );
 
         if (json.has("options")) {
 
@@ -44,8 +44,7 @@ public class QuestionBuilder {
 
         }
 
-
-        if (!json.has("directions")) { //poggers
+        if (!json.has("directions")) {
 
             directions = switch (type) {
 

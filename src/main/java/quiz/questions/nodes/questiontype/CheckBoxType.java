@@ -5,17 +5,18 @@ import javafx.scene.layout.VBox;
 import quiz.questions.Question;
 import quiz.QuizManager;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * VBox containing the checkbox question type
+ * Question
  */
 
 public class CheckBoxType {
 
-    public static VBox getNode(Question question) {
+    public static VBox getNode() {
+
+        Question question = QuizManager.getQuestion(QuizManager.getCurrNum());
 
         CheckBox box1 = new CheckBox(question.getOptions().get(0));
 
@@ -25,15 +26,17 @@ public class CheckBoxType {
 
         CheckBox box4 = new CheckBox(question.getOptions().get(3));
 
-        findPreviousAnswer(question, box1, box2, box3, box4);
+        findPreviousAnswer(box1, box2, box3, box4);
 
         for (CheckBox checkBox : Arrays.asList(box1, box2, box3, box4)) {
 
             checkBox.setOnMouseClicked(e -> {
 
-                QuizManager.responses.remove(question.getID());
+                if (QuizManager.getResponses().size() > QuizManager.getCurrNum()) {
+                    QuizManager.removeResponse(QuizManager.getCurrNum());
+                }
 
-                QuizManager.addResponse(question.getID(),
+                QuizManager.addResponse(QuizManager.getCurrNum(),
 
                         handleOptions(List.of(box1, box2, box3, box4)));
 
@@ -52,30 +55,32 @@ public class CheckBoxType {
 
     private static List<String> handleOptions(List<CheckBox> boxes) {
 
-        String response = "";
+        StringBuilder response = new StringBuilder();
 
         for (CheckBox box : boxes) {
 
             if (box.isSelected())
 
-                response += box.getText() + ",";
+                response.append(box.getText()).append(",");
 
         }
 
-        return new ArrayList<>(Arrays.asList(response.split(",")));
+        return Arrays.asList(response.toString().split(","));
 
     }
 
-    private static void findPreviousAnswer(Question question, CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3, CheckBox checkBox4) {
+    private static void findPreviousAnswer(CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3, CheckBox checkBox4) {
 
-        if (QuizManager.responses.containsKey(question.getID())) {
+        if (QuizManager.getCurrNum() < QuizManager.getResponses().size()) {
+            if (!QuizManager.getResponses().get(QuizManager.getCurrNum()).isEmpty()) {
 
-            List<String> prevAnswer = (QuizManager.responses.get(question.getID()));
+                List<String> prevAnswer = (QuizManager.getResponses().get(QuizManager.getCurrNum()));
 
-            for (CheckBox checkBox : Arrays.asList(checkBox1, checkBox2, checkBox3, checkBox4)) {
+                for (CheckBox checkBox : Arrays.asList(checkBox1, checkBox2, checkBox3, checkBox4)) {
 
-                if (prevAnswer.contains(checkBox.getText())) checkBox.setSelected(true);
+                    if (prevAnswer.contains(checkBox.getText())) checkBox.setSelected(true);
 
+                }
             }
         }
     }

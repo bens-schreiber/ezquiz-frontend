@@ -14,14 +14,14 @@ import java.util.List;
  */
 
 public class TrueOrFalse {
-    public static VBox getNode(Question question) {
+    public static VBox getNode() {
 
         RadioButton radio1 = new RadioButton("true");
 
         RadioButton radio2 = new RadioButton("false");
 
 
-        findPreviousAnswer(question, radio1, radio2);
+        findPreviousAnswer(radio1, radio2);
 
         ToggleGroup buttons = new ToggleGroup();
 
@@ -31,9 +31,13 @@ public class TrueOrFalse {
 
             radioButton.setOnMouseClicked(e -> {
 
-                QuizManager.responses.remove(question.getID());
+                if (QuizManager.getResponses().size() > QuizManager.getCurrNum()) {
+                    QuizManager.removeResponse(QuizManager.getCurrNum());
+                }
 
-                QuizManager.addResponse(question.getID(), List.of(radioButton.getText()));
+                QuizManager.addResponse(
+                        QuizManager.getCurrNum(),
+                        List.of(radioButton.getText()));
 
             });
         }
@@ -47,19 +51,21 @@ public class TrueOrFalse {
 
     }
 
-    private static void findPreviousAnswer(Question question, RadioButton radio1, RadioButton radio2) {
-        if (QuizManager.responses.containsKey(question.getID())) {
+    private static void findPreviousAnswer(RadioButton radio1, RadioButton radio2) {
+        if (QuizManager.getCurrNum() < QuizManager.getResponses().size()) {
+            if (!QuizManager.getResponses().get(QuizManager.getCurrNum()).isEmpty()) {
 
-            String prevAnswer = (QuizManager.responses.get(question.getID())).get(0);
+                String prevAnswer = (QuizManager.getResponses().get(QuizManager.getCurrNum())).get(0);
 
-            for (RadioButton radioButton : Arrays.asList(radio1, radio2)) {
+                for (RadioButton radioButton : Arrays.asList(radio1, radio2)) {
 
-                if (radioButton.getText().equals(prevAnswer)) {
+                    if (radioButton.getText().equals(prevAnswer)) {
 
-                    radioButton.setSelected(true);
+                        radioButton.setSelected(true);
 
-                    break;
+                        break;
 
+                    }
                 }
             }
         }

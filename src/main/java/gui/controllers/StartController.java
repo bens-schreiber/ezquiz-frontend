@@ -22,7 +22,7 @@ public class StartController {
 
     public void onDefaultButton(MouseEvent mouseEvent) throws IOException, JSONException {
 
-        QuizManager.loadQuestions(Constants.defaultQuestionAmount, null, null); //Load default quiz.
+        QuizManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 
 
         GuiHelper.closeWindow("Start");

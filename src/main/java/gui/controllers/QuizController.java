@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import etc.Constants;
 import gui.GuiHelper;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -89,18 +90,107 @@ public class QuizController implements Initializable {
         gc.setStroke(Color.WHITE);
 
         //Color the question that is currently selected
-        colorCurrentBox();
+        selectCurrentQuizButton();
 
         //Begin the test timer
         startTimer();
 
     }
 
+    /**
+     * Startup Functions
+     */
+    //preferences
+    private void loadPrefs() {
+        if (!QuizManager.getPreferences().isEmpty()) {
+
+            //Get preferences and apply them, if any.
+            notePadButton.setVisible(Boolean.parseBoolean(QuizManager.getPreferences().get("Notepad")));
+
+            calculatorButton.setVisible(Boolean.parseBoolean(QuizManager.getPreferences().get("Calculator")));
+
+            drawingPadButton.setVisible(Boolean.parseBoolean(QuizManager.getPreferences().get("Drawing Pad")));
+
+            quizName.setText(QuizManager.getPreferences().get("Quiz Name"));
+
+            seconds = Integer.parseInt(QuizManager.getPreferences().get("seconds"));
+
+        } else {
+
+            //Set default quiz name.
+            quizName.setText("FBLA - Default 5 Question Quiz");
+
+        }
+    }
+
+    //Load all question buttons
+    private void loadIndividualQuestionButtons() {
+
+        //Establish x amount of buttons in the hbox
+        IntStream.range(0, QuizManager.getQuestionAmount())
+                .forEach(e -> {
+
+                    Button button = new Button();
+
+                    //Give style properties
+                    button.setStyle(Constants.UNSELECTED_COLOR);
+                    button.setPrefSize(35, 35);
+
+                    questionHBox.getChildren().add(button);
+
+                    //Set text to the number of the corresponding question
+                    button.setText(String.valueOf(questionHBox.getChildren().size()));
+
+                    //Whenever the button is clicked use the individualQuestionClicked handler
+                    button.setOnMouseClicked(this::individualQuestionClicked);
+
+                });
+
+        questionHBox.setSpacing(4);
+
+    }
+
+    //test timer
+    private void startTimer() {
+
+        Timeline time = new Timeline();
+
+        time.setCycleCount(Timeline.INDEFINITE);
+
+        KeyFrame frame = new KeyFrame(Duration.seconds(1), event -> {
+
+            if (seconds == -1) {
+
+                time.stop();
+
+                endTest();
+
+
+            } else {
+
+                int hours;
+                int minutes;
+                int second;
+                hours = seconds / 3600;
+                minutes = (seconds % 3600) / 60;
+                second = seconds % 60;
+
+                //Format in hours:minutes:seconds
+                quizTimer.setText(String.format("%02d:%02d:%02d", hours, minutes, second));
+            }
+
+            seconds--;
+
+        });
+
+        time.getKeyFrames().add(frame);
+        time.playFromStart();
+    }
+
 
     /**
      * FXML Button Methods
      */
-
     //When next button is clicked
     public void onNextButton() {
 
@@ -116,7 +206,7 @@ public class QuizController implements Initializable {
         nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuestionAmount());
 
         //Color the question button that is currently selected
-        colorCurrentBox();
+        selectCurrentQuizButton();
 
     }
 
@@ -136,10 +226,9 @@ public class QuizController implements Initializable {
         nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuestionAmount());
 
         //Color the question button that is currently selected
-        colorCurrentBox();
+        selectCurrentQuizButton();
 
     }
-
 
     //On an individual question clicked
     private void individualQuestionClicked(MouseEvent mouseEvent) {
@@ -154,7 +243,7 @@ public class QuizController implements Initializable {
         displayNewQuestion();
 
         //Color the hbox that is currently selected
-        colorCurrentBox();
+        selectCurrentQuizButton();
 
         backButton.setDisable(questionSpot == 0);
         nextButton.setDisable(questionSpot + 1 == QuizManager.getQuestionAmount());
@@ -164,9 +253,7 @@ public class QuizController implements Initializable {
     //On Flag Question clicked
     public void onFlagQuestion() {
 
-        questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(
-                "-fx-background-color: #fb8804;"
-        );
+        questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(Constants.FLAGGED_COLOR);
 
     }
 
@@ -177,7 +264,7 @@ public class QuizController implements Initializable {
         boolean flaggedQuestions = false;
         for (Node node : questionHBox.getChildren()) {
 
-            if (node.getStyle().equals("-fx-background-color: #fb8804;")) {
+            if (node.getStyle().equals(Constants.FLAGGED_COLOR)) {
                 flaggedQuestions = true;
                 break;
             }
@@ -194,7 +281,7 @@ public class QuizController implements Initializable {
         }
 
         //If all questions are answered.
-        else if (QuizManager.responses.size() == QuizManager.getQuestionAmount()) {
+        else if (QuizManager.getResponses().size() == QuizManager.getQuestionAmount()) {
 
             if (ConfirmBox.display("Are you sure you want to submit?")) {
                 endTest();
@@ -281,22 +368,23 @@ public class QuizController implements Initializable {
     //On drawing button clicked
     public void onDrawingPadButton() throws IOException {
 
-        if (!GuiHelper.getOpenedWindows().containsKey("drawingpad")) { //Make sure only one drawingpad is open
+        //Make sure only one drawingpad is open
+        if (!GuiHelper.getOpenedWindows().containsKey("drawingpad")) {
 
             Parent root = FXMLLoader.load(getClass().getResource("/drawingpad.fxml")); //Grab calculator
-
             Scene scene = new Scene(root);
 
+            //Change cursor to crosshair to show drawing mode is on
             GuiHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.CROSSHAIR);
 
             Stage stage = new Stage();
             stage.setScene(scene);
-
             stage.setAlwaysOnTop(true); //Keep pad on test.
             stage.initStyle(StageStyle.UTILITY);
             stage.resizableProperty().setValue(false);
 
-            GuiHelper.addWindow("drawingpad", stage); //Add this to current stages
+            //Add this to current stages
+            GuiHelper.addWindow("drawingpad", stage);
 
             //Make sure if X is pressed it removes from stages, clears drawings
             stage.setOnCloseRequest(e -> {
@@ -335,9 +423,8 @@ public class QuizController implements Initializable {
 
 
     /**
-     * void help methods
+     * functions
      */
-
     //Ends the entire test and begins the results page
     private void endTest() {
 
@@ -351,75 +438,31 @@ public class QuizController implements Initializable {
 
     }
 
-    //Load all preferences
-    private void loadPrefs() {
-        if (!QuizManager.preferences.isEmpty()) {
-
-            //Get preferences and apply them, if any.
-            notePadButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Notepad")));
-
-            calculatorButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Calculator")));
-
-            drawingPadButton.setVisible(Boolean.parseBoolean(QuizManager.preferences.get("Drawing Pad")));
-
-            quizName.setText(QuizManager.preferences.get("Quiz Name"));
-
-            seconds = Integer.parseInt(QuizManager.preferences.get("seconds"));
-
-        } else {
-
-            //Set default quiz name.
-            quizName.setText("FBLA - Default 5 Question Quiz");
-
-        }
-    }
-
-    //Load all question buttons
-    private void loadIndividualQuestionButtons() {
-
-        //Establish x amount of buttons in the hbox
-        IntStream.range(0, QuizManager.getQuestionAmount())
-                .forEach(e -> {
-
-                    Button button = new Button();
-
-                    button.setStyle("-fx-background-color: #829AB1;");
-
-                    button.setPrefSize(35, 35);
-
-                    questionHBox.getChildren().add(button);
-
-                    button.setText(String.valueOf(questionHBox.getChildren().size()));
-
-                    button.setOnMouseClicked(this::individualQuestionClicked);
-
-                });
-
-        questionHBox.setSpacing(4);
-
-    }
-
     //Display the new question
     private void displayNewQuestion() {
 
-        questionArea.getChildren().clear(); //Clear previous question from questionArea
+        //Clear previous question from questionArea
+        questionArea.getChildren().clear();
 
-        questionArea.getChildren().add(NodeHelper.getNodeFromQuestion(QuizManager.getCurrQuestion())); //Add new question
+        //Set new question to questionArea
+        questionArea.getChildren().add(NodeHelper.getNodeFromQuestion(QuizManager.getCurrQuestion()));
 
-        questionPrompt.setText(QuizManager.getCurrQuestion().getPrompt()); // Set prompt
+        // Set prompt
+        questionPrompt.setText(QuizManager.getCurrQuestion().getPrompt());
 
-        questionDirections.setText(QuizManager.getCurrQuestion().getDirections()); //Set directions
+        //Set directions
+        questionDirections.setText(QuizManager.getCurrQuestion().getDirections());
 
-        //Change label to current question num / question amount
+        //Change top right label to current question num / question amount
         currQuestionLabel.setText((QuizManager.getCurrNum() + 1)
                 + "/"
                 + QuizManager.getQuestionAmount()
         );
 
-        //If the button is not flagged
+        //If the button is selected
         questionHBox.getChildren().forEach(button -> {
-            if (button.getStyle().equals("-fx-background-color: #829AB1;") || button.getStyle().equals("-fx-background-color: #56ea63;")) {
-                button.setStyle("-fx-background-color: #829AB1;");
+            if (button.getStyle().equals(Constants.SELECTED_COLOR)) {
+                button.setStyle(Constants.UNSELECTED_COLOR);
             }
         });
 
@@ -441,61 +484,14 @@ public class QuizController implements Initializable {
     }
 
     //Color box to show it is selected
-    private void colorCurrentBox() {
-
-        questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(
-                "-fx-background-color: #56ea63;"
-        );
-    }
-
-
-    /**
-     * Test Timer
-     */
-
-
-    private void startTimer() {
-
-        Timeline time = new Timeline();
-
-        time.setCycleCount(Timeline.INDEFINITE);
-
-        KeyFrame frame = new KeyFrame(Duration.seconds(1), event -> {
-
-            if (seconds == -1) {
-
-                time.stop();
-
-                endTest();
-
-
-            } else {
-
-                int hours;
-                int minutes;
-                int second;
-                hours = seconds / 3600;
-                minutes = (seconds % 3600) / 60;
-                second = seconds % 60;
-
-                //Format in hours:minutes:seconds
-                quizTimer.setText(String.format("%02d:%02d:%02d", hours, minutes, second));
-            }
-
-            seconds--;
-
-        });
-
-        time.getKeyFrames().add(frame);
-        time.playFromStart();
+    private void selectCurrentQuizButton() {
+        questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(Constants.SELECTED_COLOR);
     }
 
 
     /**
      * Paint Canvas Properties
      */
-
-
     //When pressing mouse
     public void canvasOnPressed(MouseEvent e) {
         //begin drawing

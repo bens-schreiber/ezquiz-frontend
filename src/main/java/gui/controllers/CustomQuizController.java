@@ -48,13 +48,13 @@ public class CustomQuizController implements Initializable {
     }
 
     //Setup all preferences and begin custom test
-    public void onStartButton(MouseEvent mouseEvent) throws IOException, JSONException {
+    public void onStartButton() throws IOException, JSONException {
 
         int questionAmount;
 
-        if (questionAmountField.getText().equals("")) {
+        if (questionAmountField.getText().isEmpty()) {
 
-            questionAmount = Constants.defaultQuestionAmount; //If no value, use the default.
+            questionAmount = Constants.DEFAULT_QUESTION_AMOUNT; //If no value, use the default.
 
         } else {//If questionAmountField has a value
 
@@ -62,7 +62,7 @@ public class CustomQuizController implements Initializable {
 
         }
 
-        if (!testTimeField.getText().equals("")) {
+        if (!testTimeField.getText().isEmpty()) {
 
             QuizManager.addPref("seconds", String.valueOf(
                     Integer.parseInt
@@ -72,7 +72,7 @@ public class CustomQuizController implements Initializable {
 
         }
 
-        if (testNameField.getText().equals("")) {
+        if (testNameField.getText().isEmpty()) {
 
             QuizManager.addPref("Quiz Name", "Custom Exam");
 

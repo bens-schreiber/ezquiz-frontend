@@ -13,13 +13,13 @@ public class NodeHelper {
 
         return switch (question.getType()) {
 
-            case "1" -> MultipleChoice.getNode(question);
+            case "1" -> MultipleChoice.getNode();
 
-            case "2" -> TrueOrFalse.getNode(question);
+            case "2" -> TrueOrFalse.getNode();
 
-            case "3" -> CheckBoxType.getNode(question);
+            case "3" -> CheckBoxType.getNode();
 
-            case "4" -> UserInput.getNode(question);
+            case "4" -> UserInput.getNode();
 
             default -> null;
 

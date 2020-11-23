@@ -56,9 +56,9 @@ public class DrawingPadController implements Initializable {
         UnaryOperator<TextFormatter.Change> modifyChange = c -> {
             if (c.isContentChange()) {
                 int newLength = c.getControlNewText().length();
-                if (newLength > Constants.brushMaxSize) {
+                if (newLength > Constants.MAX_BRUSH_SIZE) {
                     // replace the input text with the last len chars
-                    String tail = c.getControlNewText().substring(newLength - Constants.brushMaxSize, newLength);
+                    String tail = c.getControlNewText().substring(newLength - Constants.MAX_BRUSH_SIZE, newLength);
                     c.setText(tail);
                     // replace the range to complete text
                     // valid coordinates for range is in terms of old text

@@ -18,9 +18,9 @@ import org.json.JSONException;
 
 public class QuizManager {
 
-    public static final HashMap<String, String> preferences = new HashMap<>();
+    private static final HashMap<String, String> preferences = new HashMap<>();
 
-    public static LinkedHashMap<Integer, List<String>> responses = new LinkedHashMap<>();
+    static List<List<String>> responses = new ArrayList<>();
 
     private static final List<Question> questions = new ArrayList<>();
 
@@ -68,11 +68,12 @@ public class QuizManager {
 
             }
 
-            questions.add(QuestionBuilder.questionFromJSON(requestData)); //Make request.
+            questions.add(QuestionFactory.questionFromJSON(requestData)); //Make request.
 
         }
 
         for (Question question : questions) question.shuffleOptions();
+
     }
 
 
@@ -84,32 +85,29 @@ public class QuizManager {
         List<Question> correctQuestions = new ArrayList<>();
 
         //Iterate through quiz.questions along with hashmap, so it doesn't make unneeded requests
-        int quizQuestNum = 0;
+        int numberInQuiz = 0;
+        for (List<String> response : responses) {
 
-        for (Map.Entry<Integer, List<String>> entry : responses.entrySet()) {
-
-            //Grab response from responses
-            List<String> response = entry.getValue();
-
-            //Request for the answer based off the id in responses
-            List<String> answer = QuestionBuilder.answerFromJSON(Requests.getQuestionAnswer(entry.getKey()));
+            //Request for the answer based off the correlating position in questions, get id
+            List<String> answer = QuestionFactory.answerFromJSON(
+                    Requests.getQuestionAnswer(questions.get(numberInQuiz)));
 
             //user input type might be capitalized or spaced wrong. handle differently
-            if (questions.get(quizQuestNum).getType().equals("4")) {
+            if (questions.get(numberInQuiz).getType().equals("4")) {
 
-                userInputAnswerHandle(response, answer, correctQuestions, quizQuestNum);
+                userInputAnswerHandle(response, answer, correctQuestions, numberInQuiz);
 
                 //Answer may be larger than one, so .containsAll is used
             } else if (answer.containsAll(response)) {
 
                 //Give the Question an answer value, for use in Results.
-                questions.get(quizQuestNum).setAnswer(answer);
+                questions.get(numberInQuiz).setAnswer(answer);
 
-                correctQuestions.add(questions.get(quizQuestNum));
+                correctQuestions.add(questions.get(numberInQuiz));
 
             }
 
-            quizQuestNum++;
+            numberInQuiz++;
 
         }
 
@@ -149,36 +147,29 @@ public class QuizManager {
         //Determine how large the id pool should be
         if (subject == null && type == null) {
 
-            return Constants.dbSize;
+            return Constants.DATABASE_SIZE;
 
         }
 
         if (subject != null && type != null) {
 
-            return Constants.subjectAndTypeQuestionAmount;
+            return Constants.SUBJECT_TYPE_QUESTION_AMOUNT;
 
         }
 
         if (subject == null) {
 
-            return Constants.typeQuestionAmount;
+            return Constants.TYPE_QUESTION_AMOUNT;
 
         }
 
-        return Constants.subjectQuestionAmount;
-
-    }
-
-    public static void addResponse(int id, List<String> response) {
-
-        responses.put(id, response);
+        return Constants.SUBJECT_QUESTION_AMOUNT;
 
     }
 
     /**
      * Getters
      */
-
     public static int getCurrNum() {
 
         return currQuestion;
@@ -228,6 +219,24 @@ public class QuizManager {
 
         currQuestion = num;
 
+    }
+
+    public static void addResponse(int index, List<String> response) {
+
+        responses.add(index, response);
+
+    }
+
+    public static void removeResponse(int index) {
+        responses.remove(index);
+    }
+
+    public static List<List<String>> getResponses() {
+        return responses;
+    }
+
+    public static HashMap<String, String> getPreferences() {
+        return preferences;
     }
 
 }

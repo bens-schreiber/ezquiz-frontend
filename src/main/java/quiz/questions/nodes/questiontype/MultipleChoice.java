@@ -15,7 +15,9 @@ import java.util.List;
 
 
 public class MultipleChoice {
-    public static VBox getNode(Question question) {
+    public static VBox getNode() {
+
+        Question question = QuizManager.getQuestion(QuizManager.getCurrNum());
 
         RadioButton radio1 = new RadioButton(question.getOptions().get(0));
 
@@ -26,7 +28,7 @@ public class MultipleChoice {
         RadioButton radio4 = new RadioButton(question.getOptions().get(3));
 
         //Make answers not disappear when going back.
-        findPreviousAnswer(question, radio1, radio2, radio3, radio4);
+        findPreviousAnswer(radio1, radio2, radio3, radio4);
 
         ToggleGroup mChoice = new ToggleGroup(); //Make buttons only have 1 toggle at a time.
 
@@ -36,9 +38,13 @@ public class MultipleChoice {
 
             radioButton.setOnMouseClicked(e -> {
 
-                QuizManager.responses.remove(question.getID());
+                if (QuizManager.getResponses().size() > QuizManager.getCurrNum()) {
+                    QuizManager.removeResponse(QuizManager.getCurrNum());
+                }
 
-                QuizManager.addResponse(question.getID(), List.of(radioButton.getText()));
+                QuizManager.addResponse(
+                        QuizManager.getCurrNum(),
+                        List.of(radioButton.getText()));
 
             });
 
@@ -53,19 +59,22 @@ public class MultipleChoice {
 
     }
 
-    private static void findPreviousAnswer(Question question, RadioButton radio1, RadioButton radio2, RadioButton radio3, RadioButton radio4) {
-        if (QuizManager.responses.containsKey(question.getID())) {
+    private static void findPreviousAnswer(RadioButton radio1, RadioButton radio2, RadioButton radio3, RadioButton radio4) {
 
-            String prevAnswer = (QuizManager.responses.get(question.getID())).get(0);
+        if (QuizManager.getCurrNum() < QuizManager.getResponses().size()) {
+            if (!QuizManager.getResponses().get(QuizManager.getCurrNum()).isEmpty()) {
 
-            for (RadioButton radioButton : Arrays.asList(radio1, radio2, radio3, radio4)) {
+                String prevAnswer = (QuizManager.getResponses().get(QuizManager.getCurrNum())).get(0);
 
-                if (radioButton.getText().equals(prevAnswer)) {
+                for (RadioButton radioButton : Arrays.asList(radio1, radio2, radio3, radio4)) {
 
-                    radioButton.setSelected(true);
+                    if (radioButton.getText().equals(prevAnswer)) {
 
-                    break;
+                        radioButton.setSelected(true);
 
+                        break;
+
+                    }
                 }
             }
         }

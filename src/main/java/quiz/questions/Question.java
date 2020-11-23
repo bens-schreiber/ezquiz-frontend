@@ -21,6 +21,7 @@ public class Question {
 
     private final int id;
 
+    //Answer is not queried until required
     private List<String> answer;
 
     public Question(String type, String subject, List<String> options, String prompt, String directions, int id) {
@@ -36,9 +37,6 @@ public class Question {
         this.id = id;
 
         this.directions = directions;
-
-        //Answer is not queried until required
-        answer = null;
     }
 
     public void shuffleOptions() {
