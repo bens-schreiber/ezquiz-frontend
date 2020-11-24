@@ -20,7 +20,7 @@ public class StartController {
      * Start screen button controller
      */
 
-    public void onDefaultButton(MouseEvent mouseEvent) throws IOException, JSONException {
+    public void onDefaultButton() throws IOException, JSONException {
 
         QuizManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 
@@ -30,7 +30,7 @@ public class StartController {
         displayQuiz();
     }
 
-    public void onCustomButton(MouseEvent mouseEvent) throws IOException {
+    public void onCustomButton() throws IOException {
 
         GuiHelper.closeWindow("Start");
 

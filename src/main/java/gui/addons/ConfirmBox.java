@@ -1,4 +1,4 @@
-package quiz.questions.nodes;
+package gui.addons;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

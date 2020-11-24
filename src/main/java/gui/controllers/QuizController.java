@@ -24,9 +24,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import quiz.questions.nodes.ConfirmBox;
+import gui.addons.ConfirmBox;
 import quiz.QuizManager;
-import quiz.questions.NodeHelper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -127,7 +126,7 @@ public class QuizController implements Initializable {
     private void loadIndividualQuestionButtons() {
 
         //Establish x amount of buttons in the hbox
-        IntStream.range(0, QuizManager.getQuestionAmount())
+        IntStream.range(0, QuizManager.getQuestions().size())
                 .forEach(e -> {
 
                     Button button = new Button();
@@ -194,7 +193,7 @@ public class QuizController implements Initializable {
     //When next button is clicked
     public void onNextButton() {
 
-        if (QuizManager.getCurrNum() < QuizManager.getQuestionAmount() - 1) {
+        if (QuizManager.getCurrNum() < QuizManager.getQuestions().size() - 1) {
 
             QuizManager.nextQuestion(); //Change to the next question.
 
@@ -203,7 +202,7 @@ public class QuizController implements Initializable {
 
         //Disable/enable next and back based on position
         backButton.setDisable(QuizManager.getCurrNum() == 0);
-        nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuestionAmount());
+        nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuestions().size());
 
         //Color the question button that is currently selected
         selectCurrentQuizButton();
@@ -223,7 +222,7 @@ public class QuizController implements Initializable {
 
         //Disable/enable next and back based on position
         backButton.setDisable(QuizManager.getCurrNum() == 0);
-        nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuestionAmount());
+        nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuestions().size());
 
         //Color the question button that is currently selected
         selectCurrentQuizButton();
@@ -246,7 +245,7 @@ public class QuizController implements Initializable {
         selectCurrentQuizButton();
 
         backButton.setDisable(questionSpot == 0);
-        nextButton.setDisable(questionSpot + 1 == QuizManager.getQuestionAmount());
+        nextButton.setDisable(questionSpot + 1 == QuizManager.getQuestions().size());
 
     }
 
@@ -258,7 +257,7 @@ public class QuizController implements Initializable {
     }
 
     //When submit button is clicked
-    public void onSubmitButton(MouseEvent mouseEvent) {
+    public void onSubmitButton() {
 
         //Determine if any questions have been flagged
         boolean flaggedQuestions = false;
@@ -281,7 +280,7 @@ public class QuizController implements Initializable {
         }
 
         //If all questions are answered.
-        else if (QuizManager.getResponses().size() == QuizManager.getQuestionAmount()) {
+        else if (QuizManager.allResponded()) {
 
             if (ConfirmBox.display("Are you sure you want to submit?")) {
                 endTest();
@@ -444,8 +443,9 @@ public class QuizController implements Initializable {
         //Clear previous question from questionArea
         questionArea.getChildren().clear();
 
+
         //Set new question to questionArea
-        questionArea.getChildren().add(NodeHelper.getNodeFromQuestion(QuizManager.getCurrQuestion()));
+        questionArea.getChildren().add(QuizManager.getCurrNode().getNode());
 
         // Set prompt
         questionPrompt.setText(QuizManager.getCurrQuestion().getPrompt());
@@ -456,7 +456,7 @@ public class QuizController implements Initializable {
         //Change top right label to current question num / question amount
         currQuestionLabel.setText((QuizManager.getCurrNum() + 1)
                 + "/"
-                + QuizManager.getQuestionAmount()
+                + QuizManager.getQuestions().size()
         );
 
         //If the button is selected

@@ -62,9 +62,13 @@ public class CustomQuizController implements Initializable {
 
         }
 
-        if (!testTimeField.getText().isEmpty()) {
+        if (testTimeField.getText().isEmpty()) {
 
-            QuizManager.addPref("seconds", String.valueOf(
+            QuizManager.getPreferences().put("seconds", "1800");
+
+        } else {
+
+            QuizManager.getPreferences().put("seconds", String.valueOf(
                     Integer.parseInt
                             (testTimeField.getText())
                             * 60)
@@ -74,17 +78,17 @@ public class CustomQuizController implements Initializable {
 
         if (testNameField.getText().isEmpty()) {
 
-            QuizManager.addPref("Quiz Name", "Custom Exam");
+            QuizManager.getPreferences().put("Quiz Name", "Custom Exam");
 
         } else {
 
-            QuizManager.addPref("Quiz Name", testNameField.getText());
+            QuizManager.getPreferences().put("Quiz Name", testNameField.getText());
 
         }
 
         for (CheckBox checkBox : Arrays.asList(calcPref, notePadPref, drawPref)) {//Put addon prefs in
 
-            QuizManager.addPref(checkBox.getText(), String.valueOf(checkBox.isSelected()));
+            QuizManager.getPreferences().put(checkBox.getText(), String.valueOf(checkBox.isSelected()));
 
         }
 

@@ -13,16 +13,16 @@ import java.util.stream.IntStream;
 import quiz.questions.*;
 import database.Requests;
 import org.json.JSONException;
+import quiz.questions.nodes.QuizNode;
 
+import javax.xml.namespace.QName;
 
 
 public class QuizManager {
 
     private static final HashMap<String, String> preferences = new HashMap<>();
 
-    static List<List<String>> responses = new ArrayList<>();
-
-    private static final List<Question> questions = new ArrayList<>();
+    private static final List<QuizNode> quizNodes = new ArrayList<>();
 
     private static int currQuestion = 0;
 
@@ -68,11 +68,13 @@ public class QuizManager {
 
             }
 
-            questions.add(QuestionFactory.questionFromJSON(requestData)); //Make request.
+            Question question = QuestionFactory.questionFromJSON(requestData);
+            question.shuffleOptions();
+
+            quizNodes.add(QuizNodeFactory.getNodeFromQuestion(question)); //Make request.
 
         }
 
-        for (Question question : questions) question.shuffleOptions();
 
     }
 
@@ -85,29 +87,38 @@ public class QuizManager {
         List<Question> correctQuestions = new ArrayList<>();
 
         //Iterate through quiz.questions along with hashmap, so it doesn't make unneeded requests
-        int numberInQuiz = 0;
-        for (List<String> response : responses) {
+        for (QuizNode quizNode : quizNodes) {
 
-            //Request for the answer based off the correlating position in questions, get id
-            List<String> answer = QuestionFactory.answerFromJSON(
-                    Requests.getQuestionAnswer(questions.get(numberInQuiz)));
+            List<String> response = quizNode.getResponse();
+
+            List<String> answer = QuestionFactory.answerFromJSON(Requests.getQuestionAnswer(quizNode.getQuestion()));
+
+            //set question answer for use in Results
+            quizNode.getQuestion().setAnswer(answer);
 
             //user input type might be capitalized or spaced wrong. handle differently
-            if (questions.get(numberInQuiz).getType().equals("4")) {
+            if (quizNode.getQuestion().getType().equals("4")) {
 
-                userInputAnswerHandle(response, answer, correctQuestions, numberInQuiz);
+                //Set to all lowercase and no spaces for minimal input based error
+                response = response
+                        .stream()
+                        .map(String::toLowerCase)
+                        .map(str -> str.replaceAll("\\s", ""))
+                        .collect(Collectors.toList());
 
-                //Answer may be larger than one, so .containsAll is used
-            } else if (answer.containsAll(response)) {
-
-                //Give the Question an answer value, for use in Results.
-                questions.get(numberInQuiz).setAnswer(answer);
-
-                correctQuestions.add(questions.get(numberInQuiz));
-
+                answer = answer
+                        .stream()
+                        .map(String::toLowerCase)
+                        .map(str -> str.replaceAll("\\s", ""))
+                        .collect(Collectors.toList());
             }
 
-            numberInQuiz++;
+                //Answer may be larger than one, so .containsAll is used
+            if (answer.containsAll(response)) {
+
+                correctQuestions.add(quizNode.getQuestion());
+
+            }
 
         }
 
@@ -115,32 +126,6 @@ public class QuizManager {
 
     }
 
-    private static void userInputAnswerHandle(List<String> response, List<String> answer, List<Question> correctQuestions, int quizQuestNum) {
-
-        //Set to all lowercase and no spaces for minimal input based error
-        response = response
-                .stream()
-                .map(String::toLowerCase)
-                .map(str -> str.replaceAll("\\s", ""))
-                .collect(Collectors.toList());
-
-        //TODO: Change answers in db to lowercase and no spaces
-        answer = answer
-                .stream()
-                .map(String::toLowerCase)
-                .map(str -> str.replaceAll("\\s", ""))
-                .collect(Collectors.toList());
-
-        //Answer may be larger than one, so .containsAll is used
-        if (answer.containsAll(response)) {
-
-            questions.get(quizQuestNum).setAnswer(answer);
-
-            correctQuestions.add(questions.get(quizQuestNum));
-
-        }
-
-    }
 
     private static int determineSize(String subject, String type) {
 
@@ -176,32 +161,38 @@ public class QuizManager {
 
     }
 
+    public static HashMap<String, String> getPreferences() {
+
+        return preferences;
+    }
+
+    public static List<QuizNode> getQuestions() {
+
+        return quizNodes;
+    }
+
+    public static QuizNode getCurrNode() {
+
+        return quizNodes.get(currQuestion);
+    }
+
     public static Question getCurrQuestion() {
 
-        return questions.get(currQuestion);
+        return quizNodes.get(currQuestion).getQuestion();
 
     }
 
-    public static int getQuestionAmount() {
-
-        return questions.size();
-
-    }
-
-    public static Question getQuestion(int index) {
-        return questions.get(index);
+    public static boolean allResponded() {
+        for (QuizNode quizNode : quizNodes) {
+            return quizNode.getResponse().isEmpty();
+        }
+        return false;
     }
 
 
     /**
      * Setters
      */
-
-    public static void addPref(String pref, String val) {
-
-        preferences.put(pref, val);
-
-    }
 
     public static void nextQuestion() {
 
@@ -219,24 +210,6 @@ public class QuizManager {
 
         currQuestion = num;
 
-    }
-
-    public static void addResponse(int index, List<String> response) {
-
-        responses.add(index, response);
-
-    }
-
-    public static void removeResponse(int index) {
-        responses.remove(index);
-    }
-
-    public static List<List<String>> getResponses() {
-        return responses;
-    }
-
-    public static HashMap<String, String> getPreferences() {
-        return preferences;
     }
 
 }
