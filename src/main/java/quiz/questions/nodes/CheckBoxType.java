@@ -57,20 +57,4 @@ public class CheckBoxType extends QuizNode {
 
     }
 
-
-//    private static void findPreviousAnswer(CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3, CheckBox checkBox4) {
-//
-//        if (QuizManager.getCurrNum() < QuizManager.getResponses().size()) {
-//            if (!QuizManager.getResponses().get(QuizManager.getCurrNum()).isEmpty()) {
-//
-//                List<String> prevAnswer = (QuizManager.getResponses().get(QuizManager.getCurrNum()));
-//
-//                for (CheckBox checkBox : Arrays.asList(checkBox1, checkBox2, checkBox3, checkBox4)) {
-//
-//                    if (prevAnswer.contains(checkBox.getText())) checkBox.setSelected(true);
-//
-//                }
-//            }
-//        }
-//    }
 }

@@ -2,10 +2,14 @@ package gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import org.json.JSONException;
 import quiz.questions.Question;
 import quiz.QuizManager;
+import quiz.questions.nodes.QuizNode;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,15 +26,21 @@ public class ResultsController implements Initializable {
     @FXML
     private Label resultsArea, points;
 
+    @FXML
+    VBox correctAnswersVBox;
+
+    private int correctAnswers = 0;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        List<Question> correctQuestions = null;
+
+        correctAnswersVBox.setSpacing(50);
 
         try { //Attempt to check answers.
 
-            correctQuestions = QuizManager.checkAnswers();
+            QuizManager.checkAnswers();
 
         } catch (IOException | JSONException e) {
 
@@ -38,25 +48,35 @@ public class ResultsController implements Initializable {
 
         }
 
-        if (correctQuestions == null) {//If no correct answers, display it.
+        for (QuizNode quizNode : QuizManager.getQuestions()) {
 
-            resultsArea.setText("No correct answers.");
+            //Make a container for the answered question, add question to it
+            VBox answeredQuestion = new VBox(15);
+            answeredQuestion.getChildren().add(new Label(quizNode.getQuestion().getPrompt()));
+            answeredQuestion.getChildren().add(quizNode.getNode());
 
-        } else {
 
-            resultsArea.setText("");
+            //Make un-intractable.
+            quizNode.getNode().setFocusTraversable(false);
+            quizNode.getNode().setMouseTransparent(true);
 
-            points.setText(points.getText() + correctQuestions.size());
+            if (quizNode.isCorrect()) {
 
-            for (Question correctQuestion : correctQuestions) {//Format the text to display.
+                answeredQuestion.setStyle("-fx-background-color: rgba(86, 234, 99, .5);");
+                correctAnswers++;
 
-                resultsArea.setText(
-                        resultsArea.getText() + "\n"
-                                + correctQuestion.getPrompt() + " " + correctQuestion.getAnswer().toString()
-                );
+            } else {
+
+                answeredQuestion.setStyle("-fx-background-color: rgba(195, 33, 72, .7);");
 
             }
+
+            //Add container to correct answers container.
+            correctAnswersVBox.getChildren().add(answeredQuestion);
         }
 
+        points.setText("Score " + correctAnswers + "/" + QuizManager.getQuestions().size());
     }
+
 }
+

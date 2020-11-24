@@ -55,19 +55,3 @@ public class MultipleChoice extends QuizNode {
     }
 }
 
-//    private static void findPreviousAnswer(RadioButton radio1, RadioButton radio2, RadioButton radio3, RadioButton radio4) {
-//
-//        if (QuizManager.getCurrNum() < QuizManager.getResponses().size()) {
-//            if (!QuizManager.getResponses().get(QuizManager.getCurrNum()).isEmpty()) {
-//
-//                String prevAnswer = (QuizManager.getResponses().get(QuizManager.getCurrNum())).get(0);
-//
-//                for (RadioButton radioButton : Arrays.asList(radio1, radio2, radio3, radio4)) {
-//
-//                    if (radioButton.getText().equals(prevAnswer)) {
-//
-//                        radioButton.setSelected(true);
-//
-//                        break;
-//
-//                    }

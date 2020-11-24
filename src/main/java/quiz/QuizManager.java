@@ -14,16 +14,18 @@ import quiz.questions.*;
 import database.Requests;
 import org.json.JSONException;
 import quiz.questions.nodes.QuizNode;
-
-import javax.xml.namespace.QName;
+import quiz.questions.nodes.QuizNodeFactory;
 
 
 public class QuizManager {
 
+    //Hashmap of user preferences
     private static final HashMap<String, String> preferences = new HashMap<>();
 
+    //List of QuizNodes that contain the questions, responses, and javafx information
     private static final List<QuizNode> quizNodes = new ArrayList<>();
 
+    //Index of the QuizNodes the quiz is currently on
     private static int currQuestion = 0;
 
 
@@ -82,9 +84,7 @@ public class QuizManager {
     /**
      * Grab all answers to questions from responses with Requests.getQuestionAnswer
      */
-    public static List<Question> checkAnswers() throws IOException, JSONException {
-
-        List<Question> correctQuestions = new ArrayList<>();
+    public static void checkAnswers() throws IOException, JSONException {
 
         //Iterate through quiz.questions along with hashmap, so it doesn't make unneeded requests
         for (QuizNode quizNode : quizNodes) {
@@ -97,32 +97,25 @@ public class QuizManager {
             quizNode.getQuestion().setAnswer(answer);
 
             //user input type might be capitalized or spaced wrong. handle differently
-            if (quizNode.getQuestion().getType().equals("4")) {
+            if (quizNode.getQuestion().getType().equals("input")) {
 
                 //Set to all lowercase and no spaces for minimal input based error
-                response = response
-                        .stream()
+                response = response.stream()
                         .map(String::toLowerCase)
                         .map(str -> str.replaceAll("\\s", ""))
                         .collect(Collectors.toList());
 
-                answer = answer
-                        .stream()
+                answer = answer.stream()
                         .map(String::toLowerCase)
                         .map(str -> str.replaceAll("\\s", ""))
                         .collect(Collectors.toList());
             }
 
-                //Answer may be larger than one, so .containsAll is used
-            if (answer.containsAll(response)) {
-
-                correctQuestions.add(quizNode.getQuestion());
-
-            }
+            //Answer may be larger than one, so .containsAll is used
+            //Check if answer is correct.
+            quizNode.setCorrect(response.containsAll(answer));
 
         }
-
-        return correctQuestions;
 
     }
 

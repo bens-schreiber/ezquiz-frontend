@@ -18,9 +18,9 @@ public class QuestionFactory {
 
         //TODO: make a validation method
 
-        String type = json.get("type_id").toString();
+        String type = json.get("type_name").toString();
 
-        String subject = json.get("subjects").toString();
+        String subject = json.get("subject_name").toString();
 
         String question = json.get("question").toString();
 
@@ -48,11 +48,11 @@ public class QuestionFactory {
 
             directions = switch (type) {
 
-                case "1" -> "Select the correct answer.";
+                case "multiple" -> "Select the correct answer.";
 
-                case "2" -> "Determine if the problem is true or false.";
+                case "t_f" -> "Determine if the problem is true or false.";
 
-                case "3" -> "Check all the boxes that apply.";
+                case "checkbox" -> "Check all the boxes that apply.";
 
                 default -> "Correctly type the solution.";
 

@@ -41,7 +41,7 @@ public class Question {
 
     public void shuffleOptions() {
 
-        if (!this.type.equals("4") && !this.type.equals("2")) {
+        if (!this.type.equals("input") && !this.type.equals("t_f")) {
 
             Collections.shuffle(options);
 

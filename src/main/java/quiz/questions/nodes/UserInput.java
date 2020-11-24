@@ -30,7 +30,6 @@ public class UserInput extends QuizNode {
 
         Label label = new Label("Answer:");
 
-
         textField.setOnKeyTyped(e -> this.response = Collections.singletonList(textField.getText()));
 
         VBox vbox = new VBox();
@@ -40,19 +39,5 @@ public class UserInput extends QuizNode {
         return vbox;
 
     }
-//
-//    private static void findPreviousAnswer(TextField textField) {
-//
-//        if (QuizManager.getCurrNum() < QuizManager.getResponses().size()) {
-//            if (!QuizManager.getResponses().get(QuizManager.getCurrNum()).isEmpty()) {
-//
-//                String prevAnswer = (QuizManager.getResponses().get(QuizManager.getCurrNum())).get(0);
-//
-//                textField.setText(prevAnswer);
-//
-//
-//            }
-//        }
-//    }
 
 }

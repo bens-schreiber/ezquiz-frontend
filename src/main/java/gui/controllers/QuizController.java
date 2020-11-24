@@ -443,7 +443,6 @@ public class QuizController implements Initializable {
         //Clear previous question from questionArea
         questionArea.getChildren().clear();
 
-
         //Set new question to questionArea
         questionArea.getChildren().add(QuizManager.getCurrNode().getNode());
 

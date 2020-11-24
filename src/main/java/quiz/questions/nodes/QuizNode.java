@@ -7,9 +7,12 @@ import java.util.List;
 
 public abstract class QuizNode {
 
-    VBox node;
-    Question question;
-    List<String> response;
+    protected VBox node;
+    protected Question question;
+    protected boolean correct;
+
+    //Initiate response with a fake value if left empty
+    protected List<String> response = List.of("null");
 
     public QuizNode(Question question) {
         this.question = question;
@@ -25,5 +28,13 @@ public abstract class QuizNode {
 
     public List<String> getResponse() {
         return response;
+    }
+
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
+    }
+
+    public boolean isCorrect() {
+        return correct;
     }
 }
