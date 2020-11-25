@@ -113,7 +113,7 @@ public class QuizManager {
 
             //Answer may be larger than one, so .containsAll is used
             //Check if answer is correct.
-            quizNode.setCorrect(response.containsAll(answer));
+            quizNode.setCorrect(answer.containsAll(response));
 
         }
 

@@ -1,15 +1,15 @@
 package quiz.questions.nodes;
 
-import javafx.scene.layout.VBox;
+import javafx.scene.Node;
 import quiz.questions.Question;
 
 import java.util.List;
 
-public abstract class QuizNode {
+public class QuizNode {
 
-    protected VBox node;
-    protected Question question;
-    protected boolean correct;
+    private Node node;
+    private final Question question;
+    private boolean correct;
 
     //Initiate response with a fake value if left empty
     protected List<String> response = List.of("null");
@@ -18,7 +18,7 @@ public abstract class QuizNode {
         this.question = question;
     }
 
-    public VBox getNode() {
+    public Node getNode() {
         return this.node;
     }
 
@@ -28,6 +28,10 @@ public abstract class QuizNode {
 
     public List<String> getResponse() {
         return response;
+    }
+
+    public void setNode(Node node) {
+        this.node = node;
     }
 
     public void setCorrect(boolean correct) {

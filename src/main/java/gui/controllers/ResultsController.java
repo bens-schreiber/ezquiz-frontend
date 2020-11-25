@@ -2,18 +2,14 @@ package gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.json.JSONException;
-import quiz.questions.Question;
 import quiz.QuizManager;
 import quiz.questions.nodes.QuizNode;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -24,7 +20,7 @@ import java.util.ResourceBundle;
 public class ResultsController implements Initializable {
 
     @FXML
-    private Label resultsArea, points;
+    private Label points;
 
     @FXML
     VBox correctAnswersVBox;
@@ -66,8 +62,9 @@ public class ResultsController implements Initializable {
                 correctAnswers++;
 
             } else {
-
+                // if answered incorrectly
                 answeredQuestion.setStyle("-fx-background-color: rgba(195, 33, 72, .7);");
+                answeredQuestion.getChildren().add(new Label("Correct answer: " + quizNode.getQuestion().getAnswer()));
 
             }
 

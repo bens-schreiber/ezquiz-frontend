@@ -34,11 +34,7 @@ public class DrawingPadController implements Initializable {
 
         //todo: make these not lambdas
 
-        colorPicker.setOnAction(e -> {
-
-            QuizController.changeColor(colorPicker.getValue());
-
-        });
+        colorPicker.setOnAction(e -> QuizController.changeColor(colorPicker.getValue()));
 
         brushSize.setOnKeyTyped(e -> {
 
@@ -48,9 +44,7 @@ public class DrawingPadController implements Initializable {
 
         });
 
-        eraser.setOnAction(event -> {
-            QuizController.changeColor(Color.rgb(158, 158, 158));
-        });
+        eraser.setOnAction(event -> QuizController.changeColor(Color.rgb(158, 158, 158)));
 
 
         UnaryOperator<TextFormatter.Change> modifyChange = c -> {
@@ -69,7 +63,7 @@ public class DrawingPadController implements Initializable {
             return c;
         }; //Limit how much text can be typed.
 
-        brushSize.setTextFormatter(new TextFormatter<Object>(modifyChange));
+        brushSize.setTextFormatter(new TextFormatter<>(modifyChange));
 
     }
 }

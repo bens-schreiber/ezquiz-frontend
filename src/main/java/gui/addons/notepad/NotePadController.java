@@ -41,7 +41,7 @@ public class NotePadController implements Initializable {
             }
             return c;
         };
-        notepadText.setTextFormatter(new TextFormatter<Object>(modifyChange));
+        notepadText.setTextFormatter(new TextFormatter<>(modifyChange));
 
         //Put the saved text on the notepad
         notepadText.setText(NotePadHelper.getSavedText());
