@@ -2,6 +2,7 @@ package gui.controllers;
 
 import etc.Constants;
 import gui.GuiHelper;
+import gui.addons.FlaggableButton;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -129,7 +130,7 @@ public class QuizController implements Initializable {
         IntStream.range(0, QuizManager.getQuestions().size())
                 .forEach(e -> {
 
-                    Button button = new Button();
+                    FlaggableButton button = new FlaggableButton();
 
                     //Give style properties
                     button.setStyle(Constants.UNSELECTED_COLOR);
@@ -244,6 +245,10 @@ public class QuizController implements Initializable {
         //Color the hbox that is currently selected
         selectCurrentQuizButton();
 
+        if (((FlaggableButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).isFlagged()) {
+            ((FlaggableButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).setFlagged(false);
+        }
+
         backButton.setDisable(questionSpot == 0);
         nextButton.setDisable(questionSpot + 1 == QuizManager.getQuestions().size());
 
@@ -252,31 +257,27 @@ public class QuizController implements Initializable {
     //On Flag Question clicked
     public void onFlagQuestion() {
 
-        questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(Constants.FLAGGED_COLOR);
+        ((FlaggableButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).setFlagged(true);
 
     }
 
     //When submit button is clicked
     public void onSubmitButton() {
 
-        //Determine if any questions have been flagged
+        //Determine if any questions have been flaggedQuestions
         boolean flaggedQuestions = false;
         for (Node node : questionHBox.getChildren()) {
-
-            if (node.getStyle().equals(Constants.FLAGGED_COLOR)) {
+            if (((FlaggableButton) node).isFlagged()) {
                 flaggedQuestions = true;
                 break;
             }
 
         }
 
-        //If any questions are flagged
         if (flaggedQuestions) {
-
             if (ConfirmBox.display("Some questions are flagged. Are you sure you want to submit?")) {
                 endTest();
             }
-
         }
 
         //If all questions are answered.
