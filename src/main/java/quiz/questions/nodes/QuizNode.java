@@ -22,16 +22,16 @@ public class QuizNode {
         return this.node;
     }
 
+    public void setNode(Node node) {
+        this.node = node;
+    }
+
     public Question getQuestion() {
         return question;
     }
 
     public List<String> getResponse() {
         return response;
-    }
-
-    public void setNode(Node node) {
-        this.node = node;
     }
 
     public void setCorrect(boolean correct) {

@@ -14,7 +14,7 @@ import quiz.questions.*;
 import database.Requests;
 import org.json.JSONException;
 import quiz.questions.nodes.QuizNode;
-import quiz.questions.nodes.QuizNodeFactory;
+import quiz.questions.nodes.QuizNodeBuilder;
 
 
 public class QuizManager {
@@ -73,7 +73,9 @@ public class QuizManager {
             Question question = QuestionFactory.questionFromJSON(requestData);
             question.shuffleOptions();
 
-            quizNodes.add(QuizNodeFactory.getNodeFromQuestion(question)); //Make request.
+            quizNodes.add(
+                    new QuizNodeBuilder(question).create().setNode().build()
+            );
 
         }
 

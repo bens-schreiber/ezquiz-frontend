@@ -1,5 +1,6 @@
 package quiz.questions.nodes;
 
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import quiz.questions.Question;
@@ -7,33 +8,38 @@ import quiz.questions.Question;
 import java.util.Arrays;
 import java.util.Collections;
 
-/**
- * Contains method for getting a quiz node from a question objects type value
- */
+public class QuizNodeBuilder {
 
-public class QuizNodeFactory {
+    private final Question question;
+    private QuizNode quizNode;
+    private Node node;
 
-    //factory method
-    public static QuizNode getNodeFromQuestion(Question question) {
+    public QuizNodeBuilder(Question question) {
+        this.question = question;
+    }
 
-        QuizNode quizNode = new QuizNode(question);
+    public QuizNodeBuilder create() {
+        this.quizNode = new QuizNode(question);
+        return this;
+    }
 
+    public QuizNodeBuilder setNode() {
         return switch (question.getType()) {
 
-            case "multiple" -> setMultipleChoiceNode(quizNode);
+            case "multiple" -> this.setMultipleChoiceNode();
 
-            case "t_f" -> setTrueOrFalseNode(quizNode);
+            case "t_f" -> this.setTrueOrFalseNode();
 
-            case "checkbox" -> setCheckBoxNode(quizNode);
+            case "checkbox" -> this.setCheckBoxNode();
 
-            case "input" -> setUserInputNode(quizNode);
+            case "input" -> this.setUserInputNode();
 
             default -> null;
 
         };
     }
 
-    private static QuizNode setMultipleChoiceNode(QuizNode quizNode) {
+    private QuizNodeBuilder setMultipleChoiceNode() {
         Question question = quizNode.getQuestion();
         int buttonAmount = question.getOptions().size();
 
@@ -57,11 +63,11 @@ public class QuizNodeFactory {
 
         vbox.getChildren().addAll(radioButtons);
 
-        quizNode.setNode(vbox);
-        return quizNode;
+        this.node = vbox;
+        return this;
     }
 
-    private static QuizNode setCheckBoxNode(QuizNode quizNode) {
+    private QuizNodeBuilder setCheckBoxNode() {
         Question question = quizNode.getQuestion();
         int boxAmount = question.getOptions().size();
 
@@ -94,11 +100,11 @@ public class QuizNodeFactory {
 
         vbox.getChildren().addAll(boxes);
 
-        quizNode.setNode(vbox);
-        return quizNode;
+        this.node = vbox;
+        return this;
     }
 
-    private static QuizNode setTrueOrFalseNode(QuizNode quizNode) {
+    private QuizNodeBuilder setTrueOrFalseNode() {
 
         RadioButton radio1 = new RadioButton("true");
 
@@ -118,11 +124,11 @@ public class QuizNodeFactory {
 
         vbox.getChildren().addAll(radio1, radio2);
 
-        quizNode.setNode(vbox);
-        return quizNode;
+        this.node = vbox;
+        return this;
     }
 
-    private static QuizNode setUserInputNode(QuizNode quizNode) {
+    private QuizNodeBuilder setUserInputNode() {
         TextField textField = new TextField();
 
         textField.setMaxSize(115, 10);
@@ -135,7 +141,12 @@ public class QuizNodeFactory {
 
         vbox.getChildren().addAll(label, textField);
 
-        quizNode.setNode(vbox);
+        this.node = vbox;
+        return this;
+    }
+
+    public QuizNode build() {
+        quizNode.setNode(node);
         return quizNode;
     }
 
