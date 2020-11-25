@@ -5,6 +5,10 @@ import quiz.questions.Question;
 
 import java.util.List;
 
+/**
+ * QuizNode class that keeps track of the question and response, as well as the javafx node
+ */
+
 public class QuizNode {
 
     private Node node;
@@ -18,12 +22,11 @@ public class QuizNode {
         this.question = question;
     }
 
+    /**
+     * Getters
+     */
     public Node getNode() {
         return this.node;
-    }
-
-    public void setNode(Node node) {
-        this.node = node;
     }
 
     public Question getQuestion() {
@@ -34,11 +37,21 @@ public class QuizNode {
         return response;
     }
 
+
+    /**
+     * Setters
+     */
     public void setCorrect(boolean correct) {
         this.correct = correct;
+    }
+
+    public void setNode(Node node) {
+        this.node = node;
     }
 
     public boolean isCorrect() {
         return correct;
     }
+
+
 }
