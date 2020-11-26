@@ -23,57 +23,30 @@ public class StartController {
 
         QuizManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 
+        Stage stage = new Stage();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
 
+        stage.setAlwaysOnTop(true);
+        stage.initStyle(StageStyle.UNDECORATED);
+
+        GuiHelper.addWindow("Quiz", stage);
         GuiHelper.closeWindow("Start");
+        stage.show();
 
-        displayQuiz();
+
     }
 
     public void onCustomButton() throws IOException {
 
-        GuiHelper.closeWindow("Start");
+        Parent root = FXMLLoader.load(getClass().getResource("/customquiz.fxml"));
+        Scene scene = new Scene(root);
 
-        displayCustomOptions();
+        GuiHelper.getOpenedWindows().get("Start").setScene(scene);
+
     }
 
     public void onExitButton() {
         Platform.exit();
-    }
-
-    private void displayQuiz() throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("/quiz.fxml"));
-
-        Scene scene = new Scene(root);
-
-        Stage stage = new Stage();
-
-        stage.setAlwaysOnTop(true);
-
-        stage.initStyle(StageStyle.UNDECORATED);
-
-        stage.setScene(scene);
-
-        stage.show();
-
-        GuiHelper.addWindow("Quiz", stage);
-
-
-    }
-
-    private void displayCustomOptions() throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("/customquiz.fxml"));
-
-        Scene scene = new Scene(root);
-
-        Stage stage = new Stage();
-
-        stage.setScene(scene);
-
-        stage.show();
-
-        GuiHelper.addWindow("Custom", stage);
     }
 
 }

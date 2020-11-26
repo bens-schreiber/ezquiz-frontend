@@ -31,7 +31,7 @@ public class CustomQuizController implements Initializable {
     private ChoiceBox<String> subjectList, typeList;
 
     @FXML
-    private CheckBox calcPref, drawPref, notePadPref;
+    private CheckBox calcPref, drawPref, notePadPref, correctAnswers;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -45,6 +45,11 @@ public class CustomQuizController implements Initializable {
         subjectList.setItems(subjectListItems); //Establish dropdown menu items
 
         typeList.setItems(typeListItems); //Establish dropdown menu items
+    }
+
+    public void onBackButton() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/start.fxml")); //Display the start page.
+        GuiHelper.getOpenedWindows().get("Start").setScene(new Scene(root));
     }
 
     //Setup all preferences and begin custom test
@@ -86,7 +91,7 @@ public class CustomQuizController implements Initializable {
 
         }
 
-        for (CheckBox checkBox : Arrays.asList(calcPref, notePadPref, drawPref)) {//Put addon prefs in
+        for (CheckBox checkBox : Arrays.asList(calcPref, notePadPref, drawPref, correctAnswers)) {//Put addon prefs in
 
             QuizManager.getPreferences().put(checkBox.getText(), String.valueOf(checkBox.isSelected()));
 
@@ -95,7 +100,7 @@ public class CustomQuizController implements Initializable {
 
         QuizManager.loadQuestions(questionAmount, subjectList.getValue(), typeList.getValue()); //Load question
 
-        GuiHelper.closeWindow("Custom"); //Close this page
+        GuiHelper.closeWindow("Start"); //Close this page
 
         displayTest(); //Initialize the test.
 
@@ -103,21 +108,14 @@ public class CustomQuizController implements Initializable {
 
     private void displayTest() throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/quiz.fxml")); //Grab the test fxml
-
-        Scene scene = new Scene(root);
-
         Stage stage = new Stage();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
 
         stage.setAlwaysOnTop(true);
-
         stage.initStyle(StageStyle.UNDECORATED);
 
-        stage.setScene(scene);
-
-        stage.show();
-
         GuiHelper.addWindow("Quiz", stage);
+        stage.show();
     }
 
 }

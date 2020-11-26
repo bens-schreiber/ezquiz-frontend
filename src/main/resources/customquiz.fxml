@@ -29,5 +29,9 @@
         <Label fx:id="test" layoutX="34.0" layoutY="200.0" prefHeight="26.0" prefWidth="80.0" text="Test Time:"/>
         <TextField fx:id="testTimeField" layoutX="108.0" layoutY="200.0" prefHeight="26.0" prefWidth="150.0"
                    promptText="Value in minutes"/>
+        <CheckBox fx:id="correctAnswers" layoutX="30.0" layoutY="317.0" mnemonicParsing="false"
+                  text="Show Correct Answers"/>
+        <Button fx:id="backButton" layoutX="478.0" layoutY="361.0" mnemonicParsing="false" onAction="#onBackButton"
+                text="Back"/>
     </children>
 </AnchorPane>

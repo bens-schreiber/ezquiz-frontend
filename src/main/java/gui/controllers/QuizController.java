@@ -102,7 +102,16 @@ public class QuizController implements Initializable {
      */
     //preferences
     private void loadPrefs() {
-        if (!QuizManager.getPreferences().isEmpty()) {
+        if (QuizManager.getPreferences().isEmpty()) {
+            //Calculator, notepad and drawing pad are enabled by default
+
+            //Set default quiz name.
+            quizName.setText("FBLA - Default 5 Question Quiz");
+
+            //Show correct answers in results by default
+            QuizManager.getPreferences().put("Show Correct Answers", "true");
+
+        } else {
 
             //Get preferences and apply them, if any.
             notePadButton.setVisible(Boolean.parseBoolean(QuizManager.getPreferences().get("Notepad")));
@@ -114,11 +123,6 @@ public class QuizController implements Initializable {
             quizName.setText(QuizManager.getPreferences().get("Quiz Name"));
 
             seconds = Integer.parseInt(QuizManager.getPreferences().get("seconds"));
-
-        } else {
-
-            //Set default quiz name.
-            quizName.setText("FBLA - Default 5 Question Quiz");
 
         }
     }
@@ -428,13 +432,17 @@ public class QuizController implements Initializable {
     //Ends the entire test and begins the results page
     private void endTest() {
 
-        GuiHelper.closeAll(); //Close all addons
-
+        //Grab results fxml
+        Parent results = null;
         try {
-            displayResults(); //Create results page.
+            results = FXMLLoader.load(getClass().getResource("/results.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        assert results != null;
+        Scene scene = new Scene(results);
+        GuiHelper.getOpenedWindows().get("Quiz").setScene(scene);
 
     }
 
@@ -465,21 +473,6 @@ public class QuizController implements Initializable {
                 button.setStyle(Constants.UNSELECTED_COLOR);
             }
         });
-
-    }
-
-    //Display results
-    private void displayResults() throws IOException {
-
-        Parent results = FXMLLoader.load(getClass().getResource("/results.fxml")); //Grab results fxml
-
-        Scene scene = new Scene(results);
-
-        Stage stage = new Stage();
-
-        stage.setScene(scene);
-
-        stage.show();
 
     }
 

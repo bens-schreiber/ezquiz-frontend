@@ -51,27 +51,38 @@ public class ResultsController implements Initializable {
             answeredQuestion.getChildren().add(new Label(quizNode.getQuestion().getPrompt()));
             answeredQuestion.getChildren().add(quizNode.getNode());
 
-
             //Make un-intractable.
             quizNode.getNode().setFocusTraversable(false);
             quizNode.getNode().setMouseTransparent(true);
 
             if (quizNode.isCorrect()) {
 
+                //Set background to green with low opacity
                 answeredQuestion.setStyle("-fx-background-color: rgba(86, 234, 99, .5);");
+
                 correctAnswers++;
 
             } else {
-                // if answered incorrectly
+
+                //Set background to red with low opacity
                 answeredQuestion.setStyle("-fx-background-color: rgba(195, 33, 72, .7);");
-                answeredQuestion.getChildren().add(new Label("Correct answer: " + quizNode.getQuestion().getAnswer()));
+
+                //Show correct answer if desired in preferences
+                if (Boolean.parseBoolean(QuizManager.getPreferences().get("Show Correct Answers"))) {
+
+                    answeredQuestion.getChildren().add(new Label("Correct answer: "
+                            + quizNode.getQuestion().getAnswer()
+                            .toString()
+                            .replace("[", "")
+                            .replace("]", "")
+                    ));
+                }
 
             }
-
             //Add container to correct answers container.
             correctAnswersVBox.getChildren().add(answeredQuestion);
         }
-
+        //Find total score
         points.setText("Score " + correctAnswers + "/" + QuizManager.getQuestions().size());
     }
 
