@@ -11,7 +11,7 @@ import java.util.List;
 
 public class QuizNode {
 
-    private Node node;
+    private final Node node;
     private final Question question;
     private boolean correct;
 
@@ -20,6 +20,7 @@ public class QuizNode {
 
     public QuizNode(Question question) {
         this.question = question;
+        this.node = QuizNodeHelper.getNode(this);
     }
 
     /**
@@ -54,9 +55,6 @@ public class QuizNode {
         return correct;
     }
 
-    protected void setNode(Node node) {
-        this.node = node;
-    }
 
 
 }

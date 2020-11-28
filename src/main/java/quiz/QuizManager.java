@@ -14,7 +14,6 @@ import quiz.questions.*;
 import database.Requests;
 import org.json.JSONException;
 import quiz.questions.nodes.QuizNode;
-import quiz.questions.nodes.QuizNodeBuilder;
 
 
 public class QuizManager {
@@ -72,21 +71,7 @@ public class QuizManager {
 
             Question question = QuestionFactory.questionFromJSON(requestData);
             question.shuffleOptions();
-
-            switch (question.getType()) {
-                case "multiple" -> quizNodes.add(
-                        new QuizNodeBuilder(question).setMultipleChoiceNode().build()
-                );
-                case "t_f" -> quizNodes.add(
-                        new QuizNodeBuilder(question).setTrueOrFalseNode().build()
-                );
-                case "checkbox" -> quizNodes.add(
-                        new QuizNodeBuilder(question).setCheckBoxNode().build()
-                );
-                case "input" -> quizNodes.add(
-                        new QuizNodeBuilder(question).setUserInputNode().build()
-                );
-            }
+            quizNodes.add(new QuizNode(question));
 
         }
 
