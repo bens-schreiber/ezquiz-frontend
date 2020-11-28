@@ -73,9 +73,20 @@ public class QuizManager {
             Question question = QuestionFactory.questionFromJSON(requestData);
             question.shuffleOptions();
 
-            quizNodes.add(
-                    new QuizNodeBuilder(question).create().setNode().build()
-            );
+            switch (question.getType()) {
+                case "multiple" -> quizNodes.add(
+                        new QuizNodeBuilder(question).setMultipleChoiceNode().build()
+                );
+                case "t_f" -> quizNodes.add(
+                        new QuizNodeBuilder(question).setTrueOrFalseNode().build()
+                );
+                case "checkbox" -> quizNodes.add(
+                        new QuizNodeBuilder(question).setCheckBoxNode().build()
+                );
+                case "input" -> quizNodes.add(
+                        new QuizNodeBuilder(question).setUserInputNode().build()
+                );
+            }
 
         }
 

@@ -15,39 +15,15 @@ import java.util.Collections;
 
 public class QuizNodeBuilder {
 
-    private final Question question;
-    private QuizNode quizNode;
+    private final QuizNode quizNode;
     private Node node;
 
     //Initiate
     public QuizNodeBuilder(Question question) {
-        this.question = question;
-    }
-
-    //Initiate the quizNode for setNode
-    public QuizNodeBuilder create() {
         this.quizNode = new QuizNode(question);
-        return this;
     }
 
-    //Find correct question type and apply it
-    public QuizNodeBuilder setNode() {
-        return switch (question.getType()) {
-
-            case "multiple" -> this.setMultipleChoiceNode();
-
-            case "t_f" -> this.setTrueOrFalseNode();
-
-            case "checkbox" -> this.setCheckBoxNode();
-
-            case "input" -> this.setUserInputNode();
-
-            default -> null;
-
-        };
-    }
-
-    private QuizNodeBuilder setMultipleChoiceNode() {
+    public QuizNodeBuilder setMultipleChoiceNode() {
 
         //Define the question
         Question question = quizNode.getQuestion();
@@ -71,7 +47,7 @@ public class QuizNodeBuilder {
             radioButton.setToggleGroup(mChoice);
 
             //On mouse clicked, send button text to response, overwrite old
-            radioButton.setOnMouseClicked(e -> quizNode.response = Collections.singletonList(radioButton.getText()));
+            radioButton.setOnMouseClicked(e -> quizNode.setResponse(Collections.singletonList(radioButton.getText())));
 
         }
 
@@ -82,7 +58,7 @@ public class QuizNodeBuilder {
         return this;
     }
 
-    private QuizNodeBuilder setCheckBoxNode() {
+    public QuizNodeBuilder setCheckBoxNode() {
 
         //Define the question
         Question question = quizNode.getQuestion();
@@ -109,7 +85,7 @@ public class QuizNodeBuilder {
                         stringBuilder.append(box.getText()).append(",");
                 }
 
-                quizNode.response = Arrays.asList(stringBuilder.toString().split(","));
+                quizNode.setResponse(Arrays.asList(stringBuilder.toString().split(",")));
 
             });
         }
@@ -122,7 +98,7 @@ public class QuizNodeBuilder {
         return this;
     }
 
-    private QuizNodeBuilder setTrueOrFalseNode() {
+    public QuizNodeBuilder setTrueOrFalseNode() {
 
         //Establish options
         RadioButton radio1 = new RadioButton("true");
@@ -136,7 +112,7 @@ public class QuizNodeBuilder {
 
             radioButton.setToggleGroup(buttons);
 
-            radioButton.setOnMouseClicked(e -> quizNode.response = Collections.singletonList(radioButton.getText()));
+            radioButton.setOnMouseClicked(e -> quizNode.setResponse(Collections.singletonList(radioButton.getText())));
         }
 
         //Set spacing to 15
@@ -148,14 +124,14 @@ public class QuizNodeBuilder {
     }
 
     //Sets user input node
-    private QuizNodeBuilder setUserInputNode() {
+    public QuizNodeBuilder setUserInputNode() {
 
         TextField textField = new TextField();
         textField.setMaxSize(115, 10);
         Label label = new Label("Answer:");
 
         //Set functionality
-        textField.setOnKeyTyped(e -> quizNode.response = Collections.singletonList(textField.getText()));
+        textField.setOnKeyTyped(e -> quizNode.setResponse(Collections.singletonList(textField.getText())));
 
         VBox vbox = new VBox();
         vbox.getChildren().addAll(label, textField);

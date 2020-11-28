@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Run the initial Start menu
@@ -16,13 +17,12 @@ public class GuiRunner extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        primaryStage.setResizable(false);
+
+
         Parent root = FXMLLoader.load(getClass().getResource("/start.fxml")); //Display the start page.
 
         Scene scene = new Scene(root);
-
-//        primaryStage.setAlwaysOnTop(true);
-//        primaryStage.initStyle(StageStyle.UNDECORATED);
-
 
         primaryStage.setScene(scene);
 

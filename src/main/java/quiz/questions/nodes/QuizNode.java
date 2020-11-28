@@ -16,7 +16,7 @@ public class QuizNode {
     private boolean correct;
 
     //Initiate response with a fake value if left empty
-    protected List<String> response = List.of("null");
+    List<String> response = List.of("null");
 
     public QuizNode(Question question) {
         this.question = question;
@@ -41,16 +41,21 @@ public class QuizNode {
     /**
      * Setters
      */
+
+    public void setResponse(List<String> response) {
+        this.response = response;
+    }
+
     public void setCorrect(boolean correct) {
         this.correct = correct;
     }
 
-    public void setNode(Node node) {
-        this.node = node;
-    }
-
     public boolean isCorrect() {
         return correct;
+    }
+
+    protected void setNode(Node node) {
+        this.node = node;
     }
 
 
