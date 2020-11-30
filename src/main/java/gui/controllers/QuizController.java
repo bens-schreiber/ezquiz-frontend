@@ -2,7 +2,7 @@ package gui.controllers;
 
 import etc.Constants;
 import gui.GuiHelper;
-import gui.addons.FlaggableButton;
+import gui.addons.FlagButton;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -68,40 +68,10 @@ public class QuizController implements Initializable {
     /**
      * Initial run method
      */
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //Load all preferences if any
-        loadPrefs();
-
-        //Load the individual question buttons
-        loadIndividualQuestionButtons();
-
-        //Display the new question.
-        displayNewQuestion();
-
-        //Disable back button by default.
-        backButton.setDisable(true);
-
-        //Establish canvas properties
-        paintCanvas.setDisable(true);
-        gc = paintCanvas.getGraphicsContext2D();
-        gc.setStroke(Color.WHITE);
-
-        //Color the question that is currently selected
-        selectCurrentQuizButton();
-
-        //Begin the test timer
-        startTimer();
-
-    }
-
-    /**
-     * Startup Functions
-     */
-    //preferences
-    private void loadPrefs() {
+        //Establish preferences
         if (QuizManager.getPreferences().isEmpty()) {
             //Calculator, notepad and drawing pad are enabled by default
 
@@ -126,36 +96,39 @@ public class QuizController implements Initializable {
             seconds = Integer.parseInt(QuizManager.getPreferences().get("seconds"));
 
         }
-    }
 
-    //Load all question buttons
-    private void loadIndividualQuestionButtons() {
 
-        //Establish x amount of buttons in the hbox
+        //Establish flag button amount
+        //Whenever the button is clicked use the individualQuestionClicked handler
         IntStream.range(0, QuizManager.getQuizNodes().size())
-                .forEach(e -> {
-
-                    FlaggableButton button = new FlaggableButton();
-
-                    //Give style properties
-                    button.setStyle(Constants.UNSELECTED_COLOR);
-                    button.setPrefSize(35, 35);
-
-                    questionHBox.getChildren().add(button);
-
-                    //Set text to the number of the corresponding question
-                    button.setText(String.valueOf(questionHBox.getChildren().size()));
-
-                    //Whenever the button is clicked use the individualQuestionClicked handler
-                    button.setOnMouseClicked(this::individualQuestionClicked);
-
-                });
+                .mapToObj(e -> new FlagButton(questionHBox))
+                .forEach(button -> button.setOnMouseClicked(this::individualQuestionClicked));
 
         questionHBox.setSpacing(4);
 
+
+        //Display the new question.
+        displayNewQuestion();
+
+        //Disable back button by default.
+        backButton.setDisable(true);
+
+        //Establish canvas properties
+        paintCanvas.setDisable(true);
+        gc = paintCanvas.getGraphicsContext2D();
+        gc.setStroke(Color.WHITE);
+
+        //Color the question that is currently selected
+        selectCurrentQuizButton();
+
+        //Begin the test timer
+        startTimer();
+
     }
 
-    //test timer
+    /**
+     * Timer
+     */
     private void startTimer() {
 
         Timeline time = new Timeline();
@@ -194,7 +167,7 @@ public class QuizController implements Initializable {
 
 
     /**
-     * FXML Button Methods
+     * FXML onButton
      */
     //When next button is clicked
     public void onNextButton() {
@@ -250,8 +223,8 @@ public class QuizController implements Initializable {
         //Color the hbox that is currently selected
         selectCurrentQuizButton();
 
-        if (((FlaggableButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).isFlagged()) {
-            ((FlaggableButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).setFlagged(false);
+        if (((FlagButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).isFlagged()) {
+            ((FlagButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).setFlagged(false);
         }
 
         backButton.setDisable(questionSpot == 0);
@@ -261,9 +234,7 @@ public class QuizController implements Initializable {
 
     //On Flag Question clicked
     public void onFlagQuestion() {
-
-        ((FlaggableButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).setFlagged(true);
-
+        ((FlagButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).setFlagged(true);
     }
 
     //When submit button is clicked
@@ -272,7 +243,7 @@ public class QuizController implements Initializable {
         //Determine if any questions have been flaggedQuestions
         boolean flaggedQuestions = false;
         for (Node node : questionHBox.getChildren()) {
-            if (((FlaggableButton) node).isFlagged()) {
+            if (((FlagButton) node).isFlagged()) {
                 flaggedQuestions = true;
                 break;
             }
@@ -299,12 +270,11 @@ public class QuizController implements Initializable {
             endTest();
         }
 
-
     }
 
 
     /**
-     * addon button methods
+     * addon onButton methods
      */
 
     //When the calculator button is clicked
@@ -487,7 +457,7 @@ public class QuizController implements Initializable {
 
 
     /**
-     * Paint Canvas Properties
+     * Paint Canvas
      */
     //When pressing mouse
     public void canvasOnPressed(MouseEvent e) {
