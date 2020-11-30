@@ -74,8 +74,6 @@ public class QuizManager {
             quizNodes.add(new QuizNode(question));
 
         }
-
-
     }
 
 
@@ -157,7 +155,7 @@ public class QuizManager {
         return preferences;
     }
 
-    public static List<QuizNode> getQuestions() {
+    public static List<QuizNode> getQuizNodes() {
 
         return quizNodes;
     }

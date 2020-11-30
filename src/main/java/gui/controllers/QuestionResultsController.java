@@ -1,7 +1,12 @@
 package gui.controllers;
 
+import gui.GuiHelper;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import org.json.JSONException;
@@ -17,37 +22,28 @@ import java.util.ResourceBundle;
  * Results page controller
  */
 
-public class ResultsController implements Initializable {
-
-    @FXML
-    private Label points;
+public class QuestionResultsController implements Initializable {
 
     @FXML
     VBox correctAnswersVBox;
-
-    private int correctAnswers = 0;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        correctAnswersVBox.setSpacing(30);
 
-        correctAnswersVBox.setSpacing(50);
-
-        try { //Attempt to check answers.
-
-            QuizManager.checkAnswers();
-
-        } catch (IOException | JSONException e) {
-
-            e.printStackTrace();
-
-        }
-
-        for (QuizNode quizNode : QuizManager.getQuestions()) {
+        int quizNumber = 1;
+        for (QuizNode quizNode : QuizManager.getQuizNodes()) {
 
             //Make a container for the answered question, add question to it
             VBox answeredQuestion = new VBox(15);
+
+            //Display question number before question, make bold
+            Label label = new Label("Question " + quizNumber + ":");
+            label.setStyle("-fx-font-weight: bold;");
+            answeredQuestion.getChildren().add(label);
+
             answeredQuestion.getChildren().add(new Label(quizNode.getQuestion().getPrompt()));
             answeredQuestion.getChildren().add(quizNode.getNode());
 
@@ -59,8 +55,6 @@ public class ResultsController implements Initializable {
 
                 //Set background to green with low opacity
                 answeredQuestion.setStyle("-fx-background-color: rgba(86, 234, 99, .5);");
-
-                correctAnswers++;
 
             } else {
 
@@ -81,10 +75,22 @@ public class ResultsController implements Initializable {
             }
             //Add container to correct answers container.
             correctAnswersVBox.getChildren().add(answeredQuestion);
+            quizNumber++;
         }
-        //Find total score
-        points.setText("Score " + correctAnswers + "/" + QuizManager.getQuestions().size());
     }
 
+    public void onBackButton() {
+        //Grab results fxml
+        Parent results = null;
+        try {
+            results = FXMLLoader.load(getClass().getResource("/printableresults.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assert results != null;
+        Scene scene = new Scene(results);
+        GuiHelper.getOpenedWindows().get("Results").setScene(scene);
+    }
 }
 

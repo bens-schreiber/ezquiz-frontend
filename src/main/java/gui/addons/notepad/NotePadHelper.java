@@ -4,7 +4,7 @@ package gui.addons.notepad;
  * Save the text from notepad
  */
 
-public class NotePadHelper {
+class NotePadHelper {
 
     private static String savedText;
 

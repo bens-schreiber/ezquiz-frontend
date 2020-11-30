@@ -9,17 +9,17 @@ import java.util.List;
 
 public class Question {
 
+    private final int id;
+
     private final String type;
 
     private final String subject;
-
-    private final List<String> options;
 
     private final String prompt;
 
     private final String directions;
 
-    private final int id;
+    private final List<String> options;
 
     //Answer is not queried until required
     private List<String> answer;
@@ -27,15 +27,10 @@ public class Question {
     public Question(String type, String subject, List<String> options, String prompt, String directions, int id) {
 
         this.type = type;
-
         this.subject = subject;
-
         this.options = options;
-
         this.prompt = prompt;
-
         this.id = id;
-
         this.directions = directions;
     }
 

@@ -16,7 +16,7 @@ import org.json.JSONObject;
  * Reads json from url and returns JSONObject
  */
 
-public class JsonReader {
+class JsonReader {
 
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();

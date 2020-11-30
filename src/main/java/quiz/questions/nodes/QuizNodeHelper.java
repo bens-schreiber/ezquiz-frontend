@@ -8,7 +8,7 @@ import quiz.questions.Question;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class QuizNodeHelper {
+class QuizNodeHelper {
     public static Node getNode(QuizNode quizNode) {
         switch (quizNode.getQuestion().getType()) {
 
