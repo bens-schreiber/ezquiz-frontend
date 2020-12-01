@@ -16,15 +16,17 @@
                            stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="586.0"/>
                 <Button layoutX="212.0" layoutY="137.0" mnemonicParsing="false" onMouseClicked="#onDefaultButton"
                         prefWidth="136.0" text="Take Default Test"/>
-                <Button layoutX="212.0" layoutY="176.0" mnemonicParsing="false" onMouseClicked="#onCustomButton"
+                <Button layoutX="212.0" layoutY="174.0" mnemonicParsing="false" onMouseClicked="#onCustomButton"
                         prefHeight="26.0" prefWidth="136.0" text="Customize Test"/>
                 <ImageView fitHeight="105.0" fitWidth="186.0" layoutX="194.0" layoutY="14.0">
                     <image>
                         <Image url="@../../../../../Pictures/FBLA-Color-web.png"/>
                     </image>
                 </ImageView>
-                <Button fx:id="exitButton" layoutX="249.0" layoutY="223.0" mnemonicParsing="false"
-                        onAction="#onExitButton" text="Exit"/>
+                <Button fx:id="exitButton" layoutX="212.0" layoutY="255.0" mnemonicParsing="false"
+                        onAction="#onExitButton" prefHeight="26.0" prefWidth="136.0" text="Exit"/>
+                <Button layoutX="212.0" layoutY="215.0" mnemonicParsing="false" onAction="#onEnterCode"
+                        prefHeight="26.0" prefWidth="136.0" text="Enter Code"/>
             </children>
         </AnchorPane>
     </children>

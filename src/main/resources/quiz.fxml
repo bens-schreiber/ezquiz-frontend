@@ -63,12 +63,16 @@
             <VBox fx:id="questionArea" layoutX="16.0" layoutY="60.0" maxHeight="1.7976931348623157E308"
                   maxWidth="1.7976931348623157E308" prefHeight="309.0" prefWidth="375.0" spacing="50.0"
                   style="-fx-background-color: #9E9E9E;"/>
-            <Button fx:id="calculatorButton" layoutX="510.0" layoutY="1.0" mnemonicParsing="false"
-                    onMouseClicked="#onCalculatorButton" text="Calculator" AnchorPane.rightAnchor="105.0"/>
-            <Button fx:id="drawingPadButton" layoutX="595.0" layoutY="1.0" mnemonicParsing="false"
-                    onMouseClicked="#onDrawingPadButton" text="Drawing Tool" AnchorPane.rightAnchor="0.0"/>
-            <Button fx:id="notePadButton" layoutX="435.0" layoutY="1.0" mnemonicParsing="false"
-                    onMouseClicked="#onNotepadButton" text="Notepad" AnchorPane.rightAnchor="190.0"/>
+            <HBox layoutX="1608.0" layoutY="9.0" prefHeight="26.0" prefWidth="264.0">
+               <children>
+                  <Button fx:id="notePadButton" mnemonicParsing="false" onMouseClicked="#onNotepadButton"
+                          text="Notepad"/>
+                  <Button fx:id="calculatorButton" mnemonicParsing="false" onMouseClicked="#onCalculatorButton"
+                          text="Calculator"/>
+                  <Button fx:id="drawingPadButton" mnemonicParsing="false" onMouseClicked="#onDrawingPadButton"
+                          text="Drawing Tool"/>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
       <Label fx:id="questionDirections" layoutX="20.0" layoutY="124.0" prefHeight="36.0" prefWidth="548.0" text="Label">
@@ -84,8 +88,9 @@
             <Font size="30.0"/>
          </font>
       </Label>
-      <Label fx:id="currQuestionLabel" alignment="CENTER" layoutX="1865.0" layoutY="144.0" prefHeight="16.0"
-             prefWidth="35.0" text="0/50" textAlignment="CENTER" textFill="#d60338">
+      <Label fx:id="currQuestionLabel" alignment="CENTER" layoutX="1796.0" layoutY="144.0"
+             maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="104.0" text="30 out of 30"
+             textAlignment="CENTER" textFill="#d60338">
          <font>
             <Font size="14.0"/>
          </font>

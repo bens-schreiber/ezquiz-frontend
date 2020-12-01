@@ -404,19 +404,17 @@ public class QuizController implements Initializable {
     private void endTest() {
 
         //Grab results fxml
-        Parent results = null;
+        Parent results;
         try {
             results = FXMLLoader.load(getClass().getResource("/printableresults.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(results));
+            GuiHelper.addWindow("Results", stage);
+            GuiHelper.closeWindow("Quiz");
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        assert results != null;
-        Stage stage = new Stage();
-        stage.setScene(new Scene(results));
-        GuiHelper.addWindow("Results", stage);
-        GuiHelper.closeWindow("Quiz");
-        stage.show();
 
     }
 
@@ -437,7 +435,7 @@ public class QuizController implements Initializable {
 
         //Change top right label to current question num / question amount
         currQuestionLabel.setText((QuizManager.getCurrNum() + 1)
-                + "/"
+                + " out of "
                 + QuizManager.getQuizNodes().size()
         );
 

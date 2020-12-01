@@ -14,7 +14,9 @@ import quiz.questions.nodes.QuizNode;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Base64;
 
 public class PrintableResultsController implements Initializable {
 
@@ -40,33 +42,45 @@ public class PrintableResultsController implements Initializable {
         testName.setText(testName.getText() + QuizManager.getPreferences().get("Quiz Name"));
 
         float correctAnswers = 0;
+        ArrayList<Integer> ids = new ArrayList<>();
         for (QuizNode quizNode : QuizManager.getQuizNodes()) {
+
+            ids.add(quizNode.getQuestion().getID());
+
             if (quizNode.isCorrect()) {
                 correctAnswers++;
             }
         }
 
+        //Create a bitmap data structure
+        long bMap = 0;
+        for (Integer id : ids) {
+            bMap |= (1L << (id - 1));
+        }
+
+        //add how many correct out of possible, percentage, and retake code from bitmap to base64
+        System.out.println(Base64.getEncoder().withoutPadding().encodeToString(String.valueOf(bMap).getBytes()));
         resultsArea.setText(
                 (int) correctAnswers + " out of " + QuizManager.getQuizNodes().size() + "\n"
-                        + correctAnswers / QuizManager.getQuizNodes().size() + "%"
+                        + correctAnswers / QuizManager.getQuizNodes().size() + "%" + "\n"
+                        + Base64.getEncoder().withoutPadding().encodeToString(String.valueOf(bMap).getBytes())
         );
 
     }
+
 
     public void onPrintButton(ActionEvent actionEvent) {
     }
 
     public void onSeeQuestions() {
         //Grab results fxml
-        Parent results = null;
+        Parent results;
         try {
             results = FXMLLoader.load(getClass().getResource("/questionresults.fxml"));
+            Scene scene = new Scene(results);
+            GuiHelper.getOpenedWindows().get("Results").setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        assert results != null;
-        Scene scene = new Scene(results);
-        GuiHelper.getOpenedWindows().get("Results").setScene(scene);
     }
 }

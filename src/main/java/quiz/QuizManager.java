@@ -76,6 +76,19 @@ public class QuizManager {
         }
     }
 
+    public static void loadQuestions(List<Integer> ids) {
+        for (int id : ids) {
+            Question question = null;
+            try {
+                question = QuestionFactory.questionFromJSON(Requests.getQuestion(id));
+                question.shuffleOptions();
+                quizNodes.add(new QuizNode(question));
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     /**
      * Grab all answers to questions from responses with Requests.getQuestionAnswer
