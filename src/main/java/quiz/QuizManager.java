@@ -1,6 +1,7 @@
 package quiz;
 
 import etc.Constants;
+import gui.addons.ErrorBox;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 import quiz.questions.Question;
@@ -31,7 +32,7 @@ public class QuizManager {
     /**
      * Load questions into QuizManager.questions
      */
-    public static void loadQuestions(int amount, @Nullable String subject, @Nullable String type) throws IOException, JSONException {
+    public static void loadQuestions(int amount, @Nullable String subject, @Nullable String type) {
 
         //Create a pool of question id's in the specific size of how many questions available
         List<Integer> idPool = IntStream
@@ -51,27 +52,34 @@ public class QuizManager {
             //Remove the element and grab its value
             id = idPool.remove(0);
 
-            if (subject == null && type == null) {//If subject and type are null, request based on all items in db.
+            try {
+                if (subject == null && type == null) {//If subject and type are null, request based on all items in db.
 
-                requestData = Requests.getQuestion(id);
+                    requestData = Requests.getQuestion(id);
 
-            } else if (subject != null && type != null) {//If both subject and type, request for both
+                } else if (subject != null && type != null) {//If both subject and type, request for both
 
-                requestData = Requests.getQuestionBySubjectAndType(subject, type, id);
+                    requestData = Requests.getQuestionBySubjectAndType(subject, type, id);
 
-            } else if (subject == null) {//If only type, request for type
+                } else if (subject == null) {//If only type, request for type
 
-                requestData = Requests.getQuestionByType(type, id);
+                    requestData = Requests.getQuestionByType(type, id);
 
-            } else {//If only subject, request for subject
+                } else {//If only subject, request for subject
 
-                requestData = Requests.getQuestionBySubject(subject, id);
+                    requestData = Requests.getQuestionBySubject(subject, id);
 
+                }
+
+                Question question = QuestionFactory.questionFromJSON(requestData);
+                question.shuffleOptions();
+                quizNodes.add(new QuizNode(question));
+
+            } catch (IOException | JSONException e) {
+                ErrorBox.display("A question failed to load. ID: " + id, false);
+                quizNodes.clear();
+                e.printStackTrace();
             }
-
-            Question question = QuestionFactory.questionFromJSON(requestData);
-            question.shuffleOptions();
-            quizNodes.add(new QuizNode(question));
 
         }
     }
@@ -80,10 +88,14 @@ public class QuizManager {
         for (int id : ids) {
             Question question = null;
             try {
+
                 question = QuestionFactory.questionFromJSON(Requests.getQuestion(id));
                 question.shuffleOptions();
                 quizNodes.add(new QuizNode(question));
-            } catch (JSONException | IOException e) {
+
+            } catch (IOException | JSONException e) {
+                ErrorBox.display("A question failed to load. ID: " + id, false);
+                quizNodes.clear();
                 e.printStackTrace();
             }
         }
@@ -93,37 +105,44 @@ public class QuizManager {
     /**
      * Grab all answers to questions from responses with Requests.getQuestionAnswer
      */
-    public static void checkAnswers() throws IOException, JSONException {
+    public static void checkAnswers() {
 
-        //Iterate through quiz.questions along with hashmap, so it doesn't make unneeded requests
-        for (QuizNode quizNode : quizNodes) {
+        try {
 
-            List<String> response = quizNode.getResponse();
+            //Iterate through quiz.questions along with hashmap, so it doesn't make unneeded requests
+            for (QuizNode quizNode : quizNodes) {
 
-            List<String> answer = QuestionFactory.answerFromJSON(Requests.getQuestionAnswer(quizNode.getQuestion()));
+                List<String> response = quizNode.getResponse();
 
-            //set question answer for use in Results
-            quizNode.getQuestion().setAnswer(answer);
+                List<String> answer = QuestionFactory.answerFromJSON(Requests.getQuestionAnswer(quizNode.getQuestion()));
 
-            //user input type might be capitalized or spaced wrong. handle differently
-            if (quizNode.getQuestion().getType().equals("input")) {
+                //set question answer for use in Results
+                quizNode.getQuestion().setAnswer(answer);
 
-                //Set to all lowercase and no spaces for minimal input based error
-                response = response.stream()
-                        .map(String::toLowerCase)
-                        .map(str -> str.replaceAll("\\s", ""))
-                        .collect(Collectors.toList());
+                //user input type might be capitalized or spaced wrong. handle differently
+                if (quizNode.getQuestion().getType().equals("input")) {
 
-                answer = answer.stream()
-                        .map(String::toLowerCase)
-                        .map(str -> str.replaceAll("\\s", ""))
-                        .collect(Collectors.toList());
+                    //Set to all lowercase and no spaces for minimal input based error
+                    response = response.stream()
+                            .map(String::toLowerCase)
+                            .map(str -> str.replaceAll("\\s", ""))
+                            .collect(Collectors.toList());
+
+                    answer = answer.stream()
+                            .map(String::toLowerCase)
+                            .map(str -> str.replaceAll("\\s", ""))
+                            .collect(Collectors.toList());
+                }
+
+                //Answer may be larger than one, so .containsAll is used
+                //Check if answer is correct.
+                quizNode.setCorrect(answer.containsAll(response));
+
             }
 
-            //Answer may be larger than one, so .containsAll is used
-            //Check if answer is correct.
-            quizNode.setCorrect(answer.containsAll(response));
-
+        } catch (IOException | JSONException e) {
+            ErrorBox.display("A question failed to be graded.", true);
+            e.printStackTrace();
         }
 
     }

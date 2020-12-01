@@ -2,6 +2,7 @@ package gui.controllers;
 
 import etc.Constants;
 import gui.GuiHelper;
+import gui.addons.ErrorBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -106,16 +107,23 @@ public class CustomQuizController implements Initializable {
 
     }
 
-    private void displayTest() throws IOException {
+    private void displayTest() {
 
-        Stage stage = new Stage();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
+        try {
 
-        stage.setAlwaysOnTop(true);
-        stage.initStyle(StageStyle.UNDECORATED);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
 
-        GuiHelper.addWindow("Quiz", stage);
-        stage.show();
+            stage.setAlwaysOnTop(true);
+            stage.initStyle(StageStyle.UNDECORATED);
+
+            GuiHelper.addWindow("Quiz", stage);
+            stage.show();
+
+        } catch (IOException | NullPointerException e) {
+            ErrorBox.display("A page failed to load.", false);
+            e.printStackTrace();
+        }
     }
 
 }

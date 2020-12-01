@@ -1,6 +1,7 @@
 package gui.controllers;
 
 import gui.GuiHelper;
+import gui.addons.ErrorBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -80,17 +81,19 @@ public class QuestionResultsController implements Initializable {
     }
 
     public void onBackButton() {
+
         //Grab results fxml
-        Parent results = null;
         try {
-            results = FXMLLoader.load(getClass().getResource("/printableresults.fxml"));
-        } catch (IOException e) {
+
+            Parent results = FXMLLoader.load(getClass().getResource("/printableresults.fxml"));
+            Scene scene = new Scene(results);
+            GuiHelper.getOpenedWindows().get("Results").setScene(scene);
+
+        } catch (IOException | NullPointerException e) {
+            ErrorBox.display("A page failed to load.", false);
             e.printStackTrace();
         }
 
-        assert results != null;
-        Scene scene = new Scene(results);
-        GuiHelper.getOpenedWindows().get("Results").setScene(scene);
     }
 }
 

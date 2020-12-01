@@ -1,6 +1,7 @@
 package gui.controllers;
 
 import gui.GuiHelper;
+import gui.addons.ErrorBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +36,7 @@ public class PrintableResultsController implements Initializable {
 
         } catch (IOException | JSONException e) {
 
+            ErrorBox.display("The questions failed to be graded.", true);
             e.printStackTrace();
 
         }
@@ -74,12 +76,13 @@ public class PrintableResultsController implements Initializable {
 
     public void onSeeQuestions() {
         //Grab results fxml
-        Parent results;
+
         try {
-            results = FXMLLoader.load(getClass().getResource("/questionresults.fxml"));
+            Parent results = FXMLLoader.load(getClass().getResource("/questionresults.fxml"));
             Scene scene = new Scene(results);
             GuiHelper.getOpenedWindows().get("Results").setScene(scene);
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
+            ErrorBox.display("A page failed to load.", false);
             e.printStackTrace();
         }
     }

@@ -16,17 +16,13 @@ public class QuestionFactory {
     //Factory method
     public static Question questionFromJSON(JSONObject json) throws JSONException {
 
-        //TODO: make a validation method
-
         String type = json.get("type_name").toString();
 
         String subject = json.get("subject_name").toString();
 
         String question = json.get("question").toString();
 
-        int id = Integer.parseInt(
-                json.get("question_num").toString()
-        );
+        int id = Integer.parseInt(json.get("question_num").toString());
 
         String directions;
 
@@ -44,7 +40,11 @@ public class QuestionFactory {
 
         }
 
-        if (!json.has("directions")) {
+        if (json.has("directions")) {
+
+            directions = json.get("directions").toString();
+
+        } else {
 
             directions = switch (type) {
 
@@ -57,10 +57,6 @@ public class QuestionFactory {
                 default -> "Correctly type the solution.";
 
             };
-        } else {
-
-            directions = json.get("directions").toString();
-
         }
 
         return new Question(type, subject, options, question, directions, id);
@@ -74,4 +70,5 @@ public class QuestionFactory {
                         .split(", ")));
 
     }
+
 }
