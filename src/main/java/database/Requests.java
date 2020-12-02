@@ -30,7 +30,7 @@ public class Requests {
      */
     public static JSONObject getQuestionByType(String type, int id) throws IOException, JSONException {
 
-        return (JSONObject) JsonReader.readJsonFromUrl(Constants.DEFAULT_PATH + type).get("obj" + id);
+        return (JSONObject) JsonReader.readJsonFromUrl(Constants.DEFAULT_PATH + "type/" + type).get("obj" + id);
 
     }
 
@@ -41,7 +41,7 @@ public class Requests {
      */
     public static JSONObject getQuestionBySubject(String subject, int id) throws IOException, JSONException {
 
-        return (JSONObject) JsonReader.readJsonFromUrl(Constants.DEFAULT_PATH + subject).get("obj" + id);
+        return (JSONObject) JsonReader.readJsonFromUrl(Constants.DEFAULT_PATH + "subject/" + subject).get("obj" + id);
 
     }
 

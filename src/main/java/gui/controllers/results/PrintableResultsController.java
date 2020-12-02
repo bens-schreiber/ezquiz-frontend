@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import quiz.QuizManager;
 import quiz.questions.nodes.QuizNode;
@@ -29,11 +30,16 @@ public class PrintableResultsController implements Initializable {
     @FXML
     Label resultsArea;
 
+    @FXML
+    Button seeQuestionsButton;
+
     /**
      * Initial startup method.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        seeQuestionsButton.setDisable(!Boolean.parseBoolean(QuizManager.getPreferences().get("Show Correct Answers")));
 
         QuizManager.checkAnswers();
 

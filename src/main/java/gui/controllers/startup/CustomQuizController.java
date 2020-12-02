@@ -45,7 +45,7 @@ public class CustomQuizController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         ObservableList<String> subjectListItems = FXCollections
-                .observableArrayList("Math", "Science", "English", "History", "VideoGames");
+                .observableArrayList("math", "science", "english", "history", "videogames");
 
         ObservableList<String> typeListItems = FXCollections
                 .observableArrayList("input", "t_f", "checkbox", "multiple");
