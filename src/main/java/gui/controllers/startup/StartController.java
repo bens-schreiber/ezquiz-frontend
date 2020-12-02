@@ -24,24 +24,32 @@ import java.util.*;
 /**
  * Provides methods for ActionEvents on Startup Screen.
  */
-
 public class StartController {
 
 
     public void onDefaultButton() {
 
         try {
+
+            //Load in questions with no null limiters
             QuizManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 
+            //Attempt to load scene and set it to stage
             Stage stage = new Stage();
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
-
             stage.setAlwaysOnTop(true);
             stage.initStyle(StageStyle.UNDECORATED);
 
-            StageHelper.addWindow("Quiz", stage);
-            StageHelper.closeWindow("Start");
+            //Make new Quiz stage and add it to  Stage Helper
+            StageHelper.addStage("Quiz", stage);
+
+            //Close stage helper resources
+            StageHelper.clearScenes();
+            StageHelper.closeStage("Start");
+
+            //Display Quiz
             stage.show();
+
         } catch (IOException | NullPointerException e) {
             ErrorBox.display("A page failed to load.", false);
             e.printStackTrace();
@@ -52,15 +60,30 @@ public class StartController {
 
     public void onCustomButton() {
 
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/customquiz.fxml"));
-            Scene scene = new Scene(root);
-            StageHelper.getOpenedWindows().get("Start").setScene(scene);
-        } catch (IOException | NullPointerException e) {
-            ErrorBox.display("A page failed to load.", false);
-            e.printStackTrace();
-        }
+        //Try to not reload scene if scene its already been loaded.
+        if (StageHelper.getScenes().containsKey("custom")) {
 
+            StageHelper.getStages().get("Start").setScene(StageHelper.getScenes().get("custom"));
+
+        } else {
+            try {
+
+                //Attempt to load in customquiz options scene
+                Parent root = FXMLLoader.load(getClass().getResource("/customquiz.fxml"));
+                Scene scene = new Scene(root);
+
+                //Add scene to StageHelper so it can be used again
+                StageHelper.addScene("custom", scene);
+
+                //Display this scene
+                StageHelper.getStages().get("Start").setScene(scene);
+
+            } catch (IOException | NullPointerException e) {
+                ErrorBox.display("A page failed to load.", false);
+                e.printStackTrace();
+            }
+
+        }
     }
 
     /**
@@ -69,79 +92,97 @@ public class StartController {
 
     public void onEnterCode() {
 
-        //Set stage style
-        Stage window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Custom Quiz");
-        window.setMinWidth(250);
+        //Try to not reload scene if scene already exists.
+        if (StageHelper.getStages().containsKey("code prompt")) {
+            StageHelper.getStages().get("code prompt").showAndWait();
+        } else {
 
-        //Add directions and borderpane box to put nodes in
-        BorderPane layout = new BorderPane();
-        Label label = new Label("Enter the quiz code");
-        layout.setTop(label);
+            //Establish window
+            Stage window = new Stage();
 
-        //Text field to enter quiz code
-        TextField textField = new TextField();
+            //Set stage style
+            window.initModality(Modality.APPLICATION_MODAL);
+            window.setTitle("Custom Quiz");
+            window.setMinWidth(250);
 
-        //Start button to begin test
-        Button startButton = new Button("Start");
+            //Add directions and borderpane box to put nodes in
+            BorderPane layout = new BorderPane();
+            Label label = new Label("Enter the quiz code");
+            layout.setTop(label);
 
-        //On start button clicked
-        startButton.setOnAction(event -> {
+            //Text field to enter quiz code
+            TextField textField = new TextField();
 
-            //Get ID's from Base64 bitmap
-            ArrayList<Integer> ids = new ArrayList<>();
-            long bMap = Long.parseLong(new String(Base64.getDecoder().decode(textField.getText())));
+            //Start button to begin test
+            Button startButton = new Button("Start");
 
-            for (int i = 63; i >= 0; --i) {
-                if ((bMap < 0 && i == 63) || (bMap & 1L << i) > 0) {
-                    ids.add(i + 1);
+            //On start button clicked
+            startButton.setOnAction(event -> {
+
+                //Get ID's from Base64 bitmap
+                ArrayList<Integer> ids = new ArrayList<>();
+                long bMap = Long.parseLong(new String(Base64.getDecoder().decode(textField.getText())));
+
+                for (int i = 63; i >= 0; --i) {
+                    if ((bMap < 0 && i == 63) || (bMap & 1L << i) > 0) {
+                        ids.add(i + 1);
+                    }
                 }
-            }
 
-            //Load ID's into the QuizManager
-            QuizManager.loadQuestions(ids);
+                //Load ID's into the QuizManager
+                QuizManager.loadQuestions(ids);
 
-            //Start test
-            try {
-                Stage stage = new Stage();
-                stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
-                stage.setAlwaysOnTop(true);
-                stage.initStyle(StageStyle.UNDECORATED);
+                //Start test
+                try {
 
-                StageHelper.addWindow("Quiz", stage);
-                StageHelper.closeWindow("Start");
-                stage.show();
-                window.close();
-            } catch (IOException | NullPointerException e) {
-                ErrorBox.display("A page failed to load.", false);
-                e.printStackTrace();
-            }
-        });
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
+                    stage.setAlwaysOnTop(true);
+                    stage.initStyle(StageStyle.UNDECORATED);
 
-        //Add exit button for leaving code page
-        Button exitButton = new Button("Exit");
-        exitButton.setOnAction(event -> window.close());
+                    //Close resources that arent needed anymore
+                    StageHelper.closeAllStages();
+                    StageHelper.clearScenes();
 
-        //Add buttons to horizontal node
-        HBox hbox = new HBox(5);
-        hbox.getChildren().add(startButton);
-        hbox.getChildren().add(exitButton);
+                    //Add new window
+                    StageHelper.addStage("Quiz", stage);
+                    stage.show();
+                    window.close();
 
-        //add everything to vertical node
-        VBox vBox = new VBox(15);
-        vBox.getChildren().add(textField);
-        vBox.getChildren().add(hbox);
+                } catch (IOException | NullPointerException e) {
+                    ErrorBox.display("A page failed to load.", false);
+                    e.printStackTrace();
+                }
+            });
 
-        //Make vertical node centered
-        layout.setCenter(vBox);
 
-        //Display stage
-        Scene scene = new Scene(layout);
-        window.initStyle(StageStyle.UNDECORATED);
-        window.setScene(scene);
-        window.showAndWait();
+            //Add exit button for leaving code page
+            Button exitButton = new Button("Exit");
+            exitButton.setOnAction(event -> window.close());
 
+            //Add buttons to horizontal node
+            HBox hbox = new HBox(5);
+            hbox.getChildren().add(startButton);
+            hbox.getChildren().add(exitButton);
+
+            //add everything to vertical node
+            VBox vBox = new VBox(15);
+            vBox.getChildren().add(textField);
+            vBox.getChildren().add(hbox);
+
+            //Make vertical node centered
+            layout.setCenter(vBox);
+
+            //Display stage
+            Scene scene = new Scene(layout);
+            window.initStyle(StageStyle.UNDECORATED);
+            window.setScene(scene);
+            window.showAndWait();
+
+            //Put code prompt in stage helper so it does not need to be reloaded
+            StageHelper.addStage("code prompt", window);
+
+        }
     }
 
 

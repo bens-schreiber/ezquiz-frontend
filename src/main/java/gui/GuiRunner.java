@@ -30,7 +30,7 @@ public class GuiRunner extends Application {
 
             primaryStage.show();
 
-            StageHelper.addWindow("Start", primaryStage);
+            StageHelper.addStage("Start", primaryStage);
 
         } catch (IOException | NullPointerException e) {
             ErrorBox.display("A page failed to load.", true);

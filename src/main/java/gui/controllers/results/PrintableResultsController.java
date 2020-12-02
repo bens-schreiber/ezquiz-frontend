@@ -2,7 +2,6 @@ package gui.controllers.results;
 
 import gui.StageHelper;
 import gui.popups.ErrorBox;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -68,19 +67,28 @@ public class PrintableResultsController implements Initializable {
     }
 
 
-    public void onPrintButton(ActionEvent actionEvent) {
+    public void onPrintButton() {
     }
 
     public void onSeeQuestions() {
-        //Grab results fxml
 
-        try {
-            Parent results = FXMLLoader.load(getClass().getResource("/questionresults.fxml"));
-            Scene scene = new Scene(results);
-            StageHelper.getOpenedWindows().get("Quiz").setScene(scene);
-        } catch (IOException | NullPointerException e) {
-            ErrorBox.display("A page failed to load.", false);
-            e.printStackTrace();
+        //Try not to reload page if already created
+        if (StageHelper.getScenes().containsKey("questionresults")) {
+
+            StageHelper.getStages().get("Quiz").setScene(StageHelper.getScenes().get("questionresults"));
+
+        } else {
+            try {
+
+                Parent results = FXMLLoader.load(getClass().getResource("/questionresults.fxml"));
+                Scene scene = new Scene(results);
+                StageHelper.addScene("questionresults", scene);
+                StageHelper.getStages().get("Quiz").setScene(scene);
+
+            } catch (IOException | NullPointerException e) {
+                ErrorBox.display("A page failed to load.", false);
+                e.printStackTrace();
+            }
         }
     }
 }

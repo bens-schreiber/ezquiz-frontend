@@ -277,10 +277,10 @@ public class QuizController implements Initializable {
     public void onCalculatorButton() {
 
         //Make sure one calculator only is open.
-        if (StageHelper.getOpenedWindows().containsKey("calculator")) {
+        if (StageHelper.getStages().containsKey("calculator")) {
 
             //If already open, close all
-            StageHelper.closeWindow("calculator");
+            StageHelper.closeStage("calculator");
 
         } else {
 
@@ -295,10 +295,10 @@ public class QuizController implements Initializable {
                 stage.initStyle(StageStyle.UTILITY);//Get rid of minimize
                 stage.resizableProperty().setValue(false);
 
-                StageHelper.addWindow("calculator", stage); //Add this to current stages
+                StageHelper.addStage("calculator", stage); //Add this to current stages
 
                 stage.setOnCloseRequest(e -> { //Make sure if X is pressed it removes from stages
-                    StageHelper.closeWindow("calculator");
+                    StageHelper.closeStage("calculator");
                 });
 
                 stage.show();
@@ -314,10 +314,10 @@ public class QuizController implements Initializable {
     //When the notepad button is clicked
     public void onNotepadButton() {
 
-        if (StageHelper.getOpenedWindows().containsKey("notepad")) {
+        if (StageHelper.getStages().containsKey("notepad")) {
 
             //If already open, close all.
-            StageHelper.closeWindow("notepad");
+            StageHelper.closeStage("notepad");
 
         } else {//Make sure only one notepad is open.
 
@@ -334,10 +334,10 @@ public class QuizController implements Initializable {
                 stage.initStyle(StageStyle.UTILITY);//Get rid of minimize
                 stage.resizableProperty().setValue(false); //Make non resizeable
 
-                StageHelper.addWindow("notepad", stage); //Add this to current stages
+                StageHelper.addStage("notepad", stage); //Add this to current stages
 
                 stage.setOnCloseRequest(e -> { //Make sure if X is pressed it removes from stages
-                    StageHelper.closeWindow("notepad");
+                    StageHelper.closeStage("notepad");
                 });
 
                 stage.show();
@@ -356,17 +356,17 @@ public class QuizController implements Initializable {
     public void onDrawingPadButton() {
 
         //Make sure only one drawingpad is open
-        if (StageHelper.getOpenedWindows().containsKey("drawingpad")) {
+        if (StageHelper.getStages().containsKey("drawingpad")) {
 
             //If already open, close all.
             paintCanvas.setDisable(true);
 
             //Change cursor back to default
-            StageHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.DEFAULT);
+            StageHelper.getStages().get("Quiz").getScene().setCursor(Cursor.DEFAULT);
 
             gc.clearRect(0, 0, 1920, 1080);
 
-            StageHelper.closeWindow("drawingpad");
+            StageHelper.closeStage("drawingpad");
 
         } else {
 
@@ -376,7 +376,7 @@ public class QuizController implements Initializable {
                 Scene scene = new Scene(root);
 
                 //Change cursor to crosshair to show drawing mode is on
-                StageHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.CROSSHAIR);
+                StageHelper.getStages().get("Quiz").getScene().setCursor(Cursor.CROSSHAIR);
 
                 Stage stage = new Stage();
                 stage.setScene(scene);
@@ -385,7 +385,7 @@ public class QuizController implements Initializable {
             stage.resizableProperty().setValue(false);
 
             //Add this to current stages
-                StageHelper.addWindow("drawingpad", stage);
+                StageHelper.addStage("drawingpad", stage);
 
             //Make sure if X is pressed it removes from stages, clears drawings
             stage.setOnCloseRequest(e -> {
@@ -396,9 +396,9 @@ public class QuizController implements Initializable {
                 gc.clearRect(0, 0, 1920, 1080); //Clear canvas
 
                 //Change cursor back to default
-                StageHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.DEFAULT);
+                StageHelper.getStages().get("Quiz").getScene().setCursor(Cursor.DEFAULT);
 
-                StageHelper.closeWindow("drawingpad");
+                StageHelper.closeStage("drawingpad");
 
             });
 
@@ -424,7 +424,7 @@ public class QuizController implements Initializable {
 
         //Grab results fxml
         try {
-            StageHelper.getOpenedWindows().get("Quiz").setScene(
+            StageHelper.getStages().get("Quiz").setScene(
                     new Scene(FXMLLoader.load(getClass().getResource("/printableresults.fxml")
                     )));
         } catch (IOException | NullPointerException e) {

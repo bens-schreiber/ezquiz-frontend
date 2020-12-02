@@ -16,7 +16,6 @@ import javafx.scene.control.TextField;
 
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.json.JSONException;
 import quiz.QuizManager;
 
 import java.io.IOException;
@@ -58,11 +57,11 @@ public class CustomQuizController implements Initializable {
 
     public void onBackButton() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/start.fxml")); //Display the start page.
-        StageHelper.getOpenedWindows().get("Start").setScene(new Scene(root));
+        StageHelper.getStages().get("Start").setScene(new Scene(root));
     }
 
     //Setup all preferences and begin custom test
-    public void onStartButton() throws IOException, JSONException {
+    public void onStartButton() {
 
         int questionAmount;
 
@@ -81,13 +80,7 @@ public class CustomQuizController implements Initializable {
             QuizManager.getPreferences().put("seconds", "1800");
 
         } else {
-
-            QuizManager.getPreferences().put("seconds", String.valueOf(
-                    Integer.parseInt
-                            (testTimeField.getText())
-                            * 60)
-            );
-
+            QuizManager.getPreferences().put("seconds", String.valueOf(Integer.parseInt(testTimeField.getText()) * 60));
         }
 
         if (testNameField.getText().isEmpty()) {
@@ -109,7 +102,7 @@ public class CustomQuizController implements Initializable {
 
         QuizManager.loadQuestions(questionAmount, subjectList.getValue(), typeList.getValue()); //Load question
 
-        StageHelper.closeWindow("Start"); //Close this page
+        StageHelper.closeStage("Start"); //Close this page
 
         displayTest(); //Initialize the test.
 
@@ -125,7 +118,10 @@ public class CustomQuizController implements Initializable {
             stage.setAlwaysOnTop(true);
             stage.initStyle(StageStyle.UNDECORATED);
 
-            StageHelper.addWindow("Quiz", stage);
+            StageHelper.closeAllStages();
+            StageHelper.clearScenes();
+
+            StageHelper.addStage("Quiz", stage);
             stage.show();
 
         } catch (IOException | NullPointerException e) {

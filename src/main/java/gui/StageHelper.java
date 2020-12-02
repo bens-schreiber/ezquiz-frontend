@@ -1,9 +1,9 @@
 package gui;
 
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Stores submitted windows in HashMap so they can be accessed from different Controllers
@@ -11,31 +11,49 @@ import java.util.Map;
 
 public class StageHelper {
 
-    private static final HashMap<String, Stage> openedWindows = new HashMap<>();
+    private static final HashMap<String, Stage> stages = new HashMap<>();
 
-    public static void addWindow(String name, Stage stage) {
+    public static void addStage(String name, Stage stage) {
 
-        openedWindows.put(name, stage);
+        stages.put(name, stage);
 
     }
 
-    public static HashMap<String, Stage> getOpenedWindows() {
-        return openedWindows;
+    public static HashMap<String, Stage> getStages() {
+        return stages;
     }
 
-    public static void closeWindow(String name) {
+    public static void closeStage(String name) {
 
         //Close the stage
-        openedWindows.get(name).close();
+        stages.get(name).close();
 
         //Remove from openedWindows
-        openedWindows.remove(name);
+        stages.remove(name);
     }
 
-    public static void closeAll() {
-        for (Map.Entry<String, Stage> entry : openedWindows.entrySet()) {
-            entry.getValue().close();
-        }
+    public static void closeAllStages() {
+        stages.forEach((s, stage) -> stage.close());
+    }
+
+    /**
+     * Reusable scenes to not reload information
+     */
+
+    private static final HashMap<String, Scene> reusableScenes = new HashMap<>();
+
+    public static void addScene(String name, Scene scene) {
+
+        reusableScenes.put(name, scene);
+
+    }
+
+    public static void clearScenes() {
+        reusableScenes.clear();
+    }
+
+    public static HashMap<String, Scene> getScenes() {
+        return reusableScenes;
     }
 
 }

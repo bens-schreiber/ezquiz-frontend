@@ -80,18 +80,22 @@ public class QuestionResultsController implements Initializable {
 
     public void onBackButton() {
 
-        //Grab results fxml
-        try {
+        if (StageHelper.getScenes().containsKey("printableresults")) {
+            StageHelper.getStages().get("Quiz").setScene(StageHelper.getScenes().get("printableresults"));
+        } else {
+            try {
 
-            Parent results = FXMLLoader.load(getClass().getResource("/printableresults.fxml"));
-            Scene scene = new Scene(results);
-            StageHelper.getOpenedWindows().get("Results").setScene(scene);
+                Parent results = FXMLLoader.load(getClass().getResource("/printableresults.fxml"));
+                Scene scene = new Scene(results);
+                StageHelper.addScene("printableresults", scene);
+                StageHelper.getStages().get("Quiz").setScene(scene);
 
-        } catch (IOException | NullPointerException e) {
-            ErrorBox.display("A page failed to load.", false);
-            e.printStackTrace();
+            } catch (IOException | NullPointerException e) {
+                ErrorBox.display("A page failed to load.", false);
+                e.printStackTrace();
+            }
+
         }
-
     }
 }
 
