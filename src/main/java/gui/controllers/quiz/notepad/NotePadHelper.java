@@ -1,9 +1,8 @@
-package gui.addons.notepad;
+package gui.controllers.quiz.notepad;
 
 /**
  * Save the text from notepad
  */
-
 class NotePadHelper {
 
     private static String savedText;

@@ -1,7 +1,7 @@
 package quiz;
 
 import etc.Constants;
-import gui.addons.ErrorBox;
+import gui.popups.ErrorBox;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 import quiz.questions.Question;
@@ -16,6 +16,9 @@ import database.Requests;
 import org.json.JSONException;
 import quiz.questions.nodes.QuizNode;
 
+/**
+ * Stores local quiz information, contains grading methods
+ */
 
 public class QuizManager {
 
@@ -30,7 +33,10 @@ public class QuizManager {
 
 
     /**
-     * Load questions into QuizManager.questions
+     * Load questions into QuizManager.questions.
+     *
+     * @param subject if not null limits questions to that specific subject.
+     * @param type    if not null limits questions to that specific type.
      */
     public static void loadQuestions(int amount, @Nullable String subject, @Nullable String type) {
 
@@ -40,13 +46,12 @@ public class QuizManager {
                 .boxed()
                 .collect(Collectors.toList());
 
-        //Randomize all of the id's positions.
+        //Randomize the pool
         Collections.shuffle(idPool);
 
         //Initialize the id variable and request variable
         int id;
         JSONObject requestData;
-
         for (int i = 0; i < amount; i++) {
 
             //Remove the element and grab its value
@@ -84,12 +89,14 @@ public class QuizManager {
         }
     }
 
+    /**
+     * Overloaded loadQuestions method
+     * Loads questions from an integer list of ids
+     */
     public static void loadQuestions(List<Integer> ids) {
         for (int id : ids) {
-            Question question = null;
             try {
-
-                question = QuestionFactory.questionFromJSON(Requests.getQuestion(id));
+                Question question = QuestionFactory.questionFromJSON(Requests.getQuestion(id));
                 question.shuffleOptions();
                 quizNodes.add(new QuizNode(question));
 
@@ -103,14 +110,14 @@ public class QuizManager {
 
 
     /**
-     * Grab all answers to questions from responses with Requests.getQuestionAnswer
+     * Grabs all answers to questions from responses with Requests.getQuestionAnswer
      */
     public static void checkAnswers() {
 
-        try {
 
-            //Iterate through quiz.questions along with hashmap, so it doesn't make unneeded requests
-            for (QuizNode quizNode : quizNodes) {
+        //Iterate through quiz.questions along with hashmap, so it doesn't make unneeded requests
+        for (QuizNode quizNode : quizNodes) {
+            try {
 
                 List<String> response = quizNode.getResponse();
 
@@ -138,12 +145,12 @@ public class QuizManager {
                 //Check if answer is correct.
                 quizNode.setCorrect(answer.containsAll(response));
 
+            } catch (IOException | JSONException e) {
+                ErrorBox.display("A question failed to be graded. ID: " + quizNode.getQuestion().getID(), true);
+                e.printStackTrace();
             }
-
-        } catch (IOException | JSONException e) {
-            ErrorBox.display("A question failed to be graded.", true);
-            e.printStackTrace();
         }
+
 
     }
 
@@ -176,6 +183,7 @@ public class QuizManager {
     /**
      * Getters
      */
+
     public static int getCurrNum() {
 
         return currQuestion;

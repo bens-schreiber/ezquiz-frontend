@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Put opened windows that need be closed by a different controller
+ * Stores submitted windows in HashMap so they can be accessed from different Controllers
  */
 
-public class GuiHelper {
+public class StageHelper {
 
     private static final HashMap<String, Stage> openedWindows = new HashMap<>();
 
@@ -20,9 +20,7 @@ public class GuiHelper {
     }
 
     public static HashMap<String, Stage> getOpenedWindows() {
-
         return openedWindows;
-
     }
 
     public static void closeWindow(String name) {

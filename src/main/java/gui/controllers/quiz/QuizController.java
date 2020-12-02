@@ -1,9 +1,8 @@
-package gui.controllers;
+package gui.controllers.quiz;
 
 import etc.Constants;
-import gui.GuiHelper;
-import gui.addons.ErrorBox;
-import gui.addons.FlagButton;
+import gui.StageHelper;
+import gui.popups.ErrorBox;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -26,7 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import gui.addons.ConfirmBox;
+import gui.popups.ConfirmBox;
 import quiz.QuizManager;
 
 import java.io.IOException;
@@ -168,8 +167,9 @@ public class QuizController implements Initializable {
 
 
     /**
-     * FXML onButton
+     * Methods for Button Actions
      */
+
     //When next button is clicked
     public void onNextButton() {
 
@@ -273,19 +273,14 @@ public class QuizController implements Initializable {
 
     }
 
-
-    /**
-     * addon onButton methods
-     */
-
     //When the calculator button is clicked
     public void onCalculatorButton() {
 
         //Make sure one calculator only is open.
-        if (GuiHelper.getOpenedWindows().containsKey("calculator")) {
+        if (StageHelper.getOpenedWindows().containsKey("calculator")) {
 
             //If already open, close all
-            GuiHelper.closeWindow("calculator");
+            StageHelper.closeWindow("calculator");
 
         } else {
 
@@ -300,10 +295,10 @@ public class QuizController implements Initializable {
                 stage.initStyle(StageStyle.UTILITY);//Get rid of minimize
                 stage.resizableProperty().setValue(false);
 
-                GuiHelper.addWindow("calculator", stage); //Add this to current stages
+                StageHelper.addWindow("calculator", stage); //Add this to current stages
 
                 stage.setOnCloseRequest(e -> { //Make sure if X is pressed it removes from stages
-                    GuiHelper.closeWindow("calculator");
+                    StageHelper.closeWindow("calculator");
                 });
 
                 stage.show();
@@ -319,10 +314,10 @@ public class QuizController implements Initializable {
     //When the notepad button is clicked
     public void onNotepadButton() {
 
-        if (GuiHelper.getOpenedWindows().containsKey("notepad")) {
+        if (StageHelper.getOpenedWindows().containsKey("notepad")) {
 
             //If already open, close all.
-            GuiHelper.closeWindow("notepad");
+            StageHelper.closeWindow("notepad");
 
         } else {//Make sure only one notepad is open.
 
@@ -339,10 +334,10 @@ public class QuizController implements Initializable {
                 stage.initStyle(StageStyle.UTILITY);//Get rid of minimize
                 stage.resizableProperty().setValue(false); //Make non resizeable
 
-                GuiHelper.addWindow("notepad", stage); //Add this to current stages
+                StageHelper.addWindow("notepad", stage); //Add this to current stages
 
                 stage.setOnCloseRequest(e -> { //Make sure if X is pressed it removes from stages
-                    GuiHelper.closeWindow("notepad");
+                    StageHelper.closeWindow("notepad");
                 });
 
                 stage.show();
@@ -361,17 +356,17 @@ public class QuizController implements Initializable {
     public void onDrawingPadButton() {
 
         //Make sure only one drawingpad is open
-        if (GuiHelper.getOpenedWindows().containsKey("drawingpad")) {
+        if (StageHelper.getOpenedWindows().containsKey("drawingpad")) {
 
             //If already open, close all.
             paintCanvas.setDisable(true);
 
             //Change cursor back to default
-            GuiHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.DEFAULT);
+            StageHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.DEFAULT);
 
             gc.clearRect(0, 0, 1920, 1080);
 
-            GuiHelper.closeWindow("drawingpad");
+            StageHelper.closeWindow("drawingpad");
 
         } else {
 
@@ -381,7 +376,7 @@ public class QuizController implements Initializable {
                 Scene scene = new Scene(root);
 
                 //Change cursor to crosshair to show drawing mode is on
-                GuiHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.CROSSHAIR);
+                StageHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.CROSSHAIR);
 
                 Stage stage = new Stage();
                 stage.setScene(scene);
@@ -390,7 +385,7 @@ public class QuizController implements Initializable {
             stage.resizableProperty().setValue(false);
 
             //Add this to current stages
-            GuiHelper.addWindow("drawingpad", stage);
+                StageHelper.addWindow("drawingpad", stage);
 
             //Make sure if X is pressed it removes from stages, clears drawings
             stage.setOnCloseRequest(e -> {
@@ -401,9 +396,9 @@ public class QuizController implements Initializable {
                 gc.clearRect(0, 0, 1920, 1080); //Clear canvas
 
                 //Change cursor back to default
-                GuiHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.DEFAULT);
+                StageHelper.getOpenedWindows().get("Quiz").getScene().setCursor(Cursor.DEFAULT);
 
-                GuiHelper.closeWindow("drawingpad");
+                StageHelper.closeWindow("drawingpad");
 
             });
 
@@ -422,20 +417,16 @@ public class QuizController implements Initializable {
 
 
     /**
-     * functions
+     * helper methods
      */
     //Ends the entire test and begins the results page
     private void endTest() {
 
         //Grab results fxml
-        Parent results;
         try {
-            results = FXMLLoader.load(getClass().getResource("/printableresults.fxml"));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(results));
-            GuiHelper.addWindow("Results", stage);
-            GuiHelper.closeWindow("Quiz");
-            stage.show();
+            StageHelper.getOpenedWindows().get("Quiz").setScene(
+                    new Scene(FXMLLoader.load(getClass().getResource("/printableresults.fxml")
+                    )));
         } catch (IOException | NullPointerException e) {
             ErrorBox.display("A page failed to load.", false);
             e.printStackTrace();

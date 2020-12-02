@@ -1,8 +1,7 @@
-package gui.controllers;
+package gui.controllers.results;
 
-import gui.GuiHelper;
-import gui.addons.ErrorBox;
-import javafx.event.ActionEvent;
+import gui.StageHelper;
+import gui.popups.ErrorBox;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import org.json.JSONException;
 import quiz.QuizManager;
 import quiz.questions.nodes.QuizNode;
 
@@ -20,7 +18,7 @@ import java.util.ResourceBundle;
 
 
 /**
- * Results page controller
+ * Provides methods for ActionEvents on Results page.
  */
 
 public class QuestionResultsController implements Initializable {
@@ -87,7 +85,7 @@ public class QuestionResultsController implements Initializable {
 
             Parent results = FXMLLoader.load(getClass().getResource("/printableresults.fxml"));
             Scene scene = new Scene(results);
-            GuiHelper.getOpenedWindows().get("Results").setScene(scene);
+            StageHelper.getOpenedWindows().get("Results").setScene(scene);
 
         } catch (IOException | NullPointerException e) {
             ErrorBox.display("A page failed to load.", false);

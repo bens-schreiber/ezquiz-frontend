@@ -1,7 +1,7 @@
-package gui.addons.drawingpad;
+package gui.controllers.quiz.drawingpad;
 
 import etc.Constants;
-import gui.controllers.QuizController;
+import gui.controllers.quiz.QuizController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -14,6 +14,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
+/**
+ * Provides methods for ActionEvents on DrawingPad stage.
+ */
 public class DrawingPadController implements Initializable {
 
     @FXML
@@ -25,10 +28,10 @@ public class DrawingPadController implements Initializable {
     @FXML
     private ColorPicker colorPicker;
 
-    /**
-     * Drawing pad options controller
-     */
 
+    /**
+     * Initial run method.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

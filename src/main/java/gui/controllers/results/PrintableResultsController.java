@@ -1,7 +1,7 @@
-package gui.controllers;
+package gui.controllers.results;
 
-import gui.GuiHelper;
-import gui.addons.ErrorBox;
+import gui.StageHelper;
+import gui.popups.ErrorBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import org.json.JSONException;
 import quiz.QuizManager;
 import quiz.questions.nodes.QuizNode;
 
@@ -19,6 +18,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Base64;
 
+/**
+ * Provides methods for ActionEvents on Printable Results Page.
+ */
+
 public class PrintableResultsController implements Initializable {
 
     @FXML
@@ -27,19 +30,13 @@ public class PrintableResultsController implements Initializable {
     @FXML
     Label resultsArea;
 
+    /**
+     * Initial startup method.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        try { //Attempt to check answers.
-
-            QuizManager.checkAnswers();
-
-        } catch (IOException | JSONException e) {
-
-            ErrorBox.display("The questions failed to be graded.", true);
-            e.printStackTrace();
-
-        }
+        QuizManager.checkAnswers();
 
         testName.setText(testName.getText() + QuizManager.getPreferences().get("Quiz Name"));
 
@@ -54,13 +51,13 @@ public class PrintableResultsController implements Initializable {
             }
         }
 
-        //Create a bitmap data structure
+        //Create a bitmap data structure from ids
         long bMap = 0;
         for (Integer id : ids) {
             bMap |= (1L << (id - 1));
         }
 
-        //add how many correct out of possible, percentage, and retake code from bitmap to base64
+        //add how many correct out of possible, percentage, put bitmap to Base64
         System.out.println(Base64.getEncoder().withoutPadding().encodeToString(String.valueOf(bMap).getBytes()));
         resultsArea.setText(
                 (int) correctAnswers + " out of " + QuizManager.getQuizNodes().size() + "\n"
@@ -80,7 +77,7 @@ public class PrintableResultsController implements Initializable {
         try {
             Parent results = FXMLLoader.load(getClass().getResource("/questionresults.fxml"));
             Scene scene = new Scene(results);
-            GuiHelper.getOpenedWindows().get("Results").setScene(scene);
+            StageHelper.getOpenedWindows().get("Quiz").setScene(scene);
         } catch (IOException | NullPointerException e) {
             ErrorBox.display("A page failed to load.", false);
             e.printStackTrace();

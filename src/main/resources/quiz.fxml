@@ -14,17 +14,17 @@
 <AnchorPane fx:id="mainAnchor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0"
             style="-fx-background-color: #BDBDBD;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.QuizController">
-   <children>
-      <AnchorPane fx:id="buttonPane" layoutY="354.0" prefHeight="45.0" prefWidth="600.0"
-                  style="-fx-background-color: #829AB1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0">
-         <children>
-            <Button fx:id="submitButton" layoutX="1836.0" layoutY="10.0" mnemonicParsing="false"
-                    onMouseClicked="#onSubmitButton" prefHeight="26.0" prefWidth="70.0"
-                    style="-fx-background-color: #486581;" text="Submit"/>
-            <Button layoutX="26.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onFlagQuestion"
-                    style="-fx-background-color: #fb8804;" text="Flag Question"/>
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.quiz.QuizController">
+    <children>
+        <AnchorPane fx:id="buttonPane" layoutY="354.0" prefHeight="45.0" prefWidth="600.0"
+                    style="-fx-background-color: #829AB1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0">
+            <children>
+                <Button fx:id="submitButton" layoutX="1836.0" layoutY="10.0" mnemonicParsing="false"
+                        onMouseClicked="#onSubmitButton" prefHeight="26.0" prefWidth="70.0"
+                        style="-fx-background-color: #486581;" text="Submit"/>
+                <Button layoutX="26.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onFlagQuestion"
+                        style="-fx-background-color: #fb8804;" text="Flag Question"/>
             <HBox layoutX="911.0" layoutY="10.0" prefHeight="26.0" prefWidth="98.0">
                <children>
                   <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#onBackButton"

@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" onKeyReleased="#onKeyReleased" prefHeight="314.0" prefWidth="227.0"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.addons.calculator.CalculatorController">
+            fx:controller="gui.controllers.quiz.calculator.CalculatorController">
     <fx:define>
         <Font fx:id="FONT" size="18"/>
     </fx:define>

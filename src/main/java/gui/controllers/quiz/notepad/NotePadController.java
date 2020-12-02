@@ -1,4 +1,4 @@
-package gui.addons.notepad;
+package gui.controllers.quiz.notepad;
 
 import etc.Constants;
 import javafx.fxml.FXML;
@@ -11,6 +11,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
+/**
+ * ActionEvent controller for the NotePad stage.
+ */
 public class NotePadController implements Initializable {
     @FXML
     TextArea notepadText;
@@ -18,10 +21,10 @@ public class NotePadController implements Initializable {
     @FXML
     Button saveButton;
 
-    /**
-     * Notepad Controller
-     */
 
+    /**
+     * Initial startup method.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

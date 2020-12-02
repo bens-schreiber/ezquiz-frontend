@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #829AB1;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.controllers.StartController">
+            fx:controller="gui.controllers.startup.StartController">
     <children>
         <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="382.0" prefWidth="586.0">
             <children>

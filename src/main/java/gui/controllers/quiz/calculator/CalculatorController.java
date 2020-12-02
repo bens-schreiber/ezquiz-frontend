@@ -1,4 +1,4 @@
-package gui.addons.calculator;
+package gui.controllers.quiz.calculator;
 
 import java.net.URL;
 import java.util.ArrayList;

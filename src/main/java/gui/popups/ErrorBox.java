@@ -1,4 +1,4 @@
-package gui.addons;
+package gui.popups;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -8,9 +8,15 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
+/**
+ * Displays errors to user
+ */
 
 public class ErrorBox {
+    /**
+     * @param fatal if the program should be terminated.
+     */
     public static void display(String error, boolean fatal) {
 
         //Establish the error scene

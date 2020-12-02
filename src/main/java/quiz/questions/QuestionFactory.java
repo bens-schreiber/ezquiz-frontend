@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Contains method to create a question object from its initial json
- */
-
 public class QuestionFactory {
 
-    //Factory method
+    /**
+     * Factory method.
+     *
+     * @return new Question object built from JSONObject.
+     * @throws JSONException if any required Question data is missing.
+     */
     public static Question questionFromJSON(JSONObject json) throws JSONException {
 
         String type = json.get("type_name").toString();
@@ -58,11 +59,17 @@ public class QuestionFactory {
 
             };
         }
-
         return new Question(type, subject, options, question, directions, id);
+
 
     }
 
+    /**
+     * Factory method
+     *
+     * @return answer array from JSON.
+     * @throws JSONException if required data is missing.
+     */
     public static List<String> answerFromJSON(JSONObject json) throws JSONException {
 
         return new ArrayList<>(
@@ -70,5 +77,6 @@ public class QuestionFactory {
                         .split(", ")));
 
     }
+
 
 }

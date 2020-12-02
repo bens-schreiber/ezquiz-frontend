@@ -3,8 +3,9 @@ package etc;
 /**
  * Contains constants for use across the program
  */
-
 public class Constants {
+
+    public static String DEFAULT_PATH = "http://localhost:7080/api/database/questions/";
 
     public static int DEFAULT_QUESTION_AMOUNT = 5;
 

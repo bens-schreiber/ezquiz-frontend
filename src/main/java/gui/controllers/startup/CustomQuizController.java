@@ -1,8 +1,8 @@
-package gui.controllers;
+package gui.controllers.startup;
 
 import etc.Constants;
-import gui.GuiHelper;
-import gui.addons.ErrorBox;
+import gui.StageHelper;
+import gui.popups.ErrorBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,6 +24,10 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+/**
+ * Provides methods for ActionEvents on Custom Quiz Page.
+ */
+
 public class CustomQuizController implements Initializable {
     @FXML
     private TextField questionAmountField, testNameField, testTimeField;
@@ -34,6 +38,10 @@ public class CustomQuizController implements Initializable {
     @FXML
     private CheckBox calcPref, drawPref, notePadPref, correctAnswers;
 
+
+    /**
+     * Initial startup method.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -50,7 +58,7 @@ public class CustomQuizController implements Initializable {
 
     public void onBackButton() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/start.fxml")); //Display the start page.
-        GuiHelper.getOpenedWindows().get("Start").setScene(new Scene(root));
+        StageHelper.getOpenedWindows().get("Start").setScene(new Scene(root));
     }
 
     //Setup all preferences and begin custom test
@@ -101,7 +109,7 @@ public class CustomQuizController implements Initializable {
 
         QuizManager.loadQuestions(questionAmount, subjectList.getValue(), typeList.getValue()); //Load question
 
-        GuiHelper.closeWindow("Start"); //Close this page
+        StageHelper.closeWindow("Start"); //Close this page
 
         displayTest(); //Initialize the test.
 
@@ -117,7 +125,7 @@ public class CustomQuizController implements Initializable {
             stage.setAlwaysOnTop(true);
             stage.initStyle(StageStyle.UNDECORATED);
 
-            GuiHelper.addWindow("Quiz", stage);
+            StageHelper.addWindow("Quiz", stage);
             stage.show();
 
         } catch (IOException | NullPointerException e) {

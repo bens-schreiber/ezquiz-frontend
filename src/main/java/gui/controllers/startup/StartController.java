@@ -1,11 +1,10 @@
-package gui.controllers;
+package gui.controllers.startup;
 
 import etc.Constants;
-import gui.GuiHelper;
-import gui.addons.ErrorBox;
+import gui.StageHelper;
+import gui.popups.ErrorBox;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,32 +16,36 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.json.JSONException;
 import quiz.QuizManager;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+
+/**
+ * Provides methods for ActionEvents on Startup Screen.
+ */
 
 public class StartController {
 
-    /**
-     * Start screen button controller
-     */
 
-    public void onDefaultButton() throws IOException, JSONException {
+    public void onDefaultButton() {
 
-        QuizManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
+        try {
+            QuizManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 
-        Stage stage = new Stage();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
 
-        stage.setAlwaysOnTop(true);
-        stage.initStyle(StageStyle.UNDECORATED);
+            stage.setAlwaysOnTop(true);
+            stage.initStyle(StageStyle.UNDECORATED);
 
-        GuiHelper.addWindow("Quiz", stage);
-        GuiHelper.closeWindow("Start");
-        stage.show();
+            StageHelper.addWindow("Quiz", stage);
+            StageHelper.closeWindow("Start");
+            stage.show();
+        } catch (IOException | NullPointerException e) {
+            ErrorBox.display("A page failed to load.", false);
+            e.printStackTrace();
+        }
 
 
     }
@@ -52,13 +55,17 @@ public class StartController {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/customquiz.fxml"));
             Scene scene = new Scene(root);
-            GuiHelper.getOpenedWindows().get("Start").setScene(scene);
+            StageHelper.getOpenedWindows().get("Start").setScene(scene);
         } catch (IOException | NullPointerException e) {
             ErrorBox.display("A page failed to load.", false);
             e.printStackTrace();
         }
 
     }
+
+    /**
+     * On Enter Code button clicked, decodes question id's from bitmap, creates Quiz
+     */
 
     public void onEnterCode() {
 
@@ -102,8 +109,8 @@ public class StartController {
                 stage.setAlwaysOnTop(true);
                 stage.initStyle(StageStyle.UNDECORATED);
 
-                GuiHelper.addWindow("Quiz", stage);
-                GuiHelper.closeWindow("Start");
+                StageHelper.addWindow("Quiz", stage);
+                StageHelper.closeWindow("Start");
                 stage.show();
                 window.close();
             } catch (IOException | NullPointerException e) {

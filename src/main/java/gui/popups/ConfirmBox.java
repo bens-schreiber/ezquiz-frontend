@@ -1,4 +1,4 @@
-package gui.addons;
+package gui.popups;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
- * Confirm or deny alert box
+ * Confirm or deny alert box.
  */
 
 public class ConfirmBox {
