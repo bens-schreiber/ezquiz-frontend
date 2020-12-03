@@ -18,8 +18,8 @@ class FlagButton extends Button {
     public FlagButton(HBox hBox) {
 
         //Give style properties
-        this.setStyle(Constants.UNSELECTED_COLOR);
-        this.setPrefSize(35, 35);
+        this.setStyle(Constants.UNSELECTED_COLOR_FX);
+        this.setPrefSize(40, 35);
 
         hBox.getChildren().add(this);
 
@@ -31,7 +31,7 @@ class FlagButton extends Button {
         this.flagged = flagged;
 
         if (flagged) {
-            this.setStyle(Constants.FLAGGED_COLOR);
+            this.setStyle(Constants.FLAGGED_COLOR_FX);
         }
     }
 

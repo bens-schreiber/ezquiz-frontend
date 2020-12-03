@@ -22,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -58,6 +59,9 @@ public class QuizController implements Initializable {
     //Drawing pad canvas is apart of test stage, utilized by DrawingPadController
     @FXML
     Canvas paintCanvas;
+
+    @FXML
+    Rectangle questionBorder;
 
     private static GraphicsContext gc;
 
@@ -236,6 +240,7 @@ public class QuizController implements Initializable {
     //On Flag Question clicked
     public void onFlagQuestion() {
         ((FlagButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).setFlagged(true);
+        questionBorder.setStyle("-fx-stroke: " + Constants.FLAGGED_COLOR);
     }
 
     //When submit button is clicked
@@ -381,24 +386,24 @@ public class QuizController implements Initializable {
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.setAlwaysOnTop(true); //Keep pad on test.
-            stage.initStyle(StageStyle.UTILITY);
-            stage.resizableProperty().setValue(false);
+                stage.initStyle(StageStyle.UTILITY);
+                stage.resizableProperty().setValue(false);
 
-            //Add this to current stages
+                //Add this to current stages
                 StageHelper.addStage("drawingpad", stage);
 
-            //Make sure if X is pressed it removes from stages, clears drawings
-            stage.setOnCloseRequest(e -> {
+                //Make sure if X is pressed it removes from stages, clears drawings
+                stage.setOnCloseRequest(e -> {
 
-                //Disable canvas so other parts can be used
-                paintCanvas.setDisable(true);
+                    //Disable canvas so other parts can be used
+                    paintCanvas.setDisable(true);
 
-                gc.clearRect(0, 0, 1920, 1080); //Clear canvas
+                    gc.clearRect(0, 0, 1920, 1080); //Clear canvas
 
-                //Change cursor back to default
-                StageHelper.getStages().get("Quiz").getScene().setCursor(Cursor.DEFAULT);
+                    //Change cursor back to default
+                    StageHelper.getStages().get("Quiz").getScene().setCursor(Cursor.DEFAULT);
 
-                StageHelper.closeStage("drawingpad");
+                    StageHelper.closeStage("drawingpad");
 
             });
 
@@ -444,7 +449,7 @@ public class QuizController implements Initializable {
         questionArea.getChildren().add(QuizManager.getCurrNode().getNode());
 
         // Set prompt
-        questionPrompt.setText(QuizManager.getCurrQuestion().getPrompt());
+        questionPrompt.setText(QuizManager.getCurrNum() + 1 + ".) " + QuizManager.getCurrQuestion().getPrompt());
 
         //Set directions
         questionDirections.setText(QuizManager.getCurrQuestion().getDirections());
@@ -457,16 +462,22 @@ public class QuizController implements Initializable {
 
         //If the button is selected
         questionHBox.getChildren().forEach(button -> {
-            if (button.getStyle().equals(Constants.SELECTED_COLOR)) {
-                button.setStyle(Constants.UNSELECTED_COLOR);
+            if (button.getStyle().equals(Constants.SELECTED_COLOR_FX)) {
+                button.setStyle(Constants.UNSELECTED_COLOR_FX);
             }
         });
+
+        if (((FlagButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).isFlagged()) {
+            questionBorder.setStyle("-fx-stroke: " + Constants.FLAGGED_COLOR);
+        } else {
+            questionBorder.setStyle("-fx-stroke: " + Constants.BORDER_COLOR);
+        }
 
     }
 
     //Color box to show it is selected
     private void selectCurrentQuizButton() {
-        questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(Constants.SELECTED_COLOR);
+        questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(Constants.SELECTED_COLOR_FX);
     }
 
 

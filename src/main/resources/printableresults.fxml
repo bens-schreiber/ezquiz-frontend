@@ -10,10 +10,10 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1082.0"
-            prefWidth="1920.0" style="-fx-background-color: #BDBDBD;" xmlns="http://javafx.com/javafx/11.0.1"
+            prefWidth="1920.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.results.PrintableResultsController">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c32148" height="11.0" layoutX="8.0" layoutY="100.0"
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="11.0" layoutX="8.0" layoutY="100.0"
                    stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="1898.0"
                    AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="10.0"/>
         <Label fx:id="testName" alignment="CENTER" layoutX="320.0" layoutY="49.0" prefHeight="51.0" prefWidth="1319.0"
@@ -22,10 +22,10 @@
                 <Font size="30.0"/>
             </font>
         </Label>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9e9e9e" height="872.0" layoutX="5.0" layoutY="122.0"
-                   stroke="#829ab1" strokeType="OUTSIDE" strokeWidth="5.0" width="1888.0" AnchorPane.leftAnchor="12.0"
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="872.0" layoutX="5.0" layoutY="122.0"
+                   stroke="#303f9f" strokeType="OUTSIDE" strokeWidth="2.0" width="1888.0" AnchorPane.leftAnchor="12.0"
                    AnchorPane.rightAnchor="20.0"/>
-        <AnchorPane fx:id="topPane" prefHeight="49.0" prefWidth="1920.0" style="-fx-background-color: #829AB1;">
+        <AnchorPane fx:id="topPane" prefHeight="49.0" prefWidth="1920.0" style="-fx-background-color: #9E9E9E;">
             <children>
                 <ImageView fitHeight="46.0" fitWidth="54.0" layoutX="8.0" layoutY="3.0">
                     <image>
@@ -35,14 +35,16 @@
             </children>
         </AnchorPane>
         <AnchorPane fx:id="topPane1" layoutX="-1.0" layoutY="1025.0" prefHeight="57.0" prefWidth="1920.0"
-                    style="-fx-background-color: #829AB1;">
+                    style="-fx-background-color: #9E9E9E;">
             <children>
-                <HBox layoutX="808.0" layoutY="11.0" prefHeight="35.0" prefWidth="303.0">
+                <HBox layoutX="769.0" layoutY="11.0" prefHeight="35.0" prefWidth="382.0" spacing="5.0">
                     <children>
-                        <Button fx:id="printButton" mnemonicParsing="false" onAction="#onPrintButton" text="Print"/>
+                        <Button fx:id="printButton" mnemonicParsing="false" onAction="#onPrintButton"
+                                style="-fx-background-color: #8797f1;" text="Print"/>
                         <Button fx:id="seeQuestionsButton" mnemonicParsing="false" onAction="#onSeeQuestions"
-                                text="See Questions"/>
-                        <Button fx:id="retakeCodeButton" mnemonicParsing="false" text="Copy Retake Code"/>
+                                style="-fx-background-color: #8797f1;" text="See Questions"/>
+                        <Button fx:id="retakeCodeButton" mnemonicParsing="false" onAction="#onRetakeCodeButton"
+                                style="-fx-background-color: #8797f1;" text="Copy Retake Code"/>
                     </children>
                 </HBox>
             </children>
@@ -53,8 +55,8 @@
                 <Font size="20.0"/>
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="14.0" layoutY="49.0" prefHeight="51.0" prefWidth="216.0" text="Results"
-               textAlignment="CENTER" textFill="#c32148">
+        <Label alignment="CENTER" layoutX="-26.0" layoutY="49.0" prefHeight="51.0" prefWidth="190.0" text="Results"
+               textAlignment="CENTER" textFill="#303f9f">
             <font>
                 <Font size="30.0"/>
             </font>

@@ -4,29 +4,34 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #829AB1;"
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #9E9E9E;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="gui.controllers.startup.StartController">
     <children>
         <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="382.0" prefWidth="586.0">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bdbdbd" height="382.0" layoutX="-6.0" layoutY="-4.0"
-                           stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="586.0"/>
-                <Button layoutX="212.0" layoutY="137.0" mnemonicParsing="false" onMouseClicked="#onDefaultButton"
-                        prefWidth="136.0" text="Take Default Test"/>
-                <Button layoutX="212.0" layoutY="174.0" mnemonicParsing="false" onMouseClicked="#onCustomButton"
-                        prefHeight="26.0" prefWidth="136.0" text="Customize Test"/>
-                <ImageView fitHeight="105.0" fitWidth="186.0" layoutX="194.0" layoutY="14.0">
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="382.0" layoutX="-6.0" layoutY="-4.0"
+                           stroke="#303f9f" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="2.0" width="586.0"/>
+                <ImageView fitHeight="102.0" fitWidth="136.0" layoutX="219.0" layoutY="14.0">
                     <image>
                         <Image url="@../../../../../Pictures/FBLA-Color-web.png"/>
                     </image>
                 </ImageView>
-                <Button fx:id="exitButton" layoutX="212.0" layoutY="255.0" mnemonicParsing="false"
-                        onAction="#onExitButton" prefHeight="26.0" prefWidth="136.0" text="Exit"/>
-                <Button layoutX="212.0" layoutY="215.0" mnemonicParsing="false" onAction="#onEnterCode"
-                        prefHeight="26.0" prefWidth="136.0" text="Enter Code"/>
+                <VBox layoutX="224.0" layoutY="140.0" prefHeight="200.0" prefWidth="139.0" spacing="5.0">
+                    <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#onDefaultButton" prefWidth="136.0"
+                                text="Take Default Test"/>
+                        <Button mnemonicParsing="false" onMouseClicked="#onCustomButton" prefHeight="26.0"
+                                prefWidth="136.0" text="Customize Test"/>
+                        <Button mnemonicParsing="false" onAction="#onEnterCode" prefHeight="26.0" prefWidth="136.0"
+                                text="Enter Code"/>
+                        <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitButton" prefHeight="26.0"
+                                prefWidth="136.0" text="Exit"/>
+                    </children>
+                </VBox>
             </children>
         </AnchorPane>
     </children>

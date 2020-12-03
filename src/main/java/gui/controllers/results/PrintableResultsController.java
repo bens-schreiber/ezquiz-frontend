@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import quiz.QuizManager;
 import quiz.questions.nodes.QuizNode;
 
@@ -32,6 +34,8 @@ public class PrintableResultsController implements Initializable {
 
     @FXML
     Button seeQuestionsButton;
+
+    private long bMap;
 
     /**
      * Initial startup method.
@@ -57,7 +61,7 @@ public class PrintableResultsController implements Initializable {
         }
 
         //Create a bitmap data structure from ids
-        long bMap = 0;
+        bMap = 0;
         for (Integer id : ids) {
             bMap |= (1L << (id - 1));
         }
@@ -66,14 +70,20 @@ public class PrintableResultsController implements Initializable {
         System.out.println(Base64.getEncoder().withoutPadding().encodeToString(String.valueOf(bMap).getBytes()));
         resultsArea.setText(
                 (int) correctAnswers + " out of " + QuizManager.getQuizNodes().size() + "\n"
-                        + correctAnswers / QuizManager.getQuizNodes().size() + "%" + "\n"
-                        + Base64.getEncoder().withoutPadding().encodeToString(String.valueOf(bMap).getBytes())
+                        + (correctAnswers / QuizManager.getQuizNodes().size()) * 100 + "%" + "\n"
         );
 
     }
 
 
     public void onPrintButton() {
+    }
+
+    public void onRetakeCodeButton() {
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent content = new ClipboardContent();
+        content.putString(Base64.getEncoder().withoutPadding().encodeToString(String.valueOf(bMap).getBytes()));
+        clipboard.setContent(content);
     }
 
     public void onSeeQuestions() {
