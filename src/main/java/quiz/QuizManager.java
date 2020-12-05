@@ -31,7 +31,6 @@ public class QuizManager {
     //Index of the QuizNodes the quiz is currently on
     private static int currQuestion = 0;
 
-
     /**
      * Load questions into QuizManager.questions.
      *
@@ -110,10 +109,9 @@ public class QuizManager {
 
 
     /**
-     * Grabs all answers to questions from responses with Requests.getQuestionAnswer
+     * Grab all answers to questions from responses with Requests.getQuestionAnswer
      */
     public static void checkAnswers() {
-
 
         //Iterate through quiz.questions along with hashmap, so it doesn't make unneeded requests
         for (QuizNode quizNode : quizNodes) {

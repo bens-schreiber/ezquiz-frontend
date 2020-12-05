@@ -35,8 +35,6 @@ public class DrawingPadController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //todo: make these not lambdas
-
         colorPicker.setOnAction(e -> QuizController.changeColor(colorPicker.getValue()));
 
         brushSize.setOnKeyTyped(e -> {
@@ -47,7 +45,7 @@ public class DrawingPadController implements Initializable {
 
         });
 
-        eraser.setOnAction(event -> QuizController.changeColor(Color.rgb(158, 158, 158)));
+        eraser.setOnAction(event -> QuizController.changeColor(Color.rgb(225, 225, 225)));
 
 
         UnaryOperator<TextFormatter.Change> modifyChange = c -> {

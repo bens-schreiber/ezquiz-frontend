@@ -5,31 +5,35 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #9E9E9E;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="gui.controllers.startup.StartController">
     <children>
-        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="382.0" prefWidth="586.0">
+        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="382.0" layoutX="-6.0" layoutY="-4.0"
-                           stroke="#303f9f" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="2.0" width="586.0"/>
-                <ImageView fitHeight="102.0" fitWidth="136.0" layoutX="219.0" layoutY="14.0">
+                <ImageView fitHeight="414.0" fitWidth="615.0" layoutX="-4.0" layoutY="-3.0">
+                    <image>
+                        <Image url="@../../../../../Downloads/classroom-design-denver.jpg"/>
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="102.0" fitWidth="136.0" layoutX="236.0" layoutY="14.0">
                     <image>
                         <Image url="@../../../../../Pictures/FBLA-Color-web.png"/>
                     </image>
                 </ImageView>
-                <VBox layoutX="224.0" layoutY="140.0" prefHeight="200.0" prefWidth="139.0" spacing="5.0">
+                <VBox layoutX="196.0" layoutY="144.0" prefHeight="124.0" prefWidth="219.0" spacing="8.0"
+                      style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
                     <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#onDefaultButton" prefWidth="136.0"
-                                text="Take Default Test"/>
+                        <Button mnemonicParsing="false" onMouseClicked="#onDefaultButton" prefHeight="26.0"
+                                prefWidth="222.0" text="Take Default Test"/>
                         <Button mnemonicParsing="false" onMouseClicked="#onCustomButton" prefHeight="26.0"
-                                prefWidth="136.0" text="Customize Test"/>
-                        <Button mnemonicParsing="false" onAction="#onEnterCode" prefHeight="26.0" prefWidth="136.0"
+                                prefWidth="222.0" text="Customize Test"/>
+                        <Button mnemonicParsing="false" onAction="#onEnterCode" prefHeight="26.0" prefWidth="219.0"
                                 text="Enter Code"/>
                         <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitButton" prefHeight="26.0"
-                                prefWidth="136.0" text="Exit"/>
+                                prefWidth="220.0" text="Exit"/>
                     </children>
                 </VBox>
             </children>
