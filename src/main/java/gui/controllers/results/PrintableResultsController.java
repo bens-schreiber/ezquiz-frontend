@@ -3,6 +3,7 @@ package gui.controllers.results;
 import etc.BitMap;
 import gui.StageHelper;
 import gui.popups.ErrorBox;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.stage.DirectoryChooser;
 import quiz.QuizManager;
 import quiz.questions.nodes.QuizNode;
 
@@ -23,7 +25,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 
 /**
  * Provides methods for ActionEvents on Printable Results Page.
@@ -77,8 +78,25 @@ public class PrintableResultsController implements Initializable {
     }
 
 
-    public void onPrintButton() {
+    public void onScreenshotButton() {
+        try {
+            Scene scene = StageHelper.getScenes().get("PrintableResults");
+            WritableImage writableImage = scene.snapshot(null);
 
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            File file = directoryChooser.showDialog(StageHelper.getStages().get("Quiz"));
+
+
+            ImageIO.write(
+                    SwingFXUtils.fromFXImage(writableImage, null),
+                    "png", new File(file.getAbsolutePath() + "/screenshot")
+            );
+
+        } catch (IOException ex) {
+
+            ErrorBox.display("An error occurred trying to screenshot", false);
+
+        }
     }
 
     public void onRetakeCodeButton() {

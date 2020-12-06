@@ -40,14 +40,16 @@
         <AnchorPane fx:id="topPane1" layoutX="-1.0" layoutY="1025.0" prefHeight="57.0" prefWidth="1920.0"
                     style="-fx-background-color: #9E9E9E;">
             <children>
-                <HBox layoutX="752.0" layoutY="16.0" prefHeight="25.0" prefWidth="416.0" spacing="5.0">
+                <HBox layoutX="665.0" layoutY="16.0" prefHeight="25.0" prefWidth="591.0" spacing="5.0">
                     <children>
-                        <Button fx:id="printButton" mnemonicParsing="false" onAction="#onPrintButton" prefHeight="22.0"
-                                prefWidth="97.0" text="Print"/>
+                        <Button fx:id="screenshotButton" mnemonicParsing="false" onAction="#onScreenshotButton"
+                                prefHeight="22.0" prefWidth="135.0" text="Screenshot"/>
                         <Button fx:id="seeQuestionsButton" mnemonicParsing="false" onAction="#onSeeQuestions"
                                 text="See Questions"/>
                         <Button fx:id="retakeCodeButton" mnemonicParsing="false" onAction="#onRetakeCodeButton"
                                 prefHeight="22.0" prefWidth="174.0" text="Copy Retake Code"/>
+                        <Button fx:id="printButton1" mnemonicParsing="false" onAction="#onPrintButton" prefHeight="22.0"
+                                prefWidth="135.0" text="Print"/>
                     </children>
                 </HBox>
             </children>

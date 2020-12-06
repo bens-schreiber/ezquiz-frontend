@@ -33,7 +33,6 @@ public class QuizManager {
 
     /**
      * Load questions into QuizManager.questions.
-     *
      * @param subject if not null limits questions to that specific subject.
      * @param type    if not null limits questions to that specific type.
      */
@@ -89,8 +88,9 @@ public class QuizManager {
     }
 
     /**
-     * Overloaded loadQuestions method
-     * Loads questions from an integer list of ids
+     * Overloaded loadQuestions method.
+     *
+     * @param ids id of questions to load.
      */
     public static void loadQuestions(List<Integer> ids) {
         for (int id : ids) {
