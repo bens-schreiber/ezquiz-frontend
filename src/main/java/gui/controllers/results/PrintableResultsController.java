@@ -1,5 +1,6 @@
 package gui.controllers.results;
 
+import etc.BitMap;
 import gui.StageHelper;
 import gui.popups.ErrorBox;
 import javafx.fxml.FXML;
@@ -7,18 +8,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import quiz.QuizManager;
 import quiz.questions.nodes.QuizNode;
 
+import javax.imageio.ImageIO;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Base64;
+import java.util.logging.Logger;
 
 /**
  * Provides methods for ActionEvents on Printable Results Page.
@@ -27,15 +32,16 @@ import java.util.Base64;
 public class PrintableResultsController implements Initializable {
 
     @FXML
-    Label testName;
-
-    @FXML
-    Label resultsArea;
+    Label testName, outOfLabel, percentageLabel;
 
     @FXML
     Button seeQuestionsButton;
 
-    private long bMap;
+    //todo: add chart stats
+    @FXML
+    LineChart lineChart;
+
+    private BitMap bitMap;
 
     /**
      * Initial startup method.
@@ -49,6 +55,7 @@ public class PrintableResultsController implements Initializable {
 
         testName.setText(testName.getText() + QuizManager.getPreferences().get("Quiz Name"));
 
+        //Get the amount of correct answers, get ID's for bitmap storage
         float correctAnswers = 0;
         ArrayList<Integer> ids = new ArrayList<>();
         for (QuizNode quizNode : QuizManager.getQuizNodes()) {
@@ -61,28 +68,23 @@ public class PrintableResultsController implements Initializable {
         }
 
         //Create a bitmap data structure from ids
-        bMap = 0;
-        for (Integer id : ids) {
-            bMap |= (1L << (id - 1));
-        }
+        bitMap = new BitMap(ids);
 
         //add how many correct out of possible, percentage, put bitmap to Base64
-        System.out.println(Base64.getEncoder().withoutPadding().encodeToString(String.valueOf(bMap).getBytes()));
-        resultsArea.setText(
-                (int) correctAnswers + " out of " + QuizManager.getQuizNodes().size() + "\n"
-                        + (correctAnswers / QuizManager.getQuizNodes().size()) * 100 + "%" + "\n"
-        );
+        outOfLabel.setText(correctAnswers + " out of " + QuizManager.getQuizNodes().size());
+        percentageLabel.setText((correctAnswers / QuizManager.getQuizNodes().size() * 100) + "%");
 
     }
 
 
     public void onPrintButton() {
+
     }
 
     public void onRetakeCodeButton() {
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
-        content.putString(Base64.getEncoder().withoutPadding().encodeToString(String.valueOf(bMap).getBytes()));
+        content.putString(bitMap.getEncodeToBase64());
         clipboard.setContent(content);
     }
 

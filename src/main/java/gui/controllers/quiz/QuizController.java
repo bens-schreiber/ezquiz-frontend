@@ -429,9 +429,13 @@ public class QuizController implements Initializable {
 
         //Grab results fxml
         try {
-            StageHelper.getStages().get("Quiz").setScene(
-                    new Scene(FXMLLoader.load(getClass().getResource("/printableresults.fxml")
-                    )));
+
+            Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/printableresults.fxml")));
+
+            StageHelper.getStages().get("Quiz").setScene(scene);
+
+            StageHelper.getScenes().put("PrintableResults", scene);
+
         } catch (IOException | NullPointerException e) {
             ErrorBox.display("A page failed to load.", false);
             e.printStackTrace();

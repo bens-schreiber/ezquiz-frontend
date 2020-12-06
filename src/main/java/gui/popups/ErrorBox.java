@@ -10,15 +10,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * Displays errors to user, not done with fxml.
+ * Displays errors to user.
  */
 
 public class ErrorBox {
+
     /**
      * @param fatal if the program should be terminated.
      */
     public static void display(String error, boolean fatal) {
-
+//todo: make this an fxml scene
         //Establish the error scene
         VBox vbox = new VBox(10);
         vbox.getChildren().add(new Label(error));

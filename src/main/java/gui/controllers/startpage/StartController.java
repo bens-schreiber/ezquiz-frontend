@@ -1,5 +1,6 @@
 package gui.controllers.startpage;
 
+import etc.BitMap;
 import etc.Constants;
 import gui.StageHelper;
 import gui.popups.ErrorBox;
@@ -92,7 +93,7 @@ public class StartController {
      */
 
     public void onEnterCode() {
-
+        //todo: make this an fxml scene
         //Try to not reload scene if scene already exists.
         if (StageHelper.getStages().containsKey("code prompt")) {
             StageHelper.getStages().get("code prompt").showAndWait();
@@ -121,14 +122,7 @@ public class StartController {
             startButton.setOnAction(event -> {
 
                 //Get ID's from Base64 bitmap
-                ArrayList<Integer> ids = new ArrayList<>();
-                long bMap = Long.parseLong(new String(Base64.getDecoder().decode(textField.getText())));
-
-                for (int i = 63; i >= 0; --i) {
-                    if ((bMap < 0 && i == 63) || (bMap & 1L << i) > 0) {
-                        ids.add(i + 1);
-                    }
-                }
+                ArrayList<Integer> ids = new BitMap(textField.getText()).decodeToArray();
 
                 //Load ID's into the QuizManager
                 QuizManager.loadQuestions(ids);

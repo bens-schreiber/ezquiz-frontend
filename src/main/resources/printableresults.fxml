@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -36,14 +40,14 @@
         <AnchorPane fx:id="topPane1" layoutX="-1.0" layoutY="1025.0" prefHeight="57.0" prefWidth="1920.0"
                     style="-fx-background-color: #9E9E9E;">
             <children>
-                <HBox layoutX="759.0" layoutY="16.0" prefHeight="25.0" prefWidth="403.0" spacing="5.0">
+                <HBox layoutX="752.0" layoutY="16.0" prefHeight="25.0" prefWidth="416.0" spacing="5.0">
                     <children>
                         <Button fx:id="printButton" mnemonicParsing="false" onAction="#onPrintButton" prefHeight="22.0"
                                 prefWidth="97.0" text="Print"/>
                         <Button fx:id="seeQuestionsButton" mnemonicParsing="false" onAction="#onSeeQuestions"
                                 text="See Questions"/>
                         <Button fx:id="retakeCodeButton" mnemonicParsing="false" onAction="#onRetakeCodeButton"
-                                text="Copy Retake Code"/>
+                                prefHeight="22.0" prefWidth="174.0" text="Copy Retake Code"/>
                     </children>
                 </HBox>
             </children>
@@ -60,12 +64,28 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="877.0" prefWidth="1896.0">
                     <children>
-                        <Label fx:id="resultsArea" alignment="CENTER" layoutX="659.0" layoutY="149.0" prefHeight="301.0"
-                               prefWidth="578.0" text="Label">
+                        <Label fx:id="percentageLabel" alignment="CENTER" layoutX="883.0" layoutY="162.0"
+                               prefHeight="46.0" prefWidth="132.0" text="0%">
                             <font>
                                 <Font size="20.0"/>
                             </font>
                         </Label>
+                        <Label fx:id="outOfLabel" alignment="CENTER" layoutX="774.0" layoutY="82.0" prefHeight="103.0"
+                               prefWidth="349.0" text="0 out of 0" textFill="#eb4a4a">
+                            <font>
+                                <Font size="42.0"/>
+                            </font>
+                        </Label>
+                        <TextField alignment="CENTER" layoutX="864.0" layoutY="219.0" promptText="Your Name Here"
+                                   style="-fx-border-color: black; -fx-border-style: segments(10, 15, 15, 15)  line-cap round;"/>
+                        <LineChart fx:id="lineChart" layoutX="701.0" layoutY="361.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </LineChart>
                     </children>
                 </AnchorPane>
             </content>

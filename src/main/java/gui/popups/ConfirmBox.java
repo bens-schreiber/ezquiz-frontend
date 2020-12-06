@@ -10,11 +10,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
- * Confirm or deny alert box, not done with fxml.
+ * Confirm or deny alert box.
  */
 
 public class ConfirmBox {
-
+    //todo: make this an fxml scene
     static boolean answer;
 
     public static boolean display(String alertMessage) {
