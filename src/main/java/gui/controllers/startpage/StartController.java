@@ -1,10 +1,11 @@
-package gui.controllers.startup;
+package gui.controllers.startpage;
 
 import etc.Constants;
 import gui.StageHelper;
 import gui.popups.ErrorBox;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -164,6 +165,7 @@ public class StartController {
             HBox hbox = new HBox(5);
             hbox.getChildren().add(startButton);
             hbox.getChildren().add(exitButton);
+            hbox.setAlignment(Pos.CENTER);
 
             //add everything to vertical node
             VBox vBox = new VBox(15);
@@ -175,6 +177,7 @@ public class StartController {
 
             //Display stage
             Scene scene = new Scene(layout);
+            scene.getStylesheets().add("css/standard_button.css");
             window.initStyle(StageStyle.UNDECORATED);
             window.setScene(scene);
             window.showAndWait();

@@ -21,15 +21,15 @@ public class Constants {
 
     public static int MAX_BRUSH_SIZE = 1;
 
-    public static String SELECTED_COLOR_FX = "-fx-background-color: #56ea63;";
-
-    public static String UNSELECTED_COLOR_FX = "-fx-background-color: #8797f1;";
-
-    public static String FLAGGED_COLOR_FX = "-fx-background-color: #fb8804;";
-
     public static String FLAGGED_COLOR = "#fb8804;";
 
     public static String BORDER_COLOR = "#303f9f;";
+
+    public static String FLAGGED_COLOR_FX = "-fx-background-color: " + FLAGGED_COLOR;
+
+    public static String SELECTED_COLOR_FX = "-fx-background-color: #56ea63;";
+
+    public static String UNSELECTED_COLOR_FX = "-fx-background-color: #8797f1;";
 
 
 }

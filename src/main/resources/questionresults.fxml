@@ -11,7 +11,8 @@
 <ScrollPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.results.QuestionResultsController">
     <content>
-        <AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #e1e1e1;">
+        <AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #e1e1e1;"
+                    stylesheets="@css/standard_button.css">
             <children>
                 <AnchorPane fx:id="topPane" layoutX="-4.0" prefHeight="57.0" prefWidth="1927.0"
                             style="-fx-background-color: #9E9E9E;">

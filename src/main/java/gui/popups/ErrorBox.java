@@ -10,7 +10,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * Displays errors to user
+ * Displays errors to user, not done with fxml.
  */
 
 public class ErrorBox {
@@ -44,7 +44,9 @@ public class ErrorBox {
 
         stage.setHeight(100);
         stage.setWidth(200);
-        stage.setScene(new Scene(vbox));
+        Scene scene = new Scene(vbox);
+        scene.getStylesheets().add("css/standard_button.css");
+        stage.setScene(scene);
         stage.showAndWait();
     }
 }

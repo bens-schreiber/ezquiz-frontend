@@ -11,8 +11,9 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1082.0"
-            prefWidth="1920.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.results.PrintableResultsController">
+            prefWidth="1920.0" style="-fx-background-color: #E1E1E1;" stylesheets="@css/standard_button.css"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.controllers.results.PrintableResultsController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="11.0" layoutX="8.0" layoutY="100.0"
                    stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="1898.0"
@@ -35,9 +36,10 @@
         <AnchorPane fx:id="topPane1" layoutX="-1.0" layoutY="1025.0" prefHeight="57.0" prefWidth="1920.0"
                     style="-fx-background-color: #9E9E9E;">
             <children>
-                <HBox layoutX="800.0" layoutY="11.0" prefHeight="35.0" prefWidth="320.0" spacing="5.0">
+                <HBox layoutX="759.0" layoutY="16.0" prefHeight="25.0" prefWidth="403.0" spacing="5.0">
                     <children>
-                        <Button fx:id="printButton" mnemonicParsing="false" onAction="#onPrintButton" text="Print"/>
+                        <Button fx:id="printButton" mnemonicParsing="false" onAction="#onPrintButton" prefHeight="22.0"
+                                prefWidth="97.0" text="Print"/>
                         <Button fx:id="seeQuestionsButton" mnemonicParsing="false" onAction="#onSeeQuestions"
                                 text="See Questions"/>
                         <Button fx:id="retakeCodeButton" mnemonicParsing="false" onAction="#onRetakeCodeButton"

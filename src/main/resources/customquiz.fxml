@@ -13,13 +13,13 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #E1E1E1;"
-            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.controllers.startup.CustomQuizController">
+            stylesheets="@css/standard_button.css" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.startpage.CustomQuizController">
     <children>
-        <Button id="startButton" fx:id="startButton" layoutX="504.0" layoutY="361.0" mnemonicParsing="false"
-                onMouseClicked="#onStartButton" style="-fx-background-color: #8797f1;" text="Start Quiz"/>
-        <Button fx:id="backButton" layoutX="450.0" layoutY="361.0" mnemonicParsing="false" onAction="#onBackButton"
-                style="-fx-background-color: #8797f1;" text="Back"/>
+        <Button id="startButton" fx:id="startButton" layoutX="490.0" layoutY="361.0" mnemonicParsing="false"
+                onMouseClicked="#onStartButton" text="Start Quiz"/>
+        <Button fx:id="backButton" layoutX="400.0" layoutY="361.0" mnemonicParsing="false" onAction="#onBackButton"
+                text="Back"/>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="11.0" layoutX="7.0" layoutY="46.0"
                    stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="586.0"/>
         <Text fill="#303f9f" layoutX="21.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Custom Options"

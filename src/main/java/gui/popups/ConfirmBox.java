@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
- * Confirm or deny alert box.
+ * Confirm or deny alert box, not done with fxml.
  */
 
 public class ConfirmBox {
@@ -54,6 +54,7 @@ public class ConfirmBox {
 
         layout.setCenter(hbox);
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add("css/standard_button.css");
         window.initStyle(StageStyle.UNDECORATED);
         window.setScene(scene);
         window.showAndWait();

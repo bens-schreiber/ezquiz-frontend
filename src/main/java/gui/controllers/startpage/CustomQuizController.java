@@ -1,4 +1,4 @@
-package gui.controllers.startup;
+package gui.controllers.startpage;
 
 import etc.Constants;
 import gui.StageHelper;

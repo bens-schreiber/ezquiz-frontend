@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import java.util.HashMap;
 
 /**
- * Stores submitted windows in HashMap so they can be accessed from different Controllers
+ * Stores submitted windows in HashMap so they can be accessed from different Controllers.
  */
 
 public class StageHelper {
@@ -37,9 +37,8 @@ public class StageHelper {
     }
 
     /**
-     * Reusable scenes to not reload information
+     * Reusable scenes to not reload information.
      */
-
     private static final HashMap<String, Scene> reusableScenes = new HashMap<>();
 
     public static void addScene(String name, Scene scene) {

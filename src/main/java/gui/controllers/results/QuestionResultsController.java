@@ -58,7 +58,7 @@ public class QuestionResultsController implements Initializable {
             } else {
 
                 //Set background to red with low opacity
-                answeredQuestion.setStyle("-fx-background-color: rgba(195, 33, 72, .7);");
+                answeredQuestion.setStyle("-fx-background-color: rgba(255, 158, 173, .7);");
 
                 //Show correct answer if desired in preferences
                 if (Boolean.parseBoolean(QuizManager.getPreferences().get("Show Correct Answers"))) {
