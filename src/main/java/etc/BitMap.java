@@ -5,7 +5,6 @@ import java.util.Base64;
 
 /**
  * BitMap stored as long
- *
  * @author benschreiber
  */
 public class BitMap {
@@ -27,7 +26,6 @@ public class BitMap {
 
     /**
      * Alternative constructor.
-     *
      * @param base64 String of Base64 encoded long.
      */
     public BitMap(String base64) {

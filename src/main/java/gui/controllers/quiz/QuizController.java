@@ -2,6 +2,7 @@ package gui.controllers.quiz;
 
 import etc.Constants;
 import gui.StageHelper;
+import gui.popups.ConfirmBox;
 import gui.popups.ErrorBox;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -10,7 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,13 +20,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import gui.popups.ConfirmBox;
 import quiz.QuizManager;
 
 import java.io.IOException;
@@ -101,11 +98,10 @@ public class QuizController implements Initializable {
 
         //Establish flag button amount
         //Whenever the button is clicked use the individualQuestionClicked handler
-        IntStream.range(0, QuizManager.getQuizNodes().size())
-                .mapToObj(e -> new FlagButton(questionHBox))
-                .forEach(button -> button.setOnMouseClicked(this::individualQuestionClicked));
-
-        questionHBox.setSpacing(4);
+        IntStream.range(0, QuizManager.getQuizNodes().size()).mapToObj(i -> new FlagButton()).forEach(button -> {
+            button.setOnMouseClicked(this::individualQuestionClicked);
+            questionHBox.getChildren().add(button);
+        });
 
 
         //Display the new question.
@@ -194,11 +190,8 @@ public class QuizController implements Initializable {
     public void onBackButton() {
 
         if (QuizManager.getCurrNum() > 0) {
-
             QuizManager.prevQuestion(); //Goto previous question.
-
             displayNewQuestion(); //Load previous question.
-
         }
 
         //Disable/enable next and back based on position
@@ -222,11 +215,9 @@ public class QuizController implements Initializable {
         //Display the current question.
         displayNewQuestion();
 
-        //Color the hbox that is currently selected
-        selectCurrentQuizButton();
-
-        if (((FlagButton) getCurrentButton()).isFlagged()) {
-            ((FlagButton) getCurrentButton()).setFlagged(false);
+        //Color the flag button that is currently selected if not flagged
+        if (!((FlagButton) getCurrentButton()).isFlagged()) {
+            selectCurrentQuizButton();
         }
 
         backButton.setDisable(questionSpot == 0);
@@ -241,15 +232,11 @@ public class QuizController implements Initializable {
         if (((FlagButton) getCurrentButton()).isFlagged()) {
 
             ((FlagButton) getCurrentButton()).setFlagged(false);
-
-            getCurrentButton().setStyle(Constants.UNSELECTED_COLOR_FX);
-
             questionPrompt.setStyle("-fx-text-fill: black");
 
         } else {
 
             ((FlagButton) getCurrentButton()).setFlagged(true);
-
             questionPrompt.setStyle("-fx-text-fill: " + Constants.FLAGGED_COLOR);
         }
     }
@@ -264,7 +251,6 @@ public class QuizController implements Initializable {
                 flaggedQuestions = true;
                 break;
             }
-
         }
 
         if (flaggedQuestions) {
@@ -308,9 +294,8 @@ public class QuizController implements Initializable {
                 stage.initStyle(StageStyle.UTILITY);//Get rid of minimize
                 stage.resizableProperty().setValue(false);
 
-                stage.setOnCloseRequest(e -> { //Make sure if X is pressed it removes from stages
-                    StageHelper.closeStage("calculator");
-                });
+                stage.setOnCloseRequest(e -> StageHelper.closeStage("calculator"));
+
 
                 stage.show();
 
@@ -341,9 +326,7 @@ public class QuizController implements Initializable {
                 stage.initStyle(StageStyle.UTILITY);//Get rid of minimize
                 stage.resizableProperty().setValue(false); //Make non resizeable
 
-                stage.setOnCloseRequest(e -> { //Make sure if X is pressed it removes from stages
-                    StageHelper.closeStage("notepad");
-                });
+                stage.setOnCloseRequest(e -> StageHelper.closeStage("notepad"));
 
                 stage.show();
 
@@ -352,9 +335,8 @@ public class QuizController implements Initializable {
                 e.printStackTrace();
             }
 
-
-
         }
+
     }
 
     //On drawing button clicked

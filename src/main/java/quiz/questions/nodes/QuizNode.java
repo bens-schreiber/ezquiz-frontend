@@ -35,7 +35,6 @@ public class QuizNode {
     /**
      * @return question type node correlating to questionType.
      */
-
     private Node getTypeNode() {
         switch (this.getQuestion().getType()) {
 
@@ -148,7 +147,6 @@ public class QuizNode {
             }
 
         }
-
         return null;
 
     }

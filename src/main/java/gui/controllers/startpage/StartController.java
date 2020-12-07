@@ -21,7 +21,7 @@ import javafx.stage.StageStyle;
 import quiz.QuizManager;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Provides methods for ActionEvents on Startup Screen.
@@ -122,32 +122,38 @@ public class StartController {
             startButton.setOnAction(event -> {
 
                 //Get ID's from Base64 bitmap
-                ArrayList<Integer> ids = new BitMap(textField.getText()).decodeToArray();
-
-                //Load ID's into the QuizManager
-                QuizManager.loadQuestions(ids);
-
-                //Start test
                 try {
+                    ArrayList<Integer> ids = new BitMap(textField.getText()).decodeToArray();
+                    QuizManager.loadQuestions(ids);
 
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
-                    stage.setAlwaysOnTop(true);
-                    stage.initStyle(StageStyle.UNDECORATED);
+                    //Start test
+                    try {
 
-                    //Close resources that arent needed anymore
-                    StageHelper.closeAllStages();
-                    StageHelper.clearScenes();
+                        Stage stage = new Stage();
+                        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
+                        stage.setAlwaysOnTop(true);
+                        stage.initStyle(StageStyle.UNDECORATED);
 
-                    //Add new window
-                    StageHelper.addStage("Quiz", stage);
-                    stage.show();
-                    window.close();
+                        //Close resources that arent needed anymore
+                        StageHelper.closeAllStages();
+                        StageHelper.clearScenes();
 
-                } catch (IOException | NullPointerException e) {
-                    ErrorBox.display("A page failed to load.", false);
-                    e.printStackTrace();
+                        //Add new window
+                        StageHelper.addStage("Quiz", stage);
+                        stage.show();
+                        window.close();
+
+                    } catch (IOException | NullPointerException e) {
+                        ErrorBox.display("A page failed to load.", false);
+                        e.printStackTrace();
+                    }
+
+                } catch (IllegalArgumentException e) {
+                    ErrorBox.display("Illegal characters.", false);
+                } finally {
+                    ErrorBox.display("Error attempting to use code.", false);
                 }
+
             });
 
 
