@@ -1,8 +1,11 @@
 package gui;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -35,6 +38,20 @@ public class StageHelper {
     public static void closeAllStages() {
         stages.forEach((s, stage) -> stage.close());
     }
+
+    public static Stage createAndAddStage(String name, String path) throws IOException {
+
+        Scene scene = new Scene(FXMLLoader.load(StageHelper.class.getResource(path)));
+
+        Stage stage = new Stage();
+
+        stage.setScene(scene);
+
+        addStage(name, stage);
+
+        return stage;
+    }
+
 
     /**
      * Reusable scenes to not reload information.

@@ -20,17 +20,11 @@ public class GuiRunner extends Application {
     public void start(Stage primaryStage) {
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/start.fxml")); //Display the start page.
 
-            Scene scene = new Scene(root);
-
+            primaryStage = StageHelper.createAndAddStage("Start", "/start.fxml");
             primaryStage.setResizable(false);
 
-            primaryStage.setScene(scene);
-
             primaryStage.show();
-
-            StageHelper.addStage("Start", primaryStage);
 
         } catch (IOException | NullPointerException e) {
             ErrorBox.display("A page failed to load.", true);

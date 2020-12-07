@@ -82,8 +82,10 @@ public class QuestionResultsController implements Initializable {
     public void onBackButton() {
 
         if (StageHelper.getScenes().containsKey("printableresults")) {
-            StageHelper.getStages().get("Quiz").setScene(StageHelper.getScenes().get("printableresults"));
+            StageHelper.getStages().get("Quiz").setScene(
+                    StageHelper.getScenes().get("printableresults"));
         } else {
+
             try {
 
                 Parent results = FXMLLoader.load(getClass().getResource("/printableresults.fxml"));

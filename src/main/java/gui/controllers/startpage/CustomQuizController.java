@@ -45,60 +45,73 @@ public class CustomQuizController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         ObservableList<String> subjectListItems = FXCollections
-                .observableArrayList("math", "science", "english", "history", "videogames");
+                .observableArrayList("None", "math", "science", "english", "history", "videogames");
 
         ObservableList<String> typeListItems = FXCollections
-                .observableArrayList("input", "t_f", "checkbox", "multiple");
+                .observableArrayList("None", "Written", "True or False", "Checkbox", "Multiple Choice");
 
-        subjectList.setItems(subjectListItems); //Establish dropdown menu items
+        //Establish dropdown menu items
+        subjectList.setItems(subjectListItems);
+        typeList.setItems(typeListItems);
 
-        typeList.setItems(typeListItems); //Establish dropdown menu items
+        //Establish default as none
+        typeList.setValue("None");
+        subjectList.setValue("None");
     }
 
     public void onBackButton() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/start.fxml")); //Display the start page.
-        StageHelper.getStages().get("Start").setScene(new Scene(root));
+
+        StageHelper.getStages().get("Start")
+                .setScene(
+                        new Scene(FXMLLoader.load(getClass().getResource("/start.fxml")))
+                );
     }
 
     //Setup all preferences and begin custom test
     public void onStartButton() {
 
+        //Handle the questionAmount being empty
         int questionAmount;
-
         if (questionAmountField.getText().isEmpty()) {
-
             questionAmount = Constants.DEFAULT_QUESTION_AMOUNT; //If no value, use the default.
-
-        } else {//If questionAmountField has a value
-
-            questionAmount = Integer.parseInt(questionAmountField.getText()); //Set value to questionAmount
-
+        } else {
+            questionAmount = Integer.parseInt(questionAmountField.getText());
         }
 
+        //Handle time field being empty
         if (testTimeField.getText().isEmpty()) {
-
             QuizManager.getPreferences().put("seconds", "1800");
-
         } else {
             QuizManager.getPreferences().put("seconds", String.valueOf(Integer.parseInt(testTimeField.getText()) * 60));
         }
 
+        //Handle test name being empty
         if (testNameField.getText().isEmpty()) {
-
             QuizManager.getPreferences().put("Quiz Name", "Custom Exam");
-
         } else {
-
             QuizManager.getPreferences().put("Quiz Name", testNameField.getText());
-
         }
 
         for (CheckBox checkBox : Arrays.asList(calcPref, notePadPref, drawPref, correctAnswers)) {//Put addon prefs in
-
             QuizManager.getPreferences().put(checkBox.getText(), String.valueOf(checkBox.isSelected()));
-
         }
 
+        if (subjectList.getValue().equals("None")) {
+            subjectList.setValue(null);
+        }
+
+        switch (typeList.getValue()) {
+
+            case "Multiple Choice" -> typeList.setValue("multiple");
+
+            case "True or False" -> typeList.setValue("t_f");
+
+            case "Written" -> typeList.setValue("input");
+
+            case "Checkbox" -> typeList.setValue("checkbox");
+
+            case "None" -> typeList.setValue(null);
+        }
 
         QuizManager.loadQuestions(questionAmount, subjectList.getValue(), typeList.getValue()); //Load question
 
@@ -112,8 +125,7 @@ public class CustomQuizController implements Initializable {
 
         try {
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
+            Stage stage = StageHelper.createAndAddStage("Quiz", "/quiz.fxml");
 
             stage.setAlwaysOnTop(true);
             stage.initStyle(StageStyle.UNDECORATED);
@@ -121,7 +133,6 @@ public class CustomQuizController implements Initializable {
             StageHelper.closeAllStages();
             StageHelper.clearScenes();
 
-            StageHelper.addStage("Quiz", stage);
             stage.show();
 
         } catch (IOException | NullPointerException e) {

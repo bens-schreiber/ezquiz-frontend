@@ -1,5 +1,7 @@
 .button{
   -fx-background-color: #8797f1;
+  -fx-pref-height: 35;
+  -fx-pref-width: 40;
 }
 
 .button:hover{

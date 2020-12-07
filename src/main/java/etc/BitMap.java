@@ -13,7 +13,6 @@ public class BitMap {
 
     /**
      * Class Constructor.
-     *
      * @param arrayList List of numbers to be stored into the bitmap. No duplicates.
      */
     public BitMap(ArrayList<Integer> arrayList) {
@@ -29,7 +28,7 @@ public class BitMap {
     /**
      * Alternative constructor.
      *
-     * @param base64 String of Base64 encoded integer.
+     * @param base64 String of Base64 encoded long.
      */
     public BitMap(String base64) {
 

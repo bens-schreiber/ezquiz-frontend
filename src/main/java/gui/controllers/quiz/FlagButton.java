@@ -17,9 +17,6 @@ class FlagButton extends Button {
      */
     public FlagButton(HBox hBox) {
 
-        //Give style properties
-        this.setPrefSize(40, 35);
-
         hBox.getChildren().add(this);
 
         //Set text to the number of the corresponding question

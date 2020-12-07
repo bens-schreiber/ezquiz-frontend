@@ -60,9 +60,6 @@ public class QuizController implements Initializable {
     @FXML
     Canvas paintCanvas;
 
-    @FXML
-    Rectangle questionBorder;
-
     private static GraphicsContext gc;
 
     //Default test is 30 minutes
@@ -228,8 +225,8 @@ public class QuizController implements Initializable {
         //Color the hbox that is currently selected
         selectCurrentQuizButton();
 
-        if (((FlagButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).isFlagged()) {
-            ((FlagButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).setFlagged(false);
+        if (((FlagButton) getCurrentButton()).isFlagged()) {
+            ((FlagButton) getCurrentButton()).setFlagged(false);
         }
 
         backButton.setDisable(questionSpot == 0);
@@ -239,8 +236,22 @@ public class QuizController implements Initializable {
 
     //On Flag Question clicked
     public void onFlagQuestion() {
-        ((FlagButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).setFlagged(true);
-        questionBorder.setStyle("-fx-stroke: " + Constants.FLAGGED_COLOR);
+
+        //Un-flag if already flagged.
+        if (((FlagButton) getCurrentButton()).isFlagged()) {
+
+            ((FlagButton) getCurrentButton()).setFlagged(false);
+
+            getCurrentButton().setStyle(Constants.UNSELECTED_COLOR_FX);
+
+            questionPrompt.setStyle("-fx-text-fill: black");
+
+        } else {
+
+            ((FlagButton) getCurrentButton()).setFlagged(true);
+
+            questionPrompt.setStyle("-fx-text-fill: " + Constants.FLAGGED_COLOR);
+        }
     }
 
     //When submit button is clicked
@@ -291,16 +302,11 @@ public class QuizController implements Initializable {
 
             try {
 
-                Parent root = FXMLLoader.load(getClass().getResource("/calculator.fxml"));
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
+                Stage stage = StageHelper.createAndAddStage("calculator", "/calculator.fxml");
 
                 stage.setAlwaysOnTop(true); //Keep notepad on test.
                 stage.initStyle(StageStyle.UTILITY);//Get rid of minimize
                 stage.resizableProperty().setValue(false);
-
-                StageHelper.addStage("calculator", stage); //Add this to current stages
 
                 stage.setOnCloseRequest(e -> { //Make sure if X is pressed it removes from stages
                     StageHelper.closeStage("calculator");
@@ -328,18 +334,12 @@ public class QuizController implements Initializable {
 
             try {
 
-                Parent root = FXMLLoader.load(getClass().getResource("/notepad.fxml"));
-
                 //Establish scene and stage
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
+                Stage stage = StageHelper.createAndAddStage("notepad", "/notepad.fxml");
 
                 stage.setAlwaysOnTop(true); //Keep notepad on test.
                 stage.initStyle(StageStyle.UTILITY);//Get rid of minimize
                 stage.resizableProperty().setValue(false); //Make non resizeable
-
-                StageHelper.addStage("notepad", stage); //Add this to current stages
 
                 stage.setOnCloseRequest(e -> { //Make sure if X is pressed it removes from stages
                     StageHelper.closeStage("notepad");
@@ -377,20 +377,14 @@ public class QuizController implements Initializable {
 
             try {
 
-                Parent root = FXMLLoader.load(getClass().getResource("/drawingpad.fxml")); //Grab calculator
-                Scene scene = new Scene(root);
-
                 //Change cursor to crosshair to show drawing mode is on
                 StageHelper.getStages().get("Quiz").getScene().setCursor(Cursor.CROSSHAIR);
 
-                Stage stage = new Stage();
-                stage.setScene(scene);
+                Stage stage = StageHelper.createAndAddStage("drawingpad", "/drawingpad.fxml");
+
                 stage.setAlwaysOnTop(true); //Keep pad on test.
                 stage.initStyle(StageStyle.UTILITY);
                 stage.resizableProperty().setValue(false);
-
-                //Add this to current stages
-                StageHelper.addStage("drawingpad", stage);
 
                 //Make sure if X is pressed it removes from stages, clears drawings
                 stage.setOnCloseRequest(e -> {
@@ -471,17 +465,22 @@ public class QuizController implements Initializable {
             }
         });
 
-        if (((FlagButton) questionHBox.getChildren().get(QuizManager.getCurrNum())).isFlagged()) {
-            questionBorder.setStyle("-fx-stroke: " + Constants.FLAGGED_COLOR);
+        if (((FlagButton) getCurrentButton()).isFlagged()) {
+            questionPrompt.setStyle("-fx-text-fill: " + Constants.FLAGGED_COLOR);
         } else {
-            questionBorder.setStyle("-fx-stroke: " + Constants.BORDER_COLOR);
+            questionPrompt.setStyle("-fx-text-fill: black");
         }
 
     }
 
+
     //Color box to show it is selected
     private void selectCurrentQuizButton() {
-        questionHBox.getChildren().get(QuizManager.getCurrNum()).setStyle(Constants.SELECTED_COLOR_FX);
+        getCurrentButton().setStyle(Constants.SELECTED_COLOR_FX);
+    }
+
+    private Node getCurrentButton() {
+        return questionHBox.getChildren().get(QuizManager.getCurrNum());
     }
 
 

@@ -50,11 +50,14 @@ public class PrintableResultsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        //Disable button if in preferences
         seeQuestionsButton.setDisable(!Boolean.parseBoolean(QuizManager.getPreferences().get("Show Correct Answers")));
 
-        QuizManager.checkAnswers();
-
+        //Set test name
         testName.setText(testName.getText() + QuizManager.getPreferences().get("Quiz Name"));
+
+        //Check all answers
+        QuizManager.checkAnswers();
 
         //Get the amount of correct answers, get ID's for bitmap storage
         float correctAnswers = 0;
@@ -79,6 +82,7 @@ public class PrintableResultsController implements Initializable {
 
 
     public void onScreenshotButton() {
+
         try {
             Scene scene = StageHelper.getScenes().get("PrintableResults");
             WritableImage writableImage = scene.snapshot(null);
@@ -100,10 +104,19 @@ public class PrintableResultsController implements Initializable {
     }
 
     public void onRetakeCodeButton() {
+
         Clipboard clipboard = Clipboard.getSystemClipboard();
+
         ClipboardContent content = new ClipboardContent();
+
         content.putString(bitMap.getEncodeToBase64());
+
         clipboard.setContent(content);
+
+    }
+
+    public void onPrintButton() {
+
     }
 
     public void onSeeQuestions() {

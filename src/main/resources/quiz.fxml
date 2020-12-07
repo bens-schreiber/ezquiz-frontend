@@ -25,11 +25,17 @@
                 <Button fx:id="submitButton" layoutX="1817.0" layoutY="10.0" mnemonicParsing="false"
                         onMouseClicked="#onSubmitButton" prefHeight="26.0" prefWidth="89.0"
                         stylesheets="@css/standard_button.css" text="Submit"/>
-                <HBox layoutX="32.0" layoutY="5.0" prefHeight="36.0" prefWidth="207.0" spacing="5.0"
+                <HBox layoutX="38.0" layoutY="6.0" prefHeight="36.0" prefWidth="207.0" spacing="5.0"
                       stylesheets="@css/standard_button.css">
                     <children>
                         <Button mnemonicParsing="false" onMouseClicked="#onFlagQuestion" prefHeight="35.0"
                                 prefWidth="70.0" style="-fx-background-color: #fb8804;" text="Flag"/>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" layoutX="245.0" layoutY="6.0" prefHeight="35.0" prefWidth="1554.0"
+                      spacing="5.0" stylesheets="@css/flagbutton.css" AnchorPane.leftAnchor="245.0"
+                      AnchorPane.rightAnchor="121.0">
+                    <children>
                         <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false"
                                 onMouseClicked="#onBackButton">
                             <graphic>
@@ -53,11 +59,10 @@
                                 </ImageView>
                             </graphic>
                         </Button>
+                        <HBox fx:id="questionHBox" prefHeight="35.0" prefWidth="200.0"
+                              stylesheets="@css/flagbutton.css"/>
                     </children>
                 </HBox>
-                <HBox fx:id="questionHBox" alignment="CENTER" layoutX="245.0" layoutY="6.0" prefHeight="35.0"
-                      prefWidth="1554.0" spacing="5.0" stylesheets="@css/flagbutton.css" AnchorPane.leftAnchor="245.0"
-                      AnchorPane.rightAnchor="121.0"/>
             </children>
         </AnchorPane>
         <AnchorPane fx:id="topPane" prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: #9E9E9E;"
@@ -125,6 +130,7 @@
                                 </Button>
                             </children>
                         </VBox>
+                        <HBox layoutX="531.0" layoutY="373.0" prefHeight="35.0" prefWidth="200.0"/>
                     </children>
                 </AnchorPane>
             </content>
