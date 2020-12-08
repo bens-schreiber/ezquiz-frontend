@@ -1,10 +1,9 @@
 package database;
 
 import etc.Constants;
-import quiz.questions.Question;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+import quiz.questions.Question;
 
 import java.io.IOException;
 
@@ -25,7 +24,6 @@ public class Requests {
 
     /**
      * Limits pool of questions to those with only the specified Question Type.
-     *
      * @param id JSONObject with correlating id. Not absolute id.
      */
     public static JSONObject getQuestionByType(String type, int id) throws IOException, JSONException {

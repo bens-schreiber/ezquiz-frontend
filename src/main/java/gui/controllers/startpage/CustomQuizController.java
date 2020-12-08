@@ -8,12 +8,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import quiz.QuizManager;
@@ -37,7 +35,6 @@ public class CustomQuizController implements Initializable {
     @FXML
     private CheckBox calcPref, drawPref, notePadPref, correctAnswers;
 
-
     /**
      * Initial startup method.
      */
@@ -59,38 +56,36 @@ public class CustomQuizController implements Initializable {
         subjectList.setValue("None");
     }
 
-    public void onBackButton() throws IOException {
+    public void onBackButton() {
 
-        StageHelper.getStages().get("Start")
-                .setScene(
-                        new Scene(FXMLLoader.load(getClass().getResource("/start.fxml")))
-                );
+        try {
+
+            StageHelper.getStages().get("Start")
+                    .setScene(new Scene(FXMLLoader.load(getClass().getResource("/start.fxml"))));
+
+        } catch (IOException | NullPointerException e) {
+            ErrorBox.display("A page failed to load.", false);
+            e.printStackTrace();
+        }
     }
 
     //Setup all preferences and begin custom test
     public void onStartButton() {
 
         //Handle the questionAmount being empty
-        int questionAmount;
-        if (questionAmountField.getText().isEmpty()) {
-            questionAmount = Constants.DEFAULT_QUESTION_AMOUNT; //If no value, use the default.
-        } else {
-            questionAmount = Integer.parseInt(questionAmountField.getText());
-        }
+        //If no value, use the default.
+        int questionAmount = questionAmountField.getText().isEmpty() ?
+                Constants.DEFAULT_QUESTION_AMOUNT : Integer.parseInt(questionAmountField.getText());
 
         //Handle time field being empty
-        if (testTimeField.getText().isEmpty()) {
-            QuizManager.getPreferences().put("seconds", "1800");
-        } else {
-            QuizManager.getPreferences().put("seconds", String.valueOf(Integer.parseInt(testTimeField.getText()) * 60));
-        }
+        //30 minutes default
+        QuizManager.getPreferences().put("seconds", testTimeField.getText().isEmpty() ?
+                "1800" : String.valueOf(Integer.parseInt(testTimeField.getText()) * 60));
 
         //Handle test name being empty
-        if (testNameField.getText().isEmpty()) {
-            QuizManager.getPreferences().put("Quiz Name", "Custom Exam");
-        } else {
-            QuizManager.getPreferences().put("Quiz Name", testNameField.getText());
-        }
+        //Default name is Custom Exam
+        QuizManager.getPreferences().put("Quiz Name", testNameField.getText().isEmpty() ?
+                "Custom Exam" : testNameField.getText());
 
         for (CheckBox checkBox : Arrays.asList(calcPref, notePadPref, drawPref, correctAnswers)) {//Put addon prefs in
             QuizManager.getPreferences().put(checkBox.getText(), String.valueOf(checkBox.isSelected()));

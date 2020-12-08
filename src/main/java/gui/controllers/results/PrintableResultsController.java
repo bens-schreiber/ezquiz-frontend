@@ -60,7 +60,7 @@ public class PrintableResultsController implements Initializable {
         QuizManager.checkAnswers();
 
         //Get the amount of correct answers, get ID's for bitmap storage
-        float correctAnswers = 0;
+        int correctAnswers = 0;
         ArrayList<Integer> ids = new ArrayList<>();
         for (QuizNode quizNode : QuizManager.getQuizNodes()) {
 
@@ -76,7 +76,7 @@ public class PrintableResultsController implements Initializable {
 
         //add how many correct out of possible, percentage, put bitmap to Base64
         outOfLabel.setText(correctAnswers + " out of " + QuizManager.getQuizNodes().size());
-        percentageLabel.setText((correctAnswers / QuizManager.getQuizNodes().size() * 100) + "%");
+        percentageLabel.setText((correctAnswers / QuizManager.getQuizNodes().size()) + "%");
 
     }
 

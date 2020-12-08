@@ -1,21 +1,17 @@
 package database;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.*;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Reads json from url and returns JSONObject
  */
-
+//todo: httpclient
 class JsonReader {
 
     private static String readAll(Reader rd) throws IOException {

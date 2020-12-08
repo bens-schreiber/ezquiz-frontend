@@ -14,7 +14,6 @@ import java.util.List;
  * Records responses to questions.
  * Flagged as correct or incorrect on QuizManager.checkAnswers().
  */
-
 public class QuizNode {
 
     private final Node node;
@@ -28,8 +27,11 @@ public class QuizNode {
      * Class constructor.
      */
     public QuizNode(Question question) {
+
         this.question = question;
+
         this.node = getTypeNode();
+
     }
 
     /**
@@ -154,7 +156,6 @@ public class QuizNode {
     /**
      * Getters
      */
-
     public Node getNode() {
         return this.node;
     }

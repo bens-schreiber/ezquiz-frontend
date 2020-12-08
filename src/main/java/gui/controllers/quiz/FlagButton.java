@@ -11,15 +11,12 @@ class FlagButton extends Button {
 
     private boolean flagged;
 
-
     public void setFlagged(boolean flagged) {
+
         this.flagged = flagged;
 
-        if (flagged) {
-            this.setStyle(Constants.FLAGGED_COLOR_FX);
-        } else {
-            this.setStyle(Constants.UNSELECTED_COLOR_FX);
-        }
+        this.setStyle(flagged ? Constants.FLAGGED_COLOR_FX : Constants.UNSELECTED_COLOR_FX);
+
     }
 
     public boolean isFlagged() {

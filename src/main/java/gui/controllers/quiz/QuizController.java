@@ -29,13 +29,11 @@ import quiz.QuizManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.stream.IntStream;
 
 
 /**
  * Main controller for test.
  */
-
 public class QuizController implements Initializable {
 
     @FXML
@@ -98,14 +96,25 @@ public class QuizController implements Initializable {
 
         //Establish flag button amount
         //Whenever the button is clicked use the individualQuestionClicked handler
-        IntStream.range(0, QuizManager.getQuizNodes().size()).mapToObj(i -> new FlagButton()).forEach(button -> {
+        for (int i = 0; i < QuizManager.getQuizNodes().size(); i++) {
+
+            FlagButton button = new FlagButton();
+
             button.setOnMouseClicked(this::individualQuestionClicked);
+
             questionHBox.getChildren().add(button);
-        });
+
+        }
 
 
         //Display the new question.
         displayNewQuestion();
+
+        //Color the question that is currently selected
+        selectCurrentQuizButton();
+
+        //Begin the test timer
+        startTimer();
 
         //Disable back button by default.
         backButton.setDisable(true);
@@ -115,11 +124,6 @@ public class QuizController implements Initializable {
         gc = paintCanvas.getGraphicsContext2D();
         gc.setStroke(Color.WHITE);
 
-        //Color the question that is currently selected
-        selectCurrentQuizButton();
-
-        //Begin the test timer
-        startTimer();
 
     }
 
@@ -235,7 +239,6 @@ public class QuizController implements Initializable {
             questionPrompt.setStyle("-fx-text-fill: black");
 
         } else {
-
             ((FlagButton) getCurrentButton()).setFlagged(true);
             questionPrompt.setStyle("-fx-text-fill: " + Constants.FLAGGED_COLOR);
         }
@@ -244,16 +247,8 @@ public class QuizController implements Initializable {
     //When submit button is clicked
     public void onSubmitButton() {
 
-        //Determine if any questions have been flaggedQuestions
-        boolean flaggedQuestions = false;
-        for (Node node : questionHBox.getChildren()) {
-            if (((FlagButton) node).isFlagged()) {
-                flaggedQuestions = true;
-                break;
-            }
-        }
-
-        if (flaggedQuestions) {
+        //If any questions are flagged
+        if (questionHBox.getChildren().stream().anyMatch(node -> ((FlagButton) node).isFlagged())) {
             if (ConfirmBox.display("Some questions are flagged. Are you sure you want to submit?")) {
                 endTest();
             }
@@ -447,14 +442,10 @@ public class QuizController implements Initializable {
             }
         });
 
-        if (((FlagButton) getCurrentButton()).isFlagged()) {
-            questionPrompt.setStyle("-fx-text-fill: " + Constants.FLAGGED_COLOR);
-        } else {
-            questionPrompt.setStyle("-fx-text-fill: black");
-        }
+        questionPrompt.setStyle(((FlagButton) getCurrentButton()).isFlagged() ?
+                "-fx-text-fill: " + Constants.FLAGGED_COLOR : "-fx-text-fill: black");
 
     }
-
 
     //Color box to show it is selected
     private void selectCurrentQuizButton() {

@@ -5,14 +5,15 @@ import java.util.Base64;
 
 /**
  * BitMap stored as long
- * @author benschreiber
  */
 public class BitMap {
+
     private long bitMap;
 
     /**
      * Class Constructor.
-     * @param arrayList List of numbers to be stored into the bitmap. No duplicates.
+     *
+     * @param arrayList List of numbers to be stored into the bitmap.
      */
     public BitMap(ArrayList<Integer> arrayList) {
 
@@ -26,7 +27,7 @@ public class BitMap {
 
     /**
      * Alternative constructor.
-     * @param base64 String of Base64 encoded long.
+     * @param base64 Base64 encoded long.
      */
     public BitMap(String base64) {
 

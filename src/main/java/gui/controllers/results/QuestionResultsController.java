@@ -27,12 +27,10 @@ public class QuestionResultsController implements Initializable {
     @FXML
     VBox correctAnswersVBox;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        correctAnswersVBox.setSpacing(30);
-
+        //Create question answers
         int quizNumber = 1;
         for (QuizNode quizNode : QuizManager.getQuizNodes()) {
 
@@ -82,8 +80,9 @@ public class QuestionResultsController implements Initializable {
     public void onBackButton() {
 
         if (StageHelper.getScenes().containsKey("printableresults")) {
-            StageHelper.getStages().get("Quiz").setScene(
-                    StageHelper.getScenes().get("printableresults"));
+
+            StageHelper.getStages().get("Quiz").setScene(StageHelper.getScenes().get("printableresults"));
+
         } else {
 
             try {

@@ -1,25 +1,26 @@
 package quiz;
 
+import database.Requests;
 import etc.Constants;
 import gui.popups.ErrorBox;
 import org.jetbrains.annotations.Nullable;
+import org.json.JSONException;
 import org.json.JSONObject;
 import quiz.questions.Question;
+import quiz.questions.QuestionFactory;
+import quiz.questions.nodes.QuizNode;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import quiz.questions.*;
-import database.Requests;
-import org.json.JSONException;
-import quiz.questions.nodes.QuizNode;
 
 /**
  * Stores local quiz information, contains grading methods
  */
-
 public class QuizManager {
 
     //Hashmap of user preferences
@@ -33,6 +34,7 @@ public class QuizManager {
 
     /**
      * Load questions into QuizManager.questions.
+     *
      * @param subject if not null limits questions to that specific subject.
      * @param type    if not null limits questions to that specific type.
      */
@@ -89,7 +91,6 @@ public class QuizManager {
 
     /**
      * Overloaded loadQuestions method.
-     *
      * @param ids id of questions to load.
      */
     public static void loadQuestions(List<Integer> ids) {
@@ -157,21 +158,15 @@ public class QuizManager {
 
         //Determine how large the id pool should be
         if (subject == null && type == null) {
-
             return Constants.DATABASE_SIZE;
-
         }
 
         if (subject != null && type != null) {
-
             return Constants.SUBJECT_TYPE_QUESTION_AMOUNT;
-
         }
 
         if (subject == null) {
-
             return Constants.TYPE_QUESTION_AMOUNT;
-
         }
 
         return Constants.SUBJECT_QUESTION_AMOUNT;
@@ -201,6 +196,7 @@ public class QuizManager {
     public static QuizNode getCurrNode() {
 
         return quizNodes.get(currQuestion);
+
     }
 
     public static Question getCurrQuestion() {
@@ -210,10 +206,9 @@ public class QuizManager {
     }
 
     public static boolean allResponded() {
-        for (QuizNode quizNode : quizNodes) {
-            return quizNode.getResponse().isEmpty();
-        }
-        return false;
+
+        return quizNodes.stream().noneMatch(quizNode -> quizNode.getResponse().isEmpty());
+
     }
 
 

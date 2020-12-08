@@ -37,13 +37,9 @@ public class StartController {
             QuizManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 
             //Attempt to load scene and set it to stage
-            Stage stage = new Stage();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
+            Stage stage = StageHelper.createAndAddStage("Quiz", "/quiz.fxml");
             stage.setAlwaysOnTop(true);
             stage.initStyle(StageStyle.UNDECORATED);
-
-            //Make new Quiz stage and add it to  Stage Helper
-            StageHelper.addStage("Quiz", stage);
 
             //Close stage helper resources
             StageHelper.clearScenes();
@@ -129,8 +125,7 @@ public class StartController {
                     //Start test
                     try {
 
-                        Stage stage = new Stage();
-                        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/quiz.fxml"))));
+                        Stage stage = StageHelper.createAndAddStage("Quiz", "/quiz.fxml");
                         stage.setAlwaysOnTop(true);
                         stage.initStyle(StageStyle.UNDECORATED);
 
@@ -139,7 +134,6 @@ public class StartController {
                         StageHelper.clearScenes();
 
                         //Add new window
-                        StageHelper.addStage("Quiz", stage);
                         stage.show();
                         window.close();
 

@@ -11,7 +11,6 @@ public class QuestionFactory {
 
     /**
      * Factory method.
-     *
      * @return new Question object built from JSONObject.
      * @throws JSONException if any required Question data is missing.
      */
@@ -25,48 +24,36 @@ public class QuestionFactory {
 
         int id = Integer.parseInt(json.get("question_num").toString());
 
-        String directions;
-
         ArrayList<String> options;
 
-
         if (json.has("options")) {
-
             options = new ArrayList<>(Arrays.asList(json.get("options").toString()
                     .split(", ")));
 
         } else {
-
             options = null;
-
         }
 
-        if (json.has("directions")) {
+        String directions;
 
-            directions = json.get("directions").toString();
+        directions = json.has("directions") ? json.get("directions").toString() : switch (type) {
 
-        } else {
+            case "multiple" -> "Select the correct answer.";
 
-            directions = switch (type) {
+            case "t_f" -> "Determine if the problem is true or false.";
 
-                case "multiple" -> "Select the correct answer.";
+            case "checkbox" -> "Check all the boxes that apply.";
 
-                case "t_f" -> "Determine if the problem is true or false.";
+            default -> "Correctly type the solution.";
 
-                case "checkbox" -> "Check all the boxes that apply.";
+        };
 
-                default -> "Correctly type the solution.";
-
-            };
-        }
         return new Question(type, subject, options, question, directions, id);
 
 
     }
 
     /**
-     * Factory method
-     *
      * @return answer array from JSON.
      * @throws JSONException if required data is missing.
      */

@@ -19,7 +19,7 @@ public class ErrorBox {
      * @param fatal if the program should be terminated.
      */
     public static void display(String error, boolean fatal) {
-//todo: make this an fxml scene
+        //todo: make this an fxml scene
         //Establish the error scene
         VBox vbox = new VBox(10);
         vbox.getChildren().add(new Label(error));
@@ -36,7 +36,6 @@ public class ErrorBox {
         if (fatal) {
             stage.setTitle("A fatal error occurred.");
             button.setOnAction(e -> Platform.exit());
-
 
         } else {
             stage.setTitle("An error occurred.");

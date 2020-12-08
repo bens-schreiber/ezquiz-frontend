@@ -6,14 +6,10 @@ import java.util.List;
 /**
  * Stores necessary information to display a question
  */
-
 public class Question {
 
     private final int id;
-    private final String type;
-    private final String subject;
-    private final String prompt;
-    private final String directions;
+    private final String type, subject, prompt, directions;
     private final List<String> options;
     private List<String> answer;
 
@@ -21,7 +17,6 @@ public class Question {
      * Class constructor.
      * Answer is null until specifically set.
      */
-
     public Question(String type, String subject, List<String> options, String prompt, String directions, int id) {
         this.type = type;
         this.subject = subject;
@@ -75,7 +70,6 @@ public class Question {
     /**
      * Setters
      */
-
     public void setAnswer(List<String> answer) {
         this.answer = answer;
     }
