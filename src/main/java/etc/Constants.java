@@ -5,6 +5,10 @@ package etc;
  */
 public class Constants {
 
+    public static int STATUS_ACCEPTED = 202;
+
+    public static int STATUS_UNAUTHORIZED = 401;
+
     public static String DEFAULT_PATH = "http://localhost:7080/api/database/questions/";
 
     public static int DEFAULT_QUESTION_AMOUNT = 5;
@@ -18,6 +22,8 @@ public class Constants {
     public static int SUBJECT_TYPE_QUESTION_AMOUNT = 2;
 
     public static int MAX_NOTEPAD_TEXT = 250;
+
+    public static int MAX_PASS_USER_SIZE = 8;
 
     public static int MAX_BRUSH_SIZE = 1;
 

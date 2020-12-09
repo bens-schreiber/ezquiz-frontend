@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="168.0" prefWidth="353.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.login.RegisterController">
+   <children>
+      <VBox layoutX="25.0" layoutY="22.0" prefHeight="116.0" prefWidth="303.0" spacing="15.0">
+         <children>
+            <HBox prefHeight="28.0" prefWidth="253.0" spacing="15.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="124.0" text="Enter a Username"/>
+                  <TextField fx:id="userField"/>
+               </children>
+            </HBox>
+            <HBox prefHeight="28.0" prefWidth="253.0" spacing="20.0">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="117.0" text="Enter a Password"/>
+                  <TextField fx:id="passField"/>
+               </children>
+            </HBox>
+            <Label fx:id="errorLabel" prefHeight="16.0" prefWidth="303.0" textFill="RED"/>
+            <HBox alignment="CENTER" prefHeight="31.0" prefWidth="303.0" spacing="5.0"
+                  stylesheets="@css/standard_button.css">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onExitButton" text="Exit"/>
+                  <Button mnemonicParsing="false" onAction="#onRegisterButton" text="Register Account"/>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

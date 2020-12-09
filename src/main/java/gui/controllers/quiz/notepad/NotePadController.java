@@ -33,13 +33,7 @@ public class NotePadController implements Initializable {
             if (c.isContentChange()) {
                 int newLength = c.getControlNewText().length();
                 if (newLength > Constants.MAX_NOTEPAD_TEXT) {
-                    // replace the input text with the last len chars
-                    String tail = c.getControlNewText().substring(newLength - Constants.MAX_NOTEPAD_TEXT, newLength);
-                    c.setText(tail);
-                    // replace the range to complete text
-                    // valid coordinates for range is in terms of old text
-                    int oldLength = c.getControlText().length();
-                    c.setRange(0, oldLength);
+                    c.setText("");
                 }
             }
             return c;

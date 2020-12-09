@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #9E9E9E;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="gui.controllers.startpage.StartController">
@@ -23,10 +21,12 @@
                         <Image url="@../../../../../Pictures/FBLA-Color-web.png"/>
                     </image>
                 </ImageView>
-                <VBox layoutX="196.0" layoutY="144.0" prefHeight="124.0" prefWidth="219.0" spacing="8.0"
-                      style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
+                <VBox fx:id="buttonBox" layoutX="196.0" layoutY="144.0" prefHeight="124.0" prefWidth="219.0"
+                      spacing="8.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
                       stylesheets="@css/startbutton.css">
                     <children>
+                        <Button mnemonicParsing="false" onAction="#onLoginButton" prefHeight="30.0" prefWidth="220.0"
+                                text="Login"/>
                         <Button mnemonicParsing="false" onMouseClicked="#onDefaultButton" prefHeight="26.0"
                                 prefWidth="222.0" text="Take Default Test"/>
                         <Button mnemonicParsing="false" onMouseClicked="#onCustomButton" prefHeight="26.0"

@@ -5,7 +5,9 @@ import etc.Constants;
 import gui.StageHelper;
 import gui.popups.ErrorBox;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,18 +23,47 @@ import javafx.stage.StageStyle;
 import quiz.QuizManager;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 /**
  * Provides methods for ActionEvents on Startup Screen.
  */
-public class StartController {
+public class StartController implements Initializable {
+
+    @FXML
+    private VBox buttonBox;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+//        buttonBox.getChildren().forEach(button -> button.setDisable(true));
+//        buttonBox.getChildren().get(0).setDisable(false);
 
 
-    public void onDefaultButton() {
+    }
+
+    public void onLoginButton() {
 
         try {
 
+            Stage stage = StageHelper.createAndAddStage("Login", "/login.fxml");
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setAlwaysOnTop(true);
+            stage.show();
+
+        } catch (IOException | NullPointerException e) {
+            ErrorBox.display("A page failed to load.", false);
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void onDefaultButton() {
+        try {
             //Load in questions with no null limiters
             QuizManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 

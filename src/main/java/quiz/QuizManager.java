@@ -80,7 +80,7 @@ public class QuizManager {
                 question.shuffleOptions();
                 quizNodes.add(new QuizNode(question));
 
-            } catch (IOException | JSONException e) {
+            } catch (IOException | JSONException | InterruptedException e) {
                 ErrorBox.display("A question failed to load. ID: " + id, false);
                 quizNodes.clear();
                 e.printStackTrace();
@@ -100,7 +100,7 @@ public class QuizManager {
                 question.shuffleOptions();
                 quizNodes.add(new QuizNode(question));
 
-            } catch (IOException | JSONException e) {
+            } catch (IOException | JSONException | InterruptedException e) {
                 ErrorBox.display("A question failed to load. ID: " + id, false);
                 quizNodes.clear();
                 e.printStackTrace();
@@ -144,7 +144,7 @@ public class QuizManager {
                 //Check if answer is correct.
                 quizNode.setCorrect(answer.containsAll(response));
 
-            } catch (IOException | JSONException e) {
+            } catch (IOException | JSONException | InterruptedException e) {
                 ErrorBox.display("A question failed to be graded. ID: " + quizNode.getQuestion().getID(), true);
                 e.printStackTrace();
             }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="109.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.login.LoginController">
+   <children>
+      <HBox layoutX="57.0" layoutY="107.0" prefHeight="26.0" prefWidth="258.0" spacing="10.0"
+            stylesheets="@css/standard_button.css">
+         <children>
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitButton" text="Exit"/>
+            <Button fx:id="registerButton" mnemonicParsing="false" onAction="#onRegisterButton" text="Register"/>
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginButton" text="Login"/>
+         </children>
+      </HBox>
+      <VBox layoutX="57.0" layoutY="14.0" prefHeight="75.0" prefWidth="258.0" spacing="10.0">
+         <children>
+            <HBox prefHeight="26.0" prefWidth="258.0" spacing="15.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="67.0" text="Username"/>
+                  <TextField fx:id="usernameField"/>
+               </children>
+            </HBox>
+            <HBox prefHeight="26.0" prefWidth="258.0" spacing="16.0">
+               <children>
+                  <Label prefHeight="31.0" prefWidth="67.0" text="Password"/>
+                  <TextField fx:id="passwordField"/>
+               </children>
+            </HBox>
+            <Label fx:id="errorLabel" prefHeight="16.0" prefWidth="285.0" textFill="RED"/>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
