@@ -3,15 +3,11 @@ package gui.controllers.login;
 import database.Requests;
 import etc.Constants;
 import gui.StageHelper;
-import gui.popups.ErrorBox;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -49,7 +45,13 @@ public class LoginController implements Initializable {
             boolean correct = Requests.verifyLoginCredentials(usernameField.getText(), passwordField.getText())
                     == Constants.STATUS_ACCEPTED;
 
-            errorLabel.setText(correct ? "Successfully logged in" : "Could not log in");
+            if (correct) {
+                Constants.USERNAME = usernameField.getText();
+                errorLabel.setText("Successfully logged in");
+            } else {
+                errorLabel.setText("Could not log in. Try again.");
+            }
+
 
         } catch (InterruptedException | IOException | JSONException e) {
             e.printStackTrace();
@@ -61,20 +63,4 @@ public class LoginController implements Initializable {
         StageHelper.closeStage("Login");
     }
 
-    public void onRegisterButton() {
-
-        try {
-            Stage stage = StageHelper.createAndAddStage("Register", "/register.fxml");
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setAlwaysOnTop(true);
-            stage.show();
-            StageHelper.closeStage("Login");
-
-        } catch (IOException | NullPointerException e) {
-            ErrorBox.display("A page failed to load.", false);
-            e.printStackTrace();
-        }
-
-    }
 }

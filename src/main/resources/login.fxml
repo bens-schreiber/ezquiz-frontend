@@ -5,15 +5,16 @@
 <AnchorPane prefHeight="109.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.login.LoginController">
    <children>
-      <HBox layoutX="57.0" layoutY="107.0" prefHeight="26.0" prefWidth="258.0" spacing="10.0"
+      <HBox layoutX="102.0" layoutY="105.0" prefHeight="26.0" prefWidth="171.0" spacing="10.0"
             stylesheets="@css/standard_button.css">
          <children>
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitButton" text="Exit"/>
-            <Button fx:id="registerButton" mnemonicParsing="false" onAction="#onRegisterButton" text="Register"/>
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginButton" text="Login"/>
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitButton" prefHeight="22.0"
+                    prefWidth="76.0" text="Exit"/>
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onLoginButton" prefHeight="22.0"
+                    prefWidth="87.0" text="Login"/>
          </children>
       </HBox>
-      <VBox layoutX="57.0" layoutY="14.0" prefHeight="75.0" prefWidth="258.0" spacing="10.0">
+      <VBox layoutX="58.0" layoutY="14.0" prefHeight="75.0" prefWidth="258.0" spacing="10.0">
          <children>
             <HBox prefHeight="26.0" prefWidth="258.0" spacing="15.0">
                <children>

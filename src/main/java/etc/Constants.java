@@ -1,9 +1,15 @@
 package etc;
 
+import java.util.UUID;
+
 /**
  * Contains constants for use across the program
  */
 public class Constants {
+
+    public static UUID AUTH_TOKEN;
+
+    public static String USERNAME = "";
 
     public static int STATUS_ACCEPTED = 202;
 

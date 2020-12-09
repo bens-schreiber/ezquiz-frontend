@@ -35,12 +35,32 @@ public class StartController implements Initializable {
     @FXML
     private VBox buttonBox;
 
+    @FXML
+    Label loggedInLabel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-//        buttonBox.getChildren().forEach(button -> button.setDisable(true));
-//        buttonBox.getChildren().get(0).setDisable(false);
+        buttonBox.getChildren().forEach(button -> button.setDisable(true));
+        buttonBox.getChildren().get(0).setDisable(false);
+        buttonBox.getChildren().get(1).setDisable(false);
 
+
+    }
+
+    public void onRegisterButton() {
+
+        try {
+            Stage stage = StageHelper.createAndAddStage("Register", "/register.fxml");
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setAlwaysOnTop(true);
+            stage.show();
+
+        } catch (IOException | NullPointerException e) {
+            ErrorBox.display("A page failed to load.", false);
+            e.printStackTrace();
+        }
 
     }
 
@@ -52,7 +72,14 @@ public class StartController implements Initializable {
             stage.initStyle(StageStyle.UNDECORATED);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setAlwaysOnTop(true);
-            stage.show();
+            stage.showAndWait();
+
+            if (!Constants.USERNAME.isEmpty()) {
+                buttonBox.getChildren().forEach(button -> button.setDisable(!button.isDisable()));
+                buttonBox.getChildren().remove(0);
+                buttonBox.getChildren().remove(0);
+                loggedInLabel.setText("Logged in as: " + Constants.USERNAME);
+            }
 
         } catch (IOException | NullPointerException e) {
             ErrorBox.display("A page failed to load.", false);

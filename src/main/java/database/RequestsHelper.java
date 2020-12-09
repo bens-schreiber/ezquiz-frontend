@@ -27,7 +27,7 @@ class RequestsHelper {
         return new JSONObject(response.body());
     }
 
-    public static int postRequest(JSONObject body, String urlSegment) throws IOException, InterruptedException {
+    public static HttpResponse<String> postRequest(JSONObject body, String urlSegment) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -36,8 +36,7 @@ class RequestsHelper {
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
                 .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.statusCode();
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
 
     }
 }

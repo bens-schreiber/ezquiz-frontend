@@ -6,14 +6,14 @@ import org.json.JSONObject;
 import quiz.questions.Question;
 
 import java.io.IOException;
-import java.util.UUID;
+import java.net.http.HttpResponse;
 
 /**
  * Request methods for getting data from RestServer
  */
 public class Requests {
 
-    private static final UUID token = UUID.randomUUID();
+    private static String AUTH_TOKEN;
 
     /**
      * @param id specifies absolute location in server.
@@ -21,7 +21,7 @@ public class Requests {
      */
     public static JSONObject getQuestion(int id) throws IOException, JSONException, InterruptedException {
 
-        return (JSONObject) RequestsHelper.getJSONFromURL(Constants.DEFAULT_PATH + id, token.toString()).get("obj0");
+        return (JSONObject) RequestsHelper.getJSONFromURL(Constants.DEFAULT_PATH + id, AUTH_TOKEN).get("obj0");
 
     }
 
@@ -33,7 +33,7 @@ public class Requests {
     public static JSONObject getQuestionByType(String type, int id) throws IOException, JSONException, InterruptedException {
 
         return (JSONObject) RequestsHelper
-                .getJSONFromURL(Constants.DEFAULT_PATH + "type/" + type, token.toString())
+                .getJSONFromURL(Constants.DEFAULT_PATH + "type/" + type, AUTH_TOKEN)
                 .get("obj" + id);
 
     }
@@ -46,7 +46,7 @@ public class Requests {
     public static JSONObject getQuestionBySubject(String subject, int id) throws IOException, JSONException, InterruptedException {
 
         return (JSONObject) RequestsHelper
-                .getJSONFromURL(Constants.DEFAULT_PATH + "subject/" + subject, token.toString())
+                .getJSONFromURL(Constants.DEFAULT_PATH + "subject/" + subject, AUTH_TOKEN)
                 .get("obj" + id);
 
     }
@@ -59,7 +59,7 @@ public class Requests {
     public static JSONObject getQuestionBySubjectAndType(String subject, String type, int id) throws IOException, JSONException, InterruptedException {
 
         return (JSONObject) RequestsHelper
-                .getJSONFromURL(Constants.DEFAULT_PATH + subject + "/" + type, token.toString())
+                .getJSONFromURL(Constants.DEFAULT_PATH + subject + "/" + type, AUTH_TOKEN)
                 .get("obj" + id);
 
     }
@@ -70,7 +70,7 @@ public class Requests {
     public static JSONObject getQuestionAnswer(Question question) throws IOException, JSONException, InterruptedException {
 
         return (JSONObject) RequestsHelper
-                .getJSONFromURL(Constants.DEFAULT_PATH + "answer/" + question.getID(), token.toString())
+                .getJSONFromURL(Constants.DEFAULT_PATH + "answer/" + question.getID(), AUTH_TOKEN)
                 .get("obj0");
 
     }
@@ -79,7 +79,10 @@ public class Requests {
         JSONObject body = new JSONObject();
         body.put("username", username);
         body.put("password", password);
-        return RequestsHelper.postRequest(body, "register");
+
+        HttpResponse<String> response = RequestsHelper.postRequest(body, "register");
+
+        return response.statusCode();
     }
 
     public static int verifyLoginCredentials(String username, String password) throws IOException, InterruptedException, JSONException {
@@ -88,7 +91,12 @@ public class Requests {
         body.put("password", password);
         body.put("username", username);
 
-        return RequestsHelper.postRequest(body, "login");
+        HttpResponse<String> response = RequestsHelper.postRequest(body, "login");
+
+        if (response.headers().firstValue("token").isPresent()) {
+            AUTH_TOKEN = response.headers().firstValue("token").get();
+        }
+        return response.statusCode();
 
     }
 }
