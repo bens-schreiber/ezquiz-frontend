@@ -12,8 +12,14 @@ import java.net.http.HttpResponse;
 /**
  * Reads json from url and returns JSONObject
  */
-//todo: httpclient
 class RequestsHelper {
+
+    /**
+     * Make HTTP post to server.
+     *
+     * @param url   where to send request
+     * @param token auth token
+     */
     public static JSONObject getJSONFromURL(String url, String token) throws IOException, InterruptedException, JSONException {
 
         HttpClient client = HttpClient.newHttpClient();
@@ -27,12 +33,40 @@ class RequestsHelper {
         return new JSONObject(response.body());
     }
 
+    /**
+     * Make HTTP post to server.
+     *
+     * @param body       JSONObject of what to send
+     * @param urlSegment where to send it
+     */
     public static HttpResponse<String> postRequest(JSONObject body, String urlSegment) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
-                .uri(URI.create("http://localhost:7080/api/users/" + urlSegment))
+                .uri(URI.create("http://localhost:7080/api/" + urlSegment))
+                .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+                .build();
+
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    }
+
+    /**
+     * Overloaded postRequest
+     * Make HTTP post to server.
+     *
+     * @param body       JSONObject of what to send
+     * @param urlSegment where to send it
+     * @param token      auth token
+     */
+    public static HttpResponse<String> postRequest(JSONObject body, String urlSegment, String token) throws IOException, InterruptedException {
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("Content-Type", "application/json")
+                .header("token", token)
+                .uri(URI.create("http://localhost:7080/api/" + urlSegment))
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
                 .build();
 

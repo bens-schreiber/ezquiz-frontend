@@ -17,7 +17,7 @@ public class GuiRunner extends Application {
 
         try {
 
-            primaryStage = StageHelper.createAndAddStage("Start", "/start.fxml");
+            primaryStage = StageHelper.createAndAddStage("StartupPage", "/start.fxml");
             primaryStage.setResizable(false);
 
             primaryStage.show();

@@ -6,9 +6,7 @@ import gui.popups.ErrorBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -42,7 +40,7 @@ public class CustomQuizController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         ObservableList<String> subjectListItems = FXCollections
-                .observableArrayList("None", "math", "science", "english", "history", "videogames");
+                .observableArrayList("None", "Marketing", "Business Math", "Intro To Business", "Network Design");
 
         ObservableList<String> typeListItems = FXCollections
                 .observableArrayList("None", "Written", "True or False", "Checkbox", "Multiple Choice");
@@ -60,10 +58,9 @@ public class CustomQuizController implements Initializable {
 
         try {
 
-            StageHelper.getStages().get("Start")
-                    .setScene(new Scene(FXMLLoader.load(getClass().getResource("/start.fxml"))));
+            StageHelper.getStages().get("StartupPage").setScene(StageHelper.getScenes().get("Start"));
 
-        } catch (IOException | NullPointerException e) {
+        } catch (NullPointerException e) {
             ErrorBox.display("A page failed to load.", false);
             e.printStackTrace();
         }
@@ -72,43 +69,34 @@ public class CustomQuizController implements Initializable {
     //Setup all preferences and begin custom test
     public void onStartButton() {
 
+
         //Handle the questionAmount being empty
         //If no value, use the default.
         int questionAmount = questionAmountField.getText().isEmpty() ?
                 Constants.DEFAULT_QUESTION_AMOUNT : Integer.parseInt(questionAmountField.getText());
+
 
         //Handle time field being empty
         //30 minutes default
         QuizManager.getPreferences().put("seconds", testTimeField.getText().isEmpty() ?
                 "1800" : String.valueOf(Integer.parseInt(testTimeField.getText()) * 60));
 
+
         //Handle test name being empty
         //Default name is Custom Exam
         QuizManager.getPreferences().put("Quiz Name", testNameField.getText().isEmpty() ?
                 "Custom Exam" : testNameField.getText());
 
+
         for (CheckBox checkBox : Arrays.asList(calcPref, notePadPref, drawPref, correctAnswers)) {//Put addon prefs in
             QuizManager.getPreferences().put(checkBox.getText(), String.valueOf(checkBox.isSelected()));
         }
 
-        if (subjectList.getValue().equals("None")) {
-            subjectList.setValue(null);
-        }
 
-        switch (typeList.getValue()) {
+        subjectList.setValue(subjectList.getValue().equals("None") ? null : subjectList.getValue().replace(" ", "%20"));
+        typeList.setValue(typeList.getValue().equals("None") ? null : typeList.getValue().replace(" ", "%20"));
 
-            case "Multiple Choice" -> typeList.setValue("multiple");
-
-            case "True or False" -> typeList.setValue("t_f");
-
-            case "Written" -> typeList.setValue("input");
-
-            case "Checkbox" -> typeList.setValue("checkbox");
-
-            case "None" -> typeList.setValue(null);
-        }
-
-        QuizManager.loadQuestions(questionAmount, subjectList.getValue(), typeList.getValue()); //Load question
+        QuizManager.loadQuestions(questionAmount, subjectList.getValue(), typeList.getValue());
 
         StageHelper.closeStage("Start"); //Close this page
 

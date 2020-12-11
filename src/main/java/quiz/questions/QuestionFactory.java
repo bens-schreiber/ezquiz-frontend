@@ -38,11 +38,11 @@ public class QuestionFactory {
 
         directions = json.has("directions") ? json.get("directions").toString() : switch (type) {
 
-            case "multiple" -> "Select the correct answer.";
+            case "Multiple" -> "Select the correct answer.";
 
-            case "t_f" -> "Determine if the problem is true or false.";
+            case "True or False" -> "Determine if the problem is true or false.";
 
-            case "checkbox" -> "Check all the boxes that apply.";
+            case "Checkbox" -> "Check all the boxes that apply.";
 
             default -> "Correctly type the solution.";
 

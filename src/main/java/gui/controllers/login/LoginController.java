@@ -1,5 +1,6 @@
 package gui.controllers.login;
 
+import com.google.common.hash.Hashing;
 import database.Requests;
 import etc.Constants;
 import gui.StageHelper;
@@ -12,6 +13,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
@@ -42,7 +44,11 @@ public class LoginController implements Initializable {
 
         try {
 
-            boolean correct = Requests.verifyLoginCredentials(usernameField.getText(), passwordField.getText())
+            String sha256hex = Hashing.sha256()
+                    .hashString(passwordField.getText(), StandardCharsets.UTF_8)
+                    .toString();
+
+            boolean correct = Requests.verifyLoginCredentials(usernameField.getText(), sha256hex)
                     == Constants.STATUS_ACCEPTED;
 
             if (correct) {

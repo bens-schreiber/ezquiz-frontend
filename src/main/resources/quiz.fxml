@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
 <AnchorPane fx:id="mainAnchor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0"
             style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1"
@@ -28,12 +27,28 @@
                 </HBox>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="topPane" prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: #9E9E9E;"
+        <AnchorPane fx:id="topPane" prefHeight="35.0" prefWidth="1920.0" style="-fx-background-color: #9E9E9E;"
                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <ImageView fitHeight="46.0" fitWidth="54.0" layoutX="8.0" layoutY="3.0">
+                <HBox alignment="CENTER_RIGHT" layoutX="1698.0" layoutY="9.0" maxWidth="1.7976931348623157E308"
+                      prefHeight="25.0" prefWidth="208.0" spacing="10.0">
+                    <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0">
+                            <image>
+                                <Image url="@pictures/user-circle-solid.png"/>
+                            </image>
+                        </ImageView>
+                        <Label fx:id="userLabel" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308"
+                               maxWidth="1.7976931348623157E308" textFill="#c32148">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <ImageView fitHeight="43.0" fitWidth="60.0" layoutX="14.0" layoutY="-1.0">
                     <image>
-                        <Image url="@../../../../../Pictures/FBLA-Color-web.png"/>
+                        <Image url="@pictures/FBLA-Color-web.png"/>
                     </image>
                 </ImageView>
             </children>
@@ -50,47 +65,54 @@
                                    width="1890.0"/>
                         <Canvas fx:id="paintCanvas" height="797.0" layoutX="-1.0" onMouseDragged="#canvasOnDragged"
                                 onMousePressed="#canvasOnPressed" width="1880.0"/>
-                        <Label fx:id="questionPrompt" layoutX="16.0" layoutY="9.0" maxHeight="1.7976931348623157E308"
-                               maxWidth="1.7976931348623157E308" prefHeight="49.0" prefWidth="983.0" text="Label">
-                            <font>
-                                <Font size="24.0"/>
-                            </font>
-                        </Label>
-                        <VBox fx:id="questionArea" layoutX="16.0" layoutY="60.0" maxHeight="1.7976931348623157E308"
-                              maxWidth="1.7976931348623157E308" prefHeight="309.0" prefWidth="375.0" spacing="50.0"/>
                         <VBox layoutX="1755.0" layoutY="34.0" prefHeight="192.0" prefWidth="60.0" spacing="10.0"
                               style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;"
                               stylesheets="@css/standard_button.css">
                             <children>
-                                <Button fx:id="notePadButton" mnemonicParsing="false" onMouseClicked="#onNotepadButton">
+                                <Button fx:id="notePadButton" mnemonicParsing="false" onMouseClicked="#onNotepadButton"
+                                        prefHeight="56.0" prefWidth="88.0">
                                     <graphic>
-                                        <ImageView fitHeight="45.0" fitWidth="46.0">
+                                        <ImageView>
                                             <image>
-                                                <Image url="@../../../../../Downloads/notepad.png"/>
+                                                <Image url="@pictures/clipboard-solid.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </Button>
                                 <Button fx:id="calculatorButton" mnemonicParsing="false"
-                                        onMouseClicked="#onCalculatorButton" prefWidth="0.0">
+                                        onMouseClicked="#onCalculatorButton" prefHeight="56.0" prefWidth="99.0">
                                     <graphic>
-                                        <ImageView fitHeight="45.0" fitWidth="46.0">
+                                        <ImageView>
                                             <image>
-                                                <Image url="@../../../../../Downloads/13e7a54a92c6258020b2c4130f5c0b4a.png"/>
+                                                <Image url="@pictures/calculator-solid.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </Button>
                                 <Button fx:id="drawingPadButton" mnemonicParsing="false"
-                                        onMouseClicked="#onDrawingPadButton" prefHeight="58.0" prefWidth="43.0">
+                                        onMouseClicked="#onDrawingPadButton" prefHeight="58.0" prefWidth="96.0">
                                     <graphic>
-                                        <ImageView fitHeight="45.0" fitWidth="46.0">
+                                        <ImageView>
                                             <image>
-                                                <Image url="@../../../../../Downloads/iconmonstr-paint-bucket-10.png"/>
+                                                <Image url="@pictures/palette-solid.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </Button>
+                            </children>
+                        </VBox>
+                        <Label layoutX="430.0" layoutY="496.0" prefHeight="119.0" prefWidth="36.0"/>
+                        <VBox layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" spacing="15.0">
+                            <children>
+                                <Label fx:id="questionPrompt" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
+                                       prefWidth="1133.0" text="Label" wrapText="true">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Label>
+                                <VBox fx:id="questionArea" maxHeight="1.7976931348623157E308"
+                                      maxWidth="1.7976931348623157E308" prefHeight="469.0" prefWidth="885.0"
+                                      spacing="50.0"/>
                             </children>
                         </VBox>
                     </children>
@@ -103,45 +125,27 @@
                 <Font size="16.0"/>
             </font>
         </Label>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="10.0" layoutX="4.0" layoutY="100.0"
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="10.0" layoutX="5.0" layoutY="88.0"
                    stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="1911.0"/>
-        <Label fx:id="quizName" layoutX="9.0" layoutY="57.0" prefHeight="36.0" prefWidth="1224.0" text="Exam Name Here"
-               textFill="#303f9f">
-            <font>
-                <Font name="SansSerif Regular" size="30.0"/>
-            </font>
-        </Label>
-        <Label fx:id="currQuestionLabel" alignment="CENTER" layoutX="1796.0" layoutY="144.0"
-               maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="104.0" text="30 out of 30"
-               textAlignment="CENTER" textFill="#303f9f">
-            <font>
-                <Font size="14.0"/>
-            </font>
-        </Label>
-        <Label fx:id="quizTimer" layoutX="1818.0" layoutY="127.0" prefHeight="16.0" prefWidth="60.0" text="00:00:00"
-               textFill="#c32148"/>
         <HBox alignment="CENTER" layoutX="20.0" layoutY="985.0" prefHeight="36.0" prefWidth="1880.0" spacing="5.0"
               stylesheets="@css/nextbackbuttons.css" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
             <children>
                 <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false"
                         onMouseClicked="#onBackButton">
                     <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="25.0">
+                        <ImageView>
                             <image>
-                                <Image url="@../../../../../Downloads/a.png"/>
+                                <Image url="@pictures/left.png"/>
                             </image>
-                            <viewport>
-                                <Rectangle2D/>
-                            </viewport>
                         </ImageView>
                     </graphic>
                 </Button>
                 <Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNextButton" prefHeight="35.0"
                         prefWidth="40.0">
                     <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="25.0">
+                        <ImageView>
                             <image>
-                                <Image url="@../../../../../Downloads/b.png"/>
+                                <Image url="@pictures/right.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -150,5 +154,32 @@
                       stylesheets="@css/flagbutton.css"/>
             </children>
         </HBox>
+        <Label fx:id="quizName" layoutX="14.0" layoutY="45.0" maxHeight="1.7976931348623157E308"
+               maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="FBLA - Default Test"
+               textFill="#303f9f">
+            <font>
+                <Font name="SansSerif Regular" size="30.0"/>
+            </font>
+        </Label>
+        <VBox alignment="CENTER_RIGHT" layoutX="1796.0" layoutY="103.0" maxWidth="1.7976931348623157E308"
+              prefHeight="65.0" AnchorPane.rightAnchor="20.0">
+            <children>
+                <Label fx:id="quizTimer" alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="60.0" text="00:00:00"
+                       textFill="#c32148"/>
+                <Label fx:id="subjAndQuestion" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308"
+                       nodeOrientation="LEFT_TO_RIGHT" prefHeight="18.0" text="Subj.Question" textFill="#303f9f">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="currQuestionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308"
+                       prefHeight="18.0" prefWidth="104.0" text="30 out of 30" textAlignment="CENTER"
+                       textFill="#303f9f">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+            </children>
+        </VBox>
     </children>
 </AnchorPane>

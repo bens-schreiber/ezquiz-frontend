@@ -42,7 +42,7 @@ public class QuizManager {
 
         //Create a pool of question id's in the specific size of how many questions available
         List<Integer> idPool = IntStream
-                .range(1, determineSize(subject, type))
+                .range(1, Constants.DATABASE_SIZE)
                 .boxed()
                 .collect(Collectors.toList());
 
@@ -83,7 +83,6 @@ public class QuizManager {
             } catch (IOException | JSONException | InterruptedException e) {
                 ErrorBox.display("A question failed to load. ID: " + id, false);
                 quizNodes.clear();
-                e.printStackTrace();
             }
 
         }
@@ -150,26 +149,6 @@ public class QuizManager {
             }
         }
 
-
-    }
-
-
-    private static int determineSize(String subject, String type) {
-
-        //Determine how large the id pool should be
-        if (subject == null && type == null) {
-            return Constants.DATABASE_SIZE;
-        }
-
-        if (subject != null && type != null) {
-            return Constants.SUBJECT_TYPE_QUESTION_AMOUNT;
-        }
-
-        if (subject == null) {
-            return Constants.TYPE_QUESTION_AMOUNT;
-        }
-
-        return Constants.SUBJECT_QUESTION_AMOUNT;
 
     }
 

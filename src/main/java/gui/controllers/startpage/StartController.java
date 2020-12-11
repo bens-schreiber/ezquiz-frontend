@@ -1,31 +1,33 @@
 package gui.controllers.startpage;
 
+import database.Requests;
 import etc.BitMap;
 import etc.Constants;
 import gui.StageHelper;
 import gui.popups.ErrorBox;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.json.JSONException;
 import quiz.QuizManager;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 /**
  * Provides methods for ActionEvents on Startup Screen.
@@ -78,7 +80,7 @@ public class StartController implements Initializable {
                 buttonBox.getChildren().forEach(button -> button.setDisable(!button.isDisable()));
                 buttonBox.getChildren().remove(0);
                 buttonBox.getChildren().remove(0);
-                loggedInLabel.setText("Logged in as: " + Constants.USERNAME);
+                loggedInLabel.setText(Constants.USERNAME);
             }
 
         } catch (IOException | NullPointerException e) {
@@ -114,33 +116,23 @@ public class StartController implements Initializable {
 
     }
 
-    public void onCustomButton() {
+    public void onOtherButton() {
 
-        //Try to not reload scene if scene its already been loaded.
-        if (StageHelper.getScenes().containsKey("custom")) {
+        try {
 
-            StageHelper.getStages().get("Start").setScene(StageHelper.getScenes().get("custom"));
+            Stage stage = StageHelper.createAndAddStage("otherquizes", "/otherquizes.fxml");
+            stage.setAlwaysOnTop(true);
+            stage.initStyle(StageStyle.UNDECORATED);
 
-        } else {
-            try {
+            stage.show();
 
-                //Attempt to load in customquiz options scene
-                Parent root = FXMLLoader.load(getClass().getResource("/customquiz.fxml"));
-                Scene scene = new Scene(root);
-
-                //Add scene to StageHelper so it can be used again
-                StageHelper.addScene("custom", scene);
-
-                //Display this scene
-                StageHelper.getStages().get("Start").setScene(scene);
-
-            } catch (IOException | NullPointerException e) {
-                ErrorBox.display("A page failed to load.", false);
-                e.printStackTrace();
-            }
-
+        } catch (IOException | NullPointerException e) {
+            ErrorBox.display("A page failed to load.", false);
+            e.printStackTrace();
         }
+
     }
+
 
     /**
      * On Enter Code button clicked, decodes question id's from bitmap, creates Quiz
@@ -158,7 +150,6 @@ public class StartController implements Initializable {
 
             //Set stage style
             window.initModality(Modality.APPLICATION_MODAL);
-            window.setTitle("Custom Quiz");
             window.setMinWidth(250);
 
             //Add directions and borderpane box to put nodes in
@@ -169,6 +160,18 @@ public class StartController implements Initializable {
             //Text field to enter quiz code
             TextField textField = new TextField();
 
+            UnaryOperator<TextFormatter.Change> modifyChange = c -> {
+                if (c.isContentChange()) {
+                    int newLength = c.getControlNewText().length();
+                    if (newLength > 4) {
+                        c.setText("");
+                    }
+                }
+                return c;
+            };
+
+            textField.setTextFormatter(new TextFormatter<>(modifyChange));
+
             //Start button to begin test
             Button startButton = new Button("Start");
 
@@ -177,35 +180,34 @@ public class StartController implements Initializable {
 
                 //Get ID's from Base64 bitmap
                 try {
-                    ArrayList<Integer> ids = new BitMap(textField.getText()).decodeToArray();
+
+                    long bitmap = Requests.getTestKey(Integer.parseInt(textField.getText()));
+
+                    ArrayList<Integer> ids = new BitMap(bitmap).decodeToArray();
                     QuizManager.loadQuestions(ids);
 
                     //Start test
                     try {
 
+                        //Attempt to load scene and set it to stage
                         Stage stage = StageHelper.createAndAddStage("Quiz", "/quiz.fxml");
                         stage.setAlwaysOnTop(true);
                         stage.initStyle(StageStyle.UNDECORATED);
 
-                        //Close resources that arent needed anymore
-                        StageHelper.closeAllStages();
+                        //Close stage helper resources
                         StageHelper.clearScenes();
+                        StageHelper.closeStage("Start");
 
-                        //Add new window
-                        stage.show();
+                        //Display Quiz
                         window.close();
+                        stage.show();
 
                     } catch (IOException | NullPointerException e) {
                         ErrorBox.display("A page failed to load.", false);
-                        e.printStackTrace();
                     }
-
-                } catch (IllegalArgumentException e) {
-                    ErrorBox.display("Illegal characters.", false);
-                } finally {
-                    ErrorBox.display("Error attempting to use code.", false);
+                } catch (NumberFormatException | InterruptedException | IOException | JSONException e) {
+                    ErrorBox.display("Could not get test from code.", false);
                 }
-
             });
 
 

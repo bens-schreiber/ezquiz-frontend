@@ -1,5 +1,6 @@
 package gui.controllers.login;
 
+import com.google.common.hash.Hashing;
 import database.Requests;
 import etc.Constants;
 import gui.StageHelper;
@@ -12,6 +13,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
@@ -49,7 +51,11 @@ public class RegisterController implements Initializable {
     public void onRegisterButton() {
         try {
 
-            boolean response = Requests.registerUser(userField.getText(), passField.getText())
+            String sha256hex = Hashing.sha256()
+                    .hashString(passField.getText(), StandardCharsets.UTF_8)
+                    .toString();
+
+            boolean response = Requests.registerUser(userField.getText(), sha256hex)
                     == Constants.STATUS_ACCEPTED;
 
             if (response) {

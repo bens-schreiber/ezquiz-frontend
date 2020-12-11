@@ -1,5 +1,6 @@
 package gui.controllers.results;
 
+import database.Requests;
 import etc.BitMap;
 import gui.StageHelper;
 import gui.popups.ErrorBox;
@@ -16,6 +17,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.DirectoryChooser;
+import org.json.JSONException;
 import quiz.QuizManager;
 import quiz.questions.nodes.QuizNode;
 
@@ -76,7 +78,7 @@ public class PrintableResultsController implements Initializable {
 
         //add how many correct out of possible, percentage, put bitmap to Base64
         outOfLabel.setText(correctAnswers + " out of " + QuizManager.getQuizNodes().size());
-        percentageLabel.setText((correctAnswers / QuizManager.getQuizNodes().size()) + "%");
+        percentageLabel.setText(((double) correctAnswers / (double) QuizManager.getQuizNodes().size() * 100) + "%");
 
     }
 
@@ -104,14 +106,25 @@ public class PrintableResultsController implements Initializable {
     }
 
     public void onRetakeCodeButton() {
+        try {
 
-        Clipboard clipboard = Clipboard.getSystemClipboard();
+            String key = Requests.uploadTestKey(bitMap.getBitMap());
 
-        ClipboardContent content = new ClipboardContent();
+            if (!key.isEmpty()) {
 
-        content.putString(bitMap.getEncodeToBase64());
+                Clipboard clipboard = Clipboard.getSystemClipboard();
 
-        clipboard.setContent(content);
+                ClipboardContent content = new ClipboardContent();
+
+                content.putString(key);
+
+                clipboard.setContent(content);
+
+            }
+        } catch (JSONException | IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

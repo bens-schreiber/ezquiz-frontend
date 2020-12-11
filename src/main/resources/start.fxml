@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #9E9E9E;"
@@ -14,12 +13,12 @@
             <children>
                 <ImageView fitHeight="414.0" fitWidth="615.0" layoutX="-4.0" layoutY="-3.0">
                     <image>
-                        <Image url="@../../../../../Downloads/classroom-design-denver.jpg"/>
+                        <Image url="@pictures/classroom-design-denver.jpg"/>
                     </image>
                 </ImageView>
                 <ImageView fitHeight="102.0" fitWidth="136.0" layoutX="236.0" layoutY="14.0">
                     <image>
-                        <Image url="@../../../../../Pictures/FBLA-Color-web.png"/>
+                        <Image url="@pictures/FBLA-Color-web.png"/>
                     </image>
                 </ImageView>
                 <VBox fx:id="buttonBox" layoutX="196.0" layoutY="144.0" prefHeight="124.0" prefWidth="219.0"
@@ -31,21 +30,30 @@
                         <Button mnemonicParsing="false" onAction="#onRegisterButton" prefHeight="30.0" prefWidth="220.0"
                                 text="Register"/>
                         <Button mnemonicParsing="false" onMouseClicked="#onDefaultButton" prefHeight="26.0"
-                                prefWidth="222.0" text="Take Default Test"/>
-                        <Button mnemonicParsing="false" onMouseClicked="#onCustomButton" prefHeight="26.0"
-                                prefWidth="222.0" text="Customize Test"/>
+                                prefWidth="222.0" text="Take Default Quiz"/>
+                        <Button mnemonicParsing="false" onAction="#onOtherButton" prefHeight="26.0" prefWidth="222.0"
+                                text="Other Quizes"/>
                         <Button mnemonicParsing="false" onAction="#onEnterCode" prefHeight="26.0" prefWidth="219.0"
                                 text="Enter Code"/>
                         <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitButton" prefHeight="26.0"
                                 prefWidth="220.0" text="Exit"/>
                     </children>
                 </VBox>
-                <Label fx:id="loggedInLabel" alignment="CENTER" layoutX="221.0" layoutY="116.0" prefHeight="22.0"
-                       prefWidth="166.0" text="Please Log In">
-                    <font>
-                        <Font name="System Italic" size="17.0"/>
-                    </font>
-                </Label>
+                <HBox alignment="CENTER_RIGHT" layoutX="287.0" layoutY="14.0" maxWidth="1.7976931348623157E308"
+                      prefHeight="26.0" prefWidth="310.0" spacing="10.0">
+                    <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0">
+                            <image>
+                                <Image url="@pictures/user-circle-solid.png"/>
+                            </image>
+                        </ImageView>
+                        <Label fx:id="loggedInLabel" maxWidth="1.7976931348623157E308" textFill="WHITE">
+                            <font>
+                                <Font name="System Italic" size="17.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
             </children>
         </AnchorPane>
     </children>

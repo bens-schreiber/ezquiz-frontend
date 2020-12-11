@@ -40,7 +40,7 @@ public class QuizNode {
     private Node getTypeNode() {
         switch (this.getQuestion().getType()) {
 
-            case "multiple" -> {
+            case "Multiple Choice" -> {
 
                 //Define the question
                 Question question = this.getQuestion();
@@ -75,7 +75,7 @@ public class QuizNode {
             }
 
 
-            case "t_f" -> {
+            case "True or False" -> {
 
                 //Establish options
                 RadioButton radio1 = new RadioButton("true");
@@ -98,7 +98,7 @@ public class QuizNode {
             }
 
 
-            case "checkbox" -> {
+            case "Checkbox" -> {
 
                 //Define the question
                 Question question = this.getQuestion();
@@ -133,7 +133,7 @@ public class QuizNode {
                 return vbox;
             }
 
-            case "input" -> {
+            case "Written" -> {
 
                 TextField textField = new TextField();
                 textField.setMaxSize(115, 10);

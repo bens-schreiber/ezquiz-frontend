@@ -40,7 +40,7 @@ public class QuizController implements Initializable {
     Button backButton, nextButton, notePadButton, calculatorButton, drawingPadButton;
 
     @FXML
-    Label questionPrompt, questionDirections, quizName, quizTimer, currQuestionLabel;
+    Label questionPrompt, questionDirections, quizName, quizTimer, currQuestionLabel, userLabel, subjAndQuestion;
 
     @FXML
     VBox questionArea;
@@ -119,11 +119,12 @@ public class QuizController implements Initializable {
         //Disable back button by default.
         backButton.setDisable(true);
 
+        userLabel.setText(userLabel.getText() + Constants.USERNAME);
+
         //Establish canvas properties
         paintCanvas.setDisable(true);
         gc = paintCanvas.getGraphicsContext2D();
         gc.setStroke(Color.WHITE);
-
 
     }
 
@@ -444,6 +445,8 @@ public class QuizController implements Initializable {
 
         questionPrompt.setStyle(((FlagButton) getCurrentButton()).isFlagged() ?
                 "-fx-text-fill: " + Constants.FLAGGED_COLOR : "-fx-text-fill: black");
+
+        subjAndQuestion.setText(QuizManager.getCurrQuestion().getSubject() + " QID:" + QuizManager.getCurrQuestion().getID());
 
     }
 
