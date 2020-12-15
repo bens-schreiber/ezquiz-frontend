@@ -14,7 +14,7 @@ import java.util.function.UnaryOperator;
 /**
  * ActionEvent controller for the NotePad stage.
  */
-public class NotePadController implements Initializable {
+public class NotePadController extends SaveText implements Initializable {
     @FXML
     TextArea notepadText;
 
@@ -41,14 +41,14 @@ public class NotePadController implements Initializable {
         notepadText.setTextFormatter(new TextFormatter<>(modifyChange));
 
         //Put the saved text on the notepad
-        notepadText.setText(NotePadHelper.getSavedText());
+        notepadText.setText(getSavedText());
 
     }
 
     //Save the text
     public void onSaveButton() {
 
-        NotePadHelper.setSavedText(notepadText.getText());
+        setSavedText(notepadText.getText());
 
     }
 }

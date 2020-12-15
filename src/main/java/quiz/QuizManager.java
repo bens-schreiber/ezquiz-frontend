@@ -1,6 +1,6 @@
 package quiz;
 
-import database.Requests;
+import database.DatabaseRequest;
 import etc.Constants;
 import gui.popups.ErrorBox;
 import org.jetbrains.annotations.Nullable;
@@ -60,19 +60,19 @@ public class QuizManager {
             try {
                 if (subject == null && type == null) {//If subject and type are null, request based on all items in db.
 
-                    requestData = Requests.getQuestion(id);
+                    requestData = DatabaseRequest.getQuestion(id);
 
                 } else if (subject != null && type != null) {//If both subject and type, request for both
 
-                    requestData = Requests.getQuestionBySubjectAndType(subject, type, id);
+                    requestData = DatabaseRequest.getQuestionBySubjectAndType(subject, type, id);
 
                 } else if (subject == null) {//If only type, request for type
 
-                    requestData = Requests.getQuestionByType(type, id);
+                    requestData = DatabaseRequest.getQuestionByType(type, id);
 
                 } else {//If only subject, request for subject
 
-                    requestData = Requests.getQuestionBySubject(subject, id);
+                    requestData = DatabaseRequest.getQuestionBySubject(subject, id);
 
                 }
 
@@ -95,7 +95,7 @@ public class QuizManager {
     public static void loadQuestions(List<Integer> ids) {
         for (int id : ids) {
             try {
-                Question question = QuestionFactory.questionFromJSON(Requests.getQuestion(id));
+                Question question = QuestionFactory.questionFromJSON(DatabaseRequest.getQuestion(id));
                 question.shuffleOptions();
                 quizNodes.add(new QuizNode(question));
 
@@ -119,7 +119,7 @@ public class QuizManager {
 
                 List<String> response = quizNode.getResponse();
 
-                List<String> answer = QuestionFactory.answerFromJSON(Requests.getQuestionAnswer(quizNode.getQuestion()));
+                List<String> answer = QuestionFactory.answerFromJSON(DatabaseRequest.getQuestionAnswer(quizNode.getQuestion()));
 
                 //set question answer for use in Results
                 quizNode.getQuestion().setAnswer(answer);

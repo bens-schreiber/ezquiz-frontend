@@ -17,7 +17,7 @@ public class OtherQuizesController {
 
         QuizManager.loadQuestions(10, "Network%20Design", null);
 
-        StageHelper.closeStage("Startup");
+        StageHelper.closeAllStages();
         StageHelper.clearScenes();
 
         displayTest(); //Initialize the test.
@@ -26,7 +26,7 @@ public class OtherQuizesController {
     public void onIntroBus() {
         QuizManager.loadQuestions(10, "Intro%20To%20Business", null);
 
-        StageHelper.closeStage("Startup");
+        StageHelper.closeStage("StartupPage");
         StageHelper.clearScenes();
 
         displayTest(); //Initialize the test.
@@ -35,7 +35,7 @@ public class OtherQuizesController {
     public void onBusMath() {
         QuizManager.loadQuestions(10, "Business%20Math", null);
 
-        StageHelper.closeStage("Startup");
+        StageHelper.closeStage("StartupPage");
         StageHelper.clearScenes();
 
         displayTest(); //Initialize the test.
@@ -44,7 +44,7 @@ public class OtherQuizesController {
     public void onMarketing() {
         QuizManager.loadQuestions(10, "Marketing", null);
 
-        StageHelper.closeStage("Startup");
+        StageHelper.closeStage("StartupPage");
         StageHelper.clearScenes();
 
         displayTest(); //Initialize the test.

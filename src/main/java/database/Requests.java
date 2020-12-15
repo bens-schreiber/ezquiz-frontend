@@ -1,135 +1,72 @@
 package database;
 
-import etc.Constants;
 import org.json.JSONException;
 import org.json.JSONObject;
-import quiz.questions.Question;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-/**
- * Request methods for getting data from RestServer
- */
-public class Requests {
-
-    private static String AUTH_TOKEN;
-
+public interface Requests {
     /**
-     * @return status code
-     */
-    public static int registerUser(String username, String password) throws IOException, InterruptedException, JSONException {
-        JSONObject body = new JSONObject();
-        body.put("username", username);
-        body.put("password", password);
-
-        HttpResponse<String> response = RequestsHelper.postRequest(body, "users/register");
-
-        return response.statusCode();
-    }
-
-    /**
-     * Verify if login credentials were correct.
+     * Make HTTP get request to server.
      *
-     * @return status code.
+     * @param url   where to send request
+     * @param token auth token
      */
-    public static int verifyLoginCredentials(String username, String password) throws IOException, InterruptedException, JSONException {
+    static JSONObject getJSONFromURL(String url, String token) throws IOException, InterruptedException, JSONException {
 
-        JSONObject body = new JSONObject();
-        body.put("password", password);
-        body.put("username", username);
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .GET()
+                .setHeader("token", token)
+                .uri(URI.create(url))
+                .build();
 
-        HttpResponse<String> response = RequestsHelper.postRequest(body, "users/login");
-
-        if (response.headers().firstValue("token").isPresent()) {
-            AUTH_TOKEN = response.headers().firstValue("token").get();
-            System.out.println(AUTH_TOKEN);
-        }
-        return response.statusCode();
-
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return new JSONObject(response.body());
     }
 
     /**
-     * Post bitmap to the server.
+     * Make HTTP post to server.
      *
-     * @return 4 digit test key.
+     * @param body       JSONObject of what to send
+     * @param urlSegment where to send it
      */
-    public static String uploadTestKey(long key) throws JSONException, IOException, InterruptedException {
-        JSONObject body = new JSONObject();
-        body.put("key", String.valueOf(key));
+    static HttpResponse<String> postRequest(JSONObject body, String urlSegment) throws IOException, InterruptedException {
 
-        HttpResponse<String> response = RequestsHelper.postRequest(body, "database/key", AUTH_TOKEN);
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("Content-Type", "application/json")
+                .uri(URI.create("http://localhost:7080/api/" + urlSegment))
+                .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+                .build();
 
-        return new JSONObject(response.body()).get("key").toString();
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+
     }
 
     /**
-     * Get test key from server
+     * Overloaded postRequest
+     * Make HTTP post to server.
      *
-     * @return bitmap
+     * @param body       JSONObject of what to send
+     * @param urlSegment where to send it
+     * @param token      auth token
      */
-    public static long getTestKey(int key) throws InterruptedException, JSONException, IOException {
-        JSONObject response = (JSONObject) RequestsHelper.getJSONFromURL("http://localhost:7080/api/database/key/" + key, AUTH_TOKEN).get("obj0");
-        return Long.parseLong(response.get("bitmap").toString());
-    }
+    static HttpResponse<String> postRequest(JSONObject body, String urlSegment, String token) throws IOException, InterruptedException {
 
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("Content-Type", "application/json")
+                .header("token", token)
+                .uri(URI.create("http://localhost:7080/api/" + urlSegment))
+                .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+                .build();
 
-    /**
-     * @param id specifies absolute location in server.
-     * @throws JSONException on object not found
-     */
-    public static JSONObject getQuestion(int id) throws IOException, JSONException, InterruptedException {
-
-        return (JSONObject) RequestsHelper.getJSONFromURL(Constants.DEFAULT_PATH + id, AUTH_TOKEN).get("obj0");
-
-    }
-
-    /**
-     * Limits pool of questions to those with only the specified Question Type.
-     * @param id JSONObject with correlating id. Not absolute id.
-     */
-    public static JSONObject getQuestionByType(String type, int id) throws IOException, JSONException, InterruptedException {
-
-        return (JSONObject) RequestsHelper
-                .getJSONFromURL(Constants.DEFAULT_PATH + "type/" + type, AUTH_TOKEN)
-                .get("obj" + id);
-
-    }
-
-    /**
-     * Limits pool of questions to those with only the specified Question Subject.
-     *
-     * @param id JSONObject with correlating id. Not absolute id.
-     */
-    public static JSONObject getQuestionBySubject(String subject, int id) throws IOException, JSONException, InterruptedException {
-
-        return (JSONObject) RequestsHelper
-                .getJSONFromURL(Constants.DEFAULT_PATH + "subject/" + subject, AUTH_TOKEN)
-                .get("obj" + id);
-
-    }
-
-    /**
-     * Limits pool of questions to those with only the specified question Type and Subject.
-     *
-     * @param id JSONObject with correlating id. Not absolute id.
-     */
-    public static JSONObject getQuestionBySubjectAndType(String subject, String type, int id) throws IOException, JSONException, InterruptedException {
-
-        return (JSONObject) RequestsHelper
-                .getJSONFromURL(Constants.DEFAULT_PATH + subject + "/" + type, AUTH_TOKEN)
-                .get("obj" + id);
-
-    }
-
-    /**
-     * @return JSONObject from Question Objects ID.
-     */
-    public static JSONObject getQuestionAnswer(Question question) throws IOException, JSONException, InterruptedException {
-
-        return (JSONObject) RequestsHelper
-                .getJSONFromURL(Constants.DEFAULT_PATH + "answer/" + question.getID(), AUTH_TOKEN)
-                .get("obj0");
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
 
     }
 }

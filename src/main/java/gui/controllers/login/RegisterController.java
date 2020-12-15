@@ -1,19 +1,16 @@
 package gui.controllers.login;
 
-import com.google.common.hash.Hashing;
-import database.Requests;
+import database.DatabaseRequest;
 import etc.Constants;
+import etc.SHA;
 import gui.StageHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import org.json.JSONException;
 
-import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
@@ -49,24 +46,28 @@ public class RegisterController implements Initializable {
     }
 
     public void onRegisterButton() {
-        try {
 
-            String sha256hex = Hashing.sha256()
-                    .hashString(passField.getText(), StandardCharsets.UTF_8)
-                    .toString();
+        if (userField.getText().length() < 3) {
 
-            boolean response = Requests.registerUser(userField.getText(), sha256hex)
-                    == Constants.STATUS_ACCEPTED;
+            errorLabel.setText("Username must be at least 3 characters.");
 
-            if (response) {
-                errorLabel.setText("Account successfully created.");
-            } else {
-                errorLabel.setText("Could not create account.");
+        } else {
+
+            try {
+
+                boolean response = DatabaseRequest.registerUser(userField.getText(), SHA.encrypt(passField.getText()))
+                        == Constants.STATUS_ACCEPTED;
+
+                if (response) {
+                    errorLabel.setText("Account successfully created.");
+                } else {
+                    errorLabel.setText("Could not create account.");
+                }
+
+            } catch (Exception e) {
+                errorLabel.setText("Error connecting to database.");
             }
 
-        } catch (IOException | InterruptedException | JSONException e) {
-            e.printStackTrace();
         }
     }
-
 }

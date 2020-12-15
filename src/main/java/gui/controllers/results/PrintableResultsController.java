@@ -1,6 +1,6 @@
 package gui.controllers.results;
 
-import database.Requests;
+import database.DatabaseRequest;
 import etc.BitMap;
 import gui.StageHelper;
 import gui.popups.ErrorBox;
@@ -108,7 +108,7 @@ public class PrintableResultsController implements Initializable {
     public void onRetakeCodeButton() {
         try {
 
-            String key = Requests.uploadTestKey(bitMap.getBitMap());
+            String key = DatabaseRequest.uploadTestKey(bitMap.getBitMap());
 
             if (!key.isEmpty()) {
 

@@ -1,19 +1,16 @@
 package gui.controllers.login;
 
-import com.google.common.hash.Hashing;
-import database.Requests;
+import database.DatabaseRequest;
 import etc.Constants;
+import etc.SHA;
 import gui.StageHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import org.json.JSONException;
 
-import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
@@ -27,6 +24,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         //No special characters, size of 8 only
         for (TextField node : Arrays.asList(usernameField, passwordField))
             node.setTextFormatter(new TextFormatter<>(change -> {
@@ -42,27 +40,31 @@ public class LoginController implements Initializable {
 
     public void onLoginButton() {
 
-        try {
+        if (usernameField.getText().length() < 3) {
 
-            String sha256hex = Hashing.sha256()
-                    .hashString(passwordField.getText(), StandardCharsets.UTF_8)
-                    .toString();
+            errorLabel.setText("Username must be at least 3 characters.");
 
-            boolean correct = Requests.verifyLoginCredentials(usernameField.getText(), sha256hex)
-                    == Constants.STATUS_ACCEPTED;
+        } else {
 
-            if (correct) {
-                Constants.USERNAME = usernameField.getText();
-                errorLabel.setText("Successfully logged in");
-            } else {
-                errorLabel.setText("Could not log in. Try again.");
+            try {
+
+                //If the request is accepted
+                boolean correct = DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()))
+                        == Constants.STATUS_ACCEPTED;
+
+                if (correct) {
+                    Constants.USERNAME = usernameField.getText();
+                    errorLabel.setText("Successfully logged in");
+                } else {
+                    errorLabel.setText("Could not log in. Try again.");
+                }
+
+
+            } catch (Exception e) {
+                errorLabel.setText("Error connecting to database.");
             }
 
-
-        } catch (InterruptedException | IOException | JSONException e) {
-            e.printStackTrace();
         }
-
     }
 
     public void onExitButton() {

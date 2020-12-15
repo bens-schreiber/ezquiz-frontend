@@ -1,6 +1,6 @@
 package gui.controllers.startpage;
 
-import database.Requests;
+import database.DatabaseRequest;
 import etc.BitMap;
 import etc.Constants;
 import gui.StageHelper;
@@ -76,7 +76,7 @@ public class StartController implements Initializable {
             stage.setAlwaysOnTop(true);
             stage.showAndWait();
 
-            if (!Constants.USERNAME.isEmpty()) {
+            if (!DatabaseRequest.AUTH_TOKEN.isEmpty()) {
                 buttonBox.getChildren().forEach(button -> button.setDisable(!button.isDisable()));
                 buttonBox.getChildren().remove(0);
                 buttonBox.getChildren().remove(0);
@@ -103,7 +103,7 @@ public class StartController implements Initializable {
 
             //Close stage helper resources
             StageHelper.clearScenes();
-            StageHelper.closeStage("Start");
+            StageHelper.closeStage("StartupPage");
 
             //Display Quiz
             stage.show();
@@ -181,7 +181,7 @@ public class StartController implements Initializable {
                 //Get ID's from Base64 bitmap
                 try {
 
-                    long bitmap = Requests.getTestKey(Integer.parseInt(textField.getText()));
+                    long bitmap = DatabaseRequest.getTestKey(Integer.parseInt(textField.getText()));
 
                     ArrayList<Integer> ids = new BitMap(bitmap).decodeToArray();
                     QuizManager.loadQuestions(ids);

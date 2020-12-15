@@ -3,7 +3,7 @@ package gui.controllers.quiz.notepad;
 /**
  * Save the text from notepad
  */
-class NotePadHelper {
+class SaveText {
 
     private static String savedText;
 
