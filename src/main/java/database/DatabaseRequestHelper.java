@@ -9,7 +9,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public interface Requests {
+class DatabaseRequestHelper {
     /**
      * Make HTTP get request to server.
      *

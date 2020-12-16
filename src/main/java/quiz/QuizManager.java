@@ -4,13 +4,11 @@ import database.DatabaseRequest;
 import etc.Constants;
 import gui.popups.ErrorBox;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONException;
 import org.json.JSONObject;
 import quiz.questions.Question;
 import quiz.questions.QuestionFactory;
 import quiz.questions.nodes.QuizNode;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -80,7 +78,7 @@ public class QuizManager {
                 question.shuffleOptions();
                 quizNodes.add(new QuizNode(question));
 
-            } catch (IOException | JSONException | InterruptedException e) {
+            } catch (Exception e) {
                 ErrorBox.display("A question failed to load. ID: " + id, false);
                 quizNodes.clear();
             }
@@ -99,7 +97,7 @@ public class QuizManager {
                 question.shuffleOptions();
                 quizNodes.add(new QuizNode(question));
 
-            } catch (IOException | JSONException | InterruptedException e) {
+            } catch (Exception e) {
                 ErrorBox.display("A question failed to load. ID: " + id, false);
                 quizNodes.clear();
                 e.printStackTrace();
@@ -143,7 +141,7 @@ public class QuizManager {
                 //Check if answer is correct.
                 quizNode.setCorrect(answer.containsAll(response));
 
-            } catch (IOException | JSONException | InterruptedException e) {
+            } catch (Exception e) {
                 ErrorBox.display("A question failed to be graded. ID: " + quizNode.getQuestion().getID(), true);
                 e.printStackTrace();
             }
