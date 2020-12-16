@@ -46,11 +46,12 @@ public class QuizManager {
 
         //Randomize the pool
         Collections.shuffle(idPool);
+        idPool = idPool.subList(0, amount);
 
         //Initialize the id variable and request variable
         int id;
         JSONObject requestData;
-        for (int i = 0; i < amount; i++) {
+        while (idPool.iterator().hasNext()) {
 
             //Remove the element and grab its value
             id = idPool.remove(0);
@@ -91,7 +92,7 @@ public class QuizManager {
      * @param ids id of questions to load.
      */
     public static void loadQuestions(List<Integer> ids) {
-        for (int id : ids) {
+        for (Integer id : ids) {
             try {
                 Question question = QuestionFactory.questionFromJSON(DatabaseRequest.getQuestion(id));
                 question.shuffleOptions();
@@ -138,17 +139,17 @@ public class QuizManager {
                 }
 
                 //Answer may be larger than one, so .containsAll is used
-                //Check if answer is correct.
-                quizNode.setCorrect(answer.containsAll(response));
+                //Check if answer is correct, if no response then mark wrong.
+                quizNode.setCorrect(answer.containsAll(response) && !response.isEmpty());
 
             } catch (Exception e) {
                 ErrorBox.display("A question failed to be graded. ID: " + quizNode.getQuestion().getID(), true);
                 e.printStackTrace();
             }
         }
-
-
     }
+
+
 
     /**
      * Getters

@@ -59,7 +59,7 @@ public class StartController implements Initializable {
             stage.setAlwaysOnTop(true);
             stage.show();
 
-        } catch (IOException | NullPointerException e) {
+        } catch (Exception e) {
             ErrorBox.display("A page failed to load.", false);
             e.printStackTrace();
         }
@@ -83,7 +83,7 @@ public class StartController implements Initializable {
                 loggedInLabel.setText(Constants.USERNAME);
             }
 
-        } catch (IOException | NullPointerException e) {
+        } catch (Exception e) {
             ErrorBox.display("A page failed to load.", false);
             e.printStackTrace();
         }
@@ -108,7 +108,7 @@ public class StartController implements Initializable {
             //Display Quiz
             stage.show();
 
-        } catch (IOException | NullPointerException e) {
+        } catch (Exception e) {
             ErrorBox.display("A page failed to load.", false);
             e.printStackTrace();
         }
@@ -126,7 +126,7 @@ public class StartController implements Initializable {
 
             stage.show();
 
-        } catch (IOException | NullPointerException e) {
+        } catch (Exception e) {
             ErrorBox.display("A page failed to load.", false);
             e.printStackTrace();
         }

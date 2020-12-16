@@ -20,8 +20,8 @@ public class QuizNode {
     private final Question question;
     private boolean correct;
 
-    //Initiate response with a fake value if left empty
-    private List<String> response = List.of("null");
+    //Initiate response with no value
+    private List<String> response = Collections.emptyList();
 
     /**
      * Class constructor.

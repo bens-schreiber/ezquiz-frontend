@@ -33,6 +33,7 @@ public class CustomQuizController implements Initializable {
     @FXML
     private CheckBox calcPref, drawPref, notePadPref, correctAnswers;
 
+
     /**
      * Initial startup method.
      */
