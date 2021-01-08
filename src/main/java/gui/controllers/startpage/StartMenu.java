@@ -54,7 +54,7 @@ public class StartMenu extends StartQuiz implements Initializable {
     public void onRegisterButton() {
 
         try {
-            Stage stage = StageHelper.createAndAddStage("Register", "/register.fxml");
+            Stage stage = StageHelper.createAndAddStage(Constants.Window.REGISTER, "/register.fxml");
             stage.initStyle(StageStyle.UNDECORATED);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setAlwaysOnTop(true);
@@ -71,7 +71,7 @@ public class StartMenu extends StartQuiz implements Initializable {
 
         try {
 
-            Stage stage = StageHelper.createAndAddStage("Login", "/login.fxml");
+            Stage stage = StageHelper.createAndAddStage(Constants.Window.LOGIN, "/login.fxml");
             stage.initStyle(StageStyle.UNDECORATED);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setAlwaysOnTop(true);
@@ -105,7 +105,7 @@ public class StartMenu extends StartQuiz implements Initializable {
 
         try {
 
-            Stage stage = StageHelper.createAndAddStage("otherquizes", "/otherquizes.fxml");
+            Stage stage = StageHelper.createAndAddStage(Constants.Window.PREMADEQUIZES, "/premadequizes.fxml");
             stage.setAlwaysOnTop(true);
             stage.initStyle(StageStyle.UNDECORATED);
 
@@ -126,8 +126,8 @@ public class StartMenu extends StartQuiz implements Initializable {
     public void onEnterCode() {
         //todo: make this an fxml scene
         //Try to not reload scene if scene already exists.
-        if (StageHelper.getStages().containsKey("code prompt")) {
-            StageHelper.getStages().get("code prompt").showAndWait();
+        if (StageHelper.getStages().containsKey(Constants.Window.ENTERCODE)) {
+            StageHelper.getStages().get(Constants.Window.ENTERCODE).showAndWait();
         } else {
 
             //Establish window
@@ -173,13 +173,13 @@ public class StartMenu extends StartQuiz implements Initializable {
                     try {
 
                         //Attempt to load scene and set it to stage
-                        Stage stage = StageHelper.createAndAddStage("Quiz", "/quiz.fxml");
+                        Stage stage = StageHelper.createAndAddStage(Constants.Window.QUIZ, "/quiz.fxml");
                         stage.setAlwaysOnTop(true);
                         stage.initStyle(StageStyle.UNDECORATED);
 
                         //Close stage helper resources
                         StageHelper.clearScenes();
-                        StageHelper.closeStage("StartupPage");
+                        StageHelper.closeStage(Constants.Window.STARTPAGE);
 
                         //Display Quiz
                         window.close();
@@ -221,7 +221,7 @@ public class StartMenu extends StartQuiz implements Initializable {
             window.showAndWait();
 
             //Put code prompt in stage helper so it does not need to be reloaded
-            StageHelper.addStage("code prompt", window);
+            StageHelper.addStage(Constants.Window.ENTERCODE, window);
 
         }
     }

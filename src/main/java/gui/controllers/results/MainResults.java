@@ -2,6 +2,7 @@ package gui.controllers.results;
 
 import database.DatabaseRequest;
 import etc.BitMap;
+import etc.Constants;
 import gui.StageHelper;
 import gui.popups.ErrorBox;
 import javafx.embed.swing.SwingFXUtils;
@@ -118,12 +119,11 @@ public class MainResults implements Initializable {
     public void onScreenshotButton() {
 
         try {
-            Scene scene = StageHelper.getScenes().get("PrintableResults");
+            Scene scene = StageHelper.getScenes().get(Constants.Window.PRINTRESULTS);
             WritableImage writableImage = scene.snapshot(null);
 
             DirectoryChooser directoryChooser = new DirectoryChooser();
-            File file = directoryChooser.showDialog(StageHelper.getStages().get("Quiz"));
-
+            File file = directoryChooser.showDialog(StageHelper.getStages().get(Constants.Window.QUIZ));
 
             ImageIO.write(
                     SwingFXUtils.fromFXImage(writableImage, null),
@@ -167,17 +167,17 @@ public class MainResults implements Initializable {
     public void onSeeQuestions() {
 
         //Try not to reload page if already created
-        if (StageHelper.getScenes().containsKey("questionresults")) {
+        if (StageHelper.getScenes().containsKey(Constants.Window.SEERESULTS)) {
 
-            StageHelper.getStages().get("Quiz").setScene(StageHelper.getScenes().get("questionresults"));
+            StageHelper.getStages().get(Constants.Window.QUIZ).setScene(StageHelper.getScenes().get(Constants.Window.SEERESULTS));
 
         } else {
             try {
 
                 Parent results = FXMLLoader.load(getClass().getResource("/questionresults.fxml"));
                 Scene scene = new Scene(results);
-                StageHelper.addScene("questionresults", scene);
-                StageHelper.getStages().get("Quiz").setScene(scene);
+                StageHelper.addScene(Constants.Window.SEERESULTS, scene);
+                StageHelper.getStages().get(Constants.Window.QUIZ).setScene(scene);
 
             } catch (IOException | NullPointerException e) {
                 ErrorBox.display("A page failed to load.", false);

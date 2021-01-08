@@ -39,7 +39,7 @@ public class DrawingPadController implements Initializable {
 
         brushSize.setOnKeyTyped(e -> {
 
-            if (!brushSize.getText().equals("")) {
+            if (!brushSize.getText().isEmpty()) {
                 QuizController.changeWidth(Double.parseDouble(brushSize.getText()));
             }
 

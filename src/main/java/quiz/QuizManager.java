@@ -146,6 +146,7 @@ public class QuizManager {
 
                 } else {
                     quizNode.setCorrect(false);
+                    quizNode.getQuestion().setAnswer(QuestionFactory.answerFromJSON(DatabaseRequest.getQuestionAnswer(quizNode.getQuestion())));
                 }
 
             } catch (Exception e) {

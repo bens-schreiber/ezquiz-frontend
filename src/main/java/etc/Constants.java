@@ -5,6 +5,12 @@ package etc;
  */
 public class Constants {
 
+    public enum Window {
+        STARTPAGE, PREMADEQUIZES, LOGIN, REGISTER, QUIZ, ENTERCODE,
+        CALCULATOR, DRAWINGPAD, NOTEPAD, PRINTRESULTS, SEERESULTS,
+        CUSTOMQUIZ
+    }
+
     public static String USERNAME = "";
 
     public static int STATUS_ACCEPTED = 202;

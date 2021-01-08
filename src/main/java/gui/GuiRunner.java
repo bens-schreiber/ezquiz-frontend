@@ -1,5 +1,6 @@
 package gui;
 
+import etc.Constants;
 import gui.popups.ErrorBox;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -17,7 +18,7 @@ public class GuiRunner extends Application {
 
         try {
 
-            primaryStage = StageHelper.createAndAddStage("StartupPage", "/start.fxml");
+            primaryStage = StageHelper.createAndAddStage(Constants.Window.STARTPAGE, "/start.fxml");
             primaryStage.setResizable(false);
 
             primaryStage.show();

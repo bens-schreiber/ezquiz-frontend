@@ -68,7 +68,7 @@ public class Login implements Initializable {
     }
 
     public void onExitButton() {
-        StageHelper.closeStage("Login");
+        StageHelper.closeStage(Constants.Window.LOGIN);
     }
 
 }

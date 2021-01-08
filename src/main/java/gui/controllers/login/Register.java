@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 
 import java.net.URL;
-import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -27,7 +27,7 @@ public class Register implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         //No special characters, size of 8 only
-        for (TextField node : Arrays.asList(userField, passField))
+        for (TextField node : List.of(userField, passField))
             node.setTextFormatter(new TextFormatter<>(change -> {
                 if (change.getText().matches("[ $&+,:;=\\\\?@#|/'<>.^*()%!-]")) {
                     change.setText("");
@@ -41,7 +41,7 @@ public class Register implements Initializable {
 
     public void onExitButton() {
 
-        StageHelper.closeStage("Register");
+        StageHelper.closeStage(Constants.Window.REGISTER);
 
     }
 

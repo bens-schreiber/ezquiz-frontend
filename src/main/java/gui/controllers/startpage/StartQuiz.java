@@ -1,5 +1,6 @@
 package gui.controllers.startpage;
 
+import etc.Constants;
 import gui.StageHelper;
 import gui.popups.ErrorBox;
 import javafx.stage.Stage;
@@ -13,13 +14,13 @@ class StartQuiz {
         try {
 
             //Attempt to load scene and set it to stage
-            Stage stage = StageHelper.createAndAddStage("Quiz", "/quiz.fxml");
+            Stage stage = StageHelper.createAndAddStage(Constants.Window.QUIZ, "/quiz.fxml");
             stage.setAlwaysOnTop(true);
             stage.initStyle(StageStyle.UNDECORATED);
 
             //Close stage helper resources
             StageHelper.clearScenes();
-            StageHelper.closeStage("StartupPage");
+            StageHelper.closeStage(Constants.Window.STARTPAGE);
 
             //Display Quiz
             stage.show();

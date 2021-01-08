@@ -57,7 +57,7 @@ public class CustomQuiz extends StartQuiz implements Initializable {
 
         try {
 
-            StageHelper.getStages().get("StartupPage").setScene(StageHelper.getScenes().get("Start"));
+            StageHelper.getStages().get(Constants.Window.STARTPAGE).setScene(StageHelper.getScenes().get(Constants.Window.STARTPAGE));
 
         } catch (NullPointerException e) {
             ErrorBox.display("A page failed to load.", false);
@@ -92,7 +92,6 @@ public class CustomQuiz extends StartQuiz implements Initializable {
         }
 
         Question.Type type;
-        Question.Subject subject;
         type = switch (typeList.getValue()) {
             case "Multiple Choice" -> Question.Type.MULTIPLECHOICE;
             case "Written" -> Question.Type.WRITTEN;
@@ -101,6 +100,7 @@ public class CustomQuiz extends StartQuiz implements Initializable {
             default -> null;
         };
 
+        Question.Subject subject;
         subject = switch (subjectList.getValue()) {
             case "Marketing" -> Question.Subject.MARKETING;
             case "Business Math" -> Question.Subject.BUSMATH;
@@ -111,7 +111,7 @@ public class CustomQuiz extends StartQuiz implements Initializable {
 
         QuizManager.loadQuestions(questionAmount, type, subject);
 
-        StageHelper.closeStage("Start"); //Close this page
+        StageHelper.closeStage(Constants.Window.STARTPAGE); //Close this page
 
         displayTest(); //Initialize the test.
 

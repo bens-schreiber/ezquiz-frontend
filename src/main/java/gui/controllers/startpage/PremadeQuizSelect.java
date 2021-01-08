@@ -1,5 +1,6 @@
 package gui.controllers.startpage;
 
+import etc.Constants;
 import gui.StageHelper;
 import gui.popups.ErrorBox;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +28,7 @@ public class PremadeQuizSelect extends StartQuiz {
     public void onIntroBus() {
         QuizManager.loadQuestions(10, null, Question.Subject.INTBUS);
 
-        StageHelper.closeStage("StartupPage");
+        StageHelper.closeStage(Constants.Window.STARTPAGE);
         StageHelper.clearScenes();
 
         displayTest(); //Initialize the test.
@@ -36,7 +37,7 @@ public class PremadeQuizSelect extends StartQuiz {
     public void onBusMath() {
         QuizManager.loadQuestions(10, null, Question.Subject.BUSMATH);
 
-        StageHelper.closeStage("StartupPage");
+        StageHelper.closeStage(Constants.Window.STARTPAGE);
         StageHelper.clearScenes();
 
         displayTest(); //Initialize the test.
@@ -45,7 +46,7 @@ public class PremadeQuizSelect extends StartQuiz {
     public void onMarketing() {
         QuizManager.loadQuestions(10, null, Question.Subject.MARKETING);
 
-        StageHelper.closeStage("StartupPage");
+        StageHelper.closeStage(Constants.Window.STARTPAGE);
         StageHelper.clearScenes();
 
         displayTest(); //Initialize the test.
@@ -54,16 +55,15 @@ public class PremadeQuizSelect extends StartQuiz {
     public void onCustom() {
 
         //Close this scene
-        StageHelper.getStages().get("otherquizes").close();
+        StageHelper.getStages().get(Constants.Window.PREMADEQUIZES).close();
 
         //Save start page
-        StageHelper.addScene("Start", StageHelper.getStages().get("StartupPage").getScene());
+        StageHelper.addScene(Constants.Window.STARTPAGE, StageHelper.getStages().get(Constants.Window.STARTPAGE).getScene());
 
         //Try to not reload scene if scene its already been loaded.
-        if (StageHelper.getScenes().containsKey("custom")) {
+        if (StageHelper.getScenes().containsKey(Constants.Window.CUSTOMQUIZ)) {
 
-
-            StageHelper.getStages().get("StartupPage").setScene(StageHelper.getScenes().get("custom"));
+            StageHelper.getStages().get(Constants.Window.STARTPAGE).setScene(StageHelper.getScenes().get(Constants.Window.CUSTOMQUIZ));
 
         } else {
 
@@ -74,10 +74,10 @@ public class PremadeQuizSelect extends StartQuiz {
                 Scene scene = new Scene(root);
 
                 //Add scene to StageHelper so it can be used again
-                StageHelper.addScene("custom", scene);
+                StageHelper.addScene(Constants.Window.CUSTOMQUIZ, scene);
 
                 //Display this scene
-                StageHelper.getStages().get("StartupPage").setScene(scene);
+                StageHelper.getStages().get(Constants.Window.STARTPAGE).setScene(scene);
 
             } catch (IOException | NullPointerException e) {
                 ErrorBox.display("A page failed to load.", false);

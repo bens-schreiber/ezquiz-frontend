@@ -1,7 +1,7 @@
 package gui;
 
+import etc.Constants;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -14,19 +14,17 @@ import java.util.HashMap;
 
 public class StageHelper {
 
-    private static final HashMap<String, Stage> stages = new HashMap<>();
+    private static final HashMap<Constants.Window, Stage> stages = new HashMap<>();
 
-    public static void addStage(String name, Stage stage) {
-
+    public static void addStage(Constants.Window name, Stage stage) {
         stages.put(name, stage);
-
     }
 
-    public static HashMap<String, Stage> getStages() {
+    public static HashMap<Constants.Window, Stage> getStages() {
         return stages;
     }
 
-    public static void closeStage(String name) {
+    public static void closeStage(Constants.Window name) {
 
         //Close the stage
         stages.get(name).close();
@@ -39,7 +37,7 @@ public class StageHelper {
         stages.forEach((s, stage) -> stage.close());
     }
 
-    public static Stage createAndAddStage(String name, String path) throws IOException {
+    public static Stage createAndAddStage(Constants.Window name, String path) throws IOException {
 
         Scene scene = new Scene(FXMLLoader.load(StageHelper.class.getResource(path)));
 
@@ -56,9 +54,9 @@ public class StageHelper {
     /**
      * Reusable scenes to not reload information.
      */
-    private static final HashMap<String, Scene> reusableScenes = new HashMap<>();
+    private static final HashMap<Constants.Window, Scene> reusableScenes = new HashMap<>();
 
-    public static void addScene(String name, Scene scene) {
+    public static void addScene(Constants.Window name, Scene scene) {
 
         reusableScenes.put(name, scene);
 
@@ -68,7 +66,7 @@ public class StageHelper {
         reusableScenes.clear();
     }
 
-    public static HashMap<String, Scene> getScenes() {
+    public static HashMap<Constants.Window, Scene> getScenes() {
         return reusableScenes;
     }
 
