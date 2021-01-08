@@ -13,7 +13,6 @@ public class Constants {
         CUSTOMQUIZ;
 
         public static HashMap<Window, String> fxmlTable;
-
         static {
             fxmlTable = new HashMap<>();
             fxmlTable.put(Window.STARTPAGE, "/start.fxml");

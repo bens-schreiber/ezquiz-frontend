@@ -269,13 +269,14 @@ public class QuizController implements Initializable {
 
     }
 
+    //todo: make drawingpad and notepad objects
     //When the calculator button is clicked
     public void onCalculatorButton() {
 
         //Make sure one calculator only is open.
         if (StageHelper.getStages().containsKey(Constants.Window.CALCULATOR)) {
 
-            //If already open, close all
+            //If already open, close
             StageHelper.closeStage(Constants.Window.CALCULATOR);
 
         } else {

@@ -21,7 +21,6 @@ public class NotePadController extends SaveText implements Initializable {
     @FXML
     Button saveButton;
 
-
     /**
      * Initial startup method.
      */
