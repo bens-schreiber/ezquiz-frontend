@@ -114,31 +114,37 @@ public class QuizManager {
         for (QuizNode quizNode : quizNodes) {
             try {
 
-                List<String> response = quizNode.getResponse();
+                if (quizNode.isAnswered()) {
 
-                List<String> answer = QuestionFactory.answerFromJSON(DatabaseRequest.getQuestionAnswer(quizNode.getQuestion()));
+                    List<String> response = quizNode.getResponse();
 
-                //set question answer for use in Results
-                quizNode.getQuestion().setAnswer(answer);
+                    List<String> answer = QuestionFactory.answerFromJSON(DatabaseRequest.getQuestionAnswer(quizNode.getQuestion()));
 
-                //user input type might be capitalized or spaced wrong. handle differently
-                if (quizNode.getQuestion().getType() == Question.Type.WRITTEN) {
+                    //set question answer for use in Results
+                    quizNode.getQuestion().setAnswer(answer);
 
-                    //Set to all lowercase and no spaces for minimal input based error
-                    response = response.stream()
-                            .map(String::toLowerCase)
-                            .map(str -> str.replaceAll("\\s", ""))
-                            .collect(Collectors.toList());
+                    //user input type might be capitalized or spaced wrong. handle differently
+                    if (quizNode.getQuestion().getType() == Question.Type.WRITTEN) {
 
-                    answer = answer.stream()
-                            .map(String::toLowerCase)
-                            .map(str -> str.replaceAll("\\s", ""))
-                            .collect(Collectors.toList());
+                        //Set to all lowercase and no spaces for minimal input based error
+                        response = response.stream()
+                                .map(String::toLowerCase)
+                                .map(str -> str.replaceAll("\\s", ""))
+                                .collect(Collectors.toList());
+
+                        answer = answer.stream()
+                                .map(String::toLowerCase)
+                                .map(str -> str.replaceAll("\\s", ""))
+                                .collect(Collectors.toList());
+                    }
+
+                    //Answer may be larger than one, so .containsAll is used
+                    //Check if answer is correct, if no response then mark wrong.
+                    quizNode.setCorrect(answer.containsAll(response));
+
+                } else {
+                    quizNode.setCorrect(false);
                 }
-
-                //Answer may be larger than one, so .containsAll is used
-                //Check if answer is correct, if no response then mark wrong.
-                quizNode.setCorrect(answer.containsAll(response) && !response.isEmpty());
 
             } catch (Exception e) {
                 ErrorBox.display("A question failed to be graded. ID: " + quizNode.getQuestion().getID(), true);

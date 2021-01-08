@@ -12,7 +12,7 @@ import java.io.IOException;
 
 //todo: make dis work :(
 
-public class PremadeQuizSelect extends StartPageController {
+public class PremadeQuizSelect extends StartQuiz {
 
     public void onNetworkDesign() {
 
