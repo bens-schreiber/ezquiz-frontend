@@ -41,7 +41,7 @@ public class StageHelper {
     public static Stage createAndAddStage(Constants.Window name) throws IOException {
 
         //Find fxml path in hashmap
-        String path = Constants.fxmlTable.get(name);
+        String path = Constants.Window.fxmlTable.get(name);
 
         Scene scene = new Scene(FXMLLoader.load(StageHelper.class.getResource(path)));
 
@@ -53,7 +53,6 @@ public class StageHelper {
 
         return stage;
     }
-
 
     /**
      * Reusable scenes to not reload information.
