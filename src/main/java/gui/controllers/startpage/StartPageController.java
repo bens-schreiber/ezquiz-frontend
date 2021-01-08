@@ -7,7 +7,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
-class StartPage {
+class StartPageController {
     void displayTest() {
 
         try {

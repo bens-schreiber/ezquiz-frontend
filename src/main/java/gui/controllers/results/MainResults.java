@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
  * Provides methods for ActionEvents on Printable Results Page.
  */
 
-public class PrintableResultsController implements Initializable {
+public class MainResults implements Initializable {
 
     @FXML
     Label testName, outOfLabel, percentageLabel;

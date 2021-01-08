@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Provides methods for ActionEvents on Custom Quiz Page.
  */
 
-public class CustomQuizController extends StartPage implements Initializable {
+public class CustomQuiz extends StartPageController implements Initializable {
     @FXML
     private TextField questionAmountField, testNameField, testTimeField;
 

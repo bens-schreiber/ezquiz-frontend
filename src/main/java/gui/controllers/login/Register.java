@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 
-public class RegisterController implements Initializable {
+public class Register implements Initializable {
 
     @FXML
     TextField userField, passField;

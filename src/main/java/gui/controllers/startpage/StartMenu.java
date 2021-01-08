@@ -33,7 +33,7 @@ import java.util.function.UnaryOperator;
 /**
  * Provides methods for ActionEvents on Startup Screen.
  */
-public class StartController extends StartPage implements Initializable {
+public class StartMenu extends StartPageController implements Initializable {
 
     @FXML
     private VBox buttonBox;

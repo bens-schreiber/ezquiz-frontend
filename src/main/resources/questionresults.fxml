@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Rectangle?>
 <ScrollPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.controllers.results.QuestionResultsController">
+            fx:controller="gui.controllers.results.QuestionResults">
     <content>
         <AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #e1e1e1;"
                     stylesheets="@css/standard_button.css">

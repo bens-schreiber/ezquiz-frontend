@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Shows the missed questions, if enabled.
  */
 
-public class QuestionResultsController implements Initializable {
+public class QuestionResults implements Initializable {
 
     @FXML
     VBox correctAnswersVBox;

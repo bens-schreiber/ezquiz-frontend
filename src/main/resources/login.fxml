@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="109.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.login.LoginController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.login.Login">
    <children>
       <HBox layoutX="102.0" layoutY="105.0" prefHeight="26.0" prefWidth="171.0" spacing="10.0"
             stylesheets="@css/standard_button.css">

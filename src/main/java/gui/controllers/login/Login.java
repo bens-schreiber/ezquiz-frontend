@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+public class Login implements Initializable {
 
     @FXML
     TextField passwordField, usernameField;

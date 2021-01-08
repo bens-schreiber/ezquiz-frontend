@@ -10,7 +10,9 @@ import quiz.questions.Question;
 
 import java.io.IOException;
 
-public class OtherQuizesController extends StartPage {
+//todo: make dis work :(
+
+public class PremadeQuizSelect extends StartPageController {
 
     public void onNetworkDesign() {
 
