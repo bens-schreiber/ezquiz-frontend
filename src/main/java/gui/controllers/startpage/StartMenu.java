@@ -26,7 +26,6 @@ import quiz.QuizManager;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
@@ -168,9 +167,7 @@ public class StartMenu extends StartQuiz implements Initializable {
                 try {
 
                     long bitmap = DatabaseRequest.getTestKey(Integer.parseInt(textField.getText()));
-
-                    ArrayList<Integer> ids = new BitMap(bitmap).decodeToArray();
-                    QuizManager.loadQuestions(ids);
+                    QuizManager.loadQuestions(new BitMap(bitmap).decodeToList());
 
                     //Start test
                     try {

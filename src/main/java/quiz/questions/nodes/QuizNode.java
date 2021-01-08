@@ -7,6 +7,7 @@ import quiz.questions.Question;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -204,24 +205,25 @@ class CheckBoxNode implements TypeNode {
         int boxAmount = question.getOptions().size();
 
         //Create an array of checkboxes
-        CheckBox[] boxes = new javafx.scene.control.CheckBox[boxAmount];
+        CheckBox[] boxes = new CheckBox[boxAmount];
 
         //Iterate through the array and init each button
         for (int i = 0; i < boxAmount; i++) {
 
-            javafx.scene.control.CheckBox checkBox = new javafx.scene.control.CheckBox(question.getOptions().get(i));
+            CheckBox checkBox = new CheckBox(question.getOptions().get(i));
 
             boxes[i] = checkBox;
 
             //On mouse clicked, record response to responses
             checkBox.setOnMouseClicked(e -> {
 
-                StringBuilder stringBuilder = new StringBuilder();
+                //Make a new linked list everytime so we don't need to track removing.
+                LinkedList<String> list = new LinkedList<>();
                 for (javafx.scene.control.CheckBox box : boxes) {
                     if (box.isSelected())
-                        stringBuilder.append(box.getText()).append(",");
+                        list.add(box.getText());
                 }
-                this.response = Arrays.asList(stringBuilder.toString().split(","));
+                this.response = list;
             });
         }
 

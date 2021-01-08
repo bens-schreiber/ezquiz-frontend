@@ -1,6 +1,8 @@
 package etc;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * BitMap stored as long
@@ -45,9 +47,9 @@ public class BitMap {
 //    }
 
     //Decode from long
-    public ArrayList<Integer> decodeToArray() {
+    public List<Integer> decodeToList() {
 
-        ArrayList<Integer> ids = new ArrayList<>();
+        List<Integer> ids = new LinkedList<>();
 
         for (int i = 63; i >= 0; --i) {
             if ((this.bitMap < 0 && i == 63) || (this.bitMap & 1L << i) > 0) {

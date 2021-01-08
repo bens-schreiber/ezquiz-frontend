@@ -42,8 +42,9 @@ public class QuizManager {
         quizNodes = new QuizNode[amount];
 
         //Create a pool of question id's in the specific size of how many questions available
-        Integer[] array = IntStream.range(1, Constants.DATABASE_SIZE).boxed().toArray(Integer[]::new);
-        List<Integer> idPool = Arrays.asList(array);
+        List<Integer> idPool = Arrays.asList(
+                IntStream.range(1, Constants.DATABASE_SIZE).boxed().toArray(Integer[]::new)
+        );
 
         //Randomize the pool
         Collections.shuffle(idPool);
@@ -57,6 +58,7 @@ public class QuizManager {
         int i = 0;
         for (Integer id : idPool) {
             try {
+
                 request.setId(id);
 
                 //Request for JSON-Question with the given ID. Make that JSON into a Question object.
@@ -188,7 +190,7 @@ public class QuizManager {
 
     public static boolean allResponded() {
 
-        return Arrays.stream(quizNodes).noneMatch(quizNode -> quizNode.getResponse().isEmpty());
+        return Arrays.stream(quizNodes).allMatch(QuizNode::isAnswered);
 
     }
 

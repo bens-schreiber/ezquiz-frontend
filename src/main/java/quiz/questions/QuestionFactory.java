@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class QuestionFactory {
@@ -24,10 +25,11 @@ public class QuestionFactory {
 
         int id = Integer.parseInt(json.get("question_num").toString());
 
-        ArrayList<String> options;
+        //Only need to iterate through options, use linked list ds
+        LinkedList<String> options;
 
         if (json.has("options")) {
-            options = new ArrayList<>(Arrays.asList(json.get("options").toString()
+            options = new LinkedList<>(Arrays.asList(json.get("options").toString()
                     .split(", ")));
 
         } else {

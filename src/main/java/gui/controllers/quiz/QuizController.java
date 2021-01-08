@@ -144,7 +144,6 @@ public class QuizController implements Initializable {
 
                 endTest();
 
-
             } else {
 
                 int hours;

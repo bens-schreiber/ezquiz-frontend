@@ -8,18 +8,18 @@ import java.util.List;
  */
 public class Question {
 
+    private final Type type;
     public enum Type {
         MULTIPLECHOICE, TRUEORFALSE, CHECKBOX, WRITTEN
     }
 
+    private final Subject subject;
     public enum Subject {
         NETWORKDESIGN, INTBUS, MARKETING, BUSMATH
     }
 
     private final int id;
     private final String prompt, directions;
-    private final Type type;
-    private final Subject subject;
     private final List<String> options;
     private List<String> answer;
 
@@ -47,8 +47,6 @@ public class Question {
 
     /**
      * Getters
-     *
-     * @return
      */
 
     public Type getType() {
