@@ -10,7 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
@@ -42,7 +43,7 @@ public class PrintableResultsController implements Initializable {
 
     //todo: add chart stats
     @FXML
-    LineChart lineChart;
+    BarChart<String, Integer> barChart;
 
     private BitMap bitMap;
 
@@ -51,6 +52,8 @@ public class PrintableResultsController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        loadBarChart();
 
         //Disable button if in preferences
         seeQuestionsButton.setDisable(!Boolean.parseBoolean(QuizManager.getPreferences().get("Show Correct Answers")));
@@ -77,8 +80,37 @@ public class PrintableResultsController implements Initializable {
         bitMap = new BitMap(ids);
 
         //add how many correct out of possible, percentage, put bitmap to Base64
-        outOfLabel.setText(correctAnswers + " out of " + QuizManager.getQuizNodes().size());
-        percentageLabel.setText(((double) correctAnswers / (double) QuizManager.getQuizNodes().size() * 100) + "%");
+        outOfLabel.setText(correctAnswers + " out of " + QuizManager.getQuizNodes().length);
+        percentageLabel.setText(((double) correctAnswers / (double) QuizManager.getQuizNodes().length * 100) + "%");
+
+    }
+
+    private void loadBarChart() {
+
+        int[] subjs = {0, 0, 0, 0};
+
+        for (QuizNode quizNode : QuizManager.getQuizNodes()) {
+
+            switch (quizNode.getQuestion().getSubject()) {
+
+                case INTBUS -> subjs[0]++;
+
+                case NETWORKDESIGN -> subjs[1]++;
+
+                case MARKETING -> subjs[2]++;
+
+                case BUSMATH -> subjs[3]++;
+            }
+        }
+
+        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+        series.setName("Amount of each question");
+        series.getData().add(new XYChart.Data<>("Intro to Business", subjs[0]));
+        series.getData().add(new XYChart.Data<>("Network Design", subjs[1]));
+        series.getData().add(new XYChart.Data<>("Marketing", subjs[2]));
+        series.getData().add(new XYChart.Data<>("Business Math", subjs[3]));
+
+        barChart.getData().add(series);
 
     }
 

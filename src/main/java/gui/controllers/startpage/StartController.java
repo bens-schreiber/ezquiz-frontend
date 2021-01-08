@@ -196,7 +196,7 @@ public class StartController implements Initializable {
 
                         //Close stage helper resources
                         StageHelper.clearScenes();
-                        StageHelper.closeStage("Start");
+                        StageHelper.closeStage("StartupPage");
 
                         //Display Quiz
                         window.close();
@@ -204,6 +204,7 @@ public class StartController implements Initializable {
 
                     } catch (IOException | NullPointerException e) {
                         ErrorBox.display("A page failed to load.", false);
+                        e.printStackTrace();
                     }
                 } catch (NumberFormatException | InterruptedException | IOException | JSONException e) {
                     ErrorBox.display("Could not get test from code.", false);

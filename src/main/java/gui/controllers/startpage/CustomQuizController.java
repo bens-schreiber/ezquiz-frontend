@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import quiz.QuizManager;
+import quiz.questions.Question;
 
 import java.io.IOException;
 import java.net.URL;
@@ -93,11 +94,27 @@ public class CustomQuizController implements Initializable {
             QuizManager.getPreferences().put(checkBox.getText(), String.valueOf(checkBox.isSelected()));
         }
 
+//        "None", "Marketing", "Business Math", "Intro To Business", "Network Design"
+//        "None", "Written", "True or False", "Checkbox", "Multiple Choice");
+        Question.Type type;
+        Question.Subject subject;
+        type = switch (typeList.getValue()) {
+            case "Multiple Choice" -> Question.Type.MULTIPLECHOICE;
+            case "Written" -> Question.Type.WRITTEN;
+            case "True or False" -> Question.Type.TRUEORFALSE;
+            case "Checkbox" -> Question.Type.CHECKBOX;
+            default -> null;
+        };
 
-        subjectList.setValue(subjectList.getValue().equals("None") ? null : subjectList.getValue().replace(" ", "%20"));
-        typeList.setValue(typeList.getValue().equals("None") ? null : typeList.getValue().replace(" ", "%20"));
+        subject = switch (subjectList.getValue()) {
+            case "Marketing" -> Question.Subject.MARKETING;
+            case "Business Math" -> Question.Subject.BUSMATH;
+            case "Intro to Business" -> Question.Subject.INTBUS;
+            case "Network Design" -> Question.Subject.NETWORKDESIGN;
+            default -> null;
+        };
 
-        QuizManager.loadQuestions(questionAmount, subjectList.getValue(), typeList.getValue());
+        QuizManager.loadQuestions(questionAmount, type, subject);
 
         StageHelper.closeStage("Start"); //Close this page
 

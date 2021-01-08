@@ -38,9 +38,9 @@ public class QuizNode {
      * @return question type node correlating to questionType.
      */
     private Node getTypeNode() {
-        switch (this.getQuestion().getType()) {
+        switch (this.question.getType()) {
 
-            case "Multiple Choice" -> {
+            case MULTIPLECHOICE -> {
 
                 //Define the question
                 Question question = this.getQuestion();
@@ -75,7 +75,7 @@ public class QuizNode {
             }
 
 
-            case "True or False" -> {
+            case TRUEORFALSE -> {
 
                 //Establish options
                 RadioButton radio1 = new RadioButton("true");
@@ -98,7 +98,7 @@ public class QuizNode {
             }
 
 
-            case "Checkbox" -> {
+            case CHECKBOX -> {
 
                 //Define the question
                 Question question = this.getQuestion();
@@ -133,7 +133,7 @@ public class QuizNode {
                 return vbox;
             }
 
-            case "Written" -> {
+            case WRITTEN -> {
 
                 TextField textField = new TextField();
                 textField.setMaxSize(115, 10);

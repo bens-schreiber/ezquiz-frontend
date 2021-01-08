@@ -16,9 +16,9 @@ public class QuestionFactory {
      */
     public static Question questionFromJSON(JSONObject json) throws JSONException {
 
-        String type = json.get("type_name").toString();
+        Question.Type type = Question.Type.valueOf(json.get("type_name").toString());
 
-        String subject = json.get("subject_name").toString();
+        Question.Subject subject = Question.Subject.valueOf(json.get("subject_name").toString());
 
         String question = json.get("question").toString();
 
@@ -38,13 +38,13 @@ public class QuestionFactory {
 
         directions = json.has("directions") ? json.get("directions").toString() : switch (type) {
 
-            case "Multiple" -> "Select the correct answer.";
+            case MULTIPLECHOICE -> "Select the correct answer.";
 
-            case "True or False" -> "Determine if the problem is true or false.";
+            case TRUEORFALSE -> "Determine if the problem is true or false.";
 
-            case "Checkbox" -> "Check all the boxes that apply.";
+            case CHECKBOX -> "Check all the boxes that apply.";
 
-            default -> "Correctly type the solution.";
+            case WRITTEN -> "Correctly type the solution.";
 
         };
 

@@ -96,7 +96,7 @@ public class QuizController implements Initializable {
 
         //Establish flag button amount
         //Whenever the button is clicked use the individualQuestionClicked handler
-        for (int i = 0; i < QuizManager.getQuizNodes().size(); i++) {
+        for (int i = 0; i < QuizManager.getQuizNodes().length; i++) {
 
             FlagButton button = new FlagButton();
 
@@ -175,7 +175,7 @@ public class QuizController implements Initializable {
     //When next button is clicked
     public void onNextButton() {
 
-        if (QuizManager.getCurrNum() < QuizManager.getQuizNodes().size() - 1) {
+        if (QuizManager.getCurrNum() < QuizManager.getQuizNodes().length - 1) {
 
             QuizManager.nextQuestion(); //Change to the next question.
 
@@ -184,7 +184,7 @@ public class QuizController implements Initializable {
 
         //Disable/enable next and back based on position
         backButton.setDisable(QuizManager.getCurrNum() == 0);
-        nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuizNodes().size());
+        nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuizNodes().length);
 
         //Color the question button that is currently selected
         selectCurrentQuizButton();
@@ -201,7 +201,7 @@ public class QuizController implements Initializable {
 
         //Disable/enable next and back based on position
         backButton.setDisable(QuizManager.getCurrNum() == 0);
-        nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuizNodes().size());
+        nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuizNodes().length);
 
         //Color the question button that is currently selected
         selectCurrentQuizButton();
@@ -226,7 +226,7 @@ public class QuizController implements Initializable {
         }
 
         backButton.setDisable(questionSpot == 0);
-        nextButton.setDisable(questionSpot + 1 == QuizManager.getQuizNodes().size());
+        nextButton.setDisable(questionSpot + 1 == QuizManager.getQuizNodes().length);
 
     }
 
@@ -433,7 +433,7 @@ public class QuizController implements Initializable {
         //Change top right label to current question num / question amount
         currQuestionLabel.setText((QuizManager.getCurrNum() + 1)
                 + " out of "
-                + QuizManager.getQuizNodes().size()
+                + QuizManager.getQuizNodes().length
         );
 
         //If the button is selected
@@ -467,9 +467,7 @@ public class QuizController implements Initializable {
     public void canvasOnPressed(MouseEvent e) {
         //begin drawing
         gc.beginPath();
-
         gc.lineTo(e.getX(), e.getY());
-
         gc.stroke();
     }
 

@@ -8,8 +8,18 @@ import java.util.List;
  */
 public class Question {
 
+    public enum Type {
+        MULTIPLECHOICE, TRUEORFALSE, CHECKBOX, WRITTEN
+    }
+
+    public enum Subject {
+        NETWORKDESIGN, INTBUS, MARKETING, BUSMATH
+    }
+
     private final int id;
-    private final String type, subject, prompt, directions;
+    private final String prompt, directions;
+    private final Type type;
+    private final Subject subject;
     private final List<String> options;
     private List<String> answer;
 
@@ -17,7 +27,7 @@ public class Question {
      * Class constructor.
      * Answer is null until specifically set.
      */
-    public Question(String type, String subject, List<String> options, String prompt, String directions, int id) {
+    public Question(Type type, Subject subject, List<String> options, String prompt, String directions, int id) {
         this.type = type;
         this.subject = subject;
         this.options = options;
@@ -37,13 +47,15 @@ public class Question {
 
     /**
      * Getters
+     *
+     * @return
      */
 
-    public String getType() {
+    public Type getType() {
         return this.type;
     }
 
-    public String getSubject() {
+    public Subject getSubject() {
         return this.subject;
     }
 

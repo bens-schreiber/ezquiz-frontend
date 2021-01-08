@@ -15,6 +15,112 @@ public class DatabaseRequest {
 
     public static String AUTH_TOKEN = "";
 
+    private int id;
+    private final Question.Subject subject;
+    private final Question.Type type;
+    private JSONObject json;
+
+    /**
+     * Constructor
+     */
+
+    public DatabaseRequest(Question.Type type, Question.Subject subject) {
+        this.subject = subject;
+        this.type = type;
+    }
+
+
+    /**
+     * Determine what request to make
+     */
+    public DatabaseRequest makeRequest() throws JSONException, InterruptedException, IOException {
+
+        if ((this.subject != null) && (this.type != null)) this.json = requestQuestion(subject, type, id);
+
+        else if (this.subject != null) this.json = requestQuestion(subject, id);
+
+        else if (this.type != null) this.json = requestQuestion(type, id);
+
+        else this.json = requestQuestion(id);
+
+        return this;
+    }
+
+    public JSONObject getJSON() {
+        return json;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    /**
+     * @param id specifies absolute location in server.
+     * @throws JSONException on object not found
+     */
+    private JSONObject requestQuestion(int id) throws IOException, JSONException, InterruptedException {
+
+        return (JSONObject) DatabaseRequestHelper.getJSONFromURL(Constants.DEFAULT_PATH + id, AUTH_TOKEN).get("obj0");
+
+    }
+
+    /**
+     * Limits pool of questions to those with only the specified Question Type.
+     *
+     * @param id JSONObject with correlating id. Not absolute id.
+     */
+    private static JSONObject requestQuestion(Question.Type type, int id) throws IOException, JSONException, InterruptedException {
+
+        return (JSONObject) DatabaseRequestHelper
+                .getJSONFromURL(Constants.DEFAULT_PATH + "type/" + type, AUTH_TOKEN)
+                .get("obj" + id);
+
+    }
+
+    /**
+     * Limits pool of questions to those with only the specified Question Subject.
+     *
+     * @param id JSONObject with correlating id. Not absolute id.
+     */
+    private static JSONObject requestQuestion(Question.Subject subject, int id) throws IOException, JSONException, InterruptedException {
+
+        return (JSONObject) DatabaseRequestHelper
+                .getJSONFromURL(Constants.DEFAULT_PATH + "subject/" + subject, AUTH_TOKEN)
+                .get("obj" + id);
+
+    }
+
+    /**
+     * Limits pool of questions to those with only the specified question Type and Subject.
+     *
+     * @param id JSONObject with correlating id. Not absolute id.
+     */
+    private static JSONObject requestQuestion(Question.Subject subject, Question.Type type, int id) throws IOException, JSONException, InterruptedException {
+
+        return (JSONObject) DatabaseRequestHelper
+                .getJSONFromURL(Constants.DEFAULT_PATH + subject + "/" + type, AUTH_TOKEN)
+                .get("obj" + id);
+
+    }
+
+
+
+    /*
+      static methods
+     */
+
+    /**
+     * @return JSONObject from Question Objects ID.
+     */
+    public static JSONObject getQuestionAnswer(Question question) throws IOException, JSONException, InterruptedException {
+
+        return (JSONObject) DatabaseRequestHelper
+                .getJSONFromURL(Constants.DEFAULT_PATH + "answer/" + question.getID(), AUTH_TOKEN)
+                .get("obj0");
+
+    }
+
     /**
      * @return status code
      */
@@ -71,66 +177,5 @@ public class DatabaseRequest {
     public static long getTestKey(int key) throws InterruptedException, JSONException, IOException {
         JSONObject response = (JSONObject) DatabaseRequestHelper.getJSONFromURL("http://localhost:7080/api/database/key/" + key, AUTH_TOKEN).get("obj0");
         return Long.parseLong(response.get("bitmap").toString());
-    }
-
-
-    /**
-     * @param id specifies absolute location in server.
-     * @throws JSONException on object not found
-     */
-    public static JSONObject getQuestion(int id) throws IOException, JSONException, InterruptedException {
-
-        return (JSONObject) DatabaseRequestHelper.getJSONFromURL(Constants.DEFAULT_PATH + id, AUTH_TOKEN).get("obj0");
-
-    }
-
-    /**
-     * Limits pool of questions to those with only the specified Question Type.
-     *
-     * @param id JSONObject with correlating id. Not absolute id.
-     */
-    public static JSONObject getQuestionByType(String type, int id) throws IOException, JSONException, InterruptedException {
-
-        return (JSONObject) DatabaseRequestHelper
-                .getJSONFromURL(Constants.DEFAULT_PATH + "type/" + type, AUTH_TOKEN)
-                .get("obj" + id);
-
-    }
-
-    /**
-     * Limits pool of questions to those with only the specified Question Subject.
-     *
-     * @param id JSONObject with correlating id. Not absolute id.
-     */
-    public static JSONObject getQuestionBySubject(String subject, int id) throws IOException, JSONException, InterruptedException {
-
-        return (JSONObject) DatabaseRequestHelper
-                .getJSONFromURL(Constants.DEFAULT_PATH + "subject/" + subject, AUTH_TOKEN)
-                .get("obj" + id);
-
-    }
-
-    /**
-     * Limits pool of questions to those with only the specified question Type and Subject.
-     *
-     * @param id JSONObject with correlating id. Not absolute id.
-     */
-    public static JSONObject getQuestionBySubjectAndType(String subject, String type, int id) throws IOException, JSONException, InterruptedException {
-
-        return (JSONObject) DatabaseRequestHelper
-                .getJSONFromURL(Constants.DEFAULT_PATH + subject + "/" + type, AUTH_TOKEN)
-                .get("obj" + id);
-
-    }
-
-    /**
-     * @return JSONObject from Question Objects ID.
-     */
-    public static JSONObject getQuestionAnswer(Question question) throws IOException, JSONException, InterruptedException {
-
-        return (JSONObject) DatabaseRequestHelper
-                .getJSONFromURL(Constants.DEFAULT_PATH + "answer/" + question.getID(), AUTH_TOKEN)
-                .get("obj0");
-
     }
 }

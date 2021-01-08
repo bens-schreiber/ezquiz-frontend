@@ -3,13 +3,12 @@ package quiz;
 import database.DatabaseRequest;
 import etc.Constants;
 import gui.popups.ErrorBox;
-import org.jetbrains.annotations.Nullable;
-import org.json.JSONObject;
 import quiz.questions.Question;
 import quiz.questions.QuestionFactory;
 import quiz.questions.nodes.QuizNode;
 
-import java.util.ArrayList;
+import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +23,8 @@ public class QuizManager {
     //Hashmap of user preferences
     private static final HashMap<String, String> preferences = new HashMap<>();
 
-    //List of QuizNodes that contain the questions, responses, and javafx information
-    private static final List<QuizNode> quizNodes = new ArrayList<>();
+    //Array of QuizNodes that contain the questions, responses, and javafx information
+    private static QuizNode[] quizNodes;
 
     //Index of the QuizNodes the quiz is currently on
     private static int currQuestion = 0;
@@ -36,71 +35,58 @@ public class QuizManager {
      * @param subject if not null limits questions to that specific subject.
      * @param type    if not null limits questions to that specific type.
      */
-    public static void loadQuestions(int amount, @Nullable String subject, @Nullable String type) {
+    public static void loadQuestions(int amount, @Nullable Question.Type type, @Nullable Question.Subject subject) {
+
+        //Initiate array with set amount
+        quizNodes = new QuizNode[amount];
 
         //Create a pool of question id's in the specific size of how many questions available
-        List<Integer> idPool = IntStream
-                .range(1, Constants.DATABASE_SIZE)
-                .boxed()
-                .collect(Collectors.toList());
+        Integer[] array = IntStream.range(1, Constants.DATABASE_SIZE).boxed().toArray(Integer[]::new);
+        List<Integer> idPool = Arrays.asList(array);
 
         //Randomize the pool
         Collections.shuffle(idPool);
-        idPool = idPool.subList(0, amount);
 
-        //Initialize the id variable and request variable
-        int id;
-        JSONObject requestData;
-        while (idPool.iterator().hasNext()) {
 
-            //Remove the element and grab its value
-            id = idPool.remove(0);
-
+        //Initialize the id variable and request
+        DatabaseRequest request = new DatabaseRequest(type, subject);
+        int i = 0;
+        for (Integer id : idPool.subList(0, amount)) {
             try {
-                if (subject == null && type == null) {//If subject and type are null, request based on all items in db.
-
-                    requestData = DatabaseRequest.getQuestion(id);
-
-                } else if (subject != null && type != null) {//If both subject and type, request for both
-
-                    requestData = DatabaseRequest.getQuestionBySubjectAndType(subject, type, id);
-
-                } else if (subject == null) {//If only type, request for type
-
-                    requestData = DatabaseRequest.getQuestionByType(type, id);
-
-                } else {//If only subject, request for subject
-
-                    requestData = DatabaseRequest.getQuestionBySubject(subject, id);
-
-                }
-
-                Question question = QuestionFactory.questionFromJSON(requestData);
+                request.setId(id);
+                Question question = QuestionFactory.questionFromJSON(request.makeRequest().getJSON());
                 question.shuffleOptions();
-                quizNodes.add(new QuizNode(question));
+                quizNodes[i] = new QuizNode(question);
+                i++;
 
             } catch (Exception e) {
                 ErrorBox.display("A question failed to load. ID: " + id, false);
-                quizNodes.clear();
+                quizNodes = null;
             }
 
         }
     }
 
     /**
-     * Overloaded loadQuestions method.
      * @param ids id of questions to load.
      */
     public static void loadQuestions(List<Integer> ids) {
+
+        DatabaseRequest request = new DatabaseRequest(null, null);
+        int i = 0;
         for (Integer id : ids) {
             try {
-                Question question = QuestionFactory.questionFromJSON(DatabaseRequest.getQuestion(id));
+                request.setId(id);
+
+                Question question = QuestionFactory.questionFromJSON(request.makeRequest().getJSON());
+
                 question.shuffleOptions();
-                quizNodes.add(new QuizNode(question));
+                quizNodes[i] = new QuizNode(question);
+                i++;
 
             } catch (Exception e) {
                 ErrorBox.display("A question failed to load. ID: " + id, false);
-                quizNodes.clear();
+                quizNodes = null;
                 e.printStackTrace();
             }
         }
@@ -124,7 +110,7 @@ public class QuizManager {
                 quizNode.getQuestion().setAnswer(answer);
 
                 //user input type might be capitalized or spaced wrong. handle differently
-                if (quizNode.getQuestion().getType().equals("input")) {
+                if (quizNode.getQuestion().getType() == Question.Type.WRITTEN) {
 
                     //Set to all lowercase and no spaces for minimal input based error
                     response = response.stream()
@@ -150,7 +136,6 @@ public class QuizManager {
     }
 
 
-
     /**
      * Getters
      */
@@ -166,26 +151,26 @@ public class QuizManager {
         return preferences;
     }
 
-    public static List<QuizNode> getQuizNodes() {
+    public static QuizNode[] getQuizNodes() {
 
         return quizNodes;
     }
 
     public static QuizNode getCurrNode() {
 
-        return quizNodes.get(currQuestion);
+        return quizNodes[currQuestion];
 
     }
 
     public static Question getCurrQuestion() {
 
-        return quizNodes.get(currQuestion).getQuestion();
+        return quizNodes[currQuestion].getQuestion();
 
     }
 
     public static boolean allResponded() {
 
-        return quizNodes.stream().noneMatch(quizNode -> quizNode.getResponse().isEmpty());
+        return Arrays.stream(quizNodes).noneMatch(quizNode -> quizNode.getResponse().isEmpty());
 
     }
 

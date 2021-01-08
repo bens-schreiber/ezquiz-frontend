@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import quiz.QuizManager;
+import quiz.questions.Question;
 
 import java.io.IOException;
 
@@ -15,7 +16,7 @@ public class OtherQuizesController {
 
     public void onNetworkDesign() {
 
-        QuizManager.loadQuestions(10, "Network%20Design", null);
+        QuizManager.loadQuestions(10, null, Question.Subject.NETWORKDESIGN);
 
         StageHelper.closeAllStages();
         StageHelper.clearScenes();
@@ -24,7 +25,7 @@ public class OtherQuizesController {
     }
 
     public void onIntroBus() {
-        QuizManager.loadQuestions(10, "Intro%20To%20Business", null);
+        QuizManager.loadQuestions(10, null, Question.Subject.INTBUS);
 
         StageHelper.closeStage("StartupPage");
         StageHelper.clearScenes();
@@ -33,7 +34,7 @@ public class OtherQuizesController {
     }
 
     public void onBusMath() {
-        QuizManager.loadQuestions(10, "Business%20Math", null);
+        QuizManager.loadQuestions(10, null, Question.Subject.BUSMATH);
 
         StageHelper.closeStage("StartupPage");
         StageHelper.clearScenes();
@@ -42,7 +43,7 @@ public class OtherQuizesController {
     }
 
     public void onMarketing() {
-        QuizManager.loadQuestions(10, "Marketing", null);
+        QuizManager.loadQuestions(10, null, Question.Subject.MARKETING);
 
         StageHelper.closeStage("StartupPage");
         StageHelper.clearScenes();
