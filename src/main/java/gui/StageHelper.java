@@ -16,6 +16,7 @@ public class StageHelper {
 
     private static final HashMap<Constants.Window, Stage> stages = new HashMap<>();
 
+    //todo: remove this when code is fxml page
     public static void addStage(Constants.Window name, Stage stage) {
         stages.put(name, stage);
     }
@@ -37,7 +38,10 @@ public class StageHelper {
         stages.forEach((s, stage) -> stage.close());
     }
 
-    public static Stage createAndAddStage(Constants.Window name, String path) throws IOException {
+    public static Stage createAndAddStage(Constants.Window name) throws IOException {
+
+        //Find fxml path in hashmap
+        String path = Constants.fxmlTable.get(name);
 
         Scene scene = new Scene(FXMLLoader.load(StageHelper.class.getResource(path)));
 

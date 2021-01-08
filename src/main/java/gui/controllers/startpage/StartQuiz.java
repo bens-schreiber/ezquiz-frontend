@@ -14,7 +14,7 @@ class StartQuiz {
         try {
 
             //Attempt to load scene and set it to stage
-            Stage stage = StageHelper.createAndAddStage(Constants.Window.QUIZ, "/quiz.fxml");
+            Stage stage = StageHelper.createAndAddStage(Constants.Window.QUIZ);
             stage.setAlwaysOnTop(true);
             stage.initStyle(StageStyle.UNDECORATED);
 

@@ -54,7 +54,7 @@ public class StartMenu extends StartQuiz implements Initializable {
     public void onRegisterButton() {
 
         try {
-            Stage stage = StageHelper.createAndAddStage(Constants.Window.REGISTER, "/register.fxml");
+            Stage stage = StageHelper.createAndAddStage(Constants.Window.REGISTER);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setAlwaysOnTop(true);
@@ -71,7 +71,7 @@ public class StartMenu extends StartQuiz implements Initializable {
 
         try {
 
-            Stage stage = StageHelper.createAndAddStage(Constants.Window.LOGIN, "/login.fxml");
+            Stage stage = StageHelper.createAndAddStage(Constants.Window.LOGIN);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setAlwaysOnTop(true);
@@ -105,7 +105,7 @@ public class StartMenu extends StartQuiz implements Initializable {
 
         try {
 
-            Stage stage = StageHelper.createAndAddStage(Constants.Window.PREMADEQUIZES, "/premadequizes.fxml");
+            Stage stage = StageHelper.createAndAddStage(Constants.Window.PREMADEQUIZES);
             stage.setAlwaysOnTop(true);
             stage.initStyle(StageStyle.UNDECORATED);
 
@@ -173,7 +173,7 @@ public class StartMenu extends StartQuiz implements Initializable {
                     try {
 
                         //Attempt to load scene and set it to stage
-                        Stage stage = StageHelper.createAndAddStage(Constants.Window.QUIZ, "/quiz.fxml");
+                        Stage stage = StageHelper.createAndAddStage(Constants.Window.QUIZ);
                         stage.setAlwaysOnTop(true);
                         stage.initStyle(StageStyle.UNDECORATED);
 

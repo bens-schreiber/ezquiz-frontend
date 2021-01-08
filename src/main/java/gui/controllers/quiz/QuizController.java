@@ -282,7 +282,7 @@ public class QuizController implements Initializable {
 
             try {
 
-                Stage stage = StageHelper.createAndAddStage(Constants.Window.CALCULATOR, "/calculator.fxml");
+                Stage stage = StageHelper.createAndAddStage(Constants.Window.CALCULATOR);
 
                 stage.setAlwaysOnTop(true); //Keep notepad on test.
                 stage.initStyle(StageStyle.UTILITY);//Get rid of minimize
@@ -314,7 +314,7 @@ public class QuizController implements Initializable {
             try {
 
                 //Establish scene and stage
-                Stage stage = StageHelper.createAndAddStage(Constants.Window.NOTEPAD, "/notepad.fxml");
+                Stage stage = StageHelper.createAndAddStage(Constants.Window.NOTEPAD);
 
                 stage.setAlwaysOnTop(true); //Keep notepad on test.
                 stage.initStyle(StageStyle.UTILITY);//Get rid of minimize
@@ -356,7 +356,7 @@ public class QuizController implements Initializable {
                 //Change cursor to crosshair to show drawing mode is on
                 StageHelper.getStages().get(Constants.Window.QUIZ).getScene().setCursor(Cursor.CROSSHAIR);
 
-                Stage stage = StageHelper.createAndAddStage(Constants.Window.DRAWINGPAD, "/drawingpad.fxml");
+                Stage stage = StageHelper.createAndAddStage(Constants.Window.DRAWINGPAD);
 
                 stage.setAlwaysOnTop(true); //Keep pad on test.
                 stage.initStyle(StageStyle.UTILITY);
