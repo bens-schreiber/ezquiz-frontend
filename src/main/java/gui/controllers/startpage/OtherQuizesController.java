@@ -5,14 +5,12 @@ import gui.popups.ErrorBox;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import quiz.QuizManager;
 import quiz.questions.Question;
 
 import java.io.IOException;
 
-public class OtherQuizesController {
+public class OtherQuizesController extends StartPage {
 
     public void onNetworkDesign() {
 
@@ -84,26 +82,6 @@ public class OtherQuizesController {
                 e.printStackTrace();
             }
 
-        }
-    }
-
-    private void displayTest() {
-
-        try {
-
-            Stage stage = StageHelper.createAndAddStage("Quiz", "/quiz.fxml");
-
-            stage.setAlwaysOnTop(true);
-            stage.initStyle(StageStyle.UNDECORATED);
-
-            StageHelper.closeAllStages();
-            StageHelper.clearScenes();
-
-            stage.show();
-
-        } catch (IOException | NullPointerException e) {
-            ErrorBox.display("A page failed to load.", false);
-            e.printStackTrace();
         }
     }
 

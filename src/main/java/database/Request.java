@@ -9,7 +9,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-class DatabaseRequestHelper {
+class Request {
+
+    //AUTH UUID for http requests
+    public static String AUTH_TOKEN = "";
+
     /**
      * Make HTTP get request to server.
      *

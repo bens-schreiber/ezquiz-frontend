@@ -50,7 +50,6 @@ public class QuestionFactory {
 
         return new Question(type, subject, options, question, directions, id);
 
-
     }
 
     /**

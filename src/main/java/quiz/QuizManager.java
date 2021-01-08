@@ -1,6 +1,7 @@
 package quiz;
 
 import database.DatabaseRequest;
+import database.QuestionRequest;
 import etc.Constants;
 import gui.popups.ErrorBox;
 import quiz.questions.Question;
@@ -26,7 +27,7 @@ public class QuizManager {
     //Array of QuizNodes that contain the questions, responses, and javafx information
     private static QuizNode[] quizNodes;
 
-    //Index of the QuizNodes the quiz is currently on
+    //Index of the QuizNodes the quiz is currently showing
     private static int currQuestion = 0;
 
     /**
@@ -37,7 +38,7 @@ public class QuizManager {
      */
     public static void loadQuestions(int amount, @Nullable Question.Type type, @Nullable Question.Subject subject) {
 
-        //Initiate array with set amount
+        //Initiate the quizNodes as a static array with the amount specified
         quizNodes = new QuizNode[amount];
 
         //Create a pool of question id's in the specific size of how many questions available
@@ -47,39 +48,51 @@ public class QuizManager {
         //Randomize the pool
         Collections.shuffle(idPool);
 
+        //Get rid of values that aren't needed
+        idPool = idPool.subList(0, amount);
 
-        //Initialize the id variable and request
-        DatabaseRequest request = new DatabaseRequest(type, subject);
+        //Initialize a request with given type and subject.
+        //Count loop iterations for putting into QuizNodes
+        QuestionRequest request = new QuestionRequest(type, subject);
         int i = 0;
-        for (Integer id : idPool.subList(0, amount)) {
+        for (Integer id : idPool) {
             try {
                 request.setId(id);
-                Question question = QuestionFactory.questionFromJSON(request.makeRequest().getJSON());
+
+                //Request for JSON-Question with the given ID. Make that JSON into a Question object.
+                Question question = QuestionFactory.questionFromJSON(
+                        request.makeRequest().getJSON()
+                );
+
+                //Randomize the order of the options of the question.
                 question.shuffleOptions();
+
                 quizNodes[i] = new QuizNode(question);
                 i++;
 
             } catch (Exception e) {
                 ErrorBox.display("A question failed to load. ID: " + id, false);
+
+                //Clear quizNodes after any error.
                 quizNodes = null;
             }
-
         }
     }
 
     /**
+     * For loading a specific test through the test key.
+     *
      * @param ids id of questions to load.
      */
     public static void loadQuestions(List<Integer> ids) {
 
-        DatabaseRequest request = new DatabaseRequest(null, null);
+        QuestionRequest request = new QuestionRequest();
         int i = 0;
         for (Integer id : ids) {
             try {
+
                 request.setId(id);
-
                 Question question = QuestionFactory.questionFromJSON(request.makeRequest().getJSON());
-
                 question.shuffleOptions();
                 quizNodes[i] = new QuizNode(question);
                 i++;
@@ -98,7 +111,6 @@ public class QuizManager {
      */
     public static void checkAnswers() {
 
-        //Iterate through quiz.questions along with hashmap, so it doesn't make unneeded requests
         for (QuizNode quizNode : quizNodes) {
             try {
 

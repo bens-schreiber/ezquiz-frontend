@@ -1,6 +1,7 @@
 package gui.controllers.startpage;
 
 import database.DatabaseRequest;
+import database.QuestionRequest;
 import etc.BitMap;
 import etc.Constants;
 import gui.StageHelper;
@@ -32,7 +33,7 @@ import java.util.function.UnaryOperator;
 /**
  * Provides methods for ActionEvents on Startup Screen.
  */
-public class StartController implements Initializable {
+public class StartController extends StartPage implements Initializable {
 
     @FXML
     private VBox buttonBox;
@@ -43,6 +44,7 @@ public class StartController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        //Disable all buttons until the user has logged in.
         buttonBox.getChildren().forEach(button -> button.setDisable(true));
         buttonBox.getChildren().get(0).setDisable(false);
         buttonBox.getChildren().get(1).setDisable(false);
@@ -76,7 +78,8 @@ public class StartController implements Initializable {
             stage.setAlwaysOnTop(true);
             stage.showAndWait();
 
-            if (!DatabaseRequest.AUTH_TOKEN.isEmpty()) {
+            //If an AUTH token has been received, the user is logged in. Enable all buttons.
+            if (!QuestionRequest.AUTH_TOKEN.isEmpty()) {
                 buttonBox.getChildren().forEach(button -> button.setDisable(!button.isDisable()));
                 buttonBox.getChildren().remove(0);
                 buttonBox.getChildren().remove(0);
@@ -92,28 +95,11 @@ public class StartController implements Initializable {
     }
 
     public void onDefaultButton() {
-        try {
-            //Load in questions with no null limiters
-            QuizManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 
-            //Attempt to load scene and set it to stage
-            Stage stage = StageHelper.createAndAddStage("Quiz", "/quiz.fxml");
-            stage.setAlwaysOnTop(true);
-            stage.initStyle(StageStyle.UNDECORATED);
+        //Load in questions with no limiters
+        QuizManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 
-            //Close stage helper resources
-            StageHelper.clearScenes();
-            StageHelper.closeStage("StartupPage");
-
-            //Display Quiz
-            stage.show();
-
-        } catch (Exception e) {
-            ErrorBox.display("A page failed to load.", false);
-            e.printStackTrace();
-        }
-
-
+        displayTest();
     }
 
     public void onOtherButton() {

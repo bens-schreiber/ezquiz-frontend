@@ -10,12 +10,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import quiz.QuizManager;
 import quiz.questions.Question;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -24,7 +21,7 @@ import java.util.ResourceBundle;
  * Provides methods for ActionEvents on Custom Quiz Page.
  */
 
-public class CustomQuizController implements Initializable {
+public class CustomQuizController extends StartPage implements Initializable {
     @FXML
     private TextField questionAmountField, testNameField, testTimeField;
 
@@ -94,8 +91,6 @@ public class CustomQuizController implements Initializable {
             QuizManager.getPreferences().put(checkBox.getText(), String.valueOf(checkBox.isSelected()));
         }
 
-//        "None", "Marketing", "Business Math", "Intro To Business", "Network Design"
-//        "None", "Written", "True or False", "Checkbox", "Multiple Choice");
         Question.Type type;
         Question.Subject subject;
         type = switch (typeList.getValue()) {
@@ -120,26 +115,6 @@ public class CustomQuizController implements Initializable {
 
         displayTest(); //Initialize the test.
 
-    }
-
-    private void displayTest() {
-
-        try {
-
-            Stage stage = StageHelper.createAndAddStage("Quiz", "/quiz.fxml");
-
-            stage.setAlwaysOnTop(true);
-            stage.initStyle(StageStyle.UNDECORATED);
-
-            StageHelper.closeAllStages();
-            StageHelper.clearScenes();
-
-            stage.show();
-
-        } catch (IOException | NullPointerException e) {
-            ErrorBox.display("A page failed to load.", false);
-            e.printStackTrace();
-        }
     }
 
 }
