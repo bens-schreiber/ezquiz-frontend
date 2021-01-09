@@ -5,6 +5,7 @@ import database.QuestionRequest;
 import etc.BitMap;
 import etc.Constants;
 import gui.StageHelper;
+import gui.Window;
 import gui.popups.ErrorBox;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -54,7 +55,7 @@ public class StartMenu extends StartQuiz implements Initializable {
     public void onRegisterButton() {
 
         try {
-            Stage stage = StageHelper.createAndAddStage(Constants.Window.REGISTER);
+            Stage stage = StageHelper.createAndAddStage(Window.REGISTER);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setAlwaysOnTop(true);
@@ -71,7 +72,7 @@ public class StartMenu extends StartQuiz implements Initializable {
 
         try {
 
-            Stage stage = StageHelper.createAndAddStage(Constants.Window.LOGIN);
+            Stage stage = StageHelper.createAndAddStage(Window.LOGIN);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setAlwaysOnTop(true);
@@ -105,7 +106,7 @@ public class StartMenu extends StartQuiz implements Initializable {
 
         try {
 
-            Stage stage = StageHelper.createAndAddStage(Constants.Window.PREMADEQUIZES);
+            Stage stage = StageHelper.createAndAddStage(Window.PREMADEQUIZES);
             stage.setAlwaysOnTop(true);
             stage.initStyle(StageStyle.UNDECORATED);
 
@@ -126,8 +127,8 @@ public class StartMenu extends StartQuiz implements Initializable {
     public void onEnterCode() {
         //todo: make this an fxml scene
         //Try to not reload scene if scene already exists.
-        if (StageHelper.getStages().containsKey(Constants.Window.ENTERCODE)) {
-            StageHelper.getStages().get(Constants.Window.ENTERCODE).showAndWait();
+        if (StageHelper.getStages().containsKey(Window.ENTERCODE)) {
+            StageHelper.getStages().get(Window.ENTERCODE).showAndWait();
         } else {
 
             //Establish window
@@ -173,13 +174,13 @@ public class StartMenu extends StartQuiz implements Initializable {
                     try {
 
                         //Attempt to load scene and set it to stage
-                        Stage stage = StageHelper.createAndAddStage(Constants.Window.QUIZ);
+                        Stage stage = StageHelper.createAndAddStage(Window.QUIZ);
                         stage.setAlwaysOnTop(true);
                         stage.initStyle(StageStyle.UNDECORATED);
 
                         //Close stage helper resources
                         StageHelper.clearScenes();
-                        StageHelper.closeStage(Constants.Window.STARTPAGE);
+                        StageHelper.closeStage(Window.STARTPAGE);
 
                         //Display Quiz
                         window.close();
@@ -221,7 +222,7 @@ public class StartMenu extends StartQuiz implements Initializable {
             window.showAndWait();
 
             //Put code prompt in stage helper so it does not need to be reloaded
-            StageHelper.addStage(Constants.Window.ENTERCODE, window);
+            StageHelper.addStage(Window.ENTERCODE, window);
 
         }
     }

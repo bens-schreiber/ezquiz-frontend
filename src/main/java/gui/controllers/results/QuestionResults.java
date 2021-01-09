@@ -1,7 +1,7 @@
 package gui.controllers.results;
 
-import etc.Constants;
 import gui.StageHelper;
+import gui.Window;
 import gui.popups.ErrorBox;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -80,9 +80,9 @@ public class QuestionResults implements Initializable {
 
     public void onBackButton() {
 
-        if (StageHelper.getScenes().containsKey(Constants.Window.PRINTRESULTS)) {
+        if (StageHelper.getScenes().containsKey(Window.PRINTRESULTS)) {
 
-            StageHelper.getStages().get(Constants.Window.QUIZ).setScene(StageHelper.getScenes().get(Constants.Window.PRINTRESULTS));
+            StageHelper.getStages().get(Window.QUIZ).setScene(StageHelper.getScenes().get(Window.PRINTRESULTS));
 
         } else {
 
@@ -90,8 +90,8 @@ public class QuestionResults implements Initializable {
 
                 Parent results = FXMLLoader.load(getClass().getResource("/printableresults.fxml"));
                 Scene scene = new Scene(results);
-                StageHelper.addScene(Constants.Window.PRINTRESULTS, scene);
-                StageHelper.getStages().get(Constants.Window.QUIZ).setScene(scene);
+                StageHelper.addScene(Window.PRINTRESULTS, scene);
+                StageHelper.getStages().get(Window.QUIZ).setScene(scene);
 
             } catch (IOException | NullPointerException e) {
                 ErrorBox.display("A page failed to load.", false);

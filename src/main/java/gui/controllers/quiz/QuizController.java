@@ -2,16 +2,15 @@ package gui.controllers.quiz;
 
 import etc.Constants;
 import gui.StageHelper;
+import gui.Window;
 import gui.popups.ConfirmBox;
 import gui.popups.ErrorBox;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -24,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import quiz.Preference;
 import quiz.QuizManager;
 
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class QuizController implements Initializable {
     Label questionPrompt, questionDirections, quizName, quizTimer, currQuestionLabel, userLabel, subjAndQuestion;
 
     @FXML
-    VBox questionArea;
+    VBox questionArea, addonVBox;
 
     @FXML
     AnchorPane questionPane;
@@ -67,30 +67,22 @@ public class QuizController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         //Establish preferences
-        if (QuizManager.getPreferences().isEmpty()) {
-            //Calculator, notepad and drawing pad are enabled by default
 
-            //Set default quiz name.
-            quizName.setText("FBLA - Default 5 Question Quiz");
-            QuizManager.getPreferences().put("Quiz Name", quizName.getText());
+        //Get preferences and apply them, if any.
+        if (!Boolean.parseBoolean(QuizManager.getPreferences().get(Preference.NOTEPAD)))
+            addonVBox.getChildren().remove(notePadButton);
 
-            //Show correct answers in results by default
-            QuizManager.getPreferences().put("Show Correct Answers", "true");
-
-        } else {
-
-            //Get preferences and apply them, if any.
-            notePadButton.setVisible(Boolean.parseBoolean(QuizManager.getPreferences().get("Notepad")));
-
-            calculatorButton.setVisible(Boolean.parseBoolean(QuizManager.getPreferences().get("Calculator")));
-
-            drawingPadButton.setVisible(Boolean.parseBoolean(QuizManager.getPreferences().get("Drawing Pad")));
-
-            quizName.setText(QuizManager.getPreferences().get("Quiz Name"));
-
-            seconds = Integer.parseInt(QuizManager.getPreferences().get("seconds"));
-
+        if (!Boolean.parseBoolean(QuizManager.getPreferences().get(Preference.CALCULATOR))) {
+            addonVBox.getChildren().remove(calculatorButton);
         }
+
+        if (!Boolean.parseBoolean(QuizManager.getPreferences().get(Preference.DRAWINGPAD))) {
+            addonVBox.getChildren().remove(drawingPadButton);
+        }
+
+        quizName.setText(QuizManager.getPreferences().get(Preference.QUIZNAME));
+
+        seconds = Integer.parseInt(QuizManager.getPreferences().get(Preference.TIME));
 
 
         //Establish flag button amount
@@ -274,22 +266,22 @@ public class QuizController implements Initializable {
     public void onCalculatorButton() {
 
         //Make sure one calculator only is open.
-        if (StageHelper.getStages().containsKey(Constants.Window.CALCULATOR)) {
+        if (StageHelper.getStages().containsKey(Window.CALCULATOR)) {
 
             //If already open, close
-            StageHelper.closeStage(Constants.Window.CALCULATOR);
+            StageHelper.closeStage(Window.CALCULATOR);
 
         } else {
 
             try {
 
-                Stage stage = StageHelper.createAndAddStage(Constants.Window.CALCULATOR);
+                Stage stage = StageHelper.createAndAddStage(Window.CALCULATOR);
 
                 stage.setAlwaysOnTop(true); //Keep notepad on test.
                 stage.initStyle(StageStyle.UTILITY);//Get rid of minimize
                 stage.resizableProperty().setValue(false);
 
-                stage.setOnCloseRequest(e -> StageHelper.closeStage(Constants.Window.CALCULATOR));
+                stage.setOnCloseRequest(e -> StageHelper.closeStage(Window.CALCULATOR));
 
 
                 stage.show();
@@ -305,23 +297,23 @@ public class QuizController implements Initializable {
     //When the notepad button is clicked
     public void onNotepadButton() {
 
-        if (StageHelper.getStages().containsKey(Constants.Window.NOTEPAD)) {
+        if (StageHelper.getStages().containsKey(Window.NOTEPAD)) {
 
             //If already open, close all.
-            StageHelper.closeStage(Constants.Window.NOTEPAD);
+            StageHelper.closeStage(Window.NOTEPAD);
 
         } else {//Make sure only one notepad is open.
 
             try {
 
                 //Establish scene and stage
-                Stage stage = StageHelper.createAndAddStage(Constants.Window.NOTEPAD);
+                Stage stage = StageHelper.createAndAddStage(Window.NOTEPAD);
 
                 stage.setAlwaysOnTop(true); //Keep notepad on test.
                 stage.initStyle(StageStyle.UTILITY);//Get rid of minimize
                 stage.resizableProperty().setValue(false); //Make non resizeable
 
-                stage.setOnCloseRequest(e -> StageHelper.closeStage(Constants.Window.NOTEPAD));
+                stage.setOnCloseRequest(e -> StageHelper.closeStage(Window.NOTEPAD));
 
                 stage.show();
 
@@ -338,26 +330,26 @@ public class QuizController implements Initializable {
     public void onDrawingPadButton() {
 
         //Make sure only one drawingpad is open
-        if (StageHelper.getStages().containsKey(Constants.Window.DRAWINGPAD)) {
+        if (StageHelper.getStages().containsKey(Window.DRAWINGPAD)) {
 
             //If already open, close all.
             paintCanvas.setDisable(true);
 
             //Change cursor back to default
-            StageHelper.getStages().get(Constants.Window.QUIZ).getScene().setCursor(Cursor.DEFAULT);
+            StageHelper.getStages().get(Window.QUIZ).getScene().setCursor(Cursor.DEFAULT);
 
             gc.clearRect(0, 0, 1920, 1080);
 
-            StageHelper.closeStage(Constants.Window.DRAWINGPAD);
+            StageHelper.closeStage(Window.DRAWINGPAD);
 
         } else {
 
             try {
 
                 //Change cursor to crosshair to show drawing mode is on
-                StageHelper.getStages().get(Constants.Window.QUIZ).getScene().setCursor(Cursor.CROSSHAIR);
+                StageHelper.getStages().get(Window.QUIZ).getScene().setCursor(Cursor.CROSSHAIR);
 
-                Stage stage = StageHelper.createAndAddStage(Constants.Window.DRAWINGPAD);
+                Stage stage = StageHelper.createAndAddStage(Window.DRAWINGPAD);
 
                 stage.setAlwaysOnTop(true); //Keep pad on test.
                 stage.initStyle(StageStyle.UTILITY);
@@ -372,9 +364,9 @@ public class QuizController implements Initializable {
                     gc.clearRect(0, 0, 1920, 1080); //Clear canvas
 
                     //Change cursor back to default
-                    StageHelper.getStages().get(Constants.Window.QUIZ).getScene().setCursor(Cursor.DEFAULT);
+                    StageHelper.getStages().get(Window.QUIZ).getScene().setCursor(Cursor.DEFAULT);
 
-                    StageHelper.closeStage(Constants.Window.DRAWINGPAD);
+                    StageHelper.closeStage(Window.DRAWINGPAD);
 
             });
 
@@ -401,11 +393,17 @@ public class QuizController implements Initializable {
         //Grab results fxml
         try {
 
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/printableresults.fxml")));
+            //Attempt to load scene and set it to stage
+            Stage stage = StageHelper.createAndAddStage(Window.PRINTRESULTS);
+            stage.setAlwaysOnTop(true);
+            stage.initStyle(StageStyle.UNDECORATED);
 
-            StageHelper.getStages().get(Constants.Window.QUIZ).setScene(scene);
+            //Close stage helper resources
+            StageHelper.clearScenes();
+            StageHelper.closeAllStages();
 
-            StageHelper.getScenes().put(Constants.Window.PRINTRESULTS, scene);
+            //Display Quiz
+            stage.show();
 
         } catch (IOException | NullPointerException e) {
             ErrorBox.display("A page failed to load.", false);
@@ -486,25 +484,25 @@ public class QuizController implements Initializable {
         gc.setLineWidth(width);
     }
 
-}
+    /**
+     * Addon to buttons that allows them to be considered 'flagged' or not.
+     * For use in QuizController.
+     */
+    static class FlagButton extends Button {
 
-/**
- * Addon to buttons that allows them to be considered 'flagged' or not.
- * For use in QuizController.
- */
-class FlagButton extends Button {
+        private boolean flagged;
 
-    private boolean flagged;
+        public void setFlagged(boolean flagged) {
 
-    public void setFlagged(boolean flagged) {
+            this.flagged = flagged;
 
-        this.flagged = flagged;
+            this.setStyle(flagged ? Constants.FLAGGED_COLOR_FX : Constants.UNSELECTED_COLOR_FX);
 
-        this.setStyle(flagged ? Constants.FLAGGED_COLOR_FX : Constants.UNSELECTED_COLOR_FX);
+        }
 
+        public boolean isFlagged() {
+            return flagged;
+        }
     }
 
-    public boolean isFlagged() {
-        return flagged;
-    }
 }

@@ -1,7 +1,7 @@
 package gui.controllers.startpage;
 
-import etc.Constants;
 import gui.StageHelper;
+import gui.Window;
 import gui.popups.ErrorBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -14,13 +14,13 @@ class StartQuiz {
         try {
 
             //Attempt to load scene and set it to stage
-            Stage stage = StageHelper.createAndAddStage(Constants.Window.QUIZ);
+            Stage stage = StageHelper.createAndAddStage(Window.QUIZ);
             stage.setAlwaysOnTop(true);
             stage.initStyle(StageStyle.UNDECORATED);
 
             //Close stage helper resources
             StageHelper.clearScenes();
-            StageHelper.closeStage(Constants.Window.STARTPAGE);
+            StageHelper.closeAllStages();
 
             //Display Quiz
             stage.show();

@@ -26,11 +26,10 @@
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8797f1" height="18.0" stroke="WHITE"
                            strokeType="INSIDE" strokeWidth="0.0" width="200.0"/>
-                <CheckBox fx:id="calcPref" mnemonicParsing="false" text="Calculator"/>
-                <CheckBox fx:id="drawPref" mnemonicParsing="false" text="Drawing Pad"/>
-                <CheckBox fx:id="notePadPref" mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0"
-                          text="Notepad"/>
-                <CheckBox fx:id="correctAnswers" mnemonicParsing="false" text="Show Correct Answers"/>
+                <CheckBox fx:id="calculator" mnemonicParsing="false" text="Calculator"/>
+                <CheckBox fx:id="drawingpad" mnemonicParsing="false" text="Drawingpad"/>
+                <CheckBox fx:id="notepad" mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" text="Notepad"/>
+                <CheckBox fx:id="showAnswers" mnemonicParsing="false" text="Show Correct Answers"/>
             </children>
         </VBox>
         <VBox layoutX="21.0" layoutY="251.0" prefHeight="110.0" prefWidth="150.0" spacing="5.0"

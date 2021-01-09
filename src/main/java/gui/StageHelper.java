@@ -1,6 +1,5 @@
 package gui;
 
-import etc.Constants;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -14,18 +13,18 @@ import java.util.HashMap;
 
 public class StageHelper {
 
-    private static final HashMap<Constants.Window, Stage> stages = new HashMap<>();
+    private static final HashMap<Window, Stage> stages = new HashMap<>();
 
     //todo: remove this when code is fxml page
-    public static void addStage(Constants.Window name, Stage stage) {
+    public static void addStage(Window name, Stage stage) {
         stages.put(name, stage);
     }
 
-    public static HashMap<Constants.Window, Stage> getStages() {
+    public static HashMap<Window, Stage> getStages() {
         return stages;
     }
 
-    public static void closeStage(Constants.Window name) {
+    public static void closeStage(Window name) {
 
         //Close the stage
         stages.get(name).close();
@@ -38,10 +37,10 @@ public class StageHelper {
         stages.forEach((s, stage) -> stage.close());
     }
 
-    public static Stage createAndAddStage(Constants.Window name) throws IOException {
+    public static Stage createAndAddStage(Window name) throws IOException {
 
         //Find fxml path in hashmap
-        String path = Constants.Window.fxmlTable.get(name);
+        String path = Window.fxmlTable.get(name);
 
         Scene scene = new Scene(FXMLLoader.load(StageHelper.class.getResource(path)));
 
@@ -57,9 +56,9 @@ public class StageHelper {
     /**
      * Reusable scenes to not reload information.
      */
-    private static final HashMap<Constants.Window, Scene> reusableScenes = new HashMap<>();
+    private static final HashMap<Window, Scene> reusableScenes = new HashMap<>();
 
-    public static void addScene(Constants.Window name, Scene scene) {
+    public static void addScene(Window name, Scene scene) {
 
         reusableScenes.put(name, scene);
 
@@ -69,7 +68,7 @@ public class StageHelper {
         reusableScenes.clear();
     }
 
-    public static HashMap<Constants.Window, Scene> getScenes() {
+    public static HashMap<Window, Scene> getScenes() {
         return reusableScenes;
     }
 

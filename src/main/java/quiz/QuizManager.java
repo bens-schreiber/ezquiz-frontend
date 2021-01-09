@@ -21,8 +21,17 @@ import java.util.stream.IntStream;
  */
 public class QuizManager {
 
-    //Hashmap of user preferences
-    private static final HashMap<String, String> preferences = new HashMap<>();
+    //Hashmap of user preferences, initialize default preferences
+    private static final HashMap<Preference, String> preferences = new HashMap<>();
+
+    static {
+        preferences.put(Preference.NOTEPAD, "true");
+        preferences.put(Preference.CALCULATOR, "true");
+        preferences.put(Preference.DRAWINGPAD, "true");
+        preferences.put(Preference.QUIZNAME, "FBLA QUIZ - 5 Questions, Random");
+        preferences.put(Preference.SHOWANSWERS, "true");
+        preferences.put(Preference.TIME, "1800");
+    }
 
     //Array of QuizNodes that contain the questions, responses, and javafx information
     private static QuizNode[] quizNodes;
@@ -167,7 +176,7 @@ public class QuizManager {
 
     }
 
-    public static HashMap<String, String> getPreferences() {
+    public static HashMap<Preference, String> getPreferences() {
 
         return preferences;
     }

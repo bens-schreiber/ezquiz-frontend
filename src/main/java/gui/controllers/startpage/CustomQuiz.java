@@ -2,6 +2,7 @@ package gui.controllers.startpage;
 
 import etc.Constants;
 import gui.StageHelper;
+import gui.Window;
 import gui.popups.ErrorBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,11 +11,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import quiz.Preference;
 import quiz.QuizManager;
 import quiz.questions.Question;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 /**
@@ -29,7 +30,7 @@ public class CustomQuiz extends StartQuiz implements Initializable {
     private ChoiceBox<String> subjectList, typeList;
 
     @FXML
-    private CheckBox calcPref, drawPref, notePadPref, correctAnswers;
+    private CheckBox calculator, drawingpad, notepad, showAnswers;
 
 
     /**
@@ -57,7 +58,7 @@ public class CustomQuiz extends StartQuiz implements Initializable {
 
         try {
 
-            StageHelper.getStages().get(Constants.Window.STARTPAGE).setScene(StageHelper.getScenes().get(Constants.Window.STARTPAGE));
+            StageHelper.getStages().get(Window.STARTPAGE).setScene(StageHelper.getScenes().get(Window.STARTPAGE));
 
         } catch (NullPointerException e) {
             ErrorBox.display("A page failed to load.", false);
@@ -68,28 +69,25 @@ public class CustomQuiz extends StartQuiz implements Initializable {
     //Setup all preferences and begin custom test
     public void onStartButton() {
 
-
         //Handle the questionAmount being empty
         //If no value, use the default.
         int questionAmount = questionAmountField.getText().isEmpty() ?
                 Constants.DEFAULT_QUESTION_AMOUNT : Integer.parseInt(questionAmountField.getText());
 
-
-        //Handle time field being empty
         //30 minutes default
-        QuizManager.getPreferences().put("seconds", testTimeField.getText().isEmpty() ?
-                "1800" : String.valueOf(Integer.parseInt(testTimeField.getText()) * 60));
-
+        if (!testTimeField.getText().isEmpty()) {
+            QuizManager.getPreferences().put(Preference.TIME, testTimeField.getText());
+        }
 
         //Handle test name being empty
         //Default name is Custom Exam
-        QuizManager.getPreferences().put("Quiz Name", testNameField.getText().isEmpty() ?
-                "Custom Exam" : testNameField.getText());
+        QuizManager.getPreferences().put(Preference.QUIZNAME,
+                testNameField.getText().isEmpty() ? "Custom Exam" : testNameField.getText());
 
-
-        for (CheckBox checkBox : Arrays.asList(calcPref, notePadPref, drawPref, correctAnswers)) {//Put addon prefs in
-            QuizManager.getPreferences().put(checkBox.getText(), String.valueOf(checkBox.isSelected()));
-        }
+        QuizManager.getPreferences().put(Preference.CALCULATOR, String.valueOf(calculator.isSelected()));
+        QuizManager.getPreferences().put(Preference.NOTEPAD, String.valueOf(notepad.isSelected()));
+        QuizManager.getPreferences().put(Preference.DRAWINGPAD, String.valueOf(drawingpad.isSelected()));
+        QuizManager.getPreferences().put(Preference.SHOWANSWERS, String.valueOf(showAnswers.isSelected()));
 
         Question.Type type;
         type = switch (typeList.getValue()) {
@@ -111,7 +109,7 @@ public class CustomQuiz extends StartQuiz implements Initializable {
 
         QuizManager.loadQuestions(questionAmount, type, subject);
 
-        StageHelper.closeStage(Constants.Window.STARTPAGE); //Close this page
+        StageHelper.closeStage(Window.STARTPAGE); //Close this page
 
         displayTest(); //Initialize the test.
 

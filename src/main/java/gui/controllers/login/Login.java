@@ -4,6 +4,7 @@ import database.DatabaseRequest;
 import etc.Constants;
 import etc.SHA;
 import gui.StageHelper;
+import gui.Window;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -68,7 +69,7 @@ public class Login implements Initializable {
     }
 
     public void onExitButton() {
-        StageHelper.closeStage(Constants.Window.LOGIN);
+        StageHelper.closeStage(Window.LOGIN);
     }
 
 }
