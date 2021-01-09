@@ -5,75 +5,61 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #E1E1E1;"
-            stylesheets="@css/standard_button.css" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.startpage.CustomQuiz">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #E1E1E1;" stylesheets="@css/standard_button.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.startmenu.CustomQuiz">
     <children>
-        <Button id="startButton" fx:id="startButton" layoutX="490.0" layoutY="361.0" mnemonicParsing="false"
-                onMouseClicked="#onStartButton" text="Start Quiz"/>
-        <Button fx:id="backButton" layoutX="400.0" layoutY="361.0" mnemonicParsing="false" onAction="#onBackButton"
-                text="Back"/>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="11.0" layoutX="7.0" layoutY="46.0"
-                   stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="586.0"/>
-        <Text fill="#303f9f" layoutX="21.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Custom Options"
-              wrappingWidth="579.7294921875">
+        <Button id="startButton" layoutX="490.0" layoutY="361.0" mnemonicParsing="false" onAction="#startButtonClicked" onMouseClicked="#onStartButton" text="Start Quiz" />
+        <Button fx:id="backButton" layoutX="400.0" layoutY="361.0" mnemonicParsing="false" onAction="#backButtonClicked" text="Back" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="11.0" layoutX="7.0" layoutY="46.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="586.0" />
+        <Text fill="#303f9f" layoutX="21.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Custom Options" wrappingWidth="579.7294921875">
             <font>
-                <Font size="26.0"/>
+                <Font size="26.0" />
             </font>
         </Text>
-        <VBox layoutX="21.0" layoutY="90.0" prefHeight="143.0" prefWidth="200.0" spacing="10.0"
-              style="-fx-background-color: #e0e0e0;">
+        <VBox layoutX="21.0" layoutY="90.0" prefHeight="143.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: #e0e0e0;">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8797f1" height="18.0" stroke="WHITE"
-                           strokeType="INSIDE" strokeWidth="0.0" width="200.0"/>
-                <CheckBox fx:id="calculator" mnemonicParsing="false" text="Calculator"/>
-                <CheckBox fx:id="drawingpad" mnemonicParsing="false" text="Drawingpad"/>
-                <CheckBox fx:id="notepad" mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" text="Notepad"/>
-                <CheckBox fx:id="showAnswers" mnemonicParsing="false" text="Show Correct Answers"/>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8797f1" height="18.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="200.0" />
+                <CheckBox fx:id="calculator" mnemonicParsing="false" text="Calculator" />
+                <CheckBox fx:id="drawingpad" mnemonicParsing="false" text="Drawingpad" />
+                <CheckBox fx:id="notepad" mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" text="Notepad" />
+                <CheckBox fx:id="showAnswers" mnemonicParsing="false" text="Show Correct Answers" />
             </children>
         </VBox>
-        <VBox layoutX="21.0" layoutY="251.0" prefHeight="110.0" prefWidth="150.0" spacing="5.0"
-              style="-fx-background-color: #E1E1E1;">
+        <VBox layoutX="21.0" layoutY="251.0" prefHeight="110.0" prefWidth="150.0" spacing="5.0" style="-fx-background-color: #E1E1E1;">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8797f1" height="18.0" stroke="WHITE"
-                           strokeType="INSIDE" strokeWidth="0.0" width="200.0"/>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8797f1" height="18.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="200.0" />
                 <HBox prefHeight="38.0" prefWidth="200.0" spacing="5.0">
                     <children>
-                        <Label prefHeight="26.0" prefWidth="57.0" text="Subject:"/>
-                        <ChoiceBox fx:id="subjectList" prefHeight="26.0" prefWidth="117.0"/>
+                        <Label prefHeight="26.0" prefWidth="57.0" text="Subject:" />
+                        <ChoiceBox fx:id="subjectList" prefHeight="26.0" prefWidth="117.0" />
                     </children>
                 </HBox>
                 <HBox prefHeight="38.0" prefWidth="200.0" spacing="20.0">
                     <children>
-                        <Label prefHeight="26.0" prefWidth="42.0" text="Type:"/>
-                        <ChoiceBox fx:id="typeList" prefHeight="26.0" prefWidth="117.0"/>
+                        <Label prefHeight="26.0" prefWidth="42.0" text="Type:" />
+                        <ChoiceBox fx:id="typeList" prefHeight="26.0" prefWidth="117.0" />
                     </children>
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="342.0" layoutY="90.0" prefHeight="143.0" prefWidth="230.0" spacing="10.0"
-              style="-fx-background-color: #E1E1E1;">
+        <VBox layoutX="342.0" layoutY="90.0" prefHeight="143.0" prefWidth="230.0" spacing="10.0" style="-fx-background-color: #E1E1E1;">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8797f1" height="18.0" stroke="#8797f1"
-                           strokeType="INSIDE" width="235.0"/>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8797f1" height="18.0" stroke="#8797f1" strokeType="INSIDE" width="235.0" />
                 <HBox prefHeight="38.0" prefWidth="230.0" spacing="3.0">
                     <children>
-                        <Label prefHeight="26.0" prefWidth="76.0" text="Test Name:"/>
-                        <TextField fx:id="testNameField" prefHeight="26.0" prefWidth="150.0"/>
+                        <Label prefHeight="26.0" prefWidth="76.0" text="Test Name:" />
+                        <TextField fx:id="testNameField" prefHeight="26.0" prefWidth="150.0" />
                     </children>
                 </HBox>
                 <HBox prefHeight="30.0" prefWidth="242.0">
                     <children>
-                        <Label fx:id="test" prefHeight="26.0" prefWidth="80.0" text="Test Time:"/>
-                        <TextField fx:id="testTimeField" prefHeight="26.0" prefWidth="150.0"
-                                   promptText="Value in minutes"/>
+                        <Label fx:id="test" prefHeight="26.0" prefWidth="80.0" text="Test Time:" />
+                        <TextField fx:id="testTimeField" prefHeight="26.0" prefWidth="150.0" promptText="Value in minutes" />
                     </children>
                 </HBox>
                 <HBox prefHeight="84.0" prefWidth="230.0" spacing="4.0">
                     <children>
-                        <Label prefHeight="26.0" prefWidth="76.0" text="Question #"/>
-                        <TextField id="questionAmountTextField" fx:id="questionAmountField" prefHeight="26.0"
-                                   prefWidth="63.0"/>
+                        <Label prefHeight="26.0" prefWidth="76.0" text="Question #" />
+                        <TextField id="questionAmountTextField" fx:id="questionAmountField" prefHeight="26.0" prefWidth="63.0" />
                     </children>
                 </HBox>
             </children>

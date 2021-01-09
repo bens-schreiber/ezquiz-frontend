@@ -6,178 +6,138 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.*?>
-<AnchorPane fx:id="mainAnchor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-            minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0"
-            style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.quiz.QuizController">
+<AnchorPane fx:id="mainAnchor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.quiz.QuizController">
     <children>
-        <AnchorPane fx:id="buttonPane" layoutY="354.0" prefHeight="45.0" prefWidth="600.0"
-                    style="-fx-background-color: #9E9E9E;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                    AnchorPane.rightAnchor="0.0">
+        <AnchorPane fx:id="buttonPane" layoutY="354.0" prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: #9E9E9E;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
-                <Button fx:id="submitButton" layoutX="1817.0" layoutY="10.0" mnemonicParsing="false"
-                        onMouseClicked="#onSubmitButton" prefHeight="26.0" prefWidth="89.0"
-                        stylesheets="@css/standard_button.css" text="Submit"/>
-                <HBox layoutX="14.0" layoutY="6.0" prefHeight="36.0" prefWidth="67.0" spacing="5.0"
-                      stylesheets="@css/standard_button.css">
+                <Button fx:id="submitButton" layoutX="1817.0" layoutY="10.0" mnemonicParsing="false" onAction="#submitButtonClicked" prefHeight="26.0" prefWidth="89.0" stylesheets="@css/standard_button.css" text="Submit" />
+                <HBox layoutX="14.0" layoutY="6.0" prefHeight="36.0" prefWidth="67.0" spacing="5.0" stylesheets="@css/standard_button.css">
                     <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#onFlagQuestion" prefHeight="35.0"
-                                prefWidth="70.0" style="-fx-background-color: #fb8804;" text="Flag"/>
+                        <Button mnemonicParsing="false" onAction="#flagButtonClicked" prefHeight="35.0" prefWidth="70.0" style="-fx-background-color: #fb8804;" text="Flag" />
                     </children>
                 </HBox>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="topPane" prefHeight="35.0" prefWidth="1920.0" style="-fx-background-color: #9E9E9E;"
-                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="topPane" prefHeight="35.0" prefWidth="1920.0" style="-fx-background-color: #9E9E9E;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <HBox alignment="CENTER_RIGHT" layoutX="1698.0" layoutY="9.0" maxWidth="1.7976931348623157E308"
-                      prefHeight="25.0" prefWidth="208.0" spacing="10.0">
+                <HBox alignment="CENTER_RIGHT" layoutX="1698.0" layoutY="9.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="208.0" spacing="10.0">
                     <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0">
                             <image>
-                                <Image url="@pictures/user-circle-solid.png"/>
+                                <Image url="@pictures/user-circle-solid.png" />
                             </image>
                         </ImageView>
-                        <Label fx:id="userLabel" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308"
-                               maxWidth="1.7976931348623157E308" textFill="#c32148">
+                        <Label fx:id="userLabel" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="#c32148">
                             <font>
-                                <Font size="18.0"/>
+                                <Font size="18.0" />
                             </font>
                         </Label>
                     </children>
                 </HBox>
                 <ImageView fitHeight="43.0" fitWidth="60.0" layoutX="14.0" layoutY="-1.0">
                     <image>
-                        <Image url="@pictures/FBLA-Color-web.png"/>
+                        <Image url="@pictures/FBLA-Color-web.png" />
                     </image>
                 </ImageView>
             </children>
         </AnchorPane>
-        <ScrollPane layoutX="13.0" layoutY="169.0"
-                    style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
-                    AnchorPane.bottomAnchor="107.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
-                    AnchorPane.topAnchor="176.0">
+        <ScrollPane layoutX="13.0" layoutY="169.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" AnchorPane.bottomAnchor="107.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="176.0">
             <content>
                 <AnchorPane fx:id="questionPane" prefHeight="797.0" prefWidth="1880.0">
                     <children>
-                        <Rectangle fx:id="questionBorder" arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="797.0"
-                                   layoutX="-5.0" layoutY="-5.0" stroke="#303f9f" strokeType="OUTSIDE" strokeWidth="0.0"
-                                   width="1890.0"/>
-                        <Canvas fx:id="paintCanvas" height="797.0" layoutX="-1.0" onMouseDragged="#canvasOnDragged"
-                                onMousePressed="#canvasOnPressed" width="1880.0"/>
-                        <VBox fx:id="addonVBox" layoutX="1755.0" layoutY="34.0" prefHeight="192.0" prefWidth="60.0"
-                              spacing="10.0"
-                              style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;"
-                              stylesheets="@css/standard_button.css">
+                        <Rectangle fx:id="questionBorder" arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="797.0" layoutX="-5.0" layoutY="-5.0" stroke="#303f9f" strokeType="OUTSIDE" strokeWidth="0.0" width="1890.0" />
+                        <Canvas fx:id="paintCanvas" height="797.0" layoutX="-1.0" onMouseDragged="#canvasOnDragged" onMousePressed="#canvasOnPressed" width="1880.0" />
+                        <VBox fx:id="addonVBox" layoutX="1755.0" layoutY="34.0" prefHeight="192.0" prefWidth="60.0" spacing="10.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;" stylesheets="@css/standard_button.css">
                             <children>
-                                <Button fx:id="notePadButton" mnemonicParsing="false" onMouseClicked="#onNotepadButton"
-                                        prefHeight="56.0" prefWidth="88.0">
+                                <Button fx:id="notePadButton" mnemonicParsing="false" onAction="#notepadButtonClicked" prefHeight="56.0" prefWidth="88.0">
                                     <graphic>
                                         <ImageView>
                                             <image>
-                                                <Image url="@pictures/clipboard-solid.png"/>
+                                                <Image url="@pictures/clipboard-solid.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="calculatorButton" mnemonicParsing="false"
-                                        onMouseClicked="#onCalculatorButton" prefHeight="56.0" prefWidth="99.0">
+                                <Button fx:id="calculatorButton" mnemonicParsing="false" onAction="#calculatorButtonClicked" prefHeight="56.0" prefWidth="99.0">
                                     <graphic>
                                         <ImageView>
                                             <image>
-                                                <Image url="@pictures/calculator-solid.png"/>
+                                                <Image url="@pictures/calculator-solid.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="drawingPadButton" mnemonicParsing="false"
-                                        onMouseClicked="#onDrawingPadButton" prefHeight="58.0" prefWidth="96.0">
+                                <Button fx:id="drawingPadButton" mnemonicParsing="false" onAction="#drawingPadButtonClicked" prefHeight="58.0" prefWidth="96.0">
                                     <graphic>
                                         <ImageView>
                                             <image>
-                                                <Image url="@pictures/palette-solid.png"/>
+                                                <Image url="@pictures/palette-solid.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                 </Button>
                             </children>
                         </VBox>
-                        <Label layoutX="430.0" layoutY="496.0" prefHeight="119.0" prefWidth="36.0"/>
+                        <Label layoutX="430.0" layoutY="496.0" prefHeight="119.0" prefWidth="36.0" />
                         <VBox layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" spacing="15.0">
                             <children>
-                                <Label fx:id="questionPrompt" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
-                                       prefWidth="1133.0" text="Label" wrapText="true">
+                                <Label fx:id="questionPrompt" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="1133.0" text="Label" wrapText="true">
                                     <font>
-                                        <Font size="18.0"/>
+                                        <Font size="18.0" />
                                     </font>
                                 </Label>
-                                <VBox fx:id="questionArea" maxHeight="1.7976931348623157E308"
-                                      maxWidth="1.7976931348623157E308" prefHeight="469.0" prefWidth="885.0"
-                                      spacing="50.0"/>
+                                <VBox fx:id="questionArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="469.0" prefWidth="885.0" spacing="50.0" />
                             </children>
                         </VBox>
                     </children>
                 </AnchorPane>
             </content>
         </ScrollPane>
-        <Label fx:id="questionDirections" layoutX="20.0" layoutY="135.0" prefHeight="36.0" prefWidth="548.0"
-               text="Label">
+        <Label fx:id="questionDirections" layoutX="20.0" layoutY="135.0" prefHeight="36.0" prefWidth="548.0" text="Label">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
         </Label>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="10.0" layoutX="5.0" layoutY="88.0"
-                   stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="1911.0"/>
-        <HBox alignment="CENTER" layoutX="20.0" layoutY="985.0" prefHeight="36.0" prefWidth="1880.0" spacing="5.0"
-              stylesheets="@css/nextbackbuttons.css" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="10.0" layoutX="5.0" layoutY="88.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="1911.0" />
+        <HBox alignment="CENTER" layoutX="20.0" layoutY="985.0" prefHeight="36.0" prefWidth="1880.0" spacing="5.0" stylesheets="@css/nextbackbuttons.css" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
             <children>
-                <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false"
-                        onMouseClicked="#onBackButton">
+                <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false" onAction="#backButtonClicked">
                     <graphic>
                         <ImageView>
                             <image>
-                                <Image url="@pictures/left.png"/>
+                                <Image url="@pictures/left.png" />
                             </image>
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNextButton" prefHeight="35.0"
-                        prefWidth="40.0">
+                <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonClicked" prefHeight="35.0" prefWidth="40.0">
                     <graphic>
                         <ImageView>
                             <image>
-                                <Image url="@pictures/right.png"/>
+                                <Image url="@pictures/right.png" />
                             </image>
                         </ImageView>
                     </graphic>
                 </Button>
-                <HBox fx:id="questionHBox" alignment="CENTER" prefHeight="36.0" prefWidth="0.0" spacing="4.0"
-                      stylesheets="@css/flagbutton.css"/>
+                <HBox fx:id="questionHBox" alignment="CENTER" prefHeight="36.0" prefWidth="0.0" spacing="4.0" stylesheets="@css/flagbutton.css" />
             </children>
         </HBox>
-        <Label fx:id="quizName" layoutX="14.0" layoutY="45.0" maxHeight="1.7976931348623157E308"
-               maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="FBLA - Default Test"
-               textFill="#303f9f">
+        <Label fx:id="quizName" layoutX="14.0" layoutY="45.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="FBLA - Default Test" textFill="#303f9f">
             <font>
-                <Font name="SansSerif Regular" size="30.0"/>
+                <Font name="SansSerif Regular" size="30.0" />
             </font>
         </Label>
-        <VBox alignment="CENTER_RIGHT" layoutX="1796.0" layoutY="103.0" maxWidth="1.7976931348623157E308"
-              prefHeight="65.0" AnchorPane.rightAnchor="20.0">
+        <VBox alignment="CENTER_RIGHT" layoutX="1796.0" layoutY="103.0" maxWidth="1.7976931348623157E308" prefHeight="65.0" AnchorPane.rightAnchor="20.0">
             <children>
-                <Label fx:id="quizTimer" alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="60.0" text="00:00:00"
-                       textFill="#c32148"/>
-                <Label fx:id="subjAndQuestion" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308"
-                       nodeOrientation="LEFT_TO_RIGHT" prefHeight="18.0" text="Subj.Question" textFill="#303f9f">
+                <Label fx:id="quizTimer" alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="60.0" text="00:00:00" textFill="#c32148" />
+                <Label fx:id="subjAndQuestion" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="18.0" text="Subj.Question" textFill="#303f9f">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </Label>
-                <Label fx:id="currQuestionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308"
-                       prefHeight="18.0" prefWidth="104.0" text="30 out of 30" textAlignment="CENTER"
-                       textFill="#303f9f">
+                <Label fx:id="currQuestionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="104.0" text="30 out of 30" textAlignment="CENTER" textFill="#303f9f">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </Label>
             </children>

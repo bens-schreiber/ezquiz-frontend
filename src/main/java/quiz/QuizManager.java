@@ -1,12 +1,13 @@
 package quiz;
 
-import database.DatabaseRequest;
-import database.QuestionRequest;
 import etc.Constants;
-import gui.popups.ErrorBox;
-import quiz.questions.Question;
-import quiz.questions.QuestionFactory;
-import quiz.questions.nodes.QuizNode;
+import etc.Preference;
+import gui.popup.error.ErrorNotifier;
+import quiz.nodes.QuizNode;
+import quiz.question.Question;
+import quiz.question.QuestionFactory;
+import requests.DatabaseRequest;
+import requests.QuestionRequest;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -19,11 +20,12 @@ import java.util.stream.IntStream;
 /**
  * Stores local quiz information, contains grading methods
  */
+
+
 public class QuizManager {
 
     //Hashmap of user preferences, initialize default preferences
     private static final HashMap<Preference, String> preferences = new HashMap<>();
-
     static {
         preferences.put(Preference.NOTEPAD, "true");
         preferences.put(Preference.CALCULATOR, "true");
@@ -33,11 +35,12 @@ public class QuizManager {
         preferences.put(Preference.TIME, "1800");
     }
 
-    //Array of QuizNodes that contain the questions, responses, and javafx information
+    //LinkedList of QuizNodes that contain the questions, responses, and javafx information
     private static QuizNode[] quizNodes;
 
     //Index of the QuizNodes the quiz is currently showing
-    private static int currQuestion = 0;
+    private static int currentQuestionIndex = 0;
+
 
     /**
      * Load questions into QuizManager.questions.
@@ -70,10 +73,8 @@ public class QuizManager {
 
                 request.setId(id);
 
-                //Request for JSON-Question with the given ID. Make that JSON into a Question object.
-                Question question = QuestionFactory.questionFromJSON(
-                        request.makeRequest().getJSON()
-                );
+                //Request for question from ID. Question converts from JSON to Question object.
+                Question question = QuestionFactory.questionFromJSON(request.makeRequest().getJson());
 
                 //Randomize the order of the options of the question.
                 question.shuffleOptions();
@@ -82,7 +83,9 @@ public class QuizManager {
                 i++;
 
             } catch (Exception e) {
-                ErrorBox.display("A question failed to load. ID: " + id, false);
+
+//                new ErrorNotifier("A question failed to load. ID: " + id, false).display();
+                e.printStackTrace();
 
                 //Clear quizNodes after any error.
                 quizNodes = null;
@@ -103,13 +106,18 @@ public class QuizManager {
             try {
 
                 request.setId(id);
-                Question question = QuestionFactory.questionFromJSON(request.makeRequest().getJSON());
+
+                System.out.println(request.makeRequest().getJson());
+
+                Question question = QuestionFactory.questionFromJSON(request.makeRequest().getJson());
+
                 question.shuffleOptions();
+
                 quizNodes[i] = new QuizNode(question);
                 i++;
 
             } catch (Exception e) {
-                ErrorBox.display("A question failed to load. ID: " + id, false);
+                new ErrorNotifier("A question failed to load. ID: " + id, false).display();
                 quizNodes = null;
                 e.printStackTrace();
             }
@@ -129,7 +137,7 @@ public class QuizManager {
 
                     List<String> response = quizNode.getResponse();
 
-                    List<String> answer = QuestionFactory.answerFromJSON(DatabaseRequest.getQuestionAnswer(quizNode.getQuestion()));
+                    List<String> answer = DatabaseRequest.getQuestionAnswer(quizNode.getQuestion());
 
                     //set question answer for use in Results
                     quizNode.getQuestion().setAnswer(answer);
@@ -155,11 +163,14 @@ public class QuizManager {
 
                 } else {
                     quizNode.setCorrect(false);
-                    quizNode.getQuestion().setAnswer(QuestionFactory.answerFromJSON(DatabaseRequest.getQuestionAnswer(quizNode.getQuestion())));
+                    quizNode.getQuestion().setAnswer(DatabaseRequest.getQuestionAnswer(quizNode.getQuestion()));
                 }
 
             } catch (Exception e) {
-                ErrorBox.display("A question failed to be graded. ID: " + quizNode.getQuestion().getID(), true);
+
+                new ErrorNotifier("A question failed to be graded. ID: " + quizNode.getQuestion().getID(), true)
+                        .display();
+
                 e.printStackTrace();
             }
         }
@@ -172,7 +183,7 @@ public class QuizManager {
 
     public static int getCurrNum() {
 
-        return currQuestion;
+        return currentQuestionIndex;
 
     }
 
@@ -184,23 +195,24 @@ public class QuizManager {
     public static QuizNode[] getQuizNodes() {
 
         return quizNodes;
-    }
-
-    public static QuizNode getCurrNode() {
-
-        return quizNodes[currQuestion];
 
     }
 
-    public static Question getCurrQuestion() {
+    public static QuizNode getCurrentNode() {
 
-        return quizNodes[currQuestion].getQuestion();
+        return quizNodes[currentQuestionIndex];
+
+    }
+
+    public static Question getCurrentQuestion() {
+
+        return quizNodes[currentQuestionIndex].getQuestion();
 
     }
 
     public static boolean allResponded() {
 
-        return Arrays.stream(quizNodes).allMatch(QuizNode::isAnswered);
+        return List.of(quizNodes).stream().allMatch(QuizNode::isAnswered);
 
     }
 
@@ -211,19 +223,19 @@ public class QuizManager {
 
     public static void nextQuestion() {
 
-        currQuestion++;
+        currentQuestionIndex++;
 
     }
 
     public static void prevQuestion() {
 
-        currQuestion--;
+        currentQuestionIndex--;
 
     }
 
-    public static void setCurrNum(int num) {
+    public static void setCurrentNum(int num) {
 
-        currQuestion = num;
+        currentQuestionIndex = num;
 
     }
 

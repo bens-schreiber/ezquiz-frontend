@@ -1,15 +1,15 @@
 package gui;
 
-import gui.popups.ErrorBox;
+import gui.etc.FXHelper;
+import gui.etc.Window;
+import gui.popup.error.ErrorNotifier;
+import gui.startmenu.StageHolder;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 /**
- * JavaFX GUIRunner, runs initial start menu and passes in primary stage
+ * JavaFX GUIRunner, get a Primary Stage and assign it to the start menu.
  */
-
 public class GuiRunner extends Application {
 
     @Override
@@ -17,13 +17,13 @@ public class GuiRunner extends Application {
 
         try {
 
-            primaryStage = StageHelper.createAndAddStage(Window.STARTPAGE);
             primaryStage.setResizable(false);
-
+            primaryStage.setScene(FXHelper.getScene(Window.STARTPAGE));
+            StageHolder.setPrimaryStage(primaryStage);
             primaryStage.show();
 
-        } catch (IOException | NullPointerException e) {
-            ErrorBox.display("A page failed to load.", true);
+        } catch (Exception e) {
+            new ErrorNotifier("The program failed to load", true).display();
             e.printStackTrace();
         }
 
