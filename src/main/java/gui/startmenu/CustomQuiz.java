@@ -2,6 +2,7 @@ package gui.startmenu;
 
 import etc.Constants;
 import etc.Preference;
+import gui.PrimaryStageHelper;
 import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
@@ -22,7 +23,8 @@ import java.util.ResourceBundle;
  * Provides methods for ActionEvents on Custom Quiz Page.
  */
 
-public class CustomQuiz extends StageHolder implements Initializable {
+public class CustomQuiz extends PrimaryStageHelper implements Initializable {
+
     @FXML
     private TextField questionAmountField, testNameField, testTimeField;
 
@@ -58,7 +60,7 @@ public class CustomQuiz extends StageHolder implements Initializable {
 
         try {
 
-            getPrimaryStage().setScene(FXHelper.getScene(Window.STARTPAGE));
+            primaryStage.setScene(FXHelper.getScene(Window.STARTPAGE));
 
         } catch (Exception e) {
 
@@ -113,7 +115,7 @@ public class CustomQuiz extends StageHolder implements Initializable {
 
         QuizManager.loadQuestions(questionAmount, type, subject);
 
-        displayQuiz();
+        displayQuiz(false);
 
     }
 

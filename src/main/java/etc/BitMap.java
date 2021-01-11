@@ -1,6 +1,5 @@
 package etc;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,13 +12,14 @@ public class BitMap {
 
     /**
      * Class Constructor.
-     * @param arrayList List of numbers to be stored into the bitmap.
+     *
+     * @param list List of numbers to be stored into the bitmap.
      */
-    public BitMap(ArrayList<Integer> arrayList) {
+    public BitMap(List<Integer> list) {
 
         this.bitMap = 0;
 
-        for (Integer id : arrayList) {
+        for (Integer id : list) {
             this.bitMap |= (1L << (id - 1));
         }
 
@@ -47,6 +47,10 @@ public class BitMap {
 //    }
 
     //Decode from long
+
+    /**
+     * @return ids found in long as linked list for fast iteration
+     */
     public List<Integer> decodeToList() {
 
         List<Integer> ids = new LinkedList<>();

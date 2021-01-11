@@ -1,6 +1,7 @@
 package gui.startmenu;
 
 import etc.BitMap;
+import gui.PrimaryStageHelper;
 import gui.popup.error.ErrorNotifier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,20 +17,22 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
-public class EnterCode extends StageHolder implements Initializable {
+public class EnterCode extends PrimaryStageHelper implements Initializable {
 
-    @FXML TextField codeTextField;
+    @FXML
+    TextField codeTextField;
 
+    //Since it is a popup window, save the stage here
     static Stage stage;
 
     public void enterCodeButtonClicked() {
         try {
 
             long bitmap = DatabaseRequest.getTestKey(Integer.parseInt(codeTextField.getText()));
+            System.out.println(bitmap);
             QuizManager.loadQuestions(new BitMap(bitmap).decodeToList());
 
-
-            displayQuiz();
+            displayQuiz(false);
             stage.close();
 
         } catch (NumberFormatException | InterruptedException | IOException | JSONException e) {

@@ -22,6 +22,7 @@ public class Login implements Initializable {
     @FXML
     Label errorLabel;
 
+    //Since it is a popup window, save the stage here
     private static Stage stage;
 
     public static void setStage(Stage stage) {

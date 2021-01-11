@@ -32,6 +32,7 @@ public class CalculatorController implements Initializable {
     // Operator state
     private boolean hasOperator = false;
 
+    //Make a Stage variable because these are their own PopupStage and must be closed from inside
     private static Stage stage;
 
     public static Stage getStage() {

@@ -3,7 +3,6 @@ package gui;
 import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
-import gui.startmenu.StageHolder;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -19,7 +18,9 @@ public class GuiRunner extends Application {
 
             primaryStage.setResizable(false);
             primaryStage.setScene(FXHelper.getScene(Window.STARTPAGE));
-            StageHolder.setPrimaryStage(primaryStage);
+
+            //Pass the PrimaryStage given from start method to PrimaryStageHelper for all classes to access
+            PrimaryStageHelper.primaryStage = primaryStage;
             primaryStage.show();
 
         } catch (Exception e) {

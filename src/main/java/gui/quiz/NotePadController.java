@@ -24,6 +24,7 @@ public class NotePadController implements Initializable {
 
     private static String savedText;
 
+    //Make a Stage variable because these are their own PopupStage and must be closed from inside
     private static Stage stage;
 
     public static Stage getStage() {

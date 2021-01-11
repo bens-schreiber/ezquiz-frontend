@@ -2,11 +2,11 @@ package gui.quiz;
 
 import etc.Constants;
 import etc.Preference;
+import gui.PrimaryStageHelper;
 import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.confirm.ConfirmNotifier;
 import gui.popup.error.ErrorNotifier;
-import gui.results.PrintResultsScreen;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -26,14 +26,13 @@ import javafx.util.Duration;
 import quiz.QuizManager;
 import quiz.nodes.QuizNode;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
  * Main controller for test.
  */
-public class QuizController implements Initializable {
+public class QuizController extends PrimaryStageHelper implements Initializable {
 
     @FXML
     Button backButton, nextButton, notePadButton, calculatorButton, drawingPadButton;
@@ -58,12 +57,6 @@ public class QuizController implements Initializable {
 
     //Default test is 30 minutes
     private Integer seconds = 1800;
-
-    private static Stage primaryStage;
-
-    public static void setPrimaryStage(Stage primaryStage) {
-        QuizController.primaryStage = primaryStage;
-    }
 
 
     /**
@@ -379,17 +372,6 @@ public class QuizController implements Initializable {
     /**
      * helper methods
      */
-    //Ends the entire test and begins the results page
-    private void endTest() {
-
-        try {
-            primaryStage.setScene(FXHelper.getScene(Window.PRINTRESULTS));
-            PrintResultsScreen.setPrimaryStage(primaryStage);
-        } catch (IOException e) {
-            new ErrorNotifier("Results could not display.", true).display();
-        }
-
-    }
 
     //Display the new question
     private void displayNewQuestion() {

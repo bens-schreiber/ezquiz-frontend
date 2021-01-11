@@ -2,6 +2,7 @@ package gui.results;
 
 import etc.BitMap;
 import etc.Preference;
+import gui.PrimaryStageHelper;
 import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
@@ -17,7 +18,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
 import org.json.JSONException;
 import quiz.QuizManager;
 import quiz.nodes.QuizNode;
@@ -27,10 +27,11 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class PrintResultsScreen implements Initializable {
+public class PrintResultsScreen extends PrimaryStageHelper implements Initializable {
 
     @FXML
     Label testName, outOfLabel, percentageLabel;
@@ -41,13 +42,9 @@ public class PrintResultsScreen implements Initializable {
     @FXML
     BarChart<String, Integer> barChart;
 
-    private BitMap bitMap;
+    private static BitMap bitMap;
 
-    private static Stage primaryStage;
-
-    public static void setPrimaryStage(Stage primaryStage) {
-        PrintResultsScreen.primaryStage = primaryStage;
-    }
+    private static String key;
 
     /**
      * Initial startup method.
@@ -68,7 +65,7 @@ public class PrintResultsScreen implements Initializable {
 
         //Get the amount of correct answers, get ID's for bitmap storage
         int correctAnswers = 0;
-        ArrayList<Integer> ids = new ArrayList<>();
+        List<Integer> ids = new LinkedList<>();
         for (QuizNode quizNode : QuizManager.getQuizNodes()) {
 
             ids.add(quizNode.getQuestion().getID());
@@ -119,7 +116,7 @@ public class PrintResultsScreen implements Initializable {
     public void screenshotButtonClicked() {
 
         try {
-            Scene scene =primaryStage.getScene();
+            Scene scene = primaryStage.getScene();
             WritableImage writableImage = scene.snapshot(null);
 
             DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -139,23 +136,38 @@ public class PrintResultsScreen implements Initializable {
     }
 
     public void copyRetakeButtonClicked() {
-        try {
 
-            String key = DatabaseRequest.uploadTestKey(bitMap.getBitMap());
+        //Do not send another request for a test key if the key has already been created by the server.
+        if (key == null) {
 
-            if (!key.isEmpty()) {
+            try {
 
-                Clipboard clipboard = Clipboard.getSystemClipboard();
+                key = DatabaseRequest.uploadTestKey(bitMap.getBitMap());
 
-                ClipboardContent content = new ClipboardContent();
+                if (!key.isEmpty()) {
 
-                content.putString(key);
+                    Clipboard clipboard = Clipboard.getSystemClipboard();
 
-                clipboard.setContent(content);
+                    ClipboardContent content = new ClipboardContent();
 
+                    content.putString(key);
+
+                    clipboard.setContent(content);
+
+                }
+            } catch (JSONException | IOException | InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException | IOException | InterruptedException e) {
-            e.printStackTrace();
+        } else {
+
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+
+            ClipboardContent content = new ClipboardContent();
+
+            content.putString(key);
+
+            clipboard.setContent(content);
+
         }
     }
 
@@ -166,8 +178,9 @@ public class PrintResultsScreen implements Initializable {
     public void seeQuestionsButtonClicked() {
 
         try {
+
             primaryStage.setScene(FXHelper.getScene(Window.SEERESULTS));
-            QuestionResultsScreen.setPrimaryStage(primaryStage);
+
         } catch (IOException e) {
             new ErrorNotifier("Results could not display.", true).display();
             e.printStackTrace();

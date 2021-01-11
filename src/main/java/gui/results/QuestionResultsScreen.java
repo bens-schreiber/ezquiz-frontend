@@ -1,6 +1,7 @@
 package gui.results;
 
 import etc.Preference;
+import gui.PrimaryStageHelper;
 import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
@@ -8,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import quiz.QuizManager;
 import quiz.nodes.QuizNode;
 
@@ -22,16 +22,10 @@ import java.util.ResourceBundle;
  * Shows the missed questions, if enabled.
  */
 
-public class QuestionResultsScreen implements Initializable {
+public class QuestionResultsScreen extends PrimaryStageHelper implements Initializable {
 
     @FXML
     VBox correctAnswersVBox;
-
-    private static Stage primaryStage;
-
-    public static void setPrimaryStage(Stage primaryStage) {
-        QuestionResultsScreen.primaryStage = primaryStage;
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -86,8 +80,9 @@ public class QuestionResultsScreen implements Initializable {
     public void backButtonClicked() {
 
         try {
+
             primaryStage.setScene(FXHelper.getScene(Window.PRINTRESULTS));
-            PrintResultsScreen.setPrimaryStage(primaryStage);
+
         } catch (IOException e) {
             new ErrorNotifier("Results could not display.", true).display();
         }

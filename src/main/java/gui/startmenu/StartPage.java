@@ -1,6 +1,7 @@
 package gui.startmenu;
 
 import etc.Constants;
+import gui.PrimaryStageHelper;
 import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
@@ -18,11 +19,13 @@ import requests.Account;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class StartPage extends StageHolder implements Initializable {
+public class StartPage extends PrimaryStageHelper implements Initializable {
 
-    @FXML VBox buttonVBox;
+    @FXML
+    VBox buttonVBox;
 
-    @FXML Label usernameLabel;
+    @FXML
+    Label usernameLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -97,7 +100,7 @@ public class StartPage extends StageHolder implements Initializable {
         QuizManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 
         //Start test
-        displayQuiz();
+        displayQuiz(true);
 
     }
 

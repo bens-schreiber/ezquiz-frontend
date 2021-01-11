@@ -28,6 +28,7 @@ public class DrawingPadController implements Initializable {
     @FXML
     private ColorPicker colorPicker;
 
+    //Make a Stage variable because these are their own PopupStage and must be closed from inside
     private static Stage stage;
 
     public static Stage getStage() {
