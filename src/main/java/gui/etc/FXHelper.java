@@ -12,12 +12,13 @@ import java.util.HashSet;
 
 public class FXHelper {
 
-    private static final HashSet<Window> savedStages = new HashSet<>();
+    private static final HashSet<Window> openedInstances = new HashSet<>();
 
-    public static HashSet<Window> getSavedStages() {
-        return savedStages;
+    public static HashSet<Window> getOpenedInstances() {
+        return openedInstances;
     }
 
+    //Get a scene from Window.fxmlTable
     public static Scene getScene(Window window) throws IOException {
 
         return new Scene(FXMLLoader.load(FXHelper.class.getResource(Window.fxmlTable.get(window))));

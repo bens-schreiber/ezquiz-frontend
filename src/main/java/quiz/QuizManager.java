@@ -84,7 +84,7 @@ public class QuizManager {
 
             } catch (Exception e) {
 
-//                new ErrorNotifier("A question failed to load. ID: " + id, false).display();
+                new ErrorNotifier("A question failed to load. ID: " + id, false).display();
                 e.printStackTrace();
 
                 //Clear quizNodes after any error.
@@ -100,14 +100,15 @@ public class QuizManager {
      */
     public static void loadQuestions(List<Integer> ids) {
 
+        //Initiate the quizNodes as a static array with the amount specified
+        quizNodes = new QuizNode[ids.size()];
+
         QuestionRequest request = new QuestionRequest();
         int i = 0;
         for (Integer id : ids) {
             try {
 
                 request.setId(id);
-
-                System.out.println(request.makeRequest().getJson());
 
                 Question question = QuestionFactory.questionFromJSON(request.makeRequest().getJson());
 

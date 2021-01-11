@@ -1,7 +1,6 @@
 package requests;
 
 import etc.Constants;
-import gui.etc.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 import quiz.question.Question;
@@ -21,7 +20,6 @@ public class QuestionRequest extends Request {
     /**
      * Constructor
      */
-
     public QuestionRequest(Question.Type type, Question.Subject subject) {
         this.subject = subject;
         this.type = type;
@@ -54,7 +52,7 @@ public class QuestionRequest extends Request {
      */
     private static JSONObject requestQuestion(int id) throws IOException, JSONException, InterruptedException {
 
-        return (JSONObject) Request.getJSONFromURL(Constants.DEFAULT_PATH + id, User.AUTH_TOKEN()).get("obj0");
+        return (JSONObject) Request.getJSONFromURL(Constants.DEFAULT_PATH + id, Account.AUTH_TOKEN()).get("obj0");
 
     }
 
@@ -66,7 +64,7 @@ public class QuestionRequest extends Request {
     private static JSONObject requestQuestion(Question.Type type, int id) throws IOException, JSONException, InterruptedException {
 
         return (JSONObject) Request
-                .getJSONFromURL(Constants.DEFAULT_PATH + "type/" + type, User.AUTH_TOKEN())
+                .getJSONFromURL(Constants.DEFAULT_PATH + "type/" + type, Account.AUTH_TOKEN())
                 .get("obj" + id);
 
     }
@@ -79,7 +77,7 @@ public class QuestionRequest extends Request {
     private static JSONObject requestQuestion(Question.Subject subject, int id) throws IOException, JSONException, InterruptedException {
 
         return (JSONObject) Request
-                .getJSONFromURL(Constants.DEFAULT_PATH + "subject/" + subject, User.AUTH_TOKEN())
+                .getJSONFromURL(Constants.DEFAULT_PATH + "subject/" + subject, Account.AUTH_TOKEN())
                 .get("obj" + id);
 
     }
@@ -92,7 +90,7 @@ public class QuestionRequest extends Request {
     private static JSONObject requestQuestion(Question.Subject subject, Question.Type type, int id) throws IOException, JSONException, InterruptedException {
 
         return (JSONObject) Request
-                .getJSONFromURL(Constants.DEFAULT_PATH + subject + "/" + type, User.AUTH_TOKEN())
+                .getJSONFromURL(Constants.DEFAULT_PATH + subject + "/" + type, Account.AUTH_TOKEN())
                 .get("obj" + id);
 
     }

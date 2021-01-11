@@ -1,7 +1,6 @@
 package requests;
 
 import etc.Constants;
-import gui.etc.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 import quiz.question.Question;
@@ -42,9 +41,9 @@ public class DatabaseRequest extends Request {
         if (response.headers().firstValue("token").isPresent()) {
 
             //Login the user
-            User.login(username, response.headers().firstValue("token").get());
+            Account.login(username, response.headers().firstValue("token").get());
 
-            System.out.println(User.AUTH_TOKEN());
+            System.out.println(Account.AUTH_TOKEN());
         }
         return response.statusCode();
 
@@ -59,7 +58,7 @@ public class DatabaseRequest extends Request {
         JSONObject body = new JSONObject();
         body.put("key", String.valueOf(key));
 
-        HttpResponse<String> response = Request.postRequest(body, "database/key", User.AUTH_TOKEN());
+        HttpResponse<String> response = Request.postRequest(body, "database/key", Account.AUTH_TOKEN());
 
         return new JSONObject(response.body()).get("key").toString();
     }
@@ -70,7 +69,7 @@ public class DatabaseRequest extends Request {
      * @return bitmap
      */
     public static long getTestKey(int key) throws InterruptedException, JSONException, IOException {
-        JSONObject response = (JSONObject) Request.getJSONFromURL("http://localhost:7080/api/database/key/" + key, User.AUTH_TOKEN()).get("obj0");
+        JSONObject response = (JSONObject) Request.getJSONFromURL("http://localhost:7080/api/database/key/" + key, Account.AUTH_TOKEN()).get("obj0");
         return Long.parseLong(response.get("bitmap").toString());
     }
 
@@ -80,7 +79,7 @@ public class DatabaseRequest extends Request {
     public static List<String> getQuestionAnswer(Question question) throws IOException, JSONException, InterruptedException {
 
         return QuestionFactory.answerFromJSON((JSONObject) Request
-                .getJSONFromURL(Constants.DEFAULT_PATH + "answer/" + question.getID(), User.AUTH_TOKEN())
+                .getJSONFromURL(Constants.DEFAULT_PATH + "answer/" + question.getID(), Account.AUTH_TOKEN())
                 .get("obj0"));
     }
 }

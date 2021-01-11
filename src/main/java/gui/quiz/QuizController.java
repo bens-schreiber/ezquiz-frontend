@@ -273,13 +273,23 @@ public class QuizController implements Initializable {
 
         try {
 
-            if (FXHelper.getSavedStages().contains(Window.CALCULATOR)) {
-                CalculatorController.getStage().close();
-            }
+            //If an instance of Calculator is already open
+            if (FXHelper.getOpenedInstances().contains(Window.CALCULATOR)) {
 
-            else {
+                //Remove from stages
+                FXHelper.getOpenedInstances().remove(Window.CALCULATOR);
+
+                //Close
+                CalculatorController.getStage().close();
+            } else {
 
                 Stage stage = FXHelper.getPopupStage(Window.CALCULATOR, false);
+
+                //If X button is clicked
+                stage.setOnCloseRequest(e -> FXHelper.getOpenedInstances().remove(Window.CALCULATOR));
+
+                //Add to saved stages
+                FXHelper.getOpenedInstances().add(Window.CALCULATOR);
                 CalculatorController.setStage(stage);
                 stage.show();
 
@@ -299,11 +309,17 @@ public class QuizController implements Initializable {
     public void notepadButtonClicked() {
 
         try {
-            if (FXHelper.getSavedStages().contains(Window.NOTEPAD)) {
+            if (FXHelper.getOpenedInstances().contains(Window.NOTEPAD)) {
+                FXHelper.getOpenedInstances().remove(Window.NOTEPAD);
                 NotePadController.getStage().close();
             } else {
 
                 Stage stage = FXHelper.getPopupStage(Window.NOTEPAD, false);
+
+                //If X button is clicked
+                stage.setOnCloseRequest(e -> FXHelper.getOpenedInstances().remove(Window.NOTEPAD));
+
+                FXHelper.getOpenedInstances().add(Window.NOTEPAD);
                 NotePadController.setStage(stage);
                 stage.show();
 
@@ -324,15 +340,27 @@ public class QuizController implements Initializable {
 
             try {
 
-                if (FXHelper.getSavedStages().contains(Window.DRAWINGPAD)) {
-                    paintCanvas.setDisable(true);
-                    DrawingPadController.getStage().close();
-                }
+                if (FXHelper.getOpenedInstances().contains(Window.DRAWINGPAD)) {
 
-                else {
+                    paintCanvas.setDisable(true);
+
+                    FXHelper.getOpenedInstances().remove(Window.DRAWINGPAD);
+                    DrawingPadController.getStage().close();
+                } else {
+
+                    paintCanvas.setDisable(false);
 
                     Stage stage = FXHelper.getPopupStage(Window.DRAWINGPAD, false);
+
+                    //If X button is clicked
+                    stage.setOnCloseRequest(e -> {
+                        FXHelper.getOpenedInstances().remove(Window.DRAWINGPAD);
+                        paintCanvas.setDisable(true);
+                    });
+
+                    FXHelper.getOpenedInstances().add(Window.DRAWINGPAD);
                     DrawingPadController.setStage(stage);
+
                     stage.show();
 
                 }

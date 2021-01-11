@@ -13,12 +13,13 @@ import java.util.List;
 /**
  * Container for all information regarding the Question
  */
-public class QuizNode implements TypeNode {
+public class QuizNode {
 
     //TypeNode that contains the question type, and user response to it.
     private final TypeNode node;
 
     private final Question question;
+
     private boolean correct;
 
     /**
@@ -57,7 +58,6 @@ public class QuizNode implements TypeNode {
         return question;
     }
 
-
     public boolean isCorrect() {
         return correct;
     }
@@ -70,10 +70,7 @@ public class QuizNode implements TypeNode {
     /**
      * Helper classes that records the response of the input to the corresponding Type node.
      */
-    private static class Written implements TypeNode {
-
-        private List<String> response = Collections.emptyList();
-        private final Node writtenNode;
+    private static class Written extends TypeNode {
 
         public Written() {
 
@@ -86,27 +83,18 @@ public class QuizNode implements TypeNode {
 
             VBox vbox = new VBox(15);
             vbox.getChildren().addAll(label, textField);
-            this.writtenNode = vbox;
+
+            this.node = vbox;
 
         }
 
-        public Node getNode() {
-            return this.writtenNode;
-        }
-
-        public List<String> getResponse() {
-            return this.response;
-        }
 
         public boolean isAnswered() {
             return !response.isEmpty();
         }
     }
 
-    private static class TrueOrFalse implements TypeNode {
-
-        private List<String> response = Collections.emptyList();
-        private final Node trueOrFalseNode;
+    private static class TrueOrFalse extends TypeNode {
 
         public TrueOrFalse() {
 
@@ -127,16 +115,8 @@ public class QuizNode implements TypeNode {
             //Set spacing to 15
             VBox vbox = new VBox(15);
             vbox.getChildren().addAll(radio1, radio2);
-            this.trueOrFalseNode = vbox;
-        }
 
-
-        public Node getNode() {
-            return this.trueOrFalseNode;
-        }
-
-        public List<String> getResponse() {
-            return this.response;
+            this.node = vbox;
         }
 
         public boolean isAnswered() {
@@ -146,10 +126,7 @@ public class QuizNode implements TypeNode {
 
     }
 
-    private static class MultipleChoice implements TypeNode {
-
-        private List<String> response = Collections.emptyList();
-        private final Node multipleChoiceQuestionNode;
+    private static class MultipleChoice extends TypeNode {
 
         public MultipleChoice(Question question) {
 
@@ -179,15 +156,8 @@ public class QuizNode implements TypeNode {
             //Set spacing to 15
             VBox vbox = new VBox(15);
             vbox.getChildren().addAll(radioButtons);
-            this.multipleChoiceQuestionNode = vbox;
-        }
 
-        public Node getNode() {
-            return multipleChoiceQuestionNode;
-        }
-
-        public List<String> getResponse() {
-            return this.response;
+            this.node = vbox;
         }
 
         public boolean isAnswered() {
@@ -195,10 +165,7 @@ public class QuizNode implements TypeNode {
         }
     }
 
-    private static class CheckBoxNode implements TypeNode {
-
-        private List<String> response = Collections.emptyList();
-        private final Node checkBoxNode;
+    private static class CheckBoxNode extends TypeNode {
 
         public CheckBoxNode(Question question) {
             //Get box amount from options size
@@ -229,19 +196,8 @@ public class QuizNode implements TypeNode {
 
             VBox vbox = new VBox(15);
             vbox.getChildren().addAll(boxes);
-            checkBoxNode = vbox;
-        }
 
-        public Node getNode() {
-            return this.checkBoxNode;
-        }
-
-        public List<String> getResponse() {
-            return this.response;
-        }
-
-        public boolean isAnswered() {
-            return !response.isEmpty();
+            this.node = vbox;
         }
     }
 }

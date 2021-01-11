@@ -2,7 +2,6 @@ package gui.startmenu;
 
 import etc.Constants;
 import gui.etc.FXHelper;
-import gui.etc.User;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
 import gui.startmenu.login.Login;
@@ -14,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import quiz.QuizManager;
+import requests.Account;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,10 +27,19 @@ public class StartPage extends StageHolder implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //Disable every button but Login and Register, so the user must login.
-        buttonVBox.getChildren().forEach(button -> button.setDisable(true));
-        buttonVBox.getChildren().get(0).setDisable(false);
-        buttonVBox.getChildren().get(1).setDisable(false);
+        if (!Account.isLoggedIn()) {
+            //Disable every button but Login and Register, so the user must login.
+            buttonVBox.getChildren().forEach(button -> button.setDisable(true));
+            buttonVBox.getChildren().get(0).setDisable(false);
+            buttonVBox.getChildren().get(1).setDisable(false);
+        } else {
+
+            //Remove the Login and Register buttons
+            buttonVBox.getChildren().remove(0);
+            buttonVBox.getChildren().remove(0);
+
+            usernameLabel.setText(Account.getUsername());
+        }
 
     }
 
@@ -61,7 +70,7 @@ public class StartPage extends StageHolder implements Initializable {
             Login.setStage(stage);
             stage.showAndWait();
 
-            if (User.isLoggedIn()) {
+            if (Account.isLoggedIn()) {
 
                 //Enable all buttons.
                 buttonVBox.getChildren().forEach(button -> button.setDisable(!button.isDisable()));
@@ -70,7 +79,7 @@ public class StartPage extends StageHolder implements Initializable {
                 buttonVBox.getChildren().remove(0);
                 buttonVBox.getChildren().remove(0);
 
-                usernameLabel.setText(User.getUsername());
+                usernameLabel.setText(Account.getUsername());
             }
 
         } catch (Exception e) {
@@ -97,6 +106,7 @@ public class StartPage extends StageHolder implements Initializable {
         try {
 
             Stage stage = FXHelper.getPopupStage(Window.PREMADEQUIZES, true);
+            PremadeQuizzes.stage = stage;
             stage.showAndWait();
 
         } catch (Exception e) {

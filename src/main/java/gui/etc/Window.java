@@ -9,7 +9,6 @@ public enum Window {
     CUSTOMQUIZ, ERROR, CONFIRM;
 
     public static HashMap<Window, String> fxmlTable = new HashMap<>();
-
     static {
         fxmlTable.put(Window.STARTPAGE, "/startpage.fxml");
         fxmlTable.put(Window.PREMADEQUIZES, "/premadequizes.fxml");

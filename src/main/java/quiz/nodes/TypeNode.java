@@ -2,14 +2,25 @@ package quiz.nodes;
 
 import javafx.scene.Node;
 
+import java.util.Collections;
 import java.util.List;
 
-interface TypeNode {
+abstract class TypeNode {
 
-    Node getNode();
+    protected List<String> response = Collections.emptyList();
 
-    List<String> getResponse();
+    protected Node node;
 
-    boolean isAnswered();
+    public Node getNode() {
+        return node;
+    }
+
+    public List<String> getResponse() {
+        return this.response;
+    }
+
+    public boolean isAnswered() {
+        return !response.isEmpty();
+    }
 
 }
