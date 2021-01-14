@@ -5,8 +5,6 @@ package etc;
  */
 public class Constants {
 
-    public static String USERNAME = "";
-
     public static int STATUS_ACCEPTED = 202;
 
     public static String DEFAULT_PATH = "http://localhost:7080/api/database/questions/";

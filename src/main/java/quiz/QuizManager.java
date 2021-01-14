@@ -1,18 +1,15 @@
 package quiz;
 
-import etc.Constants;
 import etc.Preference;
 import gui.popup.error.ErrorNotifier;
+import org.json.JSONException;
 import quiz.nodes.QuizNode;
 import quiz.question.Question;
-import quiz.question.QuestionFactory;
 import requests.DatabaseRequest;
 import requests.QuestionRequest;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,42 +49,18 @@ public class QuizManager {
         //Initiate the quizNodes as a static array with the amount specified
         quizNodes = new QuizNode[amount];
 
-        //Create a pool of question id's in the specific size of how many questions available
-        List<Integer> idPool = new LinkedList<>();
-        for (int i = 0; i < Constants.DATABASE_SIZE; i++) idPool.add(i);
-
-        //Randomize the pool, deallocate unneeded values
-        Collections.shuffle(idPool);
-        idPool = idPool.subList(0, amount);
-
-
-        //Initialize a request with given type and subject.
         //Count loop iterations for putting into QuizNodes
-        QuestionRequest request = new QuestionRequest(type, subject);
+        QuestionRequest request = new QuestionRequest(type, subject, amount).makeRequest();
         int i = 0;
-        for (Integer id : idPool) {
-            try {
-
-                request.setId(id);
-
-                //Request for question from ID. Question converts from JSON to Question object.
-                Question question = QuestionFactory.questionFromJSON(request.makeRequest().getJson());
-
-                //Randomize the order of the options of the question.
-                question.shuffleOptions();
-
-                quizNodes[i] = new QuizNode(question);
-                i++;
-
-            } catch (Exception e) {
-
-                new ErrorNotifier("A question failed to load. ID: " + id, false).display();
-                e.printStackTrace();
-
-                //Clear quizNodes after any error.
-                quizNodes = null;
+        try {
+            for (Question question : request.toList()) {
+                quizNodes[i++] = new QuizNode(question);
             }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
     }
 
     /**
@@ -101,32 +74,15 @@ public class QuizManager {
         quizNodes = new QuizNode[ids.size()];
 
         //Count loop iterations for putting into QuizNodes
-        QuestionRequest request = new QuestionRequest();
+        QuestionRequest request = new QuestionRequest(ids).makeRequest();
         int i = 0;
-        for (Integer id : ids) {
-            try {
-
-                System.out.println(id);
-
-                request.setId(id);
-
-                //Request for question from ID. Question converts from JSON to Question object.
-                Question question = QuestionFactory.questionFromJSON(request.makeRequest().getJson());
-
-                //Randomize the order of the options of the question.
-                question.shuffleOptions();
-
-                quizNodes[i] = new QuizNode(question);
-                i++;
-
-            } catch (Exception e) {
-
-                new ErrorNotifier("A question failed to load. ID: " + id, false).display();
-                e.printStackTrace();
-
-                //Clear quizNodes after any error.
-                quizNodes = null;
+        try {
+            for (Question question : request.toList()) {
+                quizNodes[i++] = new QuizNode(question);
             }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

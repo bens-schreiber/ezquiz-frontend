@@ -2,7 +2,6 @@ import gui.GuiRunner;
 
 /**
  * Runs real main method.
- *
  * @author benschreiber
  */
 public class Main {

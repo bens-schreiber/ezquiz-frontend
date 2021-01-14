@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import quiz.QuizManager;
 import quiz.nodes.QuizNode;
+import requests.Account;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -86,7 +87,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         //Disable back button by default.
         backButton.setDisable(true);
 
-        userLabel.setText(userLabel.getText() + Constants.USERNAME);
+        userLabel.setText(userLabel.getText() + Account.getUsername());
 
         //Establish canvas properties
         paintCanvas.setDisable(true);
