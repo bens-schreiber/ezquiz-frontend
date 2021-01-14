@@ -61,7 +61,7 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
         testName.setText(testName.getText() + QuizManager.getPreferences().get(Preference.QUIZNAME));
 
         //Check all answers
-        QuizManager.checkAnswers();
+        QuizManager.gradeAnswers();
 
         //Get the amount of correct answers, get ID's for bitmap storage
         int correctAnswers = 0;

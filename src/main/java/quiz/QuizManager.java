@@ -2,10 +2,9 @@ package quiz;
 
 import etc.Preference;
 import gui.popup.error.ErrorNotifier;
-import org.json.JSONException;
 import quiz.nodes.QuizNode;
 import quiz.question.Question;
-import requests.DatabaseRequest;
+import requests.AnswerRequest;
 import requests.QuestionRequest;
 
 import javax.annotation.Nullable;
@@ -49,15 +48,15 @@ public class QuizManager {
         //Initiate the quizNodes as a static array with the amount specified
         quizNodes = new QuizNode[amount];
 
-        //Count loop iterations for putting into QuizNodes
-        QuestionRequest request = new QuestionRequest(type, subject, amount).makeRequest();
-        int i = 0;
         try {
+            QuestionRequest request = new QuestionRequest(type, subject, amount).makeRequest();
+            int i = 0;
             for (Question question : request.toList()) {
                 quizNodes[i++] = new QuizNode(question);
             }
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
+            new ErrorNotifier("A question failed to be created.", true).display();
             e.printStackTrace();
         }
 
@@ -73,15 +72,18 @@ public class QuizManager {
         //Initiate the quizNodes as a static array with the amount specified
         quizNodes = new QuizNode[ids.size()];
 
-        //Count loop iterations for putting into QuizNodes
-        QuestionRequest request = new QuestionRequest(ids).makeRequest();
-        int i = 0;
         try {
+
+            //Count loop iterations for putting into QuizNodes
+            QuestionRequest request = new QuestionRequest(ids).makeRequest();
+
+            int i = 0;
             for (Question question : request.toList()) {
                 quizNodes[i++] = new QuizNode(question);
             }
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
+            new ErrorNotifier("A question failed to be created.", true).display();
             e.printStackTrace();
         }
     }
@@ -90,22 +92,27 @@ public class QuizManager {
     /**
      * Grab all answers to questions from responses with Requests.getQuestionAnswer
      */
-    public static void checkAnswers() {
+    public static void gradeAnswers() {
+
+        try {
+
+            //Attempt to set answers for all questions
+            quizNodes = new AnswerRequest(quizNodes).makeRequest().setAnswers();
+
+        } catch (Exception e) {
+            new ErrorNotifier("A question failed to be graded.", true).display();
+            e.printStackTrace();
+        }
 
         for (QuizNode quizNode : quizNodes) {
-            try {
 
-                if (quizNode.isAnswered()) {
+            if (quizNode.isAnswered()) {
 
-                    List<String> response = quizNode.getResponse();
+                List<String> response = quizNode.getResponse();
+                List<String> answer = quizNode.getQuestion().getAnswer();
 
-                    List<String> answer = DatabaseRequest.getQuestionAnswer(quizNode.getQuestion());
-
-                    //set question answer for use in Results
-                    quizNode.getQuestion().setAnswer(answer);
-
-                    //user input type might be capitalized or spaced wrong. handle differently
-                    if (quizNode.getQuestion().getType() == Question.Type.WRITTEN) {
+                //user input type might be capitalized or spaced wrong. handle differently
+                if (quizNode.getQuestion().getType() == Question.Type.WRITTEN) {
 
                         //Set to all lowercase and no spaces for minimal input based error
                         response = response.stream()
@@ -113,10 +120,10 @@ public class QuizManager {
                                 .map(str -> str.replaceAll("\\s", ""))
                                 .collect(Collectors.toList());
 
-                        answer = answer.stream()
-                                .map(String::toLowerCase)
-                                .map(str -> str.replaceAll("\\s", ""))
-                                .collect(Collectors.toList());
+                    answer = quizNode.getQuestion().getAnswer().stream()
+                            .map(String::toLowerCase)
+                            .map(str -> str.replaceAll("\\s", ""))
+                            .collect(Collectors.toList());
                     }
 
                     //Answer may be larger than one, so .containsAll is used
@@ -125,16 +132,7 @@ public class QuizManager {
 
                 } else {
                     quizNode.setCorrect(false);
-                    quizNode.getQuestion().setAnswer(DatabaseRequest.getQuestionAnswer(quizNode.getQuestion()));
                 }
-
-            } catch (Exception e) {
-
-                new ErrorNotifier("A question failed to be graded. ID: " + quizNode.getQuestion().getID(), true)
-                        .display();
-
-                e.printStackTrace();
-            }
         }
     }
 

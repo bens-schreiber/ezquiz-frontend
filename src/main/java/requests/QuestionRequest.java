@@ -1,12 +1,12 @@
 package requests;
 
 import etc.Constants;
-import gui.popup.error.ErrorNotifier;
 import org.json.JSONException;
 import org.json.JSONObject;
 import quiz.question.Question;
 import quiz.question.QuestionFactory;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,45 +37,38 @@ public class QuestionRequest extends Request {
         this.ids = ids;
     }
 
-    public QuestionRequest makeRequest() {
+    public QuestionRequest makeRequest() throws InterruptedException, IOException, JSONException {
         this.json = this.getJSONFromSelection();
         return this;
     }
 
-    private JSONObject getJSONFromSelection() {
-        try {
-            //If this instance has ids then make the request using them
-            if (this.ids != null) {
-                StringBuilder stringBuilder = new StringBuilder().append(Constants.DEFAULT_PATH).append("ids/");
+    private JSONObject getJSONFromSelection() throws InterruptedException, JSONException, IOException {
 
-                for (Integer id : this.ids) {
-                    stringBuilder.append(id).append(",");
-                }
+        //If this instance has ids then make the request using them
+        if (this.ids != null) {
+            StringBuilder stringBuilder = new StringBuilder().append(Constants.DEFAULT_PATH);
 
-                return getJSONFromURL(stringBuilder.substring(0, stringBuilder.toString().length() - 1), Account.AUTH_TOKEN());
+            for (Integer id : this.ids) {
+                stringBuilder.append(id).append(",");
             }
 
-            if (this.subject != null && this.type != null) {
-                return getJSONFromURL(Constants.DEFAULT_PATH + this.subject + "/" + this.type, Account.AUTH_TOKEN());
-
-            } else if (this.subject != null) {
-                return getJSONFromURL(Constants.DEFAULT_PATH + "subject/" + this.subject, Account.AUTH_TOKEN());
-
-            } else if (this.type != null) {
-                return getJSONFromURL(Constants.DEFAULT_PATH + "type/" + this.type, Account.AUTH_TOKEN());
-
-            } else {
-                return getJSONFromURL(Constants.DEFAULT_PATH, Account.AUTH_TOKEN());
-            }
-
-        } catch (Exception e) {
-
-            new ErrorNotifier("The questions failed to load.", false).display();
-
-            e.printStackTrace();
+            //get rid of the last "," because it isnt needed
+            return getJSONFromURL(stringBuilder.substring(0, stringBuilder.toString().length() - 1), Account.AUTH_TOKEN());
         }
 
-        return null;
+        if (this.subject != null && this.type != null) {
+            return getJSONFromURL(Constants.DEFAULT_PATH + this.subject + "/" + this.type, Account.AUTH_TOKEN());
+
+        } else if (this.subject != null) {
+            return getJSONFromURL(Constants.DEFAULT_PATH + "subject/" + this.subject, Account.AUTH_TOKEN());
+
+        } else if (this.type != null) {
+            return getJSONFromURL(Constants.DEFAULT_PATH + "type/" + this.type, Account.AUTH_TOKEN());
+
+        } else {
+            return getJSONFromURL(Constants.DEFAULT_PATH, Account.AUTH_TOKEN());
+        }
+
     }
 
     /**
@@ -118,7 +111,5 @@ public class QuestionRequest extends Request {
 
         return questions;
     }
-
-    //Get JSON according to what variables are given.
 
 }

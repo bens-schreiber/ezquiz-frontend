@@ -9,6 +9,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+/**
+ * Foundation for request classes
+ */
 class Request {
 
     /**
@@ -17,7 +20,7 @@ class Request {
      * @param url   where to send request
      * @param token auth token
      */
-    static JSONObject getJSONFromURL(String url, String token) throws IOException, InterruptedException, JSONException {
+    protected static JSONObject getJSONFromURL(String url, String token) throws IOException, InterruptedException, JSONException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -36,7 +39,7 @@ class Request {
      * @param body       JSONObject of what to send
      * @param urlSegment where to send it
      */
-    static HttpResponse<String> postRequest(JSONObject body, String urlSegment) throws IOException, InterruptedException {
+    protected static HttpResponse<String> postRequest(JSONObject body, String urlSegment) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -57,7 +60,7 @@ class Request {
      * @param urlSegment where to send it
      * @param token      auth token
      */
-    static HttpResponse<String> postRequest(JSONObject body, String urlSegment, String token) throws IOException, InterruptedException {
+    protected static HttpResponse<String> postRequest(JSONObject body, String urlSegment, String token) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()

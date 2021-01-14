@@ -1,14 +1,10 @@
 package requests;
 
-import etc.Constants;
 import org.json.JSONException;
 import org.json.JSONObject;
-import quiz.question.Question;
-import quiz.question.QuestionFactory;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
-import java.util.List;
 
 public class DatabaseRequest extends Request {
 
@@ -71,15 +67,5 @@ public class DatabaseRequest extends Request {
     public static long getTestKey(int key) throws InterruptedException, JSONException, IOException {
         JSONObject response = (JSONObject) Request.getJSONFromURL("http://localhost:7080/api/database/key/" + key, Account.AUTH_TOKEN()).get("obj0");
         return Long.parseLong(response.get("bitmap").toString());
-    }
-
-    /**
-     * @return JSONObject from Question Objects ID.
-     */
-    public static List<String> getQuestionAnswer(Question question) throws IOException, JSONException, InterruptedException {
-
-        return QuestionFactory.answerFromJSON((JSONObject) Request
-                .getJSONFromURL(Constants.DEFAULT_PATH + "answer/" + question.getID(), Account.AUTH_TOKEN())
-                .get("obj0"));
     }
 }
