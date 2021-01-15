@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane prefHeight="115.0" prefWidth="119.0" style="-fx-background-color: #BDBDBD;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.quiz.DrawingPadController">
+            fx:controller="gui.quiz.tools.DrawingPadController">
     <children>
         <CheckBox fx:id="eraser" layoutX="5.0" layoutY="39.0" mnemonicParsing="false" text="Eraser"/>
         <TextField fx:id="brushSize" alignment="TOP_LEFT" layoutX="5.0" layoutY="74.0" prefHeight="26.0"

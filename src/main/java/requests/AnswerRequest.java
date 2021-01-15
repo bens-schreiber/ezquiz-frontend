@@ -4,7 +4,7 @@ import etc.Constants;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
-import quiz.nodes.QuizNode;
+import quiz.nodes.QuestionNode;
 import quiz.question.QuestionFactory;
 
 import java.io.IOException;
@@ -15,22 +15,22 @@ import java.util.Arrays;
  */
 public class AnswerRequest extends Request {
 
-    private final QuizNode[] quizNodes;
+    private final QuestionNode[] questionNodes;
     private JSONObject json;
 
     /**
-     * @param quizNodes array of the questions that need to be given answers
+     * @param questionNodes array of the questions that need to be given answers
      */
-    public AnswerRequest(QuizNode[] quizNodes) {
-        this.quizNodes = quizNodes;
+    public AnswerRequest(QuestionNode[] questionNodes) {
+        this.questionNodes = questionNodes;
     }
 
     public AnswerRequest makeRequest() throws InterruptedException, JSONException, IOException {
 
         StringBuilder stringBuilder = new StringBuilder().append(Constants.DEFAULT_PATH).append("answer/");
 
-        for (QuizNode quizNode : this.quizNodes) {
-            stringBuilder.append(quizNode.getQuestion().getID()).append(",");
+        for (QuestionNode questionNode : this.questionNodes) {
+            stringBuilder.append(questionNode.getQuestion().getID()).append(",");
         }
 
         //get rid of the last "," because it isn't needed
@@ -42,7 +42,7 @@ public class AnswerRequest extends Request {
     /**
      * @return QuizNodes with questions that have answers set.
      */
-    public QuizNode[] setAnswers() throws JSONException {
+    public QuestionNode[] setAnswers() throws JSONException {
 
         /*
         Because the answers in the rest server are by default sorted by smallest to greatest ID, a pair class is made
@@ -51,9 +51,9 @@ public class AnswerRequest extends Request {
         */
 
         //Fill pair array with quiz node and original index
-        Pair[] pairs = new Pair[quizNodes.length];
-        for (int i = 0; i < quizNodes.length; i++) {
-            pairs[i] = new Pair(quizNodes[i], i);
+        Pair[] pairs = new Pair[questionNodes.length];
+        for (int i = 0; i < questionNodes.length; i++) {
+            pairs[i] = new Pair(questionNodes[i], i);
         }
 
         //Sort the pair array so that it may be compared to the already sorted json.
@@ -66,20 +66,20 @@ public class AnswerRequest extends Request {
                     .setAnswer(QuestionFactory.answerFromJSON((JSONObject) this.json.get("obj" + i++)));
 
             //Assign the value of the pair to its original index, not affecting the positioning of the array.
-            quizNodes[pair.index] = pair.value;
+            questionNodes[pair.index] = pair.value;
 
         }
 
-        return this.quizNodes;
+        return this.questionNodes;
     }
 
     private static class Pair implements Comparable<Pair> {
 
-        public final QuizNode value;
+        public final QuestionNode value;
         public final int index;
 
-        public Pair(QuizNode quizNode, int index) {
-            this.value = quizNode;
+        public Pair(QuestionNode questionNode, int index) {
+            this.value = questionNode;
             this.index = index;
         }
 

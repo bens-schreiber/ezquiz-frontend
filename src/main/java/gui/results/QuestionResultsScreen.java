@@ -10,7 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import quiz.QuizManager;
-import quiz.nodes.QuizNode;
+import quiz.nodes.QuestionNode;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,7 +32,7 @@ public class QuestionResultsScreen extends PrimaryStageHelper implements Initial
 
         //Create question answers
         int quizNumber = 1;
-        for (QuizNode quizNode : QuizManager.getQuizNodes()) {
+        for (QuestionNode questionNode : QuizManager.getStages()) {
 
             //Make a container for the answered question, add question to it
             VBox answeredQuestion = new VBox(15);
@@ -42,14 +42,14 @@ public class QuestionResultsScreen extends PrimaryStageHelper implements Initial
             label.setStyle("-fx-font-weight: bold;");
             answeredQuestion.getChildren().add(label);
 
-            answeredQuestion.getChildren().add(new Label(quizNode.getQuestion().getPrompt()));
-            answeredQuestion.getChildren().add(quizNode.getNode());
+            answeredQuestion.getChildren().add(new Label(questionNode.getQuestion().getPrompt()));
+            answeredQuestion.getChildren().add(questionNode.getNode());
 
             //Make un-intractable.
-            quizNode.getNode().setFocusTraversable(false);
-            quizNode.getNode().setMouseTransparent(true);
+            questionNode.getNode().setFocusTraversable(false);
+            questionNode.getNode().setMouseTransparent(true);
 
-            if (quizNode.isCorrect()) {
+            if (questionNode.isCorrect()) {
 
                 //Set background to green with low opacity
                 answeredQuestion.setStyle("-fx-background-color: rgba(86, 234, 99, .5);");
@@ -63,7 +63,7 @@ public class QuestionResultsScreen extends PrimaryStageHelper implements Initial
                 if (Boolean.parseBoolean(QuizManager.getPreferences().get(Preference.SHOWANSWERS))) {
 
                     answeredQuestion.getChildren().add(new Label("Correct answer: "
-                            + quizNode.getQuestion().getAnswer()
+                            + questionNode.getQuestion().getAnswer()
                             .toString()
                             .replace("[", "")
                             .replace("]", "")

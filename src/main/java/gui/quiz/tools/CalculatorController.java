@@ -1,4 +1,4 @@
-package gui.quiz;
+package gui.quiz.tools;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

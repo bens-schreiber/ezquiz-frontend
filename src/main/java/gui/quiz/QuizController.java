@@ -7,8 +7,9 @@ import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.confirm.ConfirmNotifier;
 import gui.popup.error.ErrorNotifier;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import gui.quiz.tools.CalculatorController;
+import gui.quiz.tools.DrawingPadController;
+import gui.quiz.tools.NotePadController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -22,12 +23,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import quiz.QuizManager;
-import quiz.nodes.QuizNode;
+import quiz.nodes.QuestionNode;
 import requests.Account;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -54,11 +55,13 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
     @FXML
     Canvas paintCanvas;
 
-    private static GraphicsContext gc;
+    static GraphicsContext gc;
 
     //Default test is 30 minutes
-    private Integer seconds = 1800;
+    static Integer seconds = 1800;
 
+    //Index of the QuizNodes the quiz is currently showing
+    static int currentQuestionIndex = 0;
 
     /**
      * Initial run method
@@ -67,10 +70,9 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
     public void initialize(URL location, ResourceBundle resources) {
 
         //Establish preferences
-
-        //Get preferences and apply them, if any.
-        if (!Boolean.parseBoolean(QuizManager.getPreferences().get(Preference.NOTEPAD)))
+        if (!Boolean.parseBoolean(QuizManager.getPreferences().get(Preference.NOTEPAD))) {
             addonVBox.getChildren().remove(notePadButton);
+        }
 
         if (!Boolean.parseBoolean(QuizManager.getPreferences().get(Preference.CALCULATOR))) {
             addonVBox.getChildren().remove(calculatorButton);
@@ -94,10 +96,9 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         gc = paintCanvas.getGraphicsContext2D();
         gc.setStroke(Color.WHITE);
 
-
         //Establish flag button amount
         //Whenever the button is clicked use the individualQuestionClicked handler
-        for (QuizNode node : QuizManager.getQuizNodes()) {
+        for (int i = 0; i < QuizManager.getStages().length; i++) {
 
             FlagButton button = new FlagButton();
 
@@ -107,135 +108,96 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
 
         }
 
-
-        //Display the new question.
         displayNewQuestion();
-
-        //Color the question that is currently selected
-        selectCurrentQuizButton();
-
-        //Begin the test timer
-        startTimer();
 
     }
 
+
+    /**
+     * change display to current question
+     */
+    private void displayNewQuestion() {
+
+        QuestionNode currentQuestionNode = QuizManager.getStages()[currentQuestionIndex];
+
+        questionArea.getChildren().clear();
+
+        //Set new question to questionArea
+        questionArea.getChildren().add(currentQuestionNode.getNode());
+
+        //Set prompt, determine text color based on if the question is flagged or not
+        questionPrompt.setText(currentQuestionIndex + 1 + ".) " + currentQuestionNode.getQuestion().getPrompt());
+        questionPrompt.setStyle(currentFlagButton().isFlagged() ? "-fx-text-fill: " + Constants.FLAGGED_COLOR : "-fx-text-fill: black");
+
+        //Set directions
+        questionDirections.setText(currentQuestionNode.getQuestion().getDirections());
+
+        //Change top right label to current question num / question amount
+        currQuestionLabel.setText(currentQuestionIndex + 1 + " / " + QuizManager.getStages().length);
+
+        subjAndQuestion.setText(currentQuestionNode.getQuestion().getSubject() + " QID:" + currentQuestionNode.getQuestion().getID());
+
+        highlightSelected();
+
+    }
+
+    /**
+     * on buttons clicked
+     */
     //On an individual question clicked
     private void individualQuestionClicked(MouseEvent mouseEvent) {
 
         //Grab the spot of the question
-        int questionSpot = questionHBox.getChildren().indexOf(mouseEvent.getSource());
-
         //Set current question to the spot
-        QuizManager.setCurrentNum(questionSpot);
+        currentQuestionIndex = questionHBox.getChildren().indexOf(mouseEvent.getSource());
 
-        //Display the current question.
+        //display the new question
         displayNewQuestion();
 
-        //Color the flag button that is currently selected if not flagged
-        if (!((FlagButton) getCurrentButton()).isFlagged()) {
-            selectCurrentQuizButton();
-        }
-
-        backButton.setDisable(questionSpot == 0);
-        nextButton.setDisable(questionSpot + 1 == QuizManager.getQuizNodes().length);
+        backButton.setDisable(currentQuestionIndex == 0);
+        nextButton.setDisable(currentQuestionIndex + 1 == QuizManager.getStages().length);
 
     }
-
-    /**
-     * Timer
-     */
-    private void startTimer() {
-
-        Timeline time = new Timeline();
-
-        time.setCycleCount(Timeline.INDEFINITE);
-
-        KeyFrame frame = new KeyFrame(Duration.seconds(1), event -> {
-
-            if (seconds == -1) {
-
-                time.stop();
-
-                endTest();
-
-            } else {
-
-                int hours;
-                int minutes;
-                int second;
-                hours = seconds / 3600;
-                minutes = (seconds % 3600) / 60;
-                second = seconds % 60;
-
-                //Format in hours:minutes:seconds
-                quizTimer.setText(String.format("%02d:%02d:%02d", hours, minutes, second));
-            }
-
-            seconds--;
-
-        });
-
-        time.getKeyFrames().add(frame);
-        time.playFromStart();
-    }
-
-
-    /**
-     * Methods for Button Actions
-     */
 
     //When next button is clicked
     public void nextButtonClicked() {
 
-        if (QuizManager.getCurrNum() < QuizManager.getQuizNodes().length - 1) {
-
-            QuizManager.nextQuestion(); //Change to the next question.
-
-            displayNewQuestion(); //Display the new question.
-        }
+        currentQuestionIndex++;
+        displayNewQuestion();
 
         //Disable/enable next and back based on position
-        backButton.setDisable(QuizManager.getCurrNum() == 0);
-        nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuizNodes().length);
-
-        //Color the question button that is currently selected
-        selectCurrentQuizButton();
+        backButton.setDisable(currentQuestionIndex == 0);
+        nextButton.setDisable(currentQuestionIndex + 1 == QuizManager.getStages().length);
 
     }
 
     //When back button is clicked
     public void backButtonClicked() {
 
-        if (QuizManager.getCurrNum() > 0) {
-            QuizManager.prevQuestion(); //Goto previous question.
-            displayNewQuestion(); //Load previous question.
-        }
+        currentQuestionIndex--;
+        displayNewQuestion();
 
         //Disable/enable next and back based on position
-        backButton.setDisable(QuizManager.getCurrNum() == 0);
-        nextButton.setDisable(QuizManager.getCurrNum() + 1 == QuizManager.getQuizNodes().length);
-
-        //Color the question button that is currently selected
-        selectCurrentQuizButton();
+        backButton.setDisable(currentQuestionIndex == 0);
+        nextButton.setDisable(currentQuestionIndex + 1 == QuizManager.getStages().length);
 
     }
 
-    //On Flag Question clicked
     public void flagButtonClicked() {
 
         //Un-flag if already flagged.
-        if (((FlagButton) getCurrentButton()).isFlagged()) {
+        if (currentFlagButton().isFlagged()) {
 
-            ((FlagButton) getCurrentButton()).setFlagged(false);
+            currentFlagButton().setFlagged(false);
+            highlightSelected();
             questionPrompt.setStyle("-fx-text-fill: black");
 
         } else {
-            ((FlagButton) getCurrentButton()).setFlagged(true);
+            currentFlagButton().setFlagged(true);
             questionPrompt.setStyle("-fx-text-fill: " + Constants.FLAGGED_COLOR);
         }
     }
 
-    //When submit button is clicked
     public void submitButtonClicked() {
 
         //If any questions are flagged
@@ -246,7 +208,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         }
 
         //If all questions are answered.
-        else if (QuizManager.allResponded()) {
+        else if (List.of(QuizManager.getStages()).stream().allMatch(QuestionNode::isAnswered)) {
 
             if (new ConfirmNotifier("Are you sure you want to submit?").display().getResponse()) {
                 endTest();
@@ -261,8 +223,10 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
 
     }
 
-    //todo: make drawingpad and notepad objects
-    //When the calculator button is clicked
+
+    /**
+     * Test Tools
+     */
     public void calculatorButtonClicked() {
 
         try {
@@ -332,92 +296,58 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
     //On drawing button clicked
     public void drawingPadButtonClicked() {
 
-            try {
+        try {
 
-                if (FXHelper.getOpenedInstances().contains(Window.DRAWINGPAD)) {
+            if (FXHelper.getOpenedInstances().contains(Window.DRAWINGPAD)) {
 
-                    paintCanvas.setDisable(true);
+                paintCanvas.setDisable(true);
 
+                FXHelper.getOpenedInstances().remove(Window.DRAWINGPAD);
+                DrawingPadController.getStage().close();
+            } else {
+
+                paintCanvas.setDisable(false);
+
+                Stage stage = FXHelper.getPopupStage(Window.DRAWINGPAD, false);
+
+                //If X button is clicked
+                stage.setOnCloseRequest(e -> {
                     FXHelper.getOpenedInstances().remove(Window.DRAWINGPAD);
-                    DrawingPadController.getStage().close();
-                } else {
+                    paintCanvas.setDisable(true);
+                });
 
-                    paintCanvas.setDisable(false);
+                FXHelper.getOpenedInstances().add(Window.DRAWINGPAD);
+                DrawingPadController.setStage(stage);
 
-                    Stage stage = FXHelper.getPopupStage(Window.DRAWINGPAD, false);
-
-                    //If X button is clicked
-                    stage.setOnCloseRequest(e -> {
-                        FXHelper.getOpenedInstances().remove(Window.DRAWINGPAD);
-                        paintCanvas.setDisable(true);
-                    });
-
-                    FXHelper.getOpenedInstances().add(Window.DRAWINGPAD);
-                    DrawingPadController.setStage(stage);
-
-                    stage.show();
-
-                }
-
-            } catch (Exception e) {
-
-                new ErrorNotifier("A page failed to load", true).display();
-
-                e.printStackTrace();
+                stage.show();
 
             }
 
-    }
+        } catch (Exception e) {
 
+            new ErrorNotifier("A page failed to load", true).display();
 
-    /**
-     * helper methods
-     */
+            e.printStackTrace();
 
-    //Display the new question
-    private void displayNewQuestion() {
-
-        //Clear previous question from questionArea
-        questionArea.getChildren().clear();
-
-        //Set new question to questionArea
-        questionArea.getChildren().add(QuizManager.getCurrentNode().getNode());
-
-        // Set prompt
-        questionPrompt.setText(QuizManager.getCurrNum() + 1 + ".) " + QuizManager.getCurrentQuestion().getPrompt());
-
-        //Set directions
-        questionDirections.setText(QuizManager.getCurrentQuestion().getDirections());
-
-        //Change top right label to current question num / question amount
-        currQuestionLabel.setText((QuizManager.getCurrNum() + 1)
-                + " out of "
-                + QuizManager.getQuizNodes().length
-        );
-
-        //If the button is selected
-        questionHBox.getChildren().forEach(button -> {
-            if (button.getStyle().equals(Constants.SELECTED_COLOR_FX)) {
-                button.setStyle(Constants.UNSELECTED_COLOR_FX);
-            }
-        });
-
-        questionPrompt.setStyle(((FlagButton) getCurrentButton()).isFlagged() ?
-                "-fx-text-fill: " + Constants.FLAGGED_COLOR : "-fx-text-fill: black");
-
-        subjAndQuestion.setText(QuizManager.getCurrentQuestion().getSubject() + " QID:" + QuizManager.getCurrentQuestion().getID());
+        }
 
     }
 
-    //Color box to show it is selected
-    private void selectCurrentQuizButton() {
-        getCurrentButton().setStyle(Constants.SELECTED_COLOR_FX);
+    private FlagButton currentFlagButton() {
+        return (FlagButton) questionHBox.getChildren().get(currentQuestionIndex);
     }
 
-    private Node getCurrentButton() {
-        return questionHBox.getChildren().get(QuizManager.getCurrNum());
-    }
+    private void highlightSelected() {
+        //unhighlight all nodes unless flagged
+        for (Node node : questionHBox.getChildren()) {
+            if (!((FlagButton) node).isFlagged()) node.setStyle(Constants.UNSELECTED_COLOR_FX);
+        }
 
+        //highlight unless flagged
+        if (!currentFlagButton().isFlagged()) {
+            currentFlagButton().setStyle(Constants.SELECTED_COLOR_FX);
+        }
+    }
 
     /**
      * Paint Canvas
@@ -446,10 +376,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         gc.setLineWidth(width);
     }
 
-    /**
-     * Addon to buttons that allows them to be considered 'flagged' or not.
-     * For use in QuizController.
-     */
+
     static class FlagButton extends Button {
 
         private boolean flagged;
@@ -466,5 +393,5 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
             return flagged;
         }
     }
-
 }
+

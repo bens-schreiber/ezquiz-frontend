@@ -1,6 +1,7 @@
-package gui.quiz;
+package gui.quiz.tools;
 
 import etc.Constants;
+import gui.quiz.QuizController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;

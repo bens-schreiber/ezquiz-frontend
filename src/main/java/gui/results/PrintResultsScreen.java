@@ -20,7 +20,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.stage.DirectoryChooser;
 import org.json.JSONException;
 import quiz.QuizManager;
-import quiz.nodes.QuizNode;
+import quiz.nodes.QuestionNode;
 import requests.DatabaseRequest;
 
 import javax.imageio.ImageIO;
@@ -66,11 +66,11 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
         //Get the amount of correct answers, get ID's for bitmap storage
         int correctAnswers = 0;
         List<Integer> ids = new LinkedList<>();
-        for (QuizNode quizNode : QuizManager.getQuizNodes()) {
+        for (QuestionNode questionNode : QuizManager.getStages()) {
 
-            ids.add(quizNode.getQuestion().getID());
+            ids.add(questionNode.getQuestion().getID());
 
-            if (quizNode.isCorrect()) {
+            if (questionNode.isCorrect()) {
                 correctAnswers++;
             }
         }
@@ -79,8 +79,8 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
         bitMap = new BitMap(ids);
 
         //add how many correct out of possible, percentage, put bitmap to Base64
-        outOfLabel.setText(correctAnswers + " out of " + QuizManager.getQuizNodes().length);
-        percentageLabel.setText(((double) correctAnswers / (double) QuizManager.getQuizNodes().length * 100) + "%");
+        outOfLabel.setText(correctAnswers + " out of " + QuizManager.getStages().length);
+        percentageLabel.setText(((double) correctAnswers / (double) QuizManager.getStages().length * 100) + "%");
 
     }
 
@@ -88,9 +88,9 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
 
         int[] subjs = {0, 0, 0, 0};
 
-        for (QuizNode quizNode : QuizManager.getQuizNodes()) {
+        for (QuestionNode questionNode : QuizManager.getStages()) {
 
-            switch (quizNode.getQuestion().getSubject()) {
+            switch (questionNode.getQuestion().getSubject()) {
 
                 case INTBUS -> subjs[0]++;
 

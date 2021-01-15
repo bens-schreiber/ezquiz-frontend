@@ -2,7 +2,7 @@ package quiz;
 
 import etc.Preference;
 import gui.popup.error.ErrorNotifier;
-import quiz.nodes.QuizNode;
+import quiz.nodes.QuestionNode;
 import quiz.question.Question;
 import requests.AnswerRequest;
 import requests.QuestionRequest;
@@ -13,14 +13,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Stores local quiz information, contains grading methods
+ * Initializes and stores questionNodes, contains grading methods
  */
-
-
 public class QuizManager {
 
     //Hashmap of user preferences, initialize default preferences
     private static final HashMap<Preference, String> preferences = new HashMap<>();
+
     static {
         preferences.put(Preference.NOTEPAD, "true");
         preferences.put(Preference.CALCULATOR, "true");
@@ -30,11 +29,8 @@ public class QuizManager {
         preferences.put(Preference.TIME, "1800");
     }
 
-    //LinkedList of QuizNodes that contain the questions, responses, and javafx information
-    private static QuizNode[] quizNodes;
-
-    //Index of the QuizNodes the quiz is currently showing
-    private static int currentQuestionIndex = 0;
+    //contains the questions, responses, and javafx information
+    private static QuestionNode[] questionNodes;
 
 
     /**
@@ -45,14 +41,14 @@ public class QuizManager {
      */
     public static void loadQuestions(int amount, @Nullable Question.Type type, @Nullable Question.Subject subject) {
 
-        //Initiate the quizNodes as a static array with the amount specified
-        quizNodes = new QuizNode[amount];
+        //Initiate the questionNodes as a static array with the amount specified
+        questionNodes = new QuestionNode[amount];
 
         try {
             QuestionRequest request = new QuestionRequest(type, subject, amount).makeRequest();
             int i = 0;
             for (Question question : request.toList()) {
-                quizNodes[i++] = new QuizNode(question);
+                questionNodes[i++] = new QuestionNode(question);
             }
 
         } catch (Exception e) {
@@ -69,17 +65,17 @@ public class QuizManager {
      */
     public static void loadQuestions(List<Integer> ids) {
 
-        //Initiate the quizNodes as a static array with the amount specified
-        quizNodes = new QuizNode[ids.size()];
+        //Initiate the questionNodes  as a static array with the amount specified
+        questionNodes = new QuestionNode[ids.size()];
 
         try {
 
-            //Count loop iterations for putting into QuizNodes
+            //Count loop iterations for putting into questionNodes
             QuestionRequest request = new QuestionRequest(ids).makeRequest();
 
             int i = 0;
             for (Question question : request.toList()) {
-                quizNodes[i++] = new QuizNode(question);
+                questionNodes[i++] = new QuestionNode(question);
             }
 
         } catch (Exception e) {
@@ -97,30 +93,30 @@ public class QuizManager {
         try {
 
             //Attempt to set answers for all questions
-            quizNodes = new AnswerRequest(quizNodes).makeRequest().setAnswers();
+            questionNodes = new AnswerRequest(questionNodes).makeRequest().setAnswers();
 
         } catch (Exception e) {
             new ErrorNotifier("A question failed to be graded.", true).display();
             e.printStackTrace();
         }
 
-        for (QuizNode quizNode : quizNodes) {
+        for (QuestionNode questionNode : questionNodes) {
 
-            if (quizNode.isAnswered()) {
+            if (questionNode.isAnswered()) {
 
-                List<String> response = quizNode.getResponse();
-                List<String> answer = quizNode.getQuestion().getAnswer();
+                List<String> response = questionNode.getResponse();
+                List<String> answer = questionNode.getQuestion().getAnswer();
 
                 //user input type might be capitalized or spaced wrong. handle differently
-                if (quizNode.getQuestion().getType() == Question.Type.WRITTEN) {
+                if (questionNode.getQuestion().getType() == Question.Type.WRITTEN) {
 
-                        //Set to all lowercase and no spaces for minimal input based error
-                        response = response.stream()
-                                .map(String::toLowerCase)
-                                .map(str -> str.replaceAll("\\s", ""))
-                                .collect(Collectors.toList());
+                    //Set to all lowercase and no spaces for minimal input based error
+                    response = response.stream()
+                            .map(String::toLowerCase)
+                            .map(str -> str.replaceAll("\\s", ""))
+                            .collect(Collectors.toList());
 
-                    answer = quizNode.getQuestion().getAnswer().stream()
+                    answer = questionNode.getQuestion().getAnswer().stream()
                             .map(String::toLowerCase)
                             .map(str -> str.replaceAll("\\s", ""))
                             .collect(Collectors.toList());
@@ -128,10 +124,10 @@ public class QuizManager {
 
                     //Answer may be larger than one, so .containsAll is used
                     //Check if answer is correct, if no response then mark wrong.
-                    quizNode.setCorrect(answer.containsAll(response));
+                questionNode.setCorrect(answer.containsAll(response));
 
                 } else {
-                    quizNode.setCorrect(false);
+                questionNode.setCorrect(false);
                 }
         }
     }
@@ -141,63 +137,16 @@ public class QuizManager {
      * Getters
      */
 
-    public static int getCurrNum() {
-
-        return currentQuestionIndex;
-
-    }
-
     public static HashMap<Preference, String> getPreferences() {
-
         return preferences;
     }
 
-    public static QuizNode[] getQuizNodes() {
+    public static QuestionNode[] getStages() {
 
-        return quizNodes;
-
-    }
-
-    public static QuizNode getCurrentNode() {
-
-        return quizNodes[currentQuestionIndex];
+        return questionNodes;
 
     }
 
-    public static Question getCurrentQuestion() {
-
-        return quizNodes[currentQuestionIndex].getQuestion();
-
-    }
-
-    public static boolean allResponded() {
-
-        return List.of(quizNodes).stream().allMatch(QuizNode::isAnswered);
-
-    }
-
-
-    /**
-     * Setters
-     */
-
-    public static void nextQuestion() {
-
-        currentQuestionIndex++;
-
-    }
-
-    public static void prevQuestion() {
-
-        currentQuestionIndex--;
-
-    }
-
-    public static void setCurrentNum(int num) {
-
-        currentQuestionIndex = num;
-
-    }
 
 }
 

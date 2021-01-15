@@ -1,4 +1,4 @@
-package gui.quiz;
+package gui.quiz.tools;
 
 import etc.Constants;
 import javafx.fxml.FXML;

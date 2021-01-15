@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Container for all information regarding the Question
  */
-public class QuizNode {
+public class QuestionNode {
 
     //TypeNode that contains the question type, and user response to it.
     private final TypeNode node;
@@ -25,7 +25,7 @@ public class QuizNode {
     /**
      * Class constructor.
      */
-    public QuizNode(Question question) {
+    public QuestionNode(Question question) {
 
         this.question = question;
 
