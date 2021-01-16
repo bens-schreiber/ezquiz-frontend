@@ -1,7 +1,7 @@
 package gui.quiz;
 
 import etc.Constants;
-import gui.PrimaryStageHelper;
+import gui.etc.Account;
 import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.confirm.ConfirmNotifier;
@@ -22,12 +22,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import quiz.Preference;
-import quiz.QuestionManager;
-import quiz.question.nodes.QuestionNode;
-import requests.Account;
+import questions.nodes.QuestionNode;
+import questions.nodes.QuizQuestions;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -35,7 +32,7 @@ import java.util.ResourceBundle;
 /**
  * Main controller for test.
  */
-public class QuizController extends PrimaryStageHelper implements Initializable {
+public class QuizController implements Initializable {
 
     @FXML
     Button backButton, nextButton, notePadButton, calculatorButton, drawingPadButton;
@@ -99,7 +96,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
 
         //Establish flag button amount
         //Whenever the button is clicked use the individualQuestionClicked handler
-        for (int i = 0; i < QuestionManager.getQuestionNodes().length; i++) {
+        for (int i = 0; i < QuizQuestions.getQuestionNodes().length; i++) {
 
             FlagButton button = new FlagButton();
 
@@ -119,7 +116,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
      */
     private void displayNewQuestion() {
 
-        QuestionNode currentQuestionNode = QuestionManager.getQuestionNodes()[currentQuestionIndex];
+        QuestionNode currentQuestionNode = QuizQuestions.getQuestionNodes()[currentQuestionIndex];
 
         questionArea.getChildren().clear();
 
@@ -134,7 +131,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         questionDirections.setText(currentQuestionNode.getQuestion().getDirections());
 
         //Change top right label to current question num / question amount
-        currQuestionLabel.setText(currentQuestionIndex + 1 + " / " + QuestionManager.getQuestionNodes().length);
+        currQuestionLabel.setText(currentQuestionIndex + 1 + " / " + QuizQuestions.getQuestionNodes().length);
 
         subjAndQuestion.setText(currentQuestionNode.getQuestion().getSubject() + " QID:" + currentQuestionNode.getQuestion().getID());
 
@@ -156,7 +153,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         displayNewQuestion();
 
         backButton.setDisable(currentQuestionIndex == 0);
-        nextButton.setDisable(currentQuestionIndex + 1 == QuestionManager.getQuestionNodes().length);
+        nextButton.setDisable(currentQuestionIndex + 1 == QuizQuestions.getQuestionNodes().length);
 
     }
 
@@ -168,7 +165,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
 
         //Disable/enable next and back based on position
         backButton.setDisable(currentQuestionIndex == 0);
-        nextButton.setDisable(currentQuestionIndex + 1 == QuestionManager.getQuestionNodes().length);
+        nextButton.setDisable(currentQuestionIndex + 1 == QuizQuestions.getQuestionNodes().length);
 
     }
 
@@ -180,7 +177,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
 
         //Disable/enable next and back based on position
         backButton.setDisable(currentQuestionIndex == 0);
-        nextButton.setDisable(currentQuestionIndex + 1 == QuestionManager.getQuestionNodes().length);
+        nextButton.setDisable(currentQuestionIndex + 1 == QuizQuestions.getQuestionNodes().length);
 
     }
 
@@ -204,22 +201,22 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         //If any questions are flagged
         if (questionHBox.getChildren().stream().anyMatch(node -> ((FlagButton) node).isFlagged())) {
             if (new ConfirmNotifier("Some questions are flagged. Are you sure you want to submit?").display().getResponse()) {
-                endTest();
+                QuizManager.endQuiz();
             }
         }
 
         //If all questions are answered.
-        else if (List.of(QuestionManager.getQuestionNodes()).stream().allMatch(QuestionNode::isAnswered)) {
+        else if (List.of(QuizQuestions.getQuestionNodes()).stream().allMatch(QuestionNode::isAnswered)) {
 
             if (new ConfirmNotifier("Are you sure you want to submit?").display().getResponse()) {
-                endTest();
+                QuizManager.endQuiz();
             }
 
         }
 
         //If all questions aren't answered
         else if (new ConfirmNotifier("Some answers are unfinished. Are sure you want to submit?").display().getResponse()) {
-            endTest();
+            QuizManager.endQuiz();
         }
 
     }
@@ -293,7 +290,6 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         }
     }
 
-
     //On drawing button clicked
     public void drawingPadButtonClicked() {
 
@@ -334,6 +330,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
 
     }
 
+
     private FlagButton currentFlagButton() {
         return (FlagButton) questionHBox.getChildren().get(currentQuestionIndex);
     }
@@ -350,15 +347,6 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         }
     }
 
-    //Ends the entire test and begins the results page
-    private static void endTest() {
-        try {
-            primaryStage.setScene(FXHelper.getScene(Window.PRINTRESULTS));
-        } catch (IOException e) {
-            new ErrorNotifier("Results could not display.", true).display();
-        }
-
-    }
 
     /**
      * Paint Canvas
@@ -405,4 +393,3 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         }
     }
 }
-

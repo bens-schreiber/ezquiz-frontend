@@ -1,16 +1,16 @@
 package gui.results;
 
-import gui.PrimaryStageHelper;
+import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
+import gui.quiz.Preference;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import quiz.Preference;
-import quiz.QuestionManager;
-import quiz.question.nodes.QuestionNode;
+import questions.nodes.QuestionNode;
+import questions.nodes.QuizQuestions;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Shows the missed questions, if enabled.
  */
 
-public class QuestionResultsScreen extends PrimaryStageHelper implements Initializable {
+public class QuestionResultsScreen implements Initializable {
 
     @FXML
     VBox correctAnswersVBox;
@@ -32,7 +32,7 @@ public class QuestionResultsScreen extends PrimaryStageHelper implements Initial
 
         //Create question answers
         int quizNumber = 1;
-        for (QuestionNode questionNode : QuestionManager.getQuestionNodes()) {
+        for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
 
             //Make a container for the answered question, add question to it
             VBox answeredQuestion = new VBox(15);
@@ -81,7 +81,7 @@ public class QuestionResultsScreen extends PrimaryStageHelper implements Initial
 
         try {
 
-            primaryStage.setScene(FXHelper.getScene(Window.PRINTRESULTS));
+            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(Window.PRINTRESULTS));
 
         } catch (IOException e) {
             new ErrorNotifier("Results could not display.", true).display();

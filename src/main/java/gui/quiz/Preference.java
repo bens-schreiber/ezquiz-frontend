@@ -1,7 +1,10 @@
-package quiz;
+package gui.quiz;
 
 import java.util.HashMap;
 
+/**
+ * Preferences for the quiz
+ */
 public enum Preference {
     NOTEPAD, CALCULATOR, DRAWINGPAD, QUIZNAME, SHOWANSWERS, TIME;
 
@@ -16,5 +19,4 @@ public enum Preference {
         preferences.put(Preference.SHOWANSWERS, "true");
         preferences.put(Preference.TIME, "1800");
     }
-
 }

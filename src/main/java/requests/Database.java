@@ -1,12 +1,13 @@
 package requests;
 
+import gui.etc.Account;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
 
-public class DatabaseRequest extends Request {
+public class Database extends Request {
 
     /**
      * @return status code

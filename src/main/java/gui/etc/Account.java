@@ -1,4 +1,4 @@
-package requests;
+package gui.etc;
 
 //Records all necessary user side information
 public class Account {

@@ -1,28 +1,24 @@
 package requests;
 
 import etc.Constants;
+import gui.etc.Account;
 import org.json.JSONException;
 import org.json.JSONObject;
-import quiz.question.Question;
-import quiz.question.QuestionFactory;
+import questions.Question;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Request methods for getting a JSON question through the Rest Server
+ * Requests all questions in appropriate range and converts from JSON to Question list
  */
 public class QuestionRequest extends Request {
 
     private Question.Subject subject;
     private Question.Type type;
-
-    private int amount;
     private List<Integer> ids;
-
     private JSONObject json;
+    private int amount;
 
     /**
      * Constructor
@@ -37,22 +33,9 @@ public class QuestionRequest extends Request {
         this.ids = ids;
     }
 
-    public QuestionRequest makeRequest() throws InterruptedException, IOException, JSONException, IllegalArgumentException {
-
-        this.json = getJSONFromSelection();
-
-        if (json.length() == 0) {
-            throw new IllegalArgumentException();
-        }
-
-        //If the user specified amount is large, or 0 (for pre made quizzes), set it to the maximum amount possible
-        if (amount > json.length() || amount == 0) {
-            amount = json.length() - 1;
-        }
-
-        return this;
-    }
-
+    /**
+     * Determine the proper gateway from object variables
+     */
     private JSONObject getJSONFromSelection() throws InterruptedException, JSONException, IOException {
 
         //If this instance has ids then make the request using them
@@ -82,46 +65,22 @@ public class QuestionRequest extends Request {
 
     }
 
-    /**
-     * Create ids of all existing questions, randomize and use sublist of
-     * defined amount size, unless ids is specified
-     */
-    public List<Question> toList() throws JSONException {
-        //If ids have been specified use specified list method
-        if (this.ids != null) {
-            return this.toSpecifiedList();
+    public QuestionRequest makeRequest() throws InterruptedException, IOException, JSONException, IllegalArgumentException {
+
+        //Make the actual request
+        this.json = getJSONFromSelection();
+
+        //If no questions could be found with given parameters
+        if (json.length() == 0) {
+            throw new IllegalArgumentException();
         }
 
-        //Create a pool of question id's in the specific size of how many questions available
-        List<Integer> idPool = new LinkedList<>();
-        for (int i = 0; i < json.length() - 1; i++) idPool.add(i);
-
-        //Randomize the pool of ids
-        Collections.shuffle(idPool);
-
-        List<Question> questions = new LinkedList<>();
-        for (Integer id : idPool.subList(0, this.amount)) {
-            questions.add(QuestionFactory.questionFromJSON(
-                    (JSONObject) this.json.get("obj" + id))
-            );
-        }
-
-        return questions;
+        return this;
     }
 
-    //ids are already given
-    private List<Question> toSpecifiedList() throws JSONException {
-
-        List<Question> questions = new LinkedList<>();
-        int i = 0;
-        List<Integer> integers = this.ids;
-        for (Integer ignored : integers) {
-            questions.add(QuestionFactory.questionFromJSON(
-                    (JSONObject) this.json.get("obj" + i++))
-            );
-        }
-
-        return questions;
+    public JSONObject getJson() {
+        return json;
     }
+
 
 }

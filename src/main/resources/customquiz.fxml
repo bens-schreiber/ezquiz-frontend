@@ -30,7 +30,7 @@
                 <CheckBox fx:id="notepad" mnemonicParsing="false" prefHeight="18.0" prefWidth="91.0" text="Notepad"/>
                 <CheckBox fx:id="showAnswers" mnemonicParsing="false" text="Display Answers">
                     <tooltip>
-                        <Tooltip text="Display each answer to every question at the end of the quiz."/>
+                        <Tooltip text="Display each answer to every question at the end of the questions."/>
                     </tooltip>
                 </CheckBox>
             </children>

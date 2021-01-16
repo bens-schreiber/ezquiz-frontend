@@ -1,10 +1,11 @@
 package gui.startmenu;
 
 import etc.Constants;
-import gui.PrimaryStageHelper;
+import gui.etc.Account;
 import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
+import gui.quiz.QuizManager;
 import gui.startmenu.login.Login;
 import gui.startmenu.login.Register;
 import javafx.application.Platform;
@@ -13,13 +14,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import quiz.QuestionManager;
-import requests.Account;
+import questions.nodes.QuizQuestions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class StartPage extends PrimaryStageHelper implements Initializable {
+public class StartPage implements Initializable {
 
     @FXML
     VBox buttonVBox;
@@ -97,10 +97,10 @@ public class StartPage extends PrimaryStageHelper implements Initializable {
 
     public void defaultQuizButtonClicked() {
 
-        QuestionManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
+        QuizQuestions.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 
         //Start test
-        displayQuiz(true);
+        QuizManager.startQuiz(true);
 
     }
 

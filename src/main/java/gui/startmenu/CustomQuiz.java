@@ -1,9 +1,11 @@
 package gui.startmenu;
 
-import gui.PrimaryStageHelper;
+import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
+import gui.quiz.Preference;
+import gui.quiz.QuizManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,9 +14,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import quiz.Preference;
-import quiz.QuestionManager;
-import quiz.question.Question;
+import questions.Question;
+import questions.nodes.QuizQuestions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,7 +24,7 @@ import java.util.ResourceBundle;
  * Provides methods for ActionEvents on Custom Quiz Page.
  */
 
-public class CustomQuiz extends PrimaryStageHelper implements Initializable {
+public class CustomQuiz implements Initializable {
 
     @FXML
     private TextField questionAmountField, testNameField, testTimeField;
@@ -86,7 +87,7 @@ public class CustomQuiz extends PrimaryStageHelper implements Initializable {
 
         try {
 
-            primaryStage.setScene(FXHelper.getScene(Window.STARTPAGE));
+            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(Window.STARTPAGE));
 
         } catch (Exception e) {
 
@@ -139,8 +140,8 @@ public class CustomQuiz extends PrimaryStageHelper implements Initializable {
             };
 
 
-            QuestionManager.loadQuestions(questionAmount, type, subject);
-            displayQuiz(false);
+            QuizQuestions.loadQuestions(questionAmount, type, subject);
+            QuizManager.startQuiz(false);
 
         } catch (IllegalArgumentException e) {
             new ErrorNotifier("A quiz failed to be created from the current selection.", false).display();

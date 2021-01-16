@@ -1,23 +1,23 @@
 package gui.startmenu;
 
 import etc.BitMap;
-import gui.PrimaryStageHelper;
 import gui.popup.error.ErrorNotifier;
+import gui.quiz.QuizManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import org.json.JSONException;
-import quiz.QuestionManager;
-import requests.DatabaseRequest;
+import questions.nodes.QuizQuestions;
+import requests.Database;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
-public class EnterCode extends PrimaryStageHelper implements Initializable {
+public class EnterCode implements Initializable {
 
     @FXML
     TextField codeTextField;
@@ -28,11 +28,11 @@ public class EnterCode extends PrimaryStageHelper implements Initializable {
     public void enterCodeButtonClicked() {
         try {
 
-            long bitmap = DatabaseRequest.getTestKey(Integer.parseInt(codeTextField.getText()));
+            long bitmap = Database.getTestKey(Integer.parseInt(codeTextField.getText()));
             System.out.println(bitmap);
-            QuestionManager.loadQuestions(new BitMap(bitmap).decodeToList());
+            QuizQuestions.loadQuestions(new BitMap(bitmap).decodeToList());
 
-            displayQuiz(false);
+            QuizManager.startQuiz(false);
             stage.close();
 
         } catch (NumberFormatException | InterruptedException | IOException | JSONException e) {

@@ -1,10 +1,11 @@
 package gui.results;
 
 import etc.BitMap;
-import gui.PrimaryStageHelper;
+import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
+import gui.quiz.Preference;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,10 +19,9 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.DirectoryChooser;
 import org.json.JSONException;
-import quiz.Preference;
-import quiz.QuestionManager;
-import quiz.question.nodes.QuestionNode;
-import requests.DatabaseRequest;
+import questions.nodes.QuestionNode;
+import questions.nodes.QuizQuestions;
+import requests.Database;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -31,7 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PrintResultsScreen extends PrimaryStageHelper implements Initializable {
+public class PrintResultsScreen implements Initializable {
 
     @FXML
     Label testName, outOfLabel, percentageLabel;
@@ -61,12 +61,12 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
         testName.setText(testName.getText() + Preference.preferences.get(Preference.QUIZNAME));
 
         //Check all answers
-        QuestionManager.gradeAnswers();
+        QuizQuestions.gradeAnswers();
 
         //Get the amount of correct answers, get ID's for bitmap storage
         int correctAnswers = 0;
         List<Integer> ids = new LinkedList<>();
-        for (QuestionNode questionNode : QuestionManager.getQuestionNodes()) {
+        for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
 
             ids.add(questionNode.getQuestion().getID());
 
@@ -79,8 +79,8 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
         bitMap = new BitMap(ids);
 
         //add how many correct out of possible, percentage, put bitmap to Base64
-        outOfLabel.setText(correctAnswers + " out of " + QuestionManager.getQuestionNodes().length);
-        percentageLabel.setText(((double) correctAnswers / (double) QuestionManager.getQuestionNodes().length * 100) + "%");
+        outOfLabel.setText(correctAnswers + " out of " + QuizQuestions.getQuestionNodes().length);
+        percentageLabel.setText(((double) correctAnswers / (double) QuizQuestions.getQuestionNodes().length * 100) + "%");
 
     }
 
@@ -88,7 +88,7 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
 
         int[] subjs = {0, 0, 0, 0};
 
-        for (QuestionNode questionNode : QuestionManager.getQuestionNodes()) {
+        for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
 
             switch (questionNode.getQuestion().getSubject()) {
 
@@ -116,11 +116,11 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
     public void screenshotButtonClicked() {
 
         try {
-            Scene scene = primaryStage.getScene();
+            Scene scene = PrimaryStageHolder.getPrimaryStage().getScene();
             WritableImage writableImage = scene.snapshot(null);
 
             DirectoryChooser directoryChooser = new DirectoryChooser();
-            File file = directoryChooser.showDialog(primaryStage);
+            File file = directoryChooser.showDialog(PrimaryStageHolder.getPrimaryStage());
 
             ImageIO.write(
                     SwingFXUtils.fromFXImage(writableImage, null),
@@ -142,7 +142,7 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
 
             try {
 
-                key = DatabaseRequest.uploadTestKey(bitMap.getBitMap());
+                key = Database.uploadTestKey(bitMap.getBitMap());
 
                 if (!key.isEmpty()) {
 
@@ -179,7 +179,7 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
 
         try {
 
-            primaryStage.setScene(FXHelper.getScene(Window.SEERESULTS));
+            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(Window.SEERESULTS));
 
         } catch (IOException e) {
             new ErrorNotifier("Results could not display.", true).display();

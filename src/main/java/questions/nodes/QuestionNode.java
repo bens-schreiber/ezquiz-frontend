@@ -1,9 +1,9 @@
-package quiz.question.nodes;
+package questions.nodes;
 
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import quiz.question.Question;
+import questions.Question;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -87,6 +87,27 @@ public class QuestionNode {
             this.node = vbox;
 
         }
+    }
+
+    private static class TypeNode {
+
+        protected List<String> response = Collections.emptyList();
+
+        protected Node node;
+
+        public Node getNode() {
+            return node;
+        }
+
+        public List<String> getResponse() {
+            return this.response;
+        }
+
+        public boolean isAnswered() {
+            return !response.isEmpty();
+        }
+
+
     }
 
     private static class TrueOrFalse extends TypeNode {

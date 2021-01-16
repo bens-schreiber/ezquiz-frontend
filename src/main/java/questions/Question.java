@@ -1,4 +1,4 @@
-package quiz.question;
+package questions;
 
 import java.util.Collections;
 import java.util.List;
