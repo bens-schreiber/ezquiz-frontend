@@ -8,7 +8,6 @@ import questions.Question;
 import requests.AnswerRequest;
 import requests.QuestionRequest;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,20 +23,17 @@ public class QuizQuestions {
     private QuizQuestions() {
     }
 
-
     /**
-     * Load question nodes
-     *
-     * @param subject if not null limits questions to that specific subject.
-     * @param type    if not null limits questions to that specific type.
+     * Load question nodes for Quiz
      */
-    public static void loadQuestions(int amount, @Nullable Question.Type type, @Nullable Question.Subject subject) throws IllegalArgumentException {
+    public static void loadQuestions(int amount, QuestionRequest questionRequest) throws IllegalArgumentException {
         try {
 
             //Put JSON through QuestionListBuilder
-            List<Question> questions = new QuestionListBuilder(new QuestionRequest(type, subject, amount).makeRequest().getJson(), amount)
-                    .toList().verifyAmount()
+            List<Question> questions = new QuestionListBuilder(questionRequest.makeRequest().getJson(), amount)
+                    .verifyAmount().toList()
                     .build();
+
 
             //Initiate the questionNodes as a static array with the actual amount possible
             questionNodes = new QuestionNode[questions.size()];
@@ -155,8 +151,8 @@ public class QuizQuestions {
         //If the amount of questions is larger than the amount of questions found in the json or 0,
         //correct it to the maximum possible
         public QuestionListBuilder verifyAmount() {
-            if (amount > json.length() || amount == 0) {
-                amount = json.length() - 1;
+            if (amount > json.length() || amount <= 0) {
+                this.amount = json.length() - 1;
             }
             return this;
         }
@@ -175,8 +171,8 @@ public class QuizQuestions {
             //Randomize the pool of ids
             Collections.shuffle(idPool);
 
-            for (Integer id : idPool.subList(0, amount)) {
-                questions.add(questionFromJSON((JSONObject) json.get("obj" + id)));
+            for (Integer id : idPool.subList(0, this.amount)) {
+                this.questions.add(questionFromJSON((JSONObject) json.get("obj" + id)));
             }
 
             return this;
@@ -188,7 +184,7 @@ public class QuizQuestions {
 
             int i = 0;
             for (Integer ignored : this.ids) {
-                questions.add(QuestionListBuilder.questionFromJSON((JSONObject) json.get("obj" + i++)));
+                this.questions.add(QuestionListBuilder.questionFromJSON((JSONObject) json.get("obj" + i++)));
             }
             return this;
 

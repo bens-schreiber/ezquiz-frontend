@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import questions.Question;
 import questions.nodes.QuizQuestions;
+import requests.QuestionRequest;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -139,8 +140,16 @@ public class CustomQuiz implements Initializable {
                 default -> null;
             };
 
+            //todo: fix this
+            if (subject != null && type != null) {
+                QuizQuestions.loadQuestions(questionAmount, new QuestionRequest(type, subject));
+            } else if (subject != null) {
+                QuizQuestions.loadQuestions(questionAmount, new QuestionRequest(subject));
+            } else if (type != null) {
+                QuizQuestions.loadQuestions(questionAmount, new QuestionRequest(type));
+            } else QuizQuestions.loadQuestions(questionAmount, new QuestionRequest());
 
-            QuizQuestions.loadQuestions(questionAmount, type, subject);
+
             QuizManager.startQuiz(false);
 
         } catch (IllegalArgumentException e) {

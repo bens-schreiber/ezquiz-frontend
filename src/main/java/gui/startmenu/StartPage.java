@@ -1,6 +1,5 @@
 package gui.startmenu;
 
-import etc.Constants;
 import gui.etc.Account;
 import gui.etc.FXHelper;
 import gui.etc.Window;
@@ -14,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import questions.nodes.QuizQuestions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -96,8 +94,6 @@ public class StartPage implements Initializable {
     }
 
     public void defaultQuizButtonClicked() {
-
-        QuizQuestions.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 
         //Start test
         QuizManager.startQuiz(true);

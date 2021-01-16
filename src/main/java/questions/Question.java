@@ -12,7 +12,6 @@ public class Question {
     public enum Type {MULTIPLECHOICE, TRUEORFALSE, CHECKBOX, WRITTEN}
 
     private final Subject subject;
-
     public enum Subject {NETWORKDESIGN, INTBUS, MARKETING, BUSMATH}
 
     private final int id;
@@ -36,6 +35,7 @@ public class Question {
     /**
      * Shuffles question options, if question has options.
      */
+    //todo: this
     public void shuffleOptions() {
         if (options != null) {
             Collections.shuffle(options);

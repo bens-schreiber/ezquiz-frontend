@@ -14,61 +14,37 @@ import java.util.List;
  */
 public class QuestionRequest extends Request {
 
-    private Question.Subject subject;
-    private Question.Type type;
-    private List<Integer> ids;
     private JSONObject json;
-    private int amount;
+    private StringBuilder path = new StringBuilder(Constants.DEFAULT_PATH);
 
     /**
      * Constructor
      */
-    public QuestionRequest(Question.Type type, Question.Subject subject, int amount) {
-        this.subject = subject;
-        this.type = type;
-        this.amount = amount;
+    public QuestionRequest(Question.Type type, Question.Subject subject) {
+        path.append(subject).append("/").append(type);
+    }
+
+    public QuestionRequest(Question.Type type) {
+        path.append("type/").append(type);
+    }
+
+    public QuestionRequest(Question.Subject subject) {
+        path.append("subject/").append(subject);
     }
 
     public QuestionRequest(List<Integer> ids) {
-        this.ids = ids;
+        for (Integer id : ids) path.append(id).append(",");
+        path = new StringBuilder(path.substring(0, path.toString().length() - 1));
     }
 
-    /**
-     * Determine the proper gateway from object variables
-     */
-    private JSONObject getJSONFromSelection() throws InterruptedException, JSONException, IOException {
-
-        //If this instance has ids then make the request using them
-        if (this.ids != null) {
-            StringBuilder stringBuilder = new StringBuilder().append(Constants.DEFAULT_PATH);
-
-            for (Integer id : this.ids) {
-                stringBuilder.append(id).append(",");
-            }
-
-            //get rid of the last "," because it isnt needed
-            return getJSONFromURL(stringBuilder.substring(0, stringBuilder.toString().length() - 1), Account.AUTH_TOKEN());
-        }
-
-        if (this.subject != null && this.type != null) {
-            return getJSONFromURL(Constants.DEFAULT_PATH + this.subject + "/" + this.type, Account.AUTH_TOKEN());
-
-        } else if (this.subject != null) {
-            return getJSONFromURL(Constants.DEFAULT_PATH + "subject/" + this.subject, Account.AUTH_TOKEN());
-
-        } else if (this.type != null) {
-            return getJSONFromURL(Constants.DEFAULT_PATH + "type/" + this.type, Account.AUTH_TOKEN());
-
-        } else {
-            return getJSONFromURL(Constants.DEFAULT_PATH, Account.AUTH_TOKEN());
-        }
-
+    public QuestionRequest() {
     }
+
 
     public QuestionRequest makeRequest() throws InterruptedException, IOException, JSONException, IllegalArgumentException {
 
         //Make the actual request
-        this.json = getJSONFromSelection();
+        this.json = getJSONFromURL(path.toString(), Account.AUTH_TOKEN());
 
         //If no questions could be found with given parameters
         if (json.length() == 0) {
@@ -79,7 +55,7 @@ public class QuestionRequest extends Request {
     }
 
     public JSONObject getJson() {
-        return json;
+        return this.json;
     }
 
 
