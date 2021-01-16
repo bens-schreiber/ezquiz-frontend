@@ -1,61 +1,56 @@
 package quiz;
 
-import etc.Preference;
 import gui.popup.error.ErrorNotifier;
-import quiz.nodes.QuestionNode;
+import org.json.JSONException;
 import quiz.question.Question;
+import quiz.question.nodes.QuestionNode;
 import requests.AnswerRequest;
 import requests.QuestionRequest;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * Initializes and stores questionNodes, contains grading methods
  */
-public class QuizManager {
+public class QuestionManager {
 
-    //Hashmap of user preferences, initialize default preferences
-    private static final HashMap<Preference, String> preferences = new HashMap<>();
-
-    static {
-        preferences.put(Preference.NOTEPAD, "true");
-        preferences.put(Preference.CALCULATOR, "true");
-        preferences.put(Preference.DRAWINGPAD, "true");
-        preferences.put(Preference.QUIZNAME, "FBLA QUIZ - 5 Questions, Random");
-        preferences.put(Preference.SHOWANSWERS, "true");
-        preferences.put(Preference.TIME, "1800");
+    private QuestionManager() {
     }
 
     //contains the questions, responses, and javafx information
     private static QuestionNode[] questionNodes;
 
-
     /**
-     * Load questions into QuizManager.questions.
+     * Load question nodes
      *
      * @param subject if not null limits questions to that specific subject.
      * @param type    if not null limits questions to that specific type.
      */
-    public static void loadQuestions(int amount, @Nullable Question.Type type, @Nullable Question.Subject subject) {
-
-        //Initiate the questionNodes as a static array with the amount specified
-        questionNodes = new QuestionNode[amount];
-
+    public static void loadQuestions(int amount, @Nullable Question.Type type, @Nullable Question.Subject subject) throws IllegalArgumentException {
         try {
+
             QuestionRequest request = new QuestionRequest(type, subject, amount).makeRequest();
+
+            //Initiate the questionNodes as a static array with the actual amount possible
+            questionNodes = new QuestionNode[request.toList().size()];
+
             int i = 0;
             for (Question question : request.toList()) {
                 questionNodes[i++] = new QuestionNode(question);
             }
 
-        } catch (Exception e) {
+        } catch (InterruptedException | IOException | JSONException e) {
             new ErrorNotifier("A question failed to be created.", true).display();
+            questionNodes = null;
             e.printStackTrace();
-        }
 
+        } catch (IllegalArgumentException e) {
+            questionNodes = null;
+            throw e;
+        }
     }
 
     /**
@@ -120,28 +115,19 @@ public class QuizManager {
                             .map(String::toLowerCase)
                             .map(str -> str.replaceAll("\\s", ""))
                             .collect(Collectors.toList());
-                    }
+                }
 
-                    //Answer may be larger than one, so .containsAll is used
-                    //Check if answer is correct, if no response then mark wrong.
+                //Answer may be larger than one, so .containsAll is used
+                //Check if answer is correct, if no response then mark wrong.
                 questionNode.setCorrect(answer.containsAll(response));
 
-                } else {
+            } else {
                 questionNode.setCorrect(false);
-                }
+            }
         }
     }
 
-
-    /**
-     * Getters
-     */
-
-    public static HashMap<Preference, String> getPreferences() {
-        return preferences;
-    }
-
-    public static QuestionNode[] getStages() {
+    public static QuestionNode[] getQuestionNodes() {
 
         return questionNodes;
 

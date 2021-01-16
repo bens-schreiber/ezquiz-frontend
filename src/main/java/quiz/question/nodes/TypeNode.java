@@ -1,11 +1,11 @@
-package quiz.nodes;
+package quiz.question.nodes;
 
 import javafx.scene.Node;
 
 import java.util.Collections;
 import java.util.List;
 
-abstract class TypeNode {
+class TypeNode {
 
     protected List<String> response = Collections.emptyList();
 

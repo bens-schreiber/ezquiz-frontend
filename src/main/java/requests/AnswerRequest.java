@@ -4,8 +4,8 @@ import etc.Constants;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
-import quiz.nodes.QuestionNode;
 import quiz.question.QuestionFactory;
+import quiz.question.nodes.QuestionNode;
 
 import java.io.IOException;
 import java.util.Arrays;

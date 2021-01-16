@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import org.json.JSONException;
-import quiz.QuizManager;
+import quiz.QuestionManager;
 import requests.DatabaseRequest;
 
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class EnterCode extends PrimaryStageHelper implements Initializable {
 
             long bitmap = DatabaseRequest.getTestKey(Integer.parseInt(codeTextField.getText()));
             System.out.println(bitmap);
-            QuizManager.loadQuestions(new BitMap(bitmap).decodeToList());
+            QuestionManager.loadQuestions(new BitMap(bitmap).decodeToList());
 
             displayQuiz(false);
             stage.close();

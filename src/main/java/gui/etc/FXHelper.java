@@ -12,6 +12,9 @@ import java.util.HashSet;
 
 public class FXHelper {
 
+    private FXHelper() {
+    }
+
     private static final HashSet<Window> openedInstances = new HashSet<>();
 
     public static HashSet<Window> getOpenedInstances() {

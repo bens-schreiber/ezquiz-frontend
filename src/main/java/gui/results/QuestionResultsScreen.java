@@ -1,6 +1,5 @@
 package gui.results;
 
-import etc.Preference;
 import gui.PrimaryStageHelper;
 import gui.etc.FXHelper;
 import gui.etc.Window;
@@ -9,8 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import quiz.QuizManager;
-import quiz.nodes.QuestionNode;
+import quiz.Preference;
+import quiz.QuestionManager;
+import quiz.question.nodes.QuestionNode;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,7 +32,7 @@ public class QuestionResultsScreen extends PrimaryStageHelper implements Initial
 
         //Create question answers
         int quizNumber = 1;
-        for (QuestionNode questionNode : QuizManager.getStages()) {
+        for (QuestionNode questionNode : QuestionManager.getQuestionNodes()) {
 
             //Make a container for the answered question, add question to it
             VBox answeredQuestion = new VBox(15);
@@ -60,7 +60,7 @@ public class QuestionResultsScreen extends PrimaryStageHelper implements Initial
                 answeredQuestion.setStyle("-fx-background-color: rgba(255, 158, 173, .7);");
 
                 //Show correct answer if desired in preferences
-                if (Boolean.parseBoolean(QuizManager.getPreferences().get(Preference.SHOWANSWERS))) {
+                if (Boolean.parseBoolean(Preference.preferences.get(Preference.SHOWANSWERS))) {
 
                     answeredQuestion.getChildren().add(new Label("Correct answer: "
                             + questionNode.getQuestion().getAnswer()

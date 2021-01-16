@@ -1,7 +1,6 @@
 package gui.results;
 
 import etc.BitMap;
-import etc.Preference;
 import gui.PrimaryStageHelper;
 import gui.etc.FXHelper;
 import gui.etc.Window;
@@ -19,8 +18,9 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.DirectoryChooser;
 import org.json.JSONException;
-import quiz.QuizManager;
-import quiz.nodes.QuestionNode;
+import quiz.Preference;
+import quiz.QuestionManager;
+import quiz.question.nodes.QuestionNode;
 import requests.DatabaseRequest;
 
 import javax.imageio.ImageIO;
@@ -55,18 +55,18 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
         loadBarChart();
 
         //Disable button if in preferences
-        seeQuestionsButton.setDisable(!Boolean.parseBoolean(QuizManager.getPreferences().get(Preference.SHOWANSWERS)));
+        seeQuestionsButton.setDisable(!Boolean.parseBoolean(Preference.preferences.get(Preference.SHOWANSWERS)));
 
         //Set test name
-        testName.setText(testName.getText() + QuizManager.getPreferences().get(Preference.QUIZNAME));
+        testName.setText(testName.getText() + Preference.preferences.get(Preference.QUIZNAME));
 
         //Check all answers
-        QuizManager.gradeAnswers();
+        QuestionManager.gradeAnswers();
 
         //Get the amount of correct answers, get ID's for bitmap storage
         int correctAnswers = 0;
         List<Integer> ids = new LinkedList<>();
-        for (QuestionNode questionNode : QuizManager.getStages()) {
+        for (QuestionNode questionNode : QuestionManager.getQuestionNodes()) {
 
             ids.add(questionNode.getQuestion().getID());
 
@@ -79,8 +79,8 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
         bitMap = new BitMap(ids);
 
         //add how many correct out of possible, percentage, put bitmap to Base64
-        outOfLabel.setText(correctAnswers + " out of " + QuizManager.getStages().length);
-        percentageLabel.setText(((double) correctAnswers / (double) QuizManager.getStages().length * 100) + "%");
+        outOfLabel.setText(correctAnswers + " out of " + QuestionManager.getQuestionNodes().length);
+        percentageLabel.setText(((double) correctAnswers / (double) QuestionManager.getQuestionNodes().length * 100) + "%");
 
     }
 
@@ -88,7 +88,7 @@ public class PrintResultsScreen extends PrimaryStageHelper implements Initializa
 
         int[] subjs = {0, 0, 0, 0};
 
-        for (QuestionNode questionNode : QuizManager.getStages()) {
+        for (QuestionNode questionNode : QuestionManager.getQuestionNodes()) {
 
             switch (questionNode.getQuestion().getSubject()) {
 

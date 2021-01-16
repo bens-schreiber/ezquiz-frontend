@@ -37,8 +37,19 @@ public class QuestionRequest extends Request {
         this.ids = ids;
     }
 
-    public QuestionRequest makeRequest() throws InterruptedException, IOException, JSONException {
-        this.json = this.getJSONFromSelection();
+    public QuestionRequest makeRequest() throws InterruptedException, IOException, JSONException, IllegalArgumentException {
+
+        this.json = getJSONFromSelection();
+
+        if (json.length() == 0) {
+            throw new IllegalArgumentException();
+        }
+
+        //If the user specified amount is large, or 0 (for pre made quizzes), set it to the maximum amount possible
+        if (amount > json.length() || amount == 0) {
+            amount = json.length() - 1;
+        }
+
         return this;
     }
 
@@ -103,7 +114,8 @@ public class QuestionRequest extends Request {
 
         List<Question> questions = new LinkedList<>();
         int i = 0;
-        for (Integer ignored : this.ids) {
+        List<Integer> integers = this.ids;
+        for (Integer ignored : integers) {
             questions.add(QuestionFactory.questionFromJSON(
                     (JSONObject) this.json.get("obj" + i++))
             );

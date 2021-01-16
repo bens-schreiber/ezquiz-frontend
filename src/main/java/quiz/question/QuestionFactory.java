@@ -10,8 +10,12 @@ import java.util.List;
 
 public class QuestionFactory {
 
+    private QuestionFactory() {
+    }
+
     /**
      * Factory method.
+     *
      * @return new Question object built from JSONObject.
      * @throws JSONException if any required Question data is missing.
      */

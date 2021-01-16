@@ -1,7 +1,6 @@
 package gui.quiz;
 
 import etc.Constants;
-import etc.Preference;
 import gui.PrimaryStageHelper;
 import gui.etc.FXHelper;
 import gui.etc.Window;
@@ -23,10 +22,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import quiz.QuizManager;
-import quiz.nodes.QuestionNode;
+import quiz.Preference;
+import quiz.QuestionManager;
+import quiz.question.nodes.QuestionNode;
 import requests.Account;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -70,21 +71,21 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
     public void initialize(URL location, ResourceBundle resources) {
 
         //Establish preferences
-        if (!Boolean.parseBoolean(QuizManager.getPreferences().get(Preference.NOTEPAD))) {
+        if (!Boolean.parseBoolean(Preference.preferences.get(Preference.NOTEPAD))) {
             addonVBox.getChildren().remove(notePadButton);
         }
 
-        if (!Boolean.parseBoolean(QuizManager.getPreferences().get(Preference.CALCULATOR))) {
+        if (!Boolean.parseBoolean(Preference.preferences.get(Preference.CALCULATOR))) {
             addonVBox.getChildren().remove(calculatorButton);
         }
 
-        if (!Boolean.parseBoolean(QuizManager.getPreferences().get(Preference.DRAWINGPAD))) {
+        if (!Boolean.parseBoolean(Preference.preferences.get(Preference.DRAWINGPAD))) {
             addonVBox.getChildren().remove(drawingPadButton);
         }
 
-        quizName.setText(QuizManager.getPreferences().get(Preference.QUIZNAME));
+        quizName.setText(Preference.preferences.get(Preference.QUIZNAME));
 
-        seconds = Integer.parseInt(QuizManager.getPreferences().get(Preference.TIME));
+        seconds = Integer.parseInt(Preference.preferences.get(Preference.TIME));
 
         //Disable back button by default.
         backButton.setDisable(true);
@@ -98,7 +99,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
 
         //Establish flag button amount
         //Whenever the button is clicked use the individualQuestionClicked handler
-        for (int i = 0; i < QuizManager.getStages().length; i++) {
+        for (int i = 0; i < QuestionManager.getQuestionNodes().length; i++) {
 
             FlagButton button = new FlagButton();
 
@@ -118,7 +119,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
      */
     private void displayNewQuestion() {
 
-        QuestionNode currentQuestionNode = QuizManager.getStages()[currentQuestionIndex];
+        QuestionNode currentQuestionNode = QuestionManager.getQuestionNodes()[currentQuestionIndex];
 
         questionArea.getChildren().clear();
 
@@ -133,7 +134,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         questionDirections.setText(currentQuestionNode.getQuestion().getDirections());
 
         //Change top right label to current question num / question amount
-        currQuestionLabel.setText(currentQuestionIndex + 1 + " / " + QuizManager.getStages().length);
+        currQuestionLabel.setText(currentQuestionIndex + 1 + " / " + QuestionManager.getQuestionNodes().length);
 
         subjAndQuestion.setText(currentQuestionNode.getQuestion().getSubject() + " QID:" + currentQuestionNode.getQuestion().getID());
 
@@ -155,7 +156,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         displayNewQuestion();
 
         backButton.setDisable(currentQuestionIndex == 0);
-        nextButton.setDisable(currentQuestionIndex + 1 == QuizManager.getStages().length);
+        nextButton.setDisable(currentQuestionIndex + 1 == QuestionManager.getQuestionNodes().length);
 
     }
 
@@ -167,7 +168,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
 
         //Disable/enable next and back based on position
         backButton.setDisable(currentQuestionIndex == 0);
-        nextButton.setDisable(currentQuestionIndex + 1 == QuizManager.getStages().length);
+        nextButton.setDisable(currentQuestionIndex + 1 == QuestionManager.getQuestionNodes().length);
 
     }
 
@@ -179,7 +180,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
 
         //Disable/enable next and back based on position
         backButton.setDisable(currentQuestionIndex == 0);
-        nextButton.setDisable(currentQuestionIndex + 1 == QuizManager.getStages().length);
+        nextButton.setDisable(currentQuestionIndex + 1 == QuestionManager.getQuestionNodes().length);
 
     }
 
@@ -208,7 +209,7 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         }
 
         //If all questions are answered.
-        else if (List.of(QuizManager.getStages()).stream().allMatch(QuestionNode::isAnswered)) {
+        else if (List.of(QuestionManager.getQuestionNodes()).stream().allMatch(QuestionNode::isAnswered)) {
 
             if (new ConfirmNotifier("Are you sure you want to submit?").display().getResponse()) {
                 endTest();
@@ -347,6 +348,16 @@ public class QuizController extends PrimaryStageHelper implements Initializable 
         if (!currentFlagButton().isFlagged()) {
             currentFlagButton().setStyle(Constants.SELECTED_COLOR_FX);
         }
+    }
+
+    //Ends the entire test and begins the results page
+    private static void endTest() {
+        try {
+            primaryStage.setScene(FXHelper.getScene(Window.PRINTRESULTS));
+        } catch (IOException e) {
+            new ErrorNotifier("Results could not display.", true).display();
+        }
+
     }
 
     /**

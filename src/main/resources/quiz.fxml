@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -8,12 +9,18 @@
 <?import javafx.scene.text.*?>
 <AnchorPane fx:id="mainAnchor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.quiz.QuizController">
     <children>
-        <AnchorPane fx:id="buttonPane" layoutY="354.0" prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: #9E9E9E;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <AnchorPane fx:id="buttonPane" layoutY="354.0" prefHeight="35.0" prefWidth="600.0"
+                    style="-fx-background-color: #9E9E9E;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0">
             <children>
-                <Button fx:id="submitButton" layoutX="1817.0" layoutY="10.0" mnemonicParsing="false" onAction="#submitButtonClicked" prefHeight="26.0" prefWidth="89.0" stylesheets="@css/standard_button.css" text="Submit" />
-                <HBox layoutX="14.0" layoutY="6.0" prefHeight="36.0" prefWidth="67.0" spacing="5.0" stylesheets="@css/standard_button.css">
+                <Button fx:id="submitButton" layoutX="1817.0" layoutY="10.0" mnemonicParsing="false"
+                        onAction="#submitButtonClicked" prefHeight="26.0" prefWidth="89.0"
+                        stylesheets="@css/standard_button.css" text="Submit"/>
+                <HBox layoutX="14.0" layoutY="6.0" prefHeight="36.0" prefWidth="67.0" spacing="5.0"
+                      stylesheets="@css/standard_button.css">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#flagButtonClicked" prefHeight="35.0" prefWidth="70.0" style="-fx-background-color: #fb8804;" text="Flag" />
+                        <Button mnemonicParsing="false" onAction="#flagButtonClicked" prefHeight="32.0" prefWidth="67.0"
+                                style="-fx-background-color: #fb8804;" text="Flag"/>
                     </children>
                 </HBox>
             </children>
@@ -41,15 +48,25 @@
                 </ImageView>
             </children>
         </AnchorPane>
-        <ScrollPane layoutX="13.0" layoutY="169.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" AnchorPane.bottomAnchor="107.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="176.0">
+        <ScrollPane layoutX="13.0" layoutY="169.0" prefHeight="779.0" prefWidth="1880.0"
+                    style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
+                    AnchorPane.bottomAnchor="132.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+                    AnchorPane.topAnchor="169.0">
             <content>
                 <AnchorPane fx:id="questionPane" prefHeight="797.0" prefWidth="1880.0">
                     <children>
-                        <Rectangle fx:id="questionBorder" arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="797.0" layoutX="-5.0" layoutY="-5.0" stroke="#303f9f" strokeType="OUTSIDE" strokeWidth="0.0" width="1890.0" />
-                        <Canvas fx:id="paintCanvas" height="797.0" layoutX="-1.0" onMouseDragged="#canvasOnDragged" onMousePressed="#canvasOnPressed" width="1880.0" />
-                        <VBox fx:id="addonVBox" layoutX="1755.0" layoutY="34.0" prefHeight="192.0" prefWidth="60.0" spacing="10.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;" stylesheets="@css/standard_button.css">
+                        <Rectangle fx:id="questionBorder" arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="797.0"
+                                   layoutX="-5.0" layoutY="-5.0" stroke="#303f9f" strokeType="OUTSIDE" strokeWidth="0.0"
+                                   width="1890.0"/>
+                        <Canvas fx:id="paintCanvas" height="779.0" layoutX="-1.0" onMouseDragged="#canvasOnDragged"
+                                onMousePressed="#canvasOnPressed" width="1880.0"/>
+                        <VBox fx:id="addonVBox" layoutX="1755.0" layoutY="34.0" prefHeight="192.0" prefWidth="60.0"
+                              spacing="10.0"
+                              style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;"
+                              stylesheets="@css/standard_button.css">
                             <children>
-                                <Button fx:id="notePadButton" mnemonicParsing="false" onAction="#notepadButtonClicked" prefHeight="56.0" prefWidth="88.0">
+                                <Button fx:id="notePadButton" mnemonicParsing="false" onAction="#notepadButtonClicked"
+                                        prefHeight="56.0" prefWidth="88.0">
                                     <graphic>
                                         <ImageView>
                                             <image>
@@ -93,19 +110,25 @@
                 </AnchorPane>
             </content>
         </ScrollPane>
-        <Label fx:id="questionDirections" layoutX="20.0" layoutY="135.0" prefHeight="36.0" prefWidth="548.0" text="Label">
+        <Label fx:id="questionDirections" layoutX="20.0" layoutY="135.0" prefHeight="36.0" prefWidth="548.0"
+               text="Label">
             <font>
-                <Font size="16.0" />
+                <Font size="16.0"/>
             </font>
+            <padding>
+                <Insets bottom="5.0"/>
+            </padding>
         </Label>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="10.0" layoutX="5.0" layoutY="88.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="1911.0" />
-        <HBox alignment="CENTER" layoutX="20.0" layoutY="985.0" prefHeight="36.0" prefWidth="1880.0" spacing="5.0" stylesheets="@css/nextbackbuttons.css" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <HBox alignment="CENTER" layoutX="21.0" layoutY="977.0" prefHeight="36.0" prefWidth="1880.0" spacing="5.0"
+              stylesheets="@css/nextbackbuttons.css" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="19.0">
             <children>
-                <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false" onAction="#backButtonClicked">
+                <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false"
+                        onAction="#backButtonClicked">
                     <graphic>
                         <ImageView>
                             <image>
-                                <Image url="@pictures/left.png" />
+                                <Image url="@pictures/left.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -122,10 +145,15 @@
                 <HBox fx:id="questionHBox" alignment="CENTER" prefHeight="36.0" prefWidth="0.0" spacing="4.0" stylesheets="@css/flagbutton.css" />
             </children>
         </HBox>
-        <Label fx:id="quizName" layoutX="14.0" layoutY="45.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="FBLA - Default Test" textFill="#303f9f">
+        <Label fx:id="quizName" layoutX="14.0" layoutY="45.0" maxHeight="1.7976931348623157E308"
+               maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="FBLA - Default Test"
+               textFill="#303f9f">
             <font>
-                <Font name="SansSerif Regular" size="30.0" />
+                <Font name="SansSerif Regular" size="30.0"/>
             </font>
+            <padding>
+                <Insets top="5.0"/>
+            </padding>
         </Label>
         <VBox alignment="CENTER_RIGHT" layoutX="1796.0" layoutY="103.0" maxWidth="1.7976931348623157E308" prefHeight="65.0" AnchorPane.rightAnchor="20.0">
             <children>

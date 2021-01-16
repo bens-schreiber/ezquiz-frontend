@@ -1,4 +1,4 @@
-package quiz.nodes;
+package quiz.question.nodes;
 
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -87,17 +87,11 @@ public class QuestionNode {
             this.node = vbox;
 
         }
-
-
-        public boolean isAnswered() {
-            return !response.isEmpty();
-        }
     }
 
     private static class TrueOrFalse extends TypeNode {
 
         public TrueOrFalse() {
-
             //Establish options
             RadioButton radio1 = new RadioButton("true");
             RadioButton radio2 = new RadioButton("false");
@@ -118,12 +112,6 @@ public class QuestionNode {
 
             this.node = vbox;
         }
-
-        public boolean isAnswered() {
-            return !response.isEmpty();
-        }
-
-
     }
 
     private static class MultipleChoice extends TypeNode {
@@ -158,10 +146,6 @@ public class QuestionNode {
             vbox.getChildren().addAll(radioButtons);
 
             this.node = vbox;
-        }
-
-        public boolean isAnswered() {
-            return !response.isEmpty();
         }
     }
 

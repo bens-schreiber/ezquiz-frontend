@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="168.0" prefWidth="353.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.startmenu.login.Register">
    <children>
-      <VBox layoutX="25.0" layoutY="22.0" prefHeight="116.0" prefWidth="303.0" spacing="15.0">
+      <VBox layoutX="25.0" layoutY="17.0" prefHeight="116.0" prefWidth="303.0" spacing="15.0">
          <children>
-            <HBox prefHeight="28.0" prefWidth="253.0" spacing="15.0">
+            <HBox alignment="CENTER" prefHeight="28.0" prefWidth="253.0" spacing="15.0">
                <children>
-                  <Label prefHeight="26.0" prefWidth="124.0" text="Enter a Username" />
-                  <TextField fx:id="userField" />
+                  <Label prefHeight="26.0" prefWidth="125.0" text="Username"/>
+                  <TextField fx:id="userField" prefHeight="26.0" prefWidth="251.0">
+                     <tooltip>
+                        <Tooltip text="Username must be larger than 3 characters."/>
+                     </tooltip>
+                  </TextField>
                </children>
             </HBox>
-            <HBox prefHeight="28.0" prefWidth="253.0" spacing="20.0">
+            <HBox alignment="CENTER" prefHeight="26.0" prefWidth="287.0" spacing="20.0">
                <children>
-                  <Label prefHeight="26.0" prefWidth="117.0" text="Enter a Password" />
-                  <TextField fx:id="passField" />
+                  <Label prefHeight="26.0" prefWidth="79.0" text="Password">
+                     <HBox.margin>
+                        <Insets/>
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="passField" prefHeight="26.0" prefWidth="209.0"/>
                </children>
             </HBox>
             <Label fx:id="errorLabel" prefHeight="16.0" prefWidth="303.0" textFill="RED" />

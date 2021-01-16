@@ -1,7 +1,5 @@
 package gui.startmenu;
 
-import etc.Constants;
-import etc.Preference;
 import gui.PrimaryStageHelper;
 import gui.etc.FXHelper;
 import gui.etc.Window;
@@ -13,7 +11,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import quiz.QuizManager;
+import javafx.scene.control.TextFormatter;
+import quiz.Preference;
+import quiz.QuestionManager;
 import quiz.question.Question;
 
 import java.net.URL;
@@ -54,6 +54,32 @@ public class CustomQuiz extends PrimaryStageHelper implements Initializable {
         //Establish default as none
         typeList.setValue("None");
         subjectList.setValue("None");
+
+        //Make User Input limited
+        testNameField.setTextFormatter(new TextFormatter<>(c -> {
+            if (c.isContentChange()) {
+                if (c.getControlNewText().length() > 20) {
+                    c.setText("");
+                }
+            }
+            return c;
+        }));
+        testTimeField.setTextFormatter(new TextFormatter<>(c -> {
+            if (c.isContentChange()) {
+                if (c.getControlNewText().length() > 4) {
+                    c.setText("");
+                }
+            }
+            return c;
+        }));
+        questionAmountField.setTextFormatter(new TextFormatter<>(c -> {
+            if (c.isContentChange()) {
+                if (c.getControlNewText().length() > 2) {
+                    c.setText("");
+                }
+            }
+            return c;
+        }));
     }
 
     public void backButtonClicked() {
@@ -71,51 +97,55 @@ public class CustomQuiz extends PrimaryStageHelper implements Initializable {
         }
     }
 
-    //todo: make this more efficient
     //Setup all preferences and begin custom test
     public void startButtonClicked() {
 
-        //Handle the questionAmount being empty
-        //If no value, use the default.
-        int questionAmount = questionAmountField.getText().isEmpty() ?
-                Constants.DEFAULT_QUESTION_AMOUNT : Integer.parseInt(questionAmountField.getText());
+        //Attempt to cast user input to usable value, catch exception if not possible.
+        try {
 
-        //30 minutes default
-        if (!testTimeField.getText().isEmpty()) {
-            QuizManager.getPreferences().put(Preference.TIME, testTimeField.getText());
+            //Handle the questionAmount being empty
+            //If no value, use the default.
+            int questionAmount = questionAmountField.getText().isEmpty() ? 0 : Integer.parseInt(questionAmountField.getText());
+
+            //30 minutes default
+            if (!testTimeField.getText().isEmpty()) {
+                Preference.preferences.put(Preference.TIME, testTimeField.getText());
+            }
+
+            //Handle test name being empty
+            //Default name is Custom Exam
+            Preference.preferences.put(Preference.QUIZNAME, testNameField.getText().isEmpty() ? "Custom Exam" : testNameField.getText());
+            Preference.preferences.put(Preference.CALCULATOR, String.valueOf(calculator.isSelected()));
+            Preference.preferences.put(Preference.NOTEPAD, String.valueOf(notepad.isSelected()));
+            Preference.preferences.put(Preference.DRAWINGPAD, String.valueOf(drawingpad.isSelected()));
+            Preference.preferences.put(Preference.SHOWANSWERS, String.valueOf(showAnswers.isSelected()));
+
+            Question.Type type;
+            type = switch (typeList.getValue()) {
+                case "Multiple Choice" -> Question.Type.MULTIPLECHOICE;
+                case "Written" -> Question.Type.WRITTEN;
+                case "True or False" -> Question.Type.TRUEORFALSE;
+                case "Checkbox" -> Question.Type.CHECKBOX;
+                default -> null;
+            };
+
+            Question.Subject subject;
+            subject = switch (subjectList.getValue()) {
+                case "Marketing" -> Question.Subject.MARKETING;
+                case "Business Math" -> Question.Subject.BUSMATH;
+                case "Intro to Business" -> Question.Subject.INTBUS;
+                case "Network Design" -> Question.Subject.NETWORKDESIGN;
+                default -> null;
+            };
+
+
+            QuestionManager.loadQuestions(questionAmount, type, subject);
+            displayQuiz(false);
+
+        } catch (IllegalArgumentException e) {
+            new ErrorNotifier("A quiz failed to be created from the current selection.", false).display();
         }
 
-        //Handle test name being empty
-        //Default name is Custom Exam
-        QuizManager.getPreferences().put(Preference.QUIZNAME,
-                testNameField.getText().isEmpty() ? "Custom Exam" : testNameField.getText());
-
-        QuizManager.getPreferences().put(Preference.CALCULATOR, String.valueOf(calculator.isSelected()));
-        QuizManager.getPreferences().put(Preference.NOTEPAD, String.valueOf(notepad.isSelected()));
-        QuizManager.getPreferences().put(Preference.DRAWINGPAD, String.valueOf(drawingpad.isSelected()));
-        QuizManager.getPreferences().put(Preference.SHOWANSWERS, String.valueOf(showAnswers.isSelected()));
-
-        Question.Type type;
-        type = switch (typeList.getValue()) {
-            case "Multiple Choice" -> Question.Type.MULTIPLECHOICE;
-            case "Written" -> Question.Type.WRITTEN;
-            case "True or False" -> Question.Type.TRUEORFALSE;
-            case "Checkbox" -> Question.Type.CHECKBOX;
-            default -> null;
-        };
-
-        Question.Subject subject;
-        subject = switch (subjectList.getValue()) {
-            case "Marketing" -> Question.Subject.MARKETING;
-            case "Business Math" -> Question.Subject.BUSMATH;
-            case "Intro to Business" -> Question.Subject.INTBUS;
-            case "Network Design" -> Question.Subject.NETWORKDESIGN;
-            default -> null;
-        };
-
-        QuizManager.loadQuestions(questionAmount, type, subject);
-
-        displayQuiz(false);
 
     }
 

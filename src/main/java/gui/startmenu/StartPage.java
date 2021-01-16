@@ -13,7 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import quiz.QuizManager;
+import quiz.QuestionManager;
 import requests.Account;
 
 import java.net.URL;
@@ -97,7 +97,7 @@ public class StartPage extends PrimaryStageHelper implements Initializable {
 
     public void defaultQuizButtonClicked() {
 
-        QuizManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
+        QuestionManager.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, null, null); //Load default quiz.
 
         //Start test
         displayQuiz(true);
@@ -108,7 +108,7 @@ public class StartPage extends PrimaryStageHelper implements Initializable {
 
         try {
 
-            Stage stage = FXHelper.getPopupStage(Window.PREMADEQUIZES, true);
+            Stage stage = FXHelper.getPopupStage(Window.PREMADEQUIZES, false);
             PremadeQuizzes.stage = stage;
             stage.showAndWait();
 
