@@ -9,8 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import org.json.JSONException;
-import questions.nodes.QuizQuestions;
-import requests.Database;
+import questions.QuizQuestions;
+import requests.DatabaseRequest;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,9 +28,9 @@ public class EnterCode implements Initializable {
     public void enterCodeButtonClicked() {
         try {
 
-            long bitmap = Database.getTestKey(Integer.parseInt(codeTextField.getText()));
+            long bitmap = DatabaseRequest.getTestKey(Integer.parseInt(codeTextField.getText()));
             System.out.println(bitmap);
-            QuizQuestions.loadQuestions(new BitMap(bitmap).decodeToList());
+            QuizQuestions.initializeQuestions(new BitMap(bitmap).decodeToList());
 
             QuizManager.startQuiz(false);
             stage.close();

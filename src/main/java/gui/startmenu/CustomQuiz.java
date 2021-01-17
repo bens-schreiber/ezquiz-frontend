@@ -14,8 +14,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import questions.Question;
-import questions.nodes.QuizQuestions;
+import questions.QuizQuestions;
+import questions.question.Question;
 import requests.QuestionRequest;
 
 import java.net.URL;
@@ -142,12 +142,12 @@ public class CustomQuiz implements Initializable {
 
             //todo: fix this
             if (subject != null && type != null) {
-                QuizQuestions.loadQuestions(questionAmount, new QuestionRequest(type, subject));
+                QuizQuestions.initializeQuestions(questionAmount, new QuestionRequest(type, subject));
             } else if (subject != null) {
-                QuizQuestions.loadQuestions(questionAmount, new QuestionRequest(subject));
+                QuizQuestions.initializeQuestions(questionAmount, new QuestionRequest(subject));
             } else if (type != null) {
-                QuizQuestions.loadQuestions(questionAmount, new QuestionRequest(type));
-            } else QuizQuestions.loadQuestions(questionAmount, new QuestionRequest());
+                QuizQuestions.initializeQuestions(questionAmount, new QuestionRequest(type));
+            } else QuizQuestions.initializeQuestions(questionAmount, new QuestionRequest());
 
 
             QuizManager.startQuiz(false);

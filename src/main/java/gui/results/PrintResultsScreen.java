@@ -19,9 +19,9 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.stage.DirectoryChooser;
 import org.json.JSONException;
-import questions.nodes.QuestionNode;
-import questions.nodes.QuizQuestions;
-import requests.Database;
+import questions.QuizQuestions;
+import questions.question.QuestionNode;
+import requests.DatabaseRequest;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -68,7 +68,7 @@ public class PrintResultsScreen implements Initializable {
         List<Integer> ids = new LinkedList<>();
         for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
 
-            ids.add(questionNode.getQuestion().getID());
+            ids.add(questionNode.getID());
 
             if (questionNode.isCorrect()) {
                 correctAnswers++;
@@ -90,7 +90,7 @@ public class PrintResultsScreen implements Initializable {
 
         for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
 
-            switch (questionNode.getQuestion().getSubject()) {
+            switch (questionNode.getSubject()) {
 
                 case INTBUS -> subjs[0]++;
 
@@ -142,7 +142,7 @@ public class PrintResultsScreen implements Initializable {
 
             try {
 
-                key = Database.uploadTestKey(bitMap.getBitMap());
+                key = DatabaseRequest.uploadTestKey(bitMap.getBitMap());
 
                 if (!key.isEmpty()) {
 

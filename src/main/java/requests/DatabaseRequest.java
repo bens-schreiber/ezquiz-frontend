@@ -7,7 +7,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.http.HttpResponse;
 
-public class Database extends Request {
+public class DatabaseRequest {
+
+    private DatabaseRequest() {
+    }
 
     /**
      * @return status code

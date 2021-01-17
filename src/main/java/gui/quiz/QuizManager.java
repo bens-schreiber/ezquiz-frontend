@@ -7,7 +7,7 @@ import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
 import gui.startmenu.PremadeQuizzes;
 import javafx.stage.StageStyle;
-import questions.nodes.QuizQuestions;
+import questions.QuizQuestions;
 import requests.QuestionRequest;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class QuizManager {
             }
 
             if (loadDefault) {
-                QuizQuestions.loadQuestions(Constants.DEFAULT_QUESTION_AMOUNT, new QuestionRequest());
+                QuizQuestions.initializeQuestions(Constants.DEFAULT_QUESTION_AMOUNT, new QuestionRequest());
             }
 
             //Make a PopupStage because the test window shares their qualities.

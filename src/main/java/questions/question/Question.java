@@ -1,11 +1,13 @@
-package questions;
+package questions.question;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Stores necessary information to display a question
+ * Stores necessary information to display a questions text elements
  */
+
+
 public class Question {
 
     private final Type type;
@@ -35,8 +37,7 @@ public class Question {
     /**
      * Shuffles question options, if question has options.
      */
-    //todo: this
-    public void shuffleOptions() {
+    void shuffleOptions() {
         if (options != null) {
             Collections.shuffle(options);
         }
@@ -52,10 +53,6 @@ public class Question {
 
     public Subject getSubject() {
         return this.subject;
-    }
-
-    public List<String> getOptions() {
-        return this.options;
     }
 
     public String getPrompt() {

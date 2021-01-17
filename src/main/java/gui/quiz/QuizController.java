@@ -22,8 +22,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import questions.nodes.QuestionNode;
-import questions.nodes.QuizQuestions;
+import questions.QuizQuestions;
+import questions.question.QuestionNode;
 
 import java.net.URL;
 import java.util.List;
@@ -124,16 +124,16 @@ public class QuizController implements Initializable {
         questionArea.getChildren().add(currentQuestionNode.getNode());
 
         //Set prompt, determine text color based on if the question is flagged or not
-        questionPrompt.setText(currentQuestionIndex + 1 + ".) " + currentQuestionNode.getQuestion().getPrompt());
+        questionPrompt.setText(currentQuestionIndex + 1 + ".) " + currentQuestionNode.getPrompt());
         questionPrompt.setStyle(currentFlagButton().isFlagged() ? "-fx-text-fill: " + Constants.FLAGGED_COLOR : "-fx-text-fill: black");
 
         //Set directions
-        questionDirections.setText(currentQuestionNode.getQuestion().getDirections());
+        questionDirections.setText(currentQuestionNode.getDirections());
 
         //Change top right label to current question num / question amount
         currQuestionLabel.setText(currentQuestionIndex + 1 + " / " + QuizQuestions.getQuestionNodes().length);
 
-        subjAndQuestion.setText(currentQuestionNode.getQuestion().getSubject() + " QID:" + currentQuestionNode.getQuestion().getID());
+        subjAndQuestion.setText(currentQuestionNode.getSubject() + " QID:" + currentQuestionNode.getID());
 
         highlightSelected();
 

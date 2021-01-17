@@ -4,7 +4,7 @@ import etc.Constants;
 import gui.etc.Account;
 import org.json.JSONException;
 import org.json.JSONObject;
-import questions.Question;
+import questions.question.Question;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Requests all questions in appropriate range and converts from JSON to Question list
  */
-public class QuestionRequest extends Request {
+public class QuestionRequest {
 
     private JSONObject json;
     private StringBuilder path = new StringBuilder(Constants.DEFAULT_PATH);
@@ -43,8 +43,8 @@ public class QuestionRequest extends Request {
 
     public QuestionRequest makeRequest() throws InterruptedException, IOException, JSONException, IllegalArgumentException {
 
-        //Make the actual request
-        this.json = getJSONFromURL(path.toString(), Account.AUTH_TOKEN());
+        //Make the request
+        this.json = Request.getJSONFromURL(path.toString(), Account.AUTH_TOKEN());
 
         //If no questions could be found with given parameters
         if (json.length() == 0) {

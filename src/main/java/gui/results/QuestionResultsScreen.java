@@ -9,8 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import questions.nodes.QuestionNode;
-import questions.nodes.QuizQuestions;
+import questions.QuizQuestions;
+import questions.question.QuestionNode;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,7 +42,7 @@ public class QuestionResultsScreen implements Initializable {
             label.setStyle("-fx-font-weight: bold;");
             answeredQuestion.getChildren().add(label);
 
-            answeredQuestion.getChildren().add(new Label(questionNode.getQuestion().getPrompt()));
+            answeredQuestion.getChildren().add(new Label(questionNode.getPrompt()));
             answeredQuestion.getChildren().add(questionNode.getNode());
 
             //Make un-intractable.
@@ -63,7 +63,7 @@ public class QuestionResultsScreen implements Initializable {
                 if (Boolean.parseBoolean(Preference.preferences.get(Preference.SHOWANSWERS))) {
 
                     answeredQuestion.getChildren().add(new Label("Correct answer: "
-                            + questionNode.getQuestion().getAnswer()
+                            + questionNode.getAnswer()
                             .toString()
                             .replace("[", "")
                             .replace("]", "")

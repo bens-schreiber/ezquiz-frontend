@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
-import requests.Database;
+import requests.DatabaseRequest;
 
 import java.net.URL;
 import java.util.List;
@@ -60,7 +60,7 @@ public class Register implements Initializable {
 
             try {
 
-                boolean response = Database.registerUser(userField.getText(), SHA.encrypt(passField.getText()))
+                boolean response = DatabaseRequest.registerUser(userField.getText(), SHA.encrypt(passField.getText()))
                         == Constants.STATUS_ACCEPTED;
 
                 errorLabel.setText(response ? "Account successfully created." : "Could not create account.");

@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
-import requests.Database;
+import requests.DatabaseRequest;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -55,7 +55,7 @@ public class Login implements Initializable {
 
             try {
                 //If the request is accepted
-                boolean correct = Database.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()))
+                boolean correct = DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()))
                         == Constants.STATUS_ACCEPTED;
 
                 errorLabel.setText(correct ? "Successfully logged in" : "Could not log in. Try again.");
