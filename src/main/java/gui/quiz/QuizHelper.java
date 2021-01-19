@@ -15,7 +15,10 @@ import java.io.IOException;
 /**
  * Starts and ends quizzes
  */
-public class QuizManager {
+public class QuizHelper {
+
+    private QuizHelper() {
+    }
 
     //private static String quizAuthToken;
 

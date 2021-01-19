@@ -5,7 +5,7 @@ import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
 import gui.quiz.Preference;
-import gui.quiz.QuizManager;
+import gui.quiz.QuizHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -150,7 +150,7 @@ public class CustomQuiz implements Initializable {
             } else QuizQuestions.initializeQuestions(questionAmount, new QuestionRequest());
 
 
-            QuizManager.startQuiz(false);
+            QuizHelper.startQuiz(false);
 
         } catch (IllegalArgumentException e) {
             new ErrorNotifier("A quiz failed to be created from the current selection.", false).display();

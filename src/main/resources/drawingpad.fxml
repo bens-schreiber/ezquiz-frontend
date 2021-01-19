@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane prefHeight="115.0" prefWidth="119.0" style="-fx-background-color: #BDBDBD;"
+<?import javafx.scene.layout.HBox?>
+<AnchorPane prefHeight="47.0" prefWidth="418.0" style="-fx-background-color: #BDBDBD;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="gui.quiz.tools.DrawingPadController">
     <children>
-        <CheckBox fx:id="eraser" layoutX="5.0" layoutY="39.0" mnemonicParsing="false" text="Eraser"/>
-        <TextField fx:id="brushSize" alignment="TOP_LEFT" layoutX="5.0" layoutY="74.0" prefHeight="26.0"
-                   prefWidth="39.0"/>
-        <Label layoutX="44.0" layoutY="79.0" text="Brush Size"/>
-        <ColorPicker fx:id="colorPicker" layoutX="5.0" layoutY="1.0" prefHeight="26.0" prefWidth="100.0"/>
+        <HBox layoutX="7.0" layoutY="10.0">
+            <children>
+                <ColorPicker fx:id="colorPicker" prefHeight="26.0" prefWidth="100.0"/>
+                <TextField fx:id="brushSize" alignment="TOP_LEFT" prefHeight="26.0" prefWidth="39.0">
+                    <HBox.margin>
+                        <Insets left="25.0"/>
+                    </HBox.margin>
+                </TextField>
+                <Label prefHeight="27.0" prefWidth="79.0" text="Brush Size">
+                    <padding>
+                        <Insets left="5.0"/>
+                    </padding>
+                </Label>
+                <CheckBox fx:id="eraser" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Eraser">
+                    <padding>
+                        <Insets left="25.0"/>
+                    </padding>
+                </CheckBox>
+                <Button fx:id="clearButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Clear">
+                    <HBox.margin>
+                        <Insets left="25.0"/>
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
     </children>
 </AnchorPane>

@@ -8,10 +8,14 @@ import questions.question.QuestionNode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 
 class QuestionAnswerHelper {
 
+    /**
+     * Set all quizNodes answers
+     */
     static void setAnswers(QuestionNode[] questionNodes, JSONObject json) throws JSONException {
 
         /*
@@ -21,15 +25,13 @@ class QuestionAnswerHelper {
         */
 
         //Fill pair array with quiz node and original index
-        Pair[] pairs = new Pair[questionNodes.length];
-        for (int i = 0; i < questionNodes.length; i++) {
-            pairs[i] = new Pair(questionNodes[i], i);
-        }
+        Pair[] pairs = IntStream.range(0, questionNodes.length).mapToObj(i -> new Pair(questionNodes[i], i)).toArray(Pair[]::new);
 
         //Sort the pair array so that it may be compared to the already sorted json.
         Arrays.sort(pairs);
         int i = 0;
         for (Pair pair : pairs) {
+
             //Get the correct answer based off the correlating position in the json
             pair.value.setAnswer(answerFromJSON((JSONObject) json.get("obj" + i++)));
 

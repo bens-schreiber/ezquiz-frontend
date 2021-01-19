@@ -4,7 +4,7 @@ import gui.etc.Account;
 import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
-import gui.quiz.QuizManager;
+import gui.quiz.QuizHelper;
 import gui.startmenu.login.Login;
 import gui.startmenu.login.Register;
 import javafx.application.Platform;
@@ -96,7 +96,7 @@ public class StartPage implements Initializable {
     public void defaultQuizButtonClicked() {
 
         //Start test
-        QuizManager.startQuiz(true);
+        QuizHelper.startQuiz(true);
 
     }
 

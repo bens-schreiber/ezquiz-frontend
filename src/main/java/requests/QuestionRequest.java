@@ -15,6 +15,8 @@ import java.util.List;
 public class QuestionRequest {
 
     private JSONObject json;
+
+    //Initialize path as string builder. Add onto default path to create path needed for the request.
     private StringBuilder path = new StringBuilder(Constants.DEFAULT_PATH);
 
     /**
@@ -33,7 +35,9 @@ public class QuestionRequest {
     }
 
     public QuestionRequest(List<Integer> ids) {
-        for (Integer id : ids) path.append(id).append(",");
+        for (Integer id : ids) {
+            path.append(id).append(",");
+        }
         path = new StringBuilder(path.substring(0, path.toString().length() - 1));
     }
 
@@ -43,7 +47,7 @@ public class QuestionRequest {
 
     public QuestionRequest makeRequest() throws InterruptedException, IOException, JSONException, IllegalArgumentException {
 
-        //Make the request
+        //Make the request from the path built by the constructor.
         this.json = Request.getJSONFromURL(path.toString(), Account.AUTH_TOKEN());
 
         //If no questions could be found with given parameters

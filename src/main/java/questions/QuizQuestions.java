@@ -2,7 +2,6 @@ package questions;
 
 import gui.popup.error.ErrorNotifier;
 import org.json.JSONException;
-import org.json.JSONObject;
 import questions.question.Question;
 import questions.question.QuestionNode;
 import requests.AnswerRequest;
@@ -34,34 +33,18 @@ public class QuizQuestions {
     public static void initializeQuestions(int amount, QuestionRequest questionRequest) throws IllegalArgumentException {
         try {
 
+            questionRequest.makeRequest();
 
-            //Make the request and get the JSON.
-            JSONObject json = questionRequest.makeRequest().getJson();
-
-
-            //If the amount is greater than possible, or less than 0, make maximum amount possible.
-            if (amount > json.length() || amount <= 0)
-                amount = json.length();
-
-
-            //Instantiate nodes with amount.
-            questionNodes = new QuestionNode[amount];
-
-
-            //Create a pool of question id's in the specific size of how many questions available
+            //Create a pool of question id's in the size of how many questions available, randomize order
             List<Integer> idPool = new LinkedList<>();
-            for (int i = 0; i < json.length() - 1; i++) idPool.add(i);
 
-
-            //Randomize the pool of ids
-            Collections.shuffle(idPool);
-
-
-            int i = 0;
-            for (Integer id : idPool.subList(0, amount)) {
-                questionNodes[i++] = (QuestionNodeFactory.questionFromJSON((JSONObject) json.get("obj" + id)));
+            for (int i = 0; i < questionRequest.getJson().length() - 1; i++) {
+                idPool.add(i);
             }
 
+            Collections.shuffle(idPool);
+
+            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(questionRequest.getJson(), amount, idPool);
 
         } catch (InterruptedException | IOException | JSONException e) {
 
@@ -86,13 +69,8 @@ public class QuizQuestions {
     public static void initializeQuestions(List<Integer> ids) {
         try {
 
-            JSONObject json = new QuestionRequest(ids).makeRequest().getJson();
-            questionNodes = new QuestionNode[json.length()];
-
-            int i = 0;
-            for (Integer ignored : ids) {
-                questionNodes[i] = (QuestionNodeFactory.questionFromJSON((JSONObject) json.get("obj" + i++)));
-            }
+            QuestionRequest questionRequest = new QuestionRequest(ids).makeRequest();
+            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(questionRequest.getJson(), ids.size(), ids);
 
         } catch (Exception e) {
             new ErrorNotifier("A question failed to be created.", true).display();

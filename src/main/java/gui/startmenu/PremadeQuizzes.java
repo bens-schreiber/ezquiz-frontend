@@ -8,7 +8,7 @@ import gui.etc.FXHelper;
 import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
 import gui.quiz.Preference;
-import gui.quiz.QuizManager;
+import gui.quiz.QuizHelper;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import questions.QuizQuestions;
@@ -25,7 +25,7 @@ public class PremadeQuizzes {
 
         Preference.preferences.put(Preference.QUIZNAME, "Network Design Quiz");
 
-        QuizManager.startQuiz(false);
+        QuizHelper.startQuiz(false);
     }
 
     public void introToBusButtonClicked() {
@@ -34,7 +34,7 @@ public class PremadeQuizzes {
 
         Preference.preferences.put(Preference.QUIZNAME, "Intro to Business Quiz");
 
-        QuizManager.startQuiz(false);
+        QuizHelper.startQuiz(false);
     }
 
     public void busMathButtonClicked() {
@@ -43,7 +43,7 @@ public class PremadeQuizzes {
 
         Preference.preferences.put(Preference.QUIZNAME, "Business Math Quiz");
 
-        QuizManager.startQuiz(false);
+        QuizHelper.startQuiz(false);
     }
 
     public void marketingButtonClicked() {
@@ -52,7 +52,7 @@ public class PremadeQuizzes {
 
         Preference.preferences.put(Preference.QUIZNAME, "Marketing Quiz");
 
-        QuizManager.startQuiz(false);
+        QuizHelper.startQuiz(false);
     }
 
     public void customButtonClicked() {

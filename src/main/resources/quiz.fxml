@@ -58,6 +58,20 @@
                         <Rectangle fx:id="questionBorder" arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="797.0"
                                    layoutX="-5.0" layoutY="-5.0" stroke="#303f9f" strokeType="OUTSIDE" strokeWidth="0.0"
                                    width="1890.0"/>
+                        <Label layoutX="430.0" layoutY="496.0" prefHeight="119.0" prefWidth="36.0"/>
+                        <VBox layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" spacing="15.0">
+                            <children>
+                                <Label fx:id="questionPrompt" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
+                                       prefWidth="1133.0" text="Label" wrapText="true">
+                                    <font>
+                                        <Font size="18.0"/>
+                                    </font>
+                                </Label>
+                                <VBox fx:id="questionArea" maxHeight="1.7976931348623157E308"
+                                      maxWidth="1.7976931348623157E308" prefHeight="469.0" prefWidth="885.0"
+                                      spacing="50.0"/>
+                            </children>
+                        </VBox>
                         <Canvas fx:id="paintCanvas" height="779.0" layoutX="-1.0" onMouseDragged="#canvasOnDragged"
                                 onMousePressed="#canvasOnPressed" width="1880.0"/>
                         <VBox fx:id="addonVBox" layoutX="1755.0" layoutY="34.0" prefHeight="192.0" prefWidth="60.0"
@@ -70,7 +84,7 @@
                                     <graphic>
                                         <ImageView>
                                             <image>
-                                                <Image url="@pictures/clipboard-solid.png" />
+                                                <Image url="@pictures/clipboard-solid.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -93,17 +107,6 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                            </children>
-                        </VBox>
-                        <Label layoutX="430.0" layoutY="496.0" prefHeight="119.0" prefWidth="36.0" />
-                        <VBox layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" spacing="15.0">
-                            <children>
-                                <Label fx:id="questionPrompt" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="1133.0" text="Label" wrapText="true">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <VBox fx:id="questionArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="469.0" prefWidth="885.0" spacing="50.0" />
                             </children>
                         </VBox>
                     </children>

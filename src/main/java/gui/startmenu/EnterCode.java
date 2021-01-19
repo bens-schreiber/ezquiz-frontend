@@ -2,7 +2,7 @@ package gui.startmenu;
 
 import etc.BitMap;
 import gui.popup.error.ErrorNotifier;
-import gui.quiz.QuizManager;
+import gui.quiz.QuizHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -32,7 +32,7 @@ public class EnterCode implements Initializable {
             System.out.println(bitmap);
             QuizQuestions.initializeQuestions(new BitMap(bitmap).decodeToList());
 
-            QuizManager.startQuiz(false);
+            QuizHelper.startQuiz(false);
             stage.close();
 
         } catch (NumberFormatException | InterruptedException | IOException | JSONException e) {

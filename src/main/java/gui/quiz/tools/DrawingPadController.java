@@ -4,10 +4,7 @@ import etc.Constants;
 import gui.quiz.QuizController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -28,6 +25,9 @@ public class DrawingPadController implements Initializable {
 
     @FXML
     private ColorPicker colorPicker;
+
+    @FXML
+    private Button clearButton;
 
     //Make a Stage variable because these are their own PopupStage and must be closed from inside
     private static Stage stage;
@@ -77,6 +77,8 @@ public class DrawingPadController implements Initializable {
         }; //Limit how much text can be typed.
 
         brushSize.setTextFormatter(new TextFormatter<>(modifyChange));
+
+        clearButton.setOnAction(event -> QuizController.clearCanvas());
 
     }
 }

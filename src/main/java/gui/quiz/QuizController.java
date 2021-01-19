@@ -84,10 +84,10 @@ public class QuizController implements Initializable {
 
         seconds = Integer.parseInt(Preference.preferences.get(Preference.TIME));
 
+        userLabel.setText(userLabel.getText() + Account.getUsername());
+
         //Disable back button by default.
         backButton.setDisable(true);
-
-        userLabel.setText(userLabel.getText() + Account.getUsername());
 
         //Establish canvas properties
         paintCanvas.setDisable(true);
@@ -109,7 +109,6 @@ public class QuizController implements Initializable {
         displayNewQuestion();
 
     }
-
 
     /**
      * change display to current question
@@ -201,7 +200,7 @@ public class QuizController implements Initializable {
         //If any questions are flagged
         if (questionHBox.getChildren().stream().anyMatch(node -> ((FlagButton) node).isFlagged())) {
             if (new ConfirmNotifier("Some questions are flagged. Are you sure you want to submit?").display().getResponse()) {
-                QuizManager.endQuiz();
+                QuizHelper.endQuiz();
             }
         }
 
@@ -209,14 +208,14 @@ public class QuizController implements Initializable {
         else if (List.of(QuizQuestions.getQuestionNodes()).stream().allMatch(QuestionNode::isAnswered)) {
 
             if (new ConfirmNotifier("Are you sure you want to submit?").display().getResponse()) {
-                QuizManager.endQuiz();
+                QuizHelper.endQuiz();
             }
 
         }
 
         //If all questions aren't answered
         else if (new ConfirmNotifier("Some answers are unfinished. Are sure you want to submit?").display().getResponse()) {
-            QuizManager.endQuiz();
+            QuizHelper.endQuiz();
         }
 
     }
@@ -373,6 +372,10 @@ public class QuizController implements Initializable {
 
     public static void changeWidth(Double width) {
         gc.setLineWidth(width);
+    }
+
+    public static void clearCanvas() {
+        gc.clearRect(0, 0, 1920, 1080);
     }
 
 
