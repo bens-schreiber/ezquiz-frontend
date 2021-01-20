@@ -64,7 +64,7 @@ class QuestionNodeFactory {
     static QuestionNode[] nodeArrayFromJSON(JSONObject json, int amount, List<Integer> ids) throws JSONException {
 
         //If the amount is greater than possible, or less than 0, make maximum amount possible.
-        if (amount > json.length() || amount <= 0) amount = json.length();
+        if (amount > json.length() || amount <= 0) amount = json.length() - 1;
 
         QuestionNode[] nodes = new QuestionNode[amount];
 

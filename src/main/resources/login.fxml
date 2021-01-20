@@ -1,31 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="109.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.startmenu.login.Login">
+<AnchorPane prefHeight="122.0" prefWidth="261.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.startmenu.login.Login">
    <children>
-      <HBox layoutX="102.0" layoutY="105.0" prefHeight="26.0" prefWidth="171.0" spacing="10.0" stylesheets="@css/standard_button.css">
-         <children>
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonClicked" prefHeight="22.0" prefWidth="76.0" text="Exit" />
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="22.0" prefWidth="87.0" text="Login" />
-         </children>
-      </HBox>
-      <VBox layoutX="58.0" layoutY="14.0" prefHeight="75.0" prefWidth="258.0" spacing="10.0">
+      <VBox layoutX="8.0" layoutY="8.0" prefHeight="122.0" prefWidth="273.0" spacing="10.0">
          <children>
             <HBox prefHeight="26.0" prefWidth="258.0" spacing="15.0">
                <children>
-                  <Label prefHeight="27.0" prefWidth="67.0" text="Username" />
-                  <TextField fx:id="usernameField" />
+                  <Label prefHeight="27.0" prefWidth="67.0" text="Username"/>
+                  <TextField fx:id="usernameField"/>
                </children>
             </HBox>
             <HBox prefHeight="26.0" prefWidth="258.0" spacing="16.0">
                <children>
-                  <Label prefHeight="31.0" prefWidth="67.0" text="Password" />
-                  <TextField fx:id="passwordField" />
+                  <Label prefHeight="31.0" prefWidth="67.0" text="Password"/>
+                  <TextField fx:id="passwordField"/>
                </children>
             </HBox>
-            <Label fx:id="errorLabel" prefHeight="16.0" prefWidth="285.0" textFill="RED" />
+            <Label fx:id="errorLabel" prefHeight="16.0" prefWidth="285.0" textFill="RED"/>
+            <HBox alignment="CENTER" prefHeight="26.0" prefWidth="171.0" spacing="10.0"
+                  stylesheets="@css/standard_button.css">
+               <children>
+                  <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonClicked" prefHeight="22.0"
+                          prefWidth="76.0" text="Exit"/>
+                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="22.0"
+                          prefWidth="87.0" text="Login"/>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>
+   <padding>
+      <Insets bottom="5.0"/>
+   </padding>
 </AnchorPane>

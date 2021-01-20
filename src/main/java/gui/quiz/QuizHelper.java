@@ -8,7 +8,7 @@ import gui.popup.error.ErrorNotifier;
 import gui.startmenu.PremadeQuizzes;
 import javafx.stage.StageStyle;
 import questions.QuizQuestions;
-import requests.QuestionRequest;
+import requests.QuestionJSONRequest;
 
 import java.io.IOException;
 
@@ -35,7 +35,7 @@ public class QuizHelper {
             }
 
             if (loadDefault) {
-                QuizQuestions.initializeQuestions(Constants.DEFAULT_QUESTION_AMOUNT, new QuestionRequest());
+                QuizQuestions.initializeQuestions(Constants.DEFAULT_QUESTION_AMOUNT, new QuestionJSONRequest());
             }
 
             //Make a PopupStage because the test window shares their qualities.

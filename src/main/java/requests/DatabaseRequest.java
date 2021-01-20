@@ -40,7 +40,7 @@ public class DatabaseRequest {
 
         if (response.headers().firstValue("token").isPresent()) {
 
-            //Login the user
+            //Store token and username in static user
             Account.login(username, response.headers().firstValue("token").get());
 
             System.out.println(Account.AUTH_TOKEN());

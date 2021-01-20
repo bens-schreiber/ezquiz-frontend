@@ -11,16 +11,16 @@ import java.io.IOException;
 /**
  * Makes a request to the database that assigns the correct answers to each question of the quiz node array.
  */
-public class AnswerRequest {
+public class AnswerJSONRequest {
 
     private JSONObject json;
     private final QuestionNode[] questionNodes;
 
-    public AnswerRequest(QuestionNode[] questionNode) {
+    public AnswerJSONRequest(QuestionNode[] questionNode) {
         this.questionNodes = questionNode;
     }
 
-    public AnswerRequest makeRequest() throws InterruptedException, JSONException, IOException {
+    public AnswerJSONRequest makeRequest() throws InterruptedException, JSONException, IOException {
 
         StringBuilder stringBuilder = new StringBuilder().append(Constants.DEFAULT_PATH).append("answer/");
 

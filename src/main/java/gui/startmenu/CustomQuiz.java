@@ -16,7 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import questions.QuizQuestions;
 import questions.question.Question;
-import requests.QuestionRequest;
+import requests.QuestionJSONRequest;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -142,12 +142,12 @@ public class CustomQuiz implements Initializable {
 
             //todo: fix this
             if (subject != null && type != null) {
-                QuizQuestions.initializeQuestions(questionAmount, new QuestionRequest(type, subject));
+                QuizQuestions.initializeQuestions(questionAmount, new QuestionJSONRequest(type, subject));
             } else if (subject != null) {
-                QuizQuestions.initializeQuestions(questionAmount, new QuestionRequest(subject));
+                QuizQuestions.initializeQuestions(questionAmount, new QuestionJSONRequest(subject));
             } else if (type != null) {
-                QuizQuestions.initializeQuestions(questionAmount, new QuestionRequest(type));
-            } else QuizQuestions.initializeQuestions(questionAmount, new QuestionRequest());
+                QuizQuestions.initializeQuestions(questionAmount, new QuestionJSONRequest(type));
+            } else QuizQuestions.initializeQuestions(questionAmount, new QuestionJSONRequest());
 
 
             QuizHelper.startQuiz(false);

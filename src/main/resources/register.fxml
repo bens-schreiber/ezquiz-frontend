@@ -3,9 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="168.0" prefWidth="353.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.startmenu.login.Register">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.startmenu.login.Register">
    <children>
-      <VBox layoutX="25.0" layoutY="17.0" prefHeight="116.0" prefWidth="303.0" spacing="15.0">
+      <VBox layoutX="4.0" layoutY="4.0" prefHeight="135.0" prefWidth="277.0" spacing="15.0">
          <children>
             <HBox alignment="CENTER" prefHeight="28.0" prefWidth="253.0" spacing="15.0">
                <children>
@@ -27,14 +28,18 @@
                   <TextField fx:id="passField" prefHeight="26.0" prefWidth="209.0"/>
                </children>
             </HBox>
-            <Label fx:id="errorLabel" prefHeight="16.0" prefWidth="303.0" textFill="RED" />
-            <HBox alignment="CENTER" prefHeight="31.0" prefWidth="303.0" spacing="5.0" stylesheets="@css/standard_button.css">
+            <Label fx:id="errorLabel" prefHeight="16.0" prefWidth="303.0" textFill="RED"/>
+            <HBox alignment="CENTER" prefHeight="31.0" prefWidth="303.0" spacing="5.0"
+                  stylesheets="@css/standard_button.css">
                <children>
-                  <Button mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit" />
-                  <Button mnemonicParsing="false" onAction="#registerButtonClicked" text="Register Account" />
+                  <Button mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit"/>
+                  <Button mnemonicParsing="false" onAction="#registerButtonClicked" text="Register Account"/>
                </children>
             </HBox>
          </children>
       </VBox>
    </children>
+   <padding>
+      <Insets bottom="3.0" right="5.0" top="3.0"/>
+   </padding>
 </AnchorPane>

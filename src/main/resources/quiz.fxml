@@ -43,76 +43,70 @@
                 </HBox>
                 <ImageView fitHeight="43.0" fitWidth="60.0" layoutX="14.0" layoutY="-1.0">
                     <image>
-                        <Image url="@pictures/FBLA-Color-web.png" />
+                        <Image url="@pictures/FBLA-Color-web.png"/>
                     </image>
                 </ImageView>
             </children>
         </AnchorPane>
-        <ScrollPane layoutX="13.0" layoutY="169.0" prefHeight="779.0" prefWidth="1880.0"
-                    style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
-                    AnchorPane.bottomAnchor="132.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
-                    AnchorPane.topAnchor="169.0">
-            <content>
-                <AnchorPane fx:id="questionPane" prefHeight="797.0" prefWidth="1880.0">
+        <AnchorPane fx:id="questionPane" layoutX="20.0" layoutY="169.0" prefHeight="797.0" prefWidth="1880.0"
+                    style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
+            <children>
+                <Rectangle fx:id="questionBorder" arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="797.0"
+                           layoutX="-5.0" layoutY="-5.0" stroke="#303f9f" strokeType="OUTSIDE" strokeWidth="0.0"
+                           width="1890.0"/>
+                <Label layoutX="430.0" layoutY="496.0" prefHeight="119.0" prefWidth="36.0"/>
+                <VBox layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" spacing="15.0">
                     <children>
-                        <Rectangle fx:id="questionBorder" arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="797.0"
-                                   layoutX="-5.0" layoutY="-5.0" stroke="#303f9f" strokeType="OUTSIDE" strokeWidth="0.0"
-                                   width="1890.0"/>
-                        <Label layoutX="430.0" layoutY="496.0" prefHeight="119.0" prefWidth="36.0"/>
-                        <VBox layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" spacing="15.0">
-                            <children>
-                                <Label fx:id="questionPrompt" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
-                                       prefWidth="1133.0" text="Label" wrapText="true">
-                                    <font>
-                                        <Font size="18.0"/>
-                                    </font>
-                                </Label>
-                                <VBox fx:id="questionArea" maxHeight="1.7976931348623157E308"
-                                      maxWidth="1.7976931348623157E308" prefHeight="469.0" prefWidth="885.0"
-                                      spacing="50.0"/>
-                            </children>
-                        </VBox>
-                        <Canvas fx:id="paintCanvas" height="779.0" layoutX="-1.0" onMouseDragged="#canvasOnDragged"
-                                onMousePressed="#canvasOnPressed" width="1880.0"/>
-                        <VBox fx:id="addonVBox" layoutX="1755.0" layoutY="34.0" prefHeight="192.0" prefWidth="60.0"
-                              spacing="10.0"
-                              style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;"
-                              stylesheets="@css/standard_button.css">
-                            <children>
-                                <Button fx:id="notePadButton" mnemonicParsing="false" onAction="#notepadButtonClicked"
-                                        prefHeight="56.0" prefWidth="88.0">
-                                    <graphic>
-                                        <ImageView>
-                                            <image>
-                                                <Image url="@pictures/clipboard-solid.png"/>
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <Button fx:id="calculatorButton" mnemonicParsing="false" onAction="#calculatorButtonClicked" prefHeight="56.0" prefWidth="99.0">
-                                    <graphic>
-                                        <ImageView>
-                                            <image>
-                                                <Image url="@pictures/calculator-solid.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <Button fx:id="drawingPadButton" mnemonicParsing="false" onAction="#drawingPadButtonClicked" prefHeight="58.0" prefWidth="96.0">
-                                    <graphic>
-                                        <ImageView>
-                                            <image>
-                                                <Image url="@pictures/palette-solid.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                            </children>
-                        </VBox>
+                        <Label fx:id="questionPrompt" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
+                               prefWidth="1133.0" text="Label" wrapText="true">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Label>
+                        <VBox fx:id="questionArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                              prefHeight="469.0" prefWidth="885.0" spacing="50.0"/>
                     </children>
-                </AnchorPane>
-            </content>
-        </ScrollPane>
+                </VBox>
+                <Canvas fx:id="paintCanvas" height="779.0" layoutX="-1.0" onMouseDragged="#canvasOnDragged"
+                        onMousePressed="#canvasOnPressed" width="1880.0"/>
+                <VBox fx:id="addonVBox" layoutX="1755.0" layoutY="34.0" prefHeight="192.0" prefWidth="60.0"
+                      spacing="10.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;"
+                      stylesheets="@css/standard_button.css">
+                    <children>
+                        <Button fx:id="notePadButton" mnemonicParsing="false" onAction="#notepadButtonClicked"
+                                prefHeight="56.0" prefWidth="88.0">
+                            <graphic>
+                                <ImageView>
+                                    <image>
+                                        <Image url="@pictures/clipboard-solid.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="calculatorButton" mnemonicParsing="false" onAction="#calculatorButtonClicked"
+                                prefHeight="56.0" prefWidth="99.0">
+                            <graphic>
+                                <ImageView>
+                                    <image>
+                                        <Image url="@pictures/calculator-solid.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="drawingPadButton" mnemonicParsing="false" onAction="#drawingPadButtonClicked"
+                                prefHeight="58.0" prefWidth="96.0">
+                            <graphic>
+                                <ImageView>
+                                    <image>
+                                        <Image url="@pictures/palette-solid.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
         <Label fx:id="questionDirections" layoutX="20.0" layoutY="135.0" prefHeight="36.0" prefWidth="548.0"
                text="Label">
             <font>
@@ -122,32 +116,41 @@
                 <Insets bottom="5.0"/>
             </padding>
         </Label>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="10.0" layoutX="5.0" layoutY="88.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="1911.0" />
-        <HBox alignment="CENTER" layoutX="21.0" layoutY="977.0" prefHeight="36.0" prefWidth="1880.0" spacing="5.0"
-              stylesheets="@css/nextbackbuttons.css" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="19.0">
-            <children>
-                <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false"
-                        onAction="#backButtonClicked">
-                    <graphic>
-                        <ImageView>
-                            <image>
-                                <Image url="@pictures/left.png"/>
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
-                <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonClicked" prefHeight="35.0" prefWidth="40.0">
-                    <graphic>
-                        <ImageView>
-                            <image>
-                                <Image url="@pictures/right.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
-                <HBox fx:id="questionHBox" alignment="CENTER" prefHeight="36.0" prefWidth="0.0" spacing="4.0" stylesheets="@css/flagbutton.css" />
-            </children>
-        </HBox>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="10.0" layoutX="5.0" layoutY="88.0"
+                   stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="1911.0"/>
+        <ScrollPane layoutX="23.0" layoutY="966.0" prefHeight="65.0" prefWidth="1880.0"
+                    style="-fx-background: #E1E1E1 #E1E1E1; -fx-border-color: #E1E1E1;" vbarPolicy="NEVER"
+                    AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="17.0">
+            <content>
+                <HBox alignment="CENTER" prefHeight="36.0" prefWidth="1880.0" spacing="5.0"
+                      stylesheets="@css/nextbackbuttons.css">
+                    <children>
+                        <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false"
+                                onAction="#backButtonClicked">
+                            <graphic>
+                                <ImageView>
+                                    <image>
+                                        <Image url="@pictures/left.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonClicked"
+                                prefHeight="35.0" prefWidth="40.0">
+                            <graphic>
+                                <ImageView>
+                                    <image>
+                                        <Image url="@pictures/right.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <HBox fx:id="questionHBox" alignment="CENTER" maxWidth="900.0" prefHeight="36.0" spacing="4.0"
+                              stylesheets="@css/flagbutton.css"/>
+                    </children>
+                </HBox>
+            </content>
+        </ScrollPane>
         <Label fx:id="quizName" layoutX="14.0" layoutY="45.0" maxHeight="1.7976931348623157E308"
                maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="FBLA - Default Test"
                textFill="#303f9f">
@@ -158,9 +161,11 @@
                 <Insets top="5.0"/>
             </padding>
         </Label>
-        <VBox alignment="CENTER_RIGHT" layoutX="1796.0" layoutY="103.0" maxWidth="1.7976931348623157E308" prefHeight="65.0" AnchorPane.rightAnchor="20.0">
+        <VBox alignment="CENTER_RIGHT" layoutX="1796.0" layoutY="103.0" maxWidth="1.7976931348623157E308"
+              prefHeight="65.0" AnchorPane.rightAnchor="20.0">
             <children>
-                <Label fx:id="quizTimer" alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="60.0" text="00:00:00" textFill="#c32148" />
+                <Label fx:id="quizTimer" alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="60.0" text="00:00:00"
+                       textFill="#c32148"/>
                 <Label fx:id="subjAndQuestion" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="18.0" text="Subj.Question" textFill="#303f9f">
                     <font>
                         <Font size="14.0" />

@@ -4,8 +4,8 @@ import gui.popup.error.ErrorNotifier;
 import org.json.JSONException;
 import questions.question.Question;
 import questions.question.QuestionNode;
-import requests.AnswerRequest;
-import requests.QuestionRequest;
+import requests.AnswerJSONRequest;
+import requests.QuestionJSONRequest;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -27,24 +27,24 @@ public class QuizQuestions {
     /**
      * Initialize questionNodes with specific questions, utilizes QuestionNodeArrayFactory
      *
-     * @param amount          amount of questions wanted, corrected if impossible
-     * @param questionRequest specific request object that should be utilized
+     * @param amount              amount of questions wanted, corrected if impossible
+     * @param questionJSONRequest specific request object that should be utilized
      */
-    public static void initializeQuestions(int amount, QuestionRequest questionRequest) throws IllegalArgumentException {
+    public static void initializeQuestions(int amount, QuestionJSONRequest questionJSONRequest) throws IllegalArgumentException {
         try {
 
-            questionRequest.makeRequest();
+            questionJSONRequest.makeRequest();
 
             //Create a pool of question id's in the size of how many questions available, randomize order
             List<Integer> idPool = new LinkedList<>();
 
-            for (int i = 0; i < questionRequest.getJson().length() - 1; i++) {
+            for (int i = 0; i < questionJSONRequest.getJson().length() - 1; i++) {
                 idPool.add(i);
             }
 
             Collections.shuffle(idPool);
 
-            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(questionRequest.getJson(), amount, idPool);
+            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(questionJSONRequest.getJson(), amount, idPool);
 
         } catch (InterruptedException | IOException | JSONException e) {
 
@@ -69,8 +69,8 @@ public class QuizQuestions {
     public static void initializeQuestions(List<Integer> ids) {
         try {
 
-            QuestionRequest questionRequest = new QuestionRequest(ids).makeRequest();
-            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(questionRequest.getJson(), ids.size(), ids);
+            QuestionJSONRequest questionJSONRequest = new QuestionJSONRequest(ids).makeRequest();
+            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(questionJSONRequest.getJson(), ids.size(), ids);
 
         } catch (Exception e) {
             new ErrorNotifier("A question failed to be created.", true).display();
@@ -85,7 +85,7 @@ public class QuizQuestions {
         try {
 
             //Attempt to set answers for all questions
-            QuestionAnswerHelper.setAnswers(questionNodes, new AnswerRequest(questionNodes).makeRequest().getJson());
+            QuestionAnswerHelper.setAnswers(questionNodes, new AnswerJSONRequest(questionNodes).makeRequest().getJson());
 
         } catch (Exception e) {
             new ErrorNotifier("A question failed to be graded.", true).display();

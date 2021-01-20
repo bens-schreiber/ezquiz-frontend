@@ -1,5 +1,6 @@
 package gui.etc;
 
+import gui.PrimaryStageHolder;
 import gui.popup.error.ErrorNotifier;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -33,6 +34,7 @@ public class FXHelper {
 
         //Set stage
         Stage stage = new Stage();
+        stage.initOwner(PrimaryStageHolder.getPrimaryStage());
 
         if (requireResponse) {
             stage.initModality(Modality.APPLICATION_MODAL);

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Requests all questions in appropriate range and converts from JSON to Question list
  */
-public class QuestionRequest {
+public class QuestionJSONRequest {
 
     private JSONObject json;
 
@@ -22,30 +22,30 @@ public class QuestionRequest {
     /**
      * Constructor
      */
-    public QuestionRequest(Question.Type type, Question.Subject subject) {
+    public QuestionJSONRequest(Question.Type type, Question.Subject subject) {
         path.append(subject).append("/").append(type);
     }
 
-    public QuestionRequest(Question.Type type) {
+    public QuestionJSONRequest(Question.Type type) {
         path.append("type/").append(type);
     }
 
-    public QuestionRequest(Question.Subject subject) {
+    public QuestionJSONRequest(Question.Subject subject) {
         path.append("subject/").append(subject);
     }
 
-    public QuestionRequest(List<Integer> ids) {
+    public QuestionJSONRequest(List<Integer> ids) {
         for (Integer id : ids) {
             path.append(id).append(",");
         }
         path = new StringBuilder(path.substring(0, path.toString().length() - 1));
     }
 
-    public QuestionRequest() {
+    public QuestionJSONRequest() {
     }
 
 
-    public QuestionRequest makeRequest() throws InterruptedException, IOException, JSONException, IllegalArgumentException {
+    public QuestionJSONRequest makeRequest() throws InterruptedException, IOException, JSONException, IllegalArgumentException {
 
         //Make the request from the path built by the constructor.
         this.json = Request.getJSONFromURL(path.toString(), Account.AUTH_TOKEN());

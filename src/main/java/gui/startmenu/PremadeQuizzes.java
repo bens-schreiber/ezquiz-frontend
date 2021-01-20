@@ -13,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import questions.QuizQuestions;
 import questions.question.Question;
-import requests.QuestionRequest;
+import requests.QuestionJSONRequest;
 
 public class PremadeQuizzes {
 
@@ -21,7 +21,7 @@ public class PremadeQuizzes {
     public static Stage stage;
 
     public void networkDesignButtonClicked() {
-        QuizQuestions.initializeQuestions(0, new QuestionRequest(Question.Subject.NETWORKDESIGN));
+        QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.NETWORKDESIGN));
 
         Preference.preferences.put(Preference.QUIZNAME, "Network Design Quiz");
 
@@ -30,7 +30,7 @@ public class PremadeQuizzes {
 
     public void introToBusButtonClicked() {
 
-        QuizQuestions.initializeQuestions(0, new QuestionRequest(Question.Subject.INTBUS));
+        QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.INTBUS));
 
         Preference.preferences.put(Preference.QUIZNAME, "Intro to Business Quiz");
 
@@ -39,7 +39,7 @@ public class PremadeQuizzes {
 
     public void busMathButtonClicked() {
 
-        QuizQuestions.initializeQuestions(0, new QuestionRequest(Question.Subject.BUSMATH));
+        QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.BUSMATH));
 
         Preference.preferences.put(Preference.QUIZNAME, "Business Math Quiz");
 
@@ -48,7 +48,7 @@ public class PremadeQuizzes {
 
     public void marketingButtonClicked() {
 
-        QuizQuestions.initializeQuestions(0, new QuestionRequest(Question.Subject.MARKETING));
+        QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.MARKETING));
 
         Preference.preferences.put(Preference.QUIZNAME, "Marketing Quiz");
 

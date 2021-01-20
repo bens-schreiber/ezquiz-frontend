@@ -20,7 +20,7 @@ class Request {
      * @param url   where to send request
      * @param token auth token
      */
-    public static JSONObject getJSONFromURL(String url, String token) throws IOException, InterruptedException, JSONException {
+    static JSONObject getJSONFromURL(String url, String token) throws IOException, InterruptedException, JSONException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -39,7 +39,7 @@ class Request {
      * @param body       JSONObject of what to send
      * @param urlSegment where to send it
      */
-    public static HttpResponse<String> postRequest(JSONObject body, String urlSegment) throws IOException, InterruptedException {
+    static HttpResponse<String> postRequest(JSONObject body, String urlSegment) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -60,7 +60,7 @@ class Request {
      * @param urlSegment where to send it
      * @param token      auth token
      */
-    public static HttpResponse<String> postRequest(JSONObject body, String urlSegment, String token) throws IOException, InterruptedException {
+    static HttpResponse<String> postRequest(JSONObject body, String urlSegment, String token) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
