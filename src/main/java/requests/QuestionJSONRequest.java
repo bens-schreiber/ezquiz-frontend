@@ -45,7 +45,7 @@ public class QuestionJSONRequest {
     }
 
 
-    public QuestionJSONRequest makeRequest() throws InterruptedException, IOException, JSONException, IllegalArgumentException {
+    public QuestionJSONRequest initializeRequest() throws InterruptedException, IOException, JSONException {
 
         //Make the request from the path built by the constructor.
         this.json = Request.getJSONFromURL(path.toString(), Account.AUTH_TOKEN());
@@ -59,6 +59,7 @@ public class QuestionJSONRequest {
     }
 
     public JSONObject getJson() {
+        System.out.println(json);
         return this.json;
     }
 

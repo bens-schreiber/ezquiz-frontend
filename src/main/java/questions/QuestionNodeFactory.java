@@ -77,5 +77,21 @@ class QuestionNodeFactory {
 
     }
 
+    static QuestionNode[] nodeArrayFromJSON(JSONObject json, int amount) throws JSONException {
+
+        //If the amount is greater than possible, or less than 0, make maximum amount possible.
+        if (amount > json.length() || amount <= 0) amount = json.length() - 1;
+
+        QuestionNode[] nodes = new QuestionNode[amount];
+
+        for (int i = 0; i < amount; i++) {
+            nodes[i] = (QuestionNodeFactory.questionFromJSON((JSONObject) json.get("obj" + i)));
+        }
+
+        System.out.print(Arrays.toString(nodes));
+        return nodes;
+
+    }
+
 
 }

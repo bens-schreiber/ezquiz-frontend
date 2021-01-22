@@ -8,11 +8,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
-import org.json.JSONException;
 import questions.QuizQuestions;
 import requests.DatabaseRequest;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
@@ -35,8 +33,8 @@ public class EnterCode implements Initializable {
             QuizHelper.startQuiz(false);
             stage.close();
 
-        } catch (NumberFormatException | InterruptedException | IOException | JSONException e) {
-            new ErrorNotifier("Could not get test from code.", false).display();
+        } catch (Exception e) {
+            new ErrorNotifier("Could not get test from code.", false).display(stage);
         }
 
     }

@@ -20,7 +20,7 @@ public class AnswerJSONRequest {
         this.questionNodes = questionNode;
     }
 
-    public AnswerJSONRequest makeRequest() throws InterruptedException, JSONException, IOException {
+    public AnswerJSONRequest initializeRequest() throws InterruptedException, JSONException, IOException {
 
         StringBuilder stringBuilder = new StringBuilder().append(Constants.DEFAULT_PATH).append("answer/");
 
@@ -29,7 +29,7 @@ public class AnswerJSONRequest {
         }
 
         //get rid of the last "," because it isn't needed
-        this.json = Request.getJSONFromURL(stringBuilder.substring(0, stringBuilder.toString().length() - 1), Account.AUTH_TOKEN());
+        this.json = Request.getJSONFromURL(stringBuilder.substring(0, stringBuilder.length() - 1), Account.AUTH_TOKEN());
 
         return this;
     }

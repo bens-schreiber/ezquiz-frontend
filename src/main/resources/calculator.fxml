@@ -118,6 +118,9 @@
                     </VBox.margin>
                 </HBox>
             </children>
+            <padding>
+                <Insets top="15.0"/>
+            </padding>
         </VBox>
     </children>
 </AnchorPane>

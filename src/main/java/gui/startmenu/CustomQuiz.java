@@ -12,10 +12,12 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import org.json.JSONException;
 import questions.QuizQuestions;
 import questions.question.Question;
 import requests.QuestionJSONRequest;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -152,6 +154,8 @@ public class CustomQuiz implements Initializable {
 
         } catch (IllegalArgumentException e) {
             new ErrorNotifier("A quiz failed to be created from the current selection.", false).display();
+        } catch (InterruptedException | IOException | JSONException e) {
+            e.printStackTrace();
         }
 
 

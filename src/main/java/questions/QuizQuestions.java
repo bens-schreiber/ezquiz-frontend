@@ -30,15 +30,14 @@ public class QuizQuestions {
      * @param amount              amount of questions wanted, corrected if impossible
      * @param questionJSONRequest specific request object that should be utilized
      */
-    public static void initializeQuestions(int amount, QuestionJSONRequest questionJSONRequest) throws IllegalArgumentException {
+    public static void initializeQuestions(int amount, QuestionJSONRequest questionJSONRequest) throws IllegalArgumentException, JSONException, IOException, InterruptedException {
         try {
 
             //Make the request on the given QuestionJSONRequest, storing the json in the object.
-            questionJSONRequest.makeRequest();
+            questionJSONRequest.initializeRequest();
 
             //Create a pool of question id's in the size of how many questions available, randomize order
             List<Integer> idPool = new LinkedList<>();
-
             for (int i = 0; i < questionJSONRequest.getJson().length() - 1; i++) {
                 idPool.add(i);
             }
@@ -48,12 +47,6 @@ public class QuizQuestions {
             questionNodes = QuestionNodeFactory.nodeArrayFromJSON(questionJSONRequest.getJson(), amount, idPool);
 
         } catch (InterruptedException | IOException | JSONException e) {
-
-            new ErrorNotifier("A question failed to be created.", true).display();
-            questionNodes = null;
-            e.printStackTrace();
-
-        } catch (IllegalArgumentException e) {
 
             //Rethrow exception but get rid of any questions that could have been invalidly loaded
             questionNodes = null;
@@ -67,16 +60,20 @@ public class QuizQuestions {
      *
      * @param ids id of questions to load.
      */
-    public static void initializeQuestions(List<Integer> ids) {
+    public static void initializeQuestions(List<Integer> ids) throws JSONException, IOException, InterruptedException {
+
         try {
 
-            QuestionJSONRequest questionJSONRequest = new QuestionJSONRequest(ids).makeRequest();
-            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(questionJSONRequest.getJson(), ids.size(), ids);
+            QuestionJSONRequest questionJSONRequest = new QuestionJSONRequest(ids).initializeRequest();
 
-        } catch (Exception e) {
-            new ErrorNotifier("A question failed to be created.", true).display();
+            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(questionJSONRequest.getJson(), ids.size());
+
+        } catch (InterruptedException | IOException | JSONException e) {
             e.printStackTrace();
+            questionNodes = null;
+            throw e;
         }
+
     }
 
     /**
@@ -86,7 +83,7 @@ public class QuizQuestions {
         try {
 
             //Attempt to set answers for all questions
-            QuestionAnswerHelper.setAnswers(questionNodes, new AnswerJSONRequest(questionNodes).makeRequest().getJson());
+            QuestionAnswerHelper.setAnswers(questionNodes, new AnswerJSONRequest(questionNodes).initializeRequest().getJson());
 
         } catch (Exception e) {
             new ErrorNotifier("A question failed to be graded.", true).display();

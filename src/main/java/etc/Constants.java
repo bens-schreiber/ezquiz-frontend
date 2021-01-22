@@ -23,7 +23,7 @@ public class Constants {
 
     public static String SELECTED_COLOR_FX = "-fx-background-color: #56ea63;";
 
-    public static String UNSELECTED_COLOR_FX = "-fx-background-color: #8797f1;";
+    public static String UNSELECTED_COLOR_FX = "-fx-background-color: #303f9f";
 
 
 }

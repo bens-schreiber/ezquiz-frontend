@@ -82,5 +82,6 @@ public class DrawingPadController implements Initializable {
 
         clearButton.setOnAction(event -> QuizController.clearCanvas());
 
+
     }
 }

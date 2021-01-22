@@ -10,15 +10,16 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Set;
 
 public class FXHelper {
 
     private FXHelper() {
     }
 
-    private static final HashSet<Window> openedInstances = new HashSet<>();
+    private static final Set<Window> openedInstances = new HashSet<>();
 
-    public static HashSet<Window> getOpenedInstances() {
+    public static Set<Window> getOpenedInstances() {
         return openedInstances;
     }
 
@@ -56,7 +57,7 @@ public class FXHelper {
         STARTPAGE("/startpage.fxml"),
         PREMADEQUIZES("/premadequizes.fxml"),
         LOGIN("/login.fxml"),
-        REGISTER("/quiz.fxml"),
+        REGISTER("/register.fxml"),
         QUIZ("/quiz.fxml"),
         ENTERCODE("/entercode.fxml"),
         CALCULATOR("/calculator.fxml"),
@@ -65,8 +66,8 @@ public class FXHelper {
         PRINTRESULTS("/printableresults.fxml"),
         SEERESULTS("/questionresults.fxml"),
         CUSTOMQUIZ("/customquiz.fxml"),
-        ERROR("/errorScreen.fxml"),
-        CONFIRM("/confirmScreen.fxml");
+        ERROR("/errorscreen.fxml"),
+        CONFIRM("/confirmscreen.fxml");
 
         private final String path;
 

@@ -14,12 +14,11 @@
                     AnchorPane.rightAnchor="0.0">
             <children>
                 <Button fx:id="submitButton" layoutX="1817.0" layoutY="10.0" mnemonicParsing="false"
-                        onAction="#submitButtonClicked" prefHeight="26.0" prefWidth="89.0"
-                        stylesheets="@css/standard_button.css" text="Submit"/>
-                <HBox layoutX="14.0" layoutY="6.0" prefHeight="36.0" prefWidth="67.0" spacing="5.0"
+                        onAction="#submitButtonClicked" stylesheets="@css/standard_button.css" text="Submit"/>
+                <HBox alignment="CENTER" layoutX="14.0" layoutY="6.0" prefHeight="36.0" prefWidth="67.0" spacing="5.0"
                       stylesheets="@css/standard_button.css">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#flagButtonClicked" prefHeight="32.0" prefWidth="67.0"
+                        <Button mnemonicParsing="false" onAction="#flagButtonClicked"
                                 style="-fx-background-color: #fb8804;" text="Flag"/>
                     </children>
                 </HBox>
@@ -126,7 +125,7 @@
                       stylesheets="@css/nextbackbuttons.css">
                     <children>
                         <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false"
-                                onAction="#backButtonClicked">
+                                onAction="#backButtonClicked" style="-fx-background-color: #303f9f;">
                             <graphic>
                                 <ImageView>
                                     <image>
@@ -136,7 +135,7 @@
                             </graphic>
                         </Button>
                         <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonClicked"
-                                prefHeight="35.0" prefWidth="40.0">
+                                prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: #303f9f;">
                             <graphic>
                                 <ImageView>
                                     <image>
@@ -166,14 +165,17 @@
             <children>
                 <Label fx:id="quizTimer" alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="60.0" text="00:00:00"
                        textFill="#c32148"/>
-                <Label fx:id="subjAndQuestion" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="18.0" text="Subj.Question" textFill="#303f9f">
+                <Label fx:id="subjAndQuestion" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308"
+                       nodeOrientation="LEFT_TO_RIGHT" prefHeight="18.0" text="Subj.Question" textFill="#303f9f">
                     <font>
-                        <Font size="14.0" />
+                        <Font size="14.0"/>
                     </font>
                 </Label>
-                <Label fx:id="currQuestionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="104.0" text="30 out of 30" textAlignment="CENTER" textFill="#303f9f">
+                <Label fx:id="currQuestionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308"
+                       prefHeight="18.0" prefWidth="104.0" text="30 out of 30" textAlignment="CENTER"
+                       textFill="#303f9f">
                     <font>
-                        <Font size="14.0" />
+                        <Font size="14.0"/>
                     </font>
                 </Label>
             </children>

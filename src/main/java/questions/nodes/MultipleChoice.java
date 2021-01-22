@@ -1,6 +1,5 @@
 package questions.nodes;
 
-import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
@@ -8,11 +7,7 @@ import javafx.scene.layout.VBox;
 import java.util.Collections;
 import java.util.List;
 
-public class MultipleChoice implements TypeNode {
-
-    private String response;
-
-    private final Node node;
+public class MultipleChoice extends TypeNode {
 
     public MultipleChoice(List<String> options) {
 
@@ -35,7 +30,7 @@ public class MultipleChoice implements TypeNode {
             radioButton.setToggleGroup(mChoice);
 
             //On mouse clicked, send button text to response, overwrite old
-            radioButton.setOnMouseClicked(e -> this.response = radioButton.getText());
+            radioButton.setOnMouseClicked(e -> this.response = Collections.singletonList(radioButton.getText()));
 
         }
 
@@ -44,21 +39,6 @@ public class MultipleChoice implements TypeNode {
         vbox.getChildren().addAll(radioButtons);
 
         this.node = vbox;
-    }
-
-    @Override
-    public Node getNode() {
-        return this.node;
-    }
-
-    @Override
-    public List<String> getResponse() {
-        return Collections.singletonList(this.response);
-    }
-
-    @Override
-    public boolean isAnswered() {
-        return !(response == null) && !response.isEmpty();
     }
 
 }

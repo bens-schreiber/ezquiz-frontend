@@ -3,7 +3,6 @@ package gui.quiz.tools;
 import etc.Constants;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
@@ -19,13 +18,10 @@ public class NotePadController implements Initializable {
     @FXML
     TextArea notepadText;
 
-    @FXML
-    Button saveButton;
-
     private static String savedText;
 
     //Make a Stage variable because these are their own PopupStage and must be closed from inside
-    private static Stage stage;
+    private static Stage stage = new Stage();
 
     public static Stage getStage() {
         return stage;
@@ -44,6 +40,7 @@ public class NotePadController implements Initializable {
         //Limit how much text can be typed.
         UnaryOperator<TextFormatter.Change> modifyChange = c -> {
             if (c.isContentChange()) {
+                savedText = c.getControlNewText();
                 int newLength = c.getControlNewText().length();
                 if (newLength > Constants.MAX_NOTEPAD_TEXT) {
                     c.setText("");
@@ -55,13 +52,5 @@ public class NotePadController implements Initializable {
 
         //Put the saved text on the notepad
         notepadText.setText(savedText);
-
-    }
-
-    //Save the text
-    public void onSaveButton() {
-
-        savedText = notepadText.getText();
-
     }
 }

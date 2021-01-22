@@ -157,6 +157,7 @@ public class QuizController implements Initializable {
 
     }
 
+
     //When next button is clicked
     public void nextButtonClicked() {
 
@@ -169,6 +170,7 @@ public class QuizController implements Initializable {
 
     }
 
+
     //When back button is clicked
     public void backButtonClicked() {
 
@@ -180,6 +182,7 @@ public class QuizController implements Initializable {
         nextButton.setDisable(currentQuestionIndex + 1 == QuizQuestions.getQuestionNodes().length);
 
     }
+
 
     public void flagButtonClicked() {
 
@@ -196,29 +199,29 @@ public class QuizController implements Initializable {
         }
     }
 
+
     public void submitButtonClicked() {
 
+        if (!List.of(QuizQuestions.getQuestionNodes()).stream().allMatch(QuestionNode::isAnswered)) {
+            if (new ConfirmNotifier("Some answers are unfinished. Are sure you want to submit?").display().getResponse()) {
+                QuizHelper.endQuiz();
+            }
+        }
+
         //If any questions are flagged
-        if (questionHBox.getChildren().stream().anyMatch(node -> ((FlagButton) node).isFlagged())) {
+        else if (questionHBox.getChildren().stream().anyMatch(node -> ((FlagButton) node).isFlagged())) {
             if (new ConfirmNotifier("Some questions are flagged. Are you sure you want to submit?").display().getResponse()) {
                 QuizHelper.endQuiz();
             }
         }
 
-        //If all questions are answered.
-        else if (List.of(QuizQuestions.getQuestionNodes()).stream().allMatch(QuestionNode::isAnswered)) {
 
+        //If all questions are answered.
+        else {
             if (new ConfirmNotifier("Are you sure you want to submit?").display().getResponse()) {
                 QuizHelper.endQuiz();
             }
-
         }
-
-        //If all questions aren't answered
-        else if (new ConfirmNotifier("Some answers are unfinished. Are sure you want to submit?").display().getResponse()) {
-            QuizHelper.endQuiz();
-        }
-
     }
 
 
@@ -241,7 +244,6 @@ public class QuizController implements Initializable {
 
                 Stage stage = FXHelper.getPopupStage(FXHelper.Window.CALCULATOR, false);
 
-                //If X button is clicked
                 stage.setOnCloseRequest(e -> FXHelper.getOpenedInstances().remove(FXHelper.Window.CALCULATOR));
 
                 //Add to saved stages
@@ -261,6 +263,7 @@ public class QuizController implements Initializable {
 
     }
 
+
     //When the notepad button is clicked
     public void notepadButtonClicked() {
 
@@ -272,7 +275,6 @@ public class QuizController implements Initializable {
 
                 Stage stage = FXHelper.getPopupStage(FXHelper.Window.NOTEPAD, false);
 
-                //If X button is clicked
                 stage.setOnCloseRequest(e -> FXHelper.getOpenedInstances().remove(FXHelper.Window.NOTEPAD));
 
                 FXHelper.getOpenedInstances().add(FXHelper.Window.NOTEPAD);
@@ -290,6 +292,7 @@ public class QuizController implements Initializable {
         }
     }
 
+
     //On drawing button clicked
     public void drawingPadButtonClicked() {
 
@@ -306,15 +309,13 @@ public class QuizController implements Initializable {
                 paintCanvas.setDisable(false);
 
                 Stage stage = FXHelper.getPopupStage(FXHelper.Window.DRAWINGPAD, false);
+                FXHelper.getOpenedInstances().add(FXHelper.Window.DRAWINGPAD);
+                DrawingPadController.setStage(stage);
 
-                //If X button is clicked
                 stage.setOnCloseRequest(e -> {
                     FXHelper.getOpenedInstances().remove(FXHelper.Window.DRAWINGPAD);
                     paintCanvas.setDisable(true);
                 });
-
-                FXHelper.getOpenedInstances().add(FXHelper.Window.DRAWINGPAD);
-                DrawingPadController.setStage(stage);
 
                 stage.show();
 
@@ -334,6 +335,7 @@ public class QuizController implements Initializable {
     private FlagButton currentFlagButton() {
         return (FlagButton) questionHBox.getChildren().get(currentQuestionIndex);
     }
+
 
     private void highlightSelected() {
         //unhighlight all nodes unless flagged
@@ -359,6 +361,7 @@ public class QuizController implements Initializable {
         gc.stroke();
     }
 
+
     //When dragging mouse
     public void canvasOnDragged(MouseEvent event) {
 
@@ -367,13 +370,16 @@ public class QuizController implements Initializable {
         gc.stroke();
     }
 
+
     public static void changeColor(Color color) {
         gc.setStroke(color);
     }
 
+
     public static void changeWidth(Double width) {
         gc.setLineWidth(width);
     }
+
 
     public static void clearCanvas() {
         gc.clearRect(0, 0, 1920, 1080);

@@ -12,9 +12,10 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1082.0" prefWidth="1920.0" style="-fx-background-color: #E1E1E1;" stylesheets="@css/standard_button.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.results.PrintResultsScreen">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="11.0" layoutX="8.0" layoutY="100.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="1898.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="10.0" />
-        <Label fx:id="testName" alignment="CENTER" layoutX="320.0" layoutY="49.0" prefHeight="51.0" prefWidth="1319.0" textAlignment="CENTER" textFill="#c32148">
+        <Label fx:id="testName" alignment="CENTER" layoutX="943.0" layoutY="57.0" text="aaaa" textAlignment="CENTER"
+               textFill="#303f9f">
             <font>
-                <Font size="30.0" />
+                <Font size="30.0"/>
             </font>
         </Label>
         <AnchorPane fx:id="topPane" prefHeight="49.0" prefWidth="1920.0" style="-fx-background-color: #9E9E9E;">
@@ -43,37 +44,37 @@
                 </HBox>
             </children>
         </AnchorPane>
-        <Label alignment="CENTER" layoutX="-26.0" layoutY="49.0" prefHeight="51.0" prefWidth="190.0" text="Results" textAlignment="CENTER" textFill="#303f9f">
+        <Label alignment="CENTER" layoutX="-26.0" layoutY="49.0" prefHeight="51.0" prefWidth="190.0" text="Results"
+               textAlignment="CENTER" textFill="#303f9f">
             <font>
-                <Font size="30.0" />
+                <Font size="30.0"/>
             </font>
         </Label>
-        <ScrollPane layoutX="14.0" layoutY="130.0" prefHeight="879.0" prefWidth="1898.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="877.0" prefWidth="1896.0">
-                    <children>
-                        <Label fx:id="percentageLabel" alignment="CENTER" layoutX="883.0" layoutY="162.0" prefHeight="46.0" prefWidth="132.0" text="0%">
-                            <font>
-                                <Font size="20.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="outOfLabel" alignment="CENTER" layoutX="774.0" layoutY="82.0" prefHeight="103.0" prefWidth="349.0" text="0 out of 0" textFill="#eb4a4a">
-                            <font>
-                                <Font size="42.0" />
-                            </font>
-                        </Label>
-                        <TextField alignment="CENTER" layoutX="864.0" layoutY="219.0" promptText="Your Name Here" style="-fx-border-color: black; -fx-border-style: segments(10, 15, 15, 15)  line-cap round;" />
-                        <BarChart fx:id="barChart" layoutX="701.0" layoutY="306.0" prefHeight="400.0" prefWidth="544.0" title="Question Variation" AnchorPane.leftAnchor="701.0" AnchorPane.rightAnchor="701.0">
-                            <xAxis>
-                                <CategoryAxis label="Subjects" side="BOTTOM" />
-                            </xAxis>
-                            <yAxis>
-                                <NumberAxis label="Occurences" side="LEFT" />
-                            </yAxis>
-                        </BarChart>
-                    </children>
-                </AnchorPane>
-            </content>
-        </ScrollPane>
+        <AnchorPane layoutX="35.0" layoutY="130.0" minHeight="0.0" minWidth="0.0" prefHeight="877.0" prefWidth="1896.0"
+                    AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="-5.0">
+            <children>
+                <Label fx:id="percentageLabel" alignment="CENTER" layoutX="934.0" layoutY="158.0" text="0%">
+                    <font>
+                        <Font size="20.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="outOfLabel" alignment="CENTER" layoutX="850.0" layoutY="83.0" text="0 out of 0"
+                       textFill="#eb4a4a">
+                    <font>
+                        <Font size="42.0"/>
+                    </font>
+                </Label>
+                <TextField alignment="CENTER" layoutX="865.0" layoutY="218.0" promptText="Your Name Here"/>
+                <BarChart fx:id="barChart" layoutX="707.0" layoutY="300.0" title="Question Variation"
+                          AnchorPane.leftAnchor="707.0" AnchorPane.rightAnchor="695.0">
+                    <xAxis>
+                        <CategoryAxis label="Subjects" side="BOTTOM"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Occurences" side="LEFT"/>
+                    </yAxis>
+                </BarChart>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>

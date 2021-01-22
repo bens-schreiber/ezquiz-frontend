@@ -1,18 +1,12 @@
 package questions.nodes;
 
-import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CheckBoxNode implements TypeNode {
-
-    private List<String> response = Collections.emptyList();
-
-    private final Node node;
+public class CheckBoxNode extends TypeNode {
 
     public CheckBoxNode(List<String> options) {
         //Get box amount from options size
@@ -45,21 +39,6 @@ public class CheckBoxNode implements TypeNode {
         vbox.getChildren().addAll(boxes);
 
         this.node = vbox;
-    }
-
-    @Override
-    public Node getNode() {
-        return this.node;
-    }
-
-    @Override
-    public List<String> getResponse() {
-        return this.response;
-    }
-
-    @Override
-    public boolean isAnswered() {
-        return !response.isEmpty();
     }
 
 }

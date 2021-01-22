@@ -40,4 +40,26 @@ public class ErrorNotifier {
             e.printStackTrace();
         }
     }
+
+    public void display(Stage owner) {
+        try {
+
+
+            Stage stage = FXHelper.getPopupStage(FXHelper.Window.ERROR, true);
+            stage.initOwner(owner);
+
+            //Pass stage to ErrorScreenController so it can close it.
+            ErrorScreenController.setStage(stage);
+
+            stage.showAndWait();
+
+
+            if (this.fatal) {
+                Platform.exit();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

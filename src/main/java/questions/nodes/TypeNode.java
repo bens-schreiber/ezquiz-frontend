@@ -4,12 +4,21 @@ import javafx.scene.Node;
 
 import java.util.List;
 
-public interface TypeNode {
+abstract public class TypeNode {
 
-    Node getNode();
+    protected List<String> response;
 
-    List<String> getResponse();
+    protected Node node;
 
-    boolean isAnswered();
+    public Node getNode() {
+        return this.node;
+    }
 
+    public List<String> getResponse() {
+        return this.response;
+    }
+
+    public boolean isAnswered() {
+        return !(response == null) && !response.isEmpty();
+    }
 }

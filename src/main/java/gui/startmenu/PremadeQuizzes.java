@@ -9,9 +9,12 @@ import gui.popup.error.ErrorNotifier;
 import gui.quiz.QuizHelper;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.json.JSONException;
 import questions.QuizQuestions;
 import questions.question.Question;
 import requests.QuestionJSONRequest;
+
+import java.io.IOException;
 
 public class PremadeQuizzes {
 
@@ -19,38 +22,69 @@ public class PremadeQuizzes {
     public static Stage stage;
 
     public void networkDesignButtonClicked() {
-        QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.NETWORKDESIGN));
+        try {
+            QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.NETWORKDESIGN));
 
-        QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, "Network Design Quiz");
+            QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, "Network Design Quiz");
 
-        QuizHelper.startQuiz(false);
+            QuizHelper.startQuiz(false);
+
+        } catch (InterruptedException | IOException | JSONException e) {
+
+            new ErrorNotifier("A question failed to be created.", true).display(stage);
+            e.printStackTrace();
+        }
     }
 
     public void introToBusButtonClicked() {
 
-        QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.INTBUS));
+        try {
 
-        QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, "Intro to Business Quiz");
+            QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.INTBUS));
 
-        QuizHelper.startQuiz(false);
+            QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, "Intro to Business Quiz");
+
+            QuizHelper.startQuiz(false);
+
+        } catch (InterruptedException | IOException | JSONException e) {
+
+            new ErrorNotifier("A question failed to be created.", true).display(stage);
+            e.printStackTrace();
+        }
     }
 
     public void busMathButtonClicked() {
 
-        QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.BUSMATH));
+        try {
 
-        QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, "Business Math Quiz");
+            QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.BUSMATH));
 
-        QuizHelper.startQuiz(false);
+            QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, "Business Math Quiz");
+
+            QuizHelper.startQuiz(false);
+
+        } catch (InterruptedException | IOException | JSONException e) {
+
+            new ErrorNotifier("A question failed to be created.", true).display(stage);
+            e.printStackTrace();
+        }
     }
 
     public void marketingButtonClicked() {
 
-        QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.MARKETING));
+        try {
 
-        QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, "Marketing Quiz");
+            QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.MARKETING));
 
-        QuizHelper.startQuiz(false);
+            QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, "Marketing Quiz");
+
+            QuizHelper.startQuiz(false);
+
+        } catch (InterruptedException | IOException | JSONException e) {
+
+            new ErrorNotifier("A question failed to be created.", true).display(stage);
+            e.printStackTrace();
+        }
     }
 
     public void customButtonClicked() {
@@ -65,7 +99,7 @@ public class PremadeQuizzes {
 
         } catch (Exception e) {
 
-            new ErrorNotifier("A page failed to load", true).display();
+            new ErrorNotifier("A page failed to load", true).display(stage);
 
             e.printStackTrace();
 
