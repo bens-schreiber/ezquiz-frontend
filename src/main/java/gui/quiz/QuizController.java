@@ -3,7 +3,6 @@ package gui.quiz;
 import etc.Constants;
 import gui.etc.Account;
 import gui.etc.FXHelper;
-import gui.etc.Window;
 import gui.popup.confirm.ConfirmNotifier;
 import gui.popup.error.ErrorNotifier;
 import gui.quiz.tools.CalculatorController;
@@ -59,7 +58,7 @@ public class QuizController implements Initializable {
     static Integer seconds = 1800;
 
     //Index of the QuizNodes the quiz is currently showing
-    static int currentQuestionIndex = 0;
+    static int currentQuestionIndex;
 
     /**
      * Initial run method
@@ -67,22 +66,24 @@ public class QuizController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        currentQuestionIndex = 0;
+
         //Establish preferences
-        if (!Boolean.parseBoolean(Preference.preferences.get(Preference.NOTEPAD))) {
+        if (!Boolean.parseBoolean(QuizHelper.Preference.preferences.get(QuizHelper.Preference.NOTEPAD))) {
             addonVBox.getChildren().remove(notePadButton);
         }
 
-        if (!Boolean.parseBoolean(Preference.preferences.get(Preference.CALCULATOR))) {
+        if (!Boolean.parseBoolean(QuizHelper.Preference.preferences.get(QuizHelper.Preference.CALCULATOR))) {
             addonVBox.getChildren().remove(calculatorButton);
         }
 
-        if (!Boolean.parseBoolean(Preference.preferences.get(Preference.DRAWINGPAD))) {
+        if (!Boolean.parseBoolean(QuizHelper.Preference.preferences.get(QuizHelper.Preference.DRAWINGPAD))) {
             addonVBox.getChildren().remove(drawingPadButton);
         }
 
-        quizName.setText(Preference.preferences.get(Preference.QUIZNAME));
+        quizName.setText(QuizHelper.Preference.preferences.get(QuizHelper.Preference.QUIZNAME));
 
-        seconds = Integer.parseInt(Preference.preferences.get(Preference.TIME));
+        seconds = Integer.parseInt(QuizHelper.Preference.preferences.get(QuizHelper.Preference.TIME));
 
         userLabel.setText(userLabel.getText() + Account.getUsername());
 
@@ -229,22 +230,22 @@ public class QuizController implements Initializable {
         try {
 
             //If an instance of Calculator is already open
-            if (FXHelper.getOpenedInstances().contains(Window.CALCULATOR)) {
+            if (FXHelper.getOpenedInstances().contains(FXHelper.Window.CALCULATOR)) {
 
                 //Remove from stages
-                FXHelper.getOpenedInstances().remove(Window.CALCULATOR);
+                FXHelper.getOpenedInstances().remove(FXHelper.Window.CALCULATOR);
 
                 //Close
                 CalculatorController.getStage().close();
             } else {
 
-                Stage stage = FXHelper.getPopupStage(Window.CALCULATOR, false);
+                Stage stage = FXHelper.getPopupStage(FXHelper.Window.CALCULATOR, false);
 
                 //If X button is clicked
-                stage.setOnCloseRequest(e -> FXHelper.getOpenedInstances().remove(Window.CALCULATOR));
+                stage.setOnCloseRequest(e -> FXHelper.getOpenedInstances().remove(FXHelper.Window.CALCULATOR));
 
                 //Add to saved stages
-                FXHelper.getOpenedInstances().add(Window.CALCULATOR);
+                FXHelper.getOpenedInstances().add(FXHelper.Window.CALCULATOR);
                 CalculatorController.setStage(stage);
                 stage.show();
 
@@ -264,17 +265,17 @@ public class QuizController implements Initializable {
     public void notepadButtonClicked() {
 
         try {
-            if (FXHelper.getOpenedInstances().contains(Window.NOTEPAD)) {
-                FXHelper.getOpenedInstances().remove(Window.NOTEPAD);
+            if (FXHelper.getOpenedInstances().contains(FXHelper.Window.NOTEPAD)) {
+                FXHelper.getOpenedInstances().remove(FXHelper.Window.NOTEPAD);
                 NotePadController.getStage().close();
             } else {
 
-                Stage stage = FXHelper.getPopupStage(Window.NOTEPAD, false);
+                Stage stage = FXHelper.getPopupStage(FXHelper.Window.NOTEPAD, false);
 
                 //If X button is clicked
-                stage.setOnCloseRequest(e -> FXHelper.getOpenedInstances().remove(Window.NOTEPAD));
+                stage.setOnCloseRequest(e -> FXHelper.getOpenedInstances().remove(FXHelper.Window.NOTEPAD));
 
-                FXHelper.getOpenedInstances().add(Window.NOTEPAD);
+                FXHelper.getOpenedInstances().add(FXHelper.Window.NOTEPAD);
                 NotePadController.setStage(stage);
                 stage.show();
 
@@ -294,25 +295,25 @@ public class QuizController implements Initializable {
 
         try {
 
-            if (FXHelper.getOpenedInstances().contains(Window.DRAWINGPAD)) {
+            if (FXHelper.getOpenedInstances().contains(FXHelper.Window.DRAWINGPAD)) {
 
                 paintCanvas.setDisable(true);
 
-                FXHelper.getOpenedInstances().remove(Window.DRAWINGPAD);
+                FXHelper.getOpenedInstances().remove(FXHelper.Window.DRAWINGPAD);
                 DrawingPadController.getStage().close();
             } else {
 
                 paintCanvas.setDisable(false);
 
-                Stage stage = FXHelper.getPopupStage(Window.DRAWINGPAD, false);
+                Stage stage = FXHelper.getPopupStage(FXHelper.Window.DRAWINGPAD, false);
 
                 //If X button is clicked
                 stage.setOnCloseRequest(e -> {
-                    FXHelper.getOpenedInstances().remove(Window.DRAWINGPAD);
+                    FXHelper.getOpenedInstances().remove(FXHelper.Window.DRAWINGPAD);
                     paintCanvas.setDisable(true);
                 });
 
-                FXHelper.getOpenedInstances().add(Window.DRAWINGPAD);
+                FXHelper.getOpenedInstances().add(FXHelper.Window.DRAWINGPAD);
                 DrawingPadController.setStage(stage);
 
                 stage.show();
@@ -379,6 +380,7 @@ public class QuizController implements Initializable {
     }
 
 
+    //Special button that has the property of a flagged boolean
     static class FlagButton extends Button {
 
         private boolean flagged;
@@ -387,6 +389,7 @@ public class QuizController implements Initializable {
 
             this.flagged = flagged;
 
+            //Change style (color) of button according to flagged boolean
             this.setStyle(flagged ? Constants.FLAGGED_COLOR_FX : Constants.UNSELECTED_COLOR_FX);
 
         }

@@ -2,9 +2,8 @@ package gui.results;
 
 import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
-import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
-import gui.quiz.Preference;
+import gui.quiz.QuizHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -60,7 +59,7 @@ public class QuestionResultsScreen implements Initializable {
                 answeredQuestion.setStyle("-fx-background-color: rgba(255, 158, 173, .7);");
 
                 //Show correct answer if desired in preferences
-                if (Boolean.parseBoolean(Preference.preferences.get(Preference.SHOWANSWERS))) {
+                if (Boolean.parseBoolean(QuizHelper.Preference.preferences.get(QuizHelper.Preference.SHOWANSWERS))) {
 
                     answeredQuestion.getChildren().add(new Label("Correct answer: "
                             + questionNode.getAnswer()
@@ -81,7 +80,7 @@ public class QuestionResultsScreen implements Initializable {
 
         try {
 
-            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(Window.PRINTRESULTS));
+            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.PRINTRESULTS));
 
         } catch (IOException e) {
             new ErrorNotifier("Results could not display.", true).display();

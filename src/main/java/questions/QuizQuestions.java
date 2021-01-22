@@ -33,6 +33,7 @@ public class QuizQuestions {
     public static void initializeQuestions(int amount, QuestionJSONRequest questionJSONRequest) throws IllegalArgumentException {
         try {
 
+            //Make the request on the given QuestionJSONRequest, storing the json in the object.
             questionJSONRequest.makeRequest();
 
             //Create a pool of question id's in the size of how many questions available, randomize order
@@ -79,7 +80,7 @@ public class QuizQuestions {
     }
 
     /**
-     * Grades stored QuestionNodes utilizing static QuestionAnswerHelper class
+     * Grades stored QuestionNodes utilizing QuestionAnswerHelper class
      */
     public static void gradeAnswers() {
         try {

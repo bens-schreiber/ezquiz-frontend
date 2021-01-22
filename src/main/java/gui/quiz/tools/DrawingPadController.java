@@ -47,6 +47,8 @@ public class DrawingPadController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        QuizController.changeColor(Color.WHITE);
+
         colorPicker.setOnAction(e -> QuizController.changeColor(colorPicker.getValue()));
 
         brushSize.setOnKeyTyped(e -> {

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MultipleChoice implements TypeNode {
 
-    private List<String> response = Collections.emptyList();
+    private String response;
 
     private final Node node;
 
@@ -35,7 +35,7 @@ public class MultipleChoice implements TypeNode {
             radioButton.setToggleGroup(mChoice);
 
             //On mouse clicked, send button text to response, overwrite old
-            radioButton.setOnMouseClicked(e -> this.response = Collections.singletonList(radioButton.getText()));
+            radioButton.setOnMouseClicked(e -> this.response = radioButton.getText());
 
         }
 
@@ -53,12 +53,12 @@ public class MultipleChoice implements TypeNode {
 
     @Override
     public List<String> getResponse() {
-        return this.response;
+        return Collections.singletonList(this.response);
     }
 
     @Override
     public boolean isAnswered() {
-        return !response.isEmpty();
+        return !(response == null) && !response.isEmpty();
     }
 
 }

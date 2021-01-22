@@ -2,9 +2,7 @@ package gui.startmenu;
 
 import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
-import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
-import gui.quiz.Preference;
 import gui.quiz.QuizHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -88,7 +86,7 @@ public class CustomQuiz implements Initializable {
 
         try {
 
-            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(Window.STARTPAGE));
+            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.STARTPAGE));
 
         } catch (Exception e) {
 
@@ -111,16 +109,16 @@ public class CustomQuiz implements Initializable {
 
             //30 minutes default
             if (!testTimeField.getText().isEmpty()) {
-                Preference.preferences.put(Preference.TIME, testTimeField.getText());
+                QuizHelper.Preference.preferences.put(QuizHelper.Preference.TIME, testTimeField.getText());
             }
 
             //Handle test name being empty
             //Default name is Custom Exam
-            Preference.preferences.put(Preference.QUIZNAME, testNameField.getText().isEmpty() ? "Custom Exam" : testNameField.getText());
-            Preference.preferences.put(Preference.CALCULATOR, String.valueOf(calculator.isSelected()));
-            Preference.preferences.put(Preference.NOTEPAD, String.valueOf(notepad.isSelected()));
-            Preference.preferences.put(Preference.DRAWINGPAD, String.valueOf(drawingpad.isSelected()));
-            Preference.preferences.put(Preference.SHOWANSWERS, String.valueOf(showAnswers.isSelected()));
+            QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, testNameField.getText().isEmpty() ? "Custom Exam" : testNameField.getText());
+            QuizHelper.Preference.preferences.put(QuizHelper.Preference.CALCULATOR, String.valueOf(calculator.isSelected()));
+            QuizHelper.Preference.preferences.put(QuizHelper.Preference.NOTEPAD, String.valueOf(notepad.isSelected()));
+            QuizHelper.Preference.preferences.put(QuizHelper.Preference.DRAWINGPAD, String.valueOf(drawingpad.isSelected()));
+            QuizHelper.Preference.preferences.put(QuizHelper.Preference.SHOWANSWERS, String.valueOf(showAnswers.isSelected()));
 
             Question.Type type;
             type = switch (typeList.getValue()) {

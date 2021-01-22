@@ -1,11 +1,13 @@
 package gui.popup.confirm;
 
 import gui.etc.FXHelper;
-import gui.etc.Window;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Confirm / Deny popup stage
+ */
 public class ConfirmNotifier {
 
     private boolean response;
@@ -14,13 +16,12 @@ public class ConfirmNotifier {
 
         //Pass error to ConfirmScreenController so it knows what to display
         ConfirmScreenController.setPrompt(prompt);
-
     }
 
     public ConfirmNotifier display() {
         try {
 
-            Stage stage = FXHelper.getPopupStage(Window.CONFIRM, true);
+            Stage stage = FXHelper.getPopupStage(FXHelper.Window.CONFIRM, true);
 
             //Pass stage to ErrorScreenController so it can close it.
             ConfirmScreenController.setStage(stage);

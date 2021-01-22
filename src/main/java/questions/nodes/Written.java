@@ -10,18 +10,18 @@ import java.util.List;
 
 public class Written implements TypeNode {
 
-    private List<String> response = Collections.emptyList();
+    private String response;
 
     private final Node node;
 
-    public Written() {
+    {
 
         TextField textField = new TextField();
         textField.setMaxSize(115, 10);
         Label label = new Label("Answer:");
 
         //Set functionality
-        textField.setOnKeyTyped(e -> this.response = Collections.singletonList(textField.getText()));
+        textField.setOnKeyTyped(e -> this.response = textField.getText());
 
         VBox vbox = new VBox(15);
         vbox.getChildren().addAll(label, textField);
@@ -37,11 +37,11 @@ public class Written implements TypeNode {
 
     @Override
     public List<String> getResponse() {
-        return this.response;
+        return Collections.singletonList(this.response);
     }
 
     @Override
     public boolean isAnswered() {
-        return !response.isEmpty();
+        return !(response == null) && !response.isEmpty();
     }
 }

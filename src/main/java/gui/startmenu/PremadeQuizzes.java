@@ -5,9 +5,7 @@ package gui.startmenu;
 
 import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
-import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
-import gui.quiz.Preference;
 import gui.quiz.QuizHelper;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,7 +21,7 @@ public class PremadeQuizzes {
     public void networkDesignButtonClicked() {
         QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.NETWORKDESIGN));
 
-        Preference.preferences.put(Preference.QUIZNAME, "Network Design Quiz");
+        QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, "Network Design Quiz");
 
         QuizHelper.startQuiz(false);
     }
@@ -32,7 +30,7 @@ public class PremadeQuizzes {
 
         QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.INTBUS));
 
-        Preference.preferences.put(Preference.QUIZNAME, "Intro to Business Quiz");
+        QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, "Intro to Business Quiz");
 
         QuizHelper.startQuiz(false);
     }
@@ -41,7 +39,7 @@ public class PremadeQuizzes {
 
         QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.BUSMATH));
 
-        Preference.preferences.put(Preference.QUIZNAME, "Business Math Quiz");
+        QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, "Business Math Quiz");
 
         QuizHelper.startQuiz(false);
     }
@@ -50,7 +48,7 @@ public class PremadeQuizzes {
 
         QuizQuestions.initializeQuestions(0, new QuestionJSONRequest(Question.Subject.MARKETING));
 
-        Preference.preferences.put(Preference.QUIZNAME, "Marketing Quiz");
+        QuizHelper.Preference.preferences.put(QuizHelper.Preference.QUIZNAME, "Marketing Quiz");
 
         QuizHelper.startQuiz(false);
     }
@@ -59,7 +57,7 @@ public class PremadeQuizzes {
 
         try {
 
-            Scene scene = FXHelper.getScene(Window.CUSTOMQUIZ);
+            Scene scene = FXHelper.getScene(FXHelper.Window.CUSTOMQUIZ);
 
             stage.close();
 

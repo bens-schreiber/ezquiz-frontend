@@ -3,9 +3,8 @@ package gui.results;
 import etc.BitMap;
 import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
-import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
-import gui.quiz.Preference;
+import gui.quiz.QuizHelper;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -55,10 +54,10 @@ public class PrintResultsScreen implements Initializable {
         loadBarChart();
 
         //Disable button if in preferences
-        seeQuestionsButton.setDisable(!Boolean.parseBoolean(Preference.preferences.get(Preference.SHOWANSWERS)));
+        seeQuestionsButton.setDisable(!Boolean.parseBoolean(QuizHelper.Preference.preferences.get(QuizHelper.Preference.SHOWANSWERS)));
 
         //Set test name
-        testName.setText(testName.getText() + Preference.preferences.get(Preference.QUIZNAME));
+        testName.setText(testName.getText() + QuizHelper.Preference.preferences.get(QuizHelper.Preference.QUIZNAME));
 
         //Check all answers
         QuizQuestions.gradeAnswers();
@@ -111,6 +110,19 @@ public class PrintResultsScreen implements Initializable {
 
         barChart.getData().add(series);
 
+    }
+
+    public void backToMainMenuClicked() {
+        try {
+
+            PrimaryStageHolder.getPrimaryStage().close();
+            PrimaryStageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.STARTPAGE, false));
+            PrimaryStageHolder.getPrimaryStage().show();
+
+        } catch (IOException e) {
+            new ErrorNotifier("Results could not display.", true).display();
+            e.printStackTrace();
+        }
     }
 
     public void screenshotButtonClicked() {
@@ -179,7 +191,7 @@ public class PrintResultsScreen implements Initializable {
 
         try {
 
-            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(Window.SEERESULTS));
+            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.SEERESULTS));
 
         } catch (IOException e) {
             new ErrorNotifier("Results could not display.", true).display();

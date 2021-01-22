@@ -22,20 +22,21 @@ public class FXHelper {
         return openedInstances;
     }
 
-    //Get a scene from Window.fxmlTable
+    //Get a Scene from Window
     public static Scene getScene(Window window) throws IOException {
-
-        return new Scene(FXMLLoader.load(FXHelper.class.getResource(Window.fxmlTable.get(window))));
-
+        return new Scene(FXMLLoader.load(FXHelper.class.getResource(window.getPath())));
     }
 
-    //requireResponse if the page must be responded to before responding to others
+    /**
+     * @param requireResponse if the stage should take priority out of all others.
+     */
     public static Stage getPopupStage(Window window, boolean requireResponse) throws IOException {
 
-        //Set stage
+        //Set stage, take ownership from primary stage so it stays on the same window
         Stage stage = new Stage();
         stage.initOwner(PrimaryStageHolder.getPrimaryStage());
 
+        //Make stage required to be answered if needed
         if (requireResponse) {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
@@ -43,10 +44,38 @@ public class FXHelper {
         stage.setAlwaysOnTop(true);
         stage.setResizable(false);
 
-        Scene scene = new Scene(FXMLLoader.load(ErrorNotifier.class.getResource(Window.fxmlTable.get(window))));
+        Scene scene = new Scene(FXMLLoader.load(ErrorNotifier.class.getResource(window.getPath())));
         stage.setScene(scene);
 
         return stage;
 
+    }
+
+    //Window names, hashmap of window names and their corresponding fxml location
+    public enum Window {
+        STARTPAGE("/startpage.fxml"),
+        PREMADEQUIZES("/premadequizes.fxml"),
+        LOGIN("/login.fxml"),
+        REGISTER("/quiz.fxml"),
+        QUIZ("/quiz.fxml"),
+        ENTERCODE("/entercode.fxml"),
+        CALCULATOR("/calculator.fxml"),
+        DRAWINGPAD("/drawingpad.fxml"),
+        NOTEPAD("/notepad.fxml"),
+        PRINTRESULTS("/printableresults.fxml"),
+        SEERESULTS("/questionresults.fxml"),
+        CUSTOMQUIZ("/customquiz.fxml"),
+        ERROR("/errorScreen.fxml"),
+        CONFIRM("/confirmScreen.fxml");
+
+        private final String path;
+
+        Window(String path) {
+            this.path = path;
+        }
+
+        public String getPath() {
+            return path;
+        }
     }
 }

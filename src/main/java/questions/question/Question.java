@@ -6,15 +6,19 @@ import java.util.List;
 /**
  * Stores necessary information to display a questions text elements
  */
-
-
 public class Question {
 
     private final Type type;
-    public enum Type {MULTIPLECHOICE, TRUEORFALSE, CHECKBOX, WRITTEN}
+
+    public enum Type {
+        MULTIPLECHOICE, TRUEORFALSE, CHECKBOX, WRITTEN
+    }
 
     private final Subject subject;
-    public enum Subject {NETWORKDESIGN, INTBUS, MARKETING, BUSMATH}
+
+    public enum Subject {
+        NETWORKDESIGN, INTBUS, MARKETING, BUSMATH
+    }
 
     private final int id;
     private final String prompt, directions;
@@ -74,6 +78,7 @@ public class Question {
     /**
      * Setters
      */
+
     public void setAnswer(List<String> answer) {
         this.answer = answer;
     }

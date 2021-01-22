@@ -1,7 +1,6 @@
 package gui.popup.error;
 
 import gui.etc.FXHelper;
-import gui.etc.Window;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -10,7 +9,6 @@ import java.io.IOException;
 /**
  * Displays errors to user.
  */
-
 public class ErrorNotifier {
 
     private final boolean fatal;
@@ -26,7 +24,7 @@ public class ErrorNotifier {
         try {
 
 
-            Stage stage = FXHelper.getPopupStage(Window.ERROR, true);
+            Stage stage = FXHelper.getPopupStage(FXHelper.Window.ERROR, true);
 
             //Pass stage to ErrorScreenController so it can close it.
             ErrorScreenController.setStage(stage);

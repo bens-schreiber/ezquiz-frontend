@@ -11,11 +11,11 @@ import java.util.List;
 
 public class TrueOrFalse implements TypeNode {
 
-    private List<String> response = Collections.emptyList();
+    private String response;
 
     private final Node node;
 
-    public TrueOrFalse() {
+    {
         //Establish options
         RadioButton radio1 = new RadioButton("true");
         RadioButton radio2 = new RadioButton("false");
@@ -27,7 +27,7 @@ public class TrueOrFalse implements TypeNode {
         for (RadioButton radioButton : Arrays.asList(radio1, radio2)) {
 
             radioButton.setToggleGroup(buttons);
-            radioButton.setOnMouseClicked(e -> this.response = Collections.singletonList(radioButton.getText()));
+            radioButton.setOnMouseClicked(e -> this.response = radioButton.getText());
         }
 
         //Set spacing to 15
@@ -44,12 +44,12 @@ public class TrueOrFalse implements TypeNode {
 
     @Override
     public List<String> getResponse() {
-        return this.response;
+        return Collections.singletonList(this.response);
     }
 
     @Override
     public boolean isAnswered() {
-        return !response.isEmpty();
+        return !(response == null) && !response.isEmpty();
     }
 
 }

@@ -2,7 +2,6 @@ package gui.startmenu;
 
 import gui.etc.Account;
 import gui.etc.FXHelper;
-import gui.etc.Window;
 import gui.popup.error.ErrorNotifier;
 import gui.quiz.QuizHelper;
 import gui.startmenu.login.Login;
@@ -49,7 +48,7 @@ public class StartPage implements Initializable {
         try {
 
             //Make a popup stage that overlays over Primary Stage. Pass it into Register so it can be closed remotely
-            Stage stage = FXHelper.getPopupStage(Window.REGISTER, true);
+            Stage stage = FXHelper.getPopupStage(FXHelper.Window.REGISTER, true);
             Register.setStage(stage);
             stage.showAndWait();
 
@@ -67,7 +66,7 @@ public class StartPage implements Initializable {
 
         try {
 
-            Stage stage = FXHelper.getPopupStage(Window.LOGIN, true);
+            Stage stage = FXHelper.getPopupStage(FXHelper.Window.LOGIN, true);
             Login.setStage(stage);
             stage.showAndWait();
 
@@ -104,7 +103,7 @@ public class StartPage implements Initializable {
 
         try {
 
-            Stage stage = FXHelper.getPopupStage(Window.PREMADEQUIZES, false);
+            Stage stage = FXHelper.getPopupStage(FXHelper.Window.PREMADEQUIZES, false);
             PremadeQuizzes.stage = stage;
             stage.showAndWait();
 
@@ -121,7 +120,7 @@ public class StartPage implements Initializable {
     public void enterCodeButtonClicked() {
         try {
 
-            Stage stage = FXHelper.getPopupStage(Window.ENTERCODE, true);
+            Stage stage = FXHelper.getPopupStage(FXHelper.Window.ENTERCODE, true);
             EnterCode.stage = stage;
             stage.showAndWait();
 
