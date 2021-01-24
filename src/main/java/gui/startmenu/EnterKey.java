@@ -1,21 +1,18 @@
 package gui.startmenu;
 
-import etc.BitMap;
 import gui.popup.error.ErrorNotifier;
-import gui.quiz.QuizHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
-import questions.QuizQuestions;
 import requests.DatabaseRequest;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
-public class EnterCode implements Initializable {
+public class EnterKey implements Initializable {
 
     @FXML
     TextField codeTextField;
@@ -26,15 +23,13 @@ public class EnterCode implements Initializable {
     public void enterCodeButtonClicked() {
         try {
 
-            long bitmap = DatabaseRequest.getQuizRetakeCode(Integer.parseInt(codeTextField.getText()));
-            System.out.println(bitmap);
-            QuizQuestions.initializeQuestions(new BitMap(bitmap).decodeToList());
-
-            QuizHelper.startQuiz(false);
-            stage.close();
+            if (DatabaseRequest.setQuizPathFromKey(Integer.parseInt(codeTextField.getText()))) {
+                stage.close();
+            } else new ErrorNotifier("Could not find Quiz from key.", false).display(stage);
 
         } catch (Exception e) {
-            new ErrorNotifier("Could not get test from code.", false).display(stage);
+            e.printStackTrace();
+            new ErrorNotifier("An error occurred.", false).display(stage);
         }
 
     }

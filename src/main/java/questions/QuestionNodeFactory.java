@@ -19,13 +19,13 @@ class QuestionNodeFactory {
 
         if (verify(json)) {
 
-            Question.Type type = Question.Type.valueOf(json.get("type_name").toString());
+            Question.Type type = Question.Type.valueOf(json.get("type").toString());
 
-            Question.Subject subject = Question.Subject.valueOf(json.get("subject_name").toString());
+            String subject = json.get("subject").toString();
 
             String question = json.get("question").toString();
 
-            int id = Integer.parseInt(json.get("question_num").toString());
+            int id = Integer.parseInt(json.get("id").toString());
 
             //Only need to iterate through options, use linked list ds
             LinkedList<String> options = null;
@@ -58,7 +58,7 @@ class QuestionNodeFactory {
 
     //Make sure all required json pieces are here
     private static boolean verify(JSONObject json) {
-        return json.has("type_name") && json.has("subject_name") && json.has("question") && json.has("question_num");
+        return json.has("type") && json.has("subject") && json.has("question") && json.has("id");
     }
 
     static QuestionNode[] nodeArrayFromJSON(JSONObject json, int amount, List<Integer> ids) throws JSONException {
@@ -88,7 +88,6 @@ class QuestionNodeFactory {
             nodes[i] = (QuestionNodeFactory.questionFromJSON((JSONObject) json.get("obj" + i)));
         }
 
-        System.out.print(Arrays.toString(nodes));
         return nodes;
 
     }

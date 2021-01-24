@@ -20,12 +20,18 @@
                 </ImageView>
                 <VBox fx:id="buttonVBox" layoutX="196.0" layoutY="144.0" prefHeight="124.0" prefWidth="219.0" spacing="8.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" stylesheets="@css/startbutton.css">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="30.0" prefWidth="220.0" text="Login" />
-                        <Button mnemonicParsing="false" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="220.0" text="Register" />
-                        <Button mnemonicParsing="false" onAction="#defaultQuizButtonClicked" prefHeight="26.0" prefWidth="222.0" text="Take Default Quiz" />
-                        <Button mnemonicParsing="false" onAction="#quizzesButtonClicked" prefHeight="26.0" prefWidth="222.0" text="Quizzes" />
-                        <Button mnemonicParsing="false" onAction="#enterCodeButtonClicked" prefHeight="26.0" prefWidth="219.0" text="Enter Code" />
-                        <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonClicked" prefHeight="26.0" prefWidth="220.0" text="Exit" />
+                        <Button fx:id="login" mnemonicParsing="false" onAction="#loginButtonClicked" prefHeight="30.0"
+                                prefWidth="220.0" text="Login"/>
+                        <Button fx:id="register" mnemonicParsing="false" onAction="#registerButtonClicked"
+                                prefHeight="30.0" prefWidth="220.0" text="Register"/>
+                        <Button fx:id="quizKey" mnemonicParsing="false" onAction="#enterQuizButtonClicked"
+                                prefHeight="30.0" prefWidth="220.0" text="Enter Quiz Key"/>
+                        <Button fx:id="takeQuiz" mnemonicParsing="false" onAction="#defaultQuizButtonClicked"
+                                prefHeight="30.0" prefWidth="228.0" text="Take 5 Question Quiz"/>
+                        <Button fx:id="uploadQuiz" mnemonicParsing="false" onAction="#uploadQuizButtonClicked"
+                                prefHeight="30.0" prefWidth="234.0" text="Upload Quiz"/>
+                        <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonClicked"
+                                prefHeight="26.0" prefWidth="220.0" text="Exit"/>
                     </children>
                 </VBox>
                 <HBox alignment="CENTER_RIGHT" layoutX="287.0" layoutY="14.0" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="310.0" spacing="10.0">

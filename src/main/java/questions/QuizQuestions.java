@@ -38,7 +38,7 @@ public class QuizQuestions {
 
             //Create a pool of question id's in the size of how many questions available, randomize order
             List<Integer> idPool = new LinkedList<>();
-            for (int i = 0; i < questionJSONRequest.getJson().length() - 1; i++) {
+            for (int i = 0; i < questionJSONRequest.getJson().length(); i++) {
                 idPool.add(i);
             }
 

@@ -55,11 +55,11 @@ public class FXHelper {
     //Window names, hashmap of window names and their corresponding fxml location
     public enum Window {
         STARTPAGE("/startpage.fxml"),
-        PREMADEQUIZES("/premadequizes.fxml"),
         LOGIN("/login.fxml"),
         REGISTER("/register.fxml"),
         QUIZ("/quiz.fxml"),
         ENTERCODE("/entercode.fxml"),
+        ENTERKEY("/enterkey.fxml"),
         CALCULATOR("/calculator.fxml"),
         DRAWINGPAD("/drawingpad.fxml"),
         NOTEPAD("/notepad.fxml"),
@@ -67,7 +67,8 @@ public class FXHelper {
         SEERESULTS("/questionresults.fxml"),
         CUSTOMQUIZ("/customquiz.fxml"),
         ERROR("/errorscreen.fxml"),
-        CONFIRM("/confirmscreen.fxml");
+        CONFIRM("/confirmscreen.fxml"),
+        UPLOADQUIZ("/uploadquiz.fxml");
 
         private final String path;
 
