@@ -9,16 +9,24 @@ public class Account {
 
         private final String AUTH_TOKEN;
 
-        public User(String username, String AUTH_TOKEN) {
+        private final boolean admin;
+
+        public User(String username, String AUTH_TOKEN, boolean admin) {
 
             this.username = username;
 
             this.AUTH_TOKEN = AUTH_TOKEN;
 
+            this.admin = admin;
+
         }
 
         public String getUsername() {
             return username;
+        }
+
+        public boolean isAdmin() {
+            return admin;
         }
 
         public String getAUTH_TOKEN() {
@@ -28,8 +36,10 @@ public class Account {
 
     private static User user;
 
-    public static void login(String username, String AUTH_TOKEN) {
-        user = new User(username, AUTH_TOKEN);
+    private static String quizPath;
+
+    public static void login(String username, String AUTH_TOKEN, boolean admin) {
+        user = new User(username, AUTH_TOKEN, admin);
     }
 
     //If there is no User then there is not a logged in user
@@ -49,4 +59,15 @@ public class Account {
         return user.getUsername();
     }
 
+    public static boolean isAdmin() {
+        return user.isAdmin();
+    }
+
+    public static void setQuizPath(String path) {
+        quizPath = path.replace(" ", "%20");
+    }
+
+    public static String getQuizPath() {
+        return quizPath;
+    }
 }

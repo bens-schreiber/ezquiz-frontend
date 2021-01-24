@@ -13,11 +13,7 @@ public class Question {
         MULTIPLECHOICE, TRUEORFALSE, CHECKBOX, WRITTEN
     }
 
-    private final Subject subject;
-    public enum Subject {
-        NETWORKDESIGN, INTBUS, MARKETING, BUSMATH
-    }
-
+    private final String subject;
     private final int id;
     private final String prompt, directions;
     private final List<String> options;
@@ -27,7 +23,7 @@ public class Question {
      * Class constructor.
      * Answer is null until specifically set.
      */
-    public Question(Type type, Subject subject, List<String> options, String prompt, String directions, int id) {
+    public Question(Type type, String subject, List<String> options, String prompt, String directions, int id) {
         this.type = type;
         this.subject = subject;
         this.options = options;
@@ -53,7 +49,7 @@ public class Question {
         return this.type;
     }
 
-    public Subject getSubject() {
+    public String getSubject() {
         return this.subject;
     }
 

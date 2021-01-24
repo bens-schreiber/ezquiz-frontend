@@ -17,7 +17,7 @@ public class QuestionNode extends Question {
     /**
      * Class constructor. Create a Question and assign JavaFX node.
      */
-    public QuestionNode(Type type, Subject subject, List<String> options, String prompt, String directions, int id, TypeNode node) {
+    public QuestionNode(Type type, String subject, List<String> options, String prompt, String directions, int id, TypeNode node) {
 
         super(type, subject, options, prompt, directions, id);
         super.shuffleOptions();

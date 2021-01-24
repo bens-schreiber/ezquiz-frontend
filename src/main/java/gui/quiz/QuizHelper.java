@@ -4,7 +4,6 @@ import etc.Constants;
 import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
 import gui.popup.error.ErrorNotifier;
-import gui.startmenu.PremadeQuizzes;
 import javafx.stage.StageStyle;
 import questions.QuizQuestions;
 import requests.QuestionJSONRequest;
@@ -29,10 +28,6 @@ public class QuizHelper {
         try {
 
             PrimaryStageHolder.getPrimaryStage().close();
-
-            if (PremadeQuizzes.stage != null) {
-                PremadeQuizzes.stage.close();
-            }
 
             if (loadDefault) {
                 QuizQuestions.initializeQuestions(Constants.DEFAULT_QUESTION_AMOUNT, new QuestionJSONRequest());

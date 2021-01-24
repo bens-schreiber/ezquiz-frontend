@@ -9,6 +9,7 @@ import gui.startmenu.login.Register;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -22,6 +23,9 @@ public class StartPage implements Initializable {
     VBox buttonVBox;
 
     @FXML
+    Button uploadQuiz, takeQuiz, login, register, quizKey;
+
+    @FXML
     Label usernameLabel;
 
     @Override
@@ -30,13 +34,13 @@ public class StartPage implements Initializable {
         if (!Account.isLoggedIn()) {
             //Disable every button but Login and Register, so the user must login.
             buttonVBox.getChildren().forEach(button -> button.setDisable(true));
-            buttonVBox.getChildren().get(0).setDisable(false);
-            buttonVBox.getChildren().get(1).setDisable(false);
+            login.setDisable(false);
+            register.setDisable(false);
         } else {
 
             //Remove the Login and Register buttons
-            buttonVBox.getChildren().remove(0);
-            buttonVBox.getChildren().remove(0);
+            buttonVBox.getChildren().remove(login);
+            buttonVBox.getChildren().remove(register);
 
             usernameLabel.setText(Account.getUsername());
         }
@@ -72,12 +76,18 @@ public class StartPage implements Initializable {
 
             if (Account.isLoggedIn()) {
 
-                //Enable all buttons.
-                buttonVBox.getChildren().forEach(button -> button.setDisable(!button.isDisable()));
 
                 //Remove the Login and Register buttons
-                buttonVBox.getChildren().remove(0);
-                buttonVBox.getChildren().remove(0);
+                buttonVBox.getChildren().remove(login);
+                buttonVBox.getChildren().remove(register);
+                quizKey.setDisable(false);
+
+
+                if (!Account.isAdmin()) {
+                    buttonVBox.getChildren().remove(uploadQuiz);
+                } else {
+                    uploadQuiz.setDisable(false);
+                }
 
                 usernameLabel.setText(Account.getUsername());
             }
@@ -99,13 +109,16 @@ public class StartPage implements Initializable {
 
     }
 
-    public void quizzesButtonClicked() {
-
+    public void enterQuizButtonClicked() {
         try {
 
-            Stage stage = FXHelper.getPopupStage(FXHelper.Window.PREMADEQUIZES, false);
-            PremadeQuizzes.stage = stage;
+            Stage stage = FXHelper.getPopupStage(FXHelper.Window.ENTERKEY, true);
+            EnterKey.stage = stage;
             stage.showAndWait();
+
+            if (Account.getQuizPath() != null) {
+                takeQuiz.setDisable(false);
+            }
 
         } catch (Exception e) {
 
@@ -117,11 +130,11 @@ public class StartPage implements Initializable {
 
     }
 
-    public void enterCodeButtonClicked() {
+    public void uploadQuizButtonClicked() {
         try {
 
-            Stage stage = FXHelper.getPopupStage(FXHelper.Window.ENTERCODE, true);
-            EnterCode.stage = stage;
+            Stage stage = FXHelper.getPopupStage(FXHelper.Window.UPLOADQUIZ, false);
+            UploadQuiz.stage = stage;
             stage.showAndWait();
 
         } catch (Exception e) {
@@ -131,7 +144,6 @@ public class StartPage implements Initializable {
             e.printStackTrace();
 
         }
-
     }
 
     public void exitButtonClicked() {

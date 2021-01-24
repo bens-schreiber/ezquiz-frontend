@@ -1,5 +1,6 @@
 package requests;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -61,6 +62,20 @@ class Request {
      * @param token      auth token
      */
     static HttpResponse<String> postRequest(JSONObject body, String urlSegment, String token) throws IOException, InterruptedException {
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("Content-Type", "application/json")
+                .header("token", token)
+                .uri(URI.create("http://localhost:7080/api/" + urlSegment))
+                .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+                .build();
+
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    }
+
+    static HttpResponse<String> postRequest(JSONArray body, String urlSegment, String token) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()

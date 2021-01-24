@@ -1,6 +1,7 @@
 package requests;
 
 import gui.etc.Account;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,7 +42,7 @@ public class DatabaseRequest {
         if (response.headers().firstValue("token").isPresent()) {
 
             //Store token and username in static user
-            Account.login(username, response.headers().firstValue("token").get());
+            Account.login(username, response.headers().firstValue("token").get(), Boolean.parseBoolean(response.body()));
 
             System.out.println(Account.AUTH_TOKEN());
         }
@@ -54,22 +55,55 @@ public class DatabaseRequest {
      *
      * @return 4 digit test key.
      */
-    public static String uploadTestKey(long key) throws JSONException, IOException, InterruptedException {
+    public static String uploadQuizRetakeCode(long key) throws JSONException, IOException, InterruptedException {
         JSONObject body = new JSONObject();
         body.put("key", String.valueOf(key));
 
-        HttpResponse<String> response = Request.postRequest(body, "database/key", Account.AUTH_TOKEN());
+        HttpResponse<String> response = Request.postRequest(body, "database/code", Account.AUTH_TOKEN());
 
         return new JSONObject(response.body()).get("key").toString();
     }
 
     /**
-     * Get test key from server
+     * Use a retake code to get a selection of quiz ids.
      *
      * @return bitmap
      */
-    public static long getTestKey(int key) throws InterruptedException, JSONException, IOException {
-        JSONObject response = (JSONObject) Request.getJSONFromURL("http://localhost:7080/api/database/key/" + key, Account.AUTH_TOKEN()).get("obj0");
+    public static long getQuizRetakeCode(int code) throws InterruptedException, JSONException, IOException {
+        JSONObject response = (JSONObject) Request.getJSONFromURL("http://localhost:7080/api/database/code/" + code, Account.AUTH_TOKEN()).get("obj0");
         return Long.parseLong(response.get("bitmap").toString());
     }
+
+    public static boolean setQuizPathFromKey(int key) throws InterruptedException, IOException {
+        try {
+
+            JSONObject response = (JSONObject) Request.getJSONFromURL("http://localhost:7080/api/database/key/" + key, Account.AUTH_TOKEN()).get("obj0");
+
+            if (response.has("quizowner") && response.has("quizname")) {
+                Account.setQuizPath(response.get("quizowner") + "/" + response.get("quizname"));
+                return true;
+            }
+
+            return false;
+
+        } catch (JSONException e) {
+            return false;
+        }
+    }
+
+
+    public static int uploadQuiz(JSONArray jsonObject, String url) throws IOException, InterruptedException, JSONException {
+
+        HttpResponse<String> response = Request.postRequest(jsonObject, url, Account.AUTH_TOKEN());
+        return response.statusCode();
+
+    }
+
+
+//    private static String verifyAdmin() {}
+
+//
+//    public static int getQuizKey() {}
+
+
 }

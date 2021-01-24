@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
@@ -51,8 +50,6 @@ public class PrintResultsScreen implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        loadBarChart();
-
         //Disable button if in preferences
         seeQuestionsButton.setDisable(!Boolean.parseBoolean(QuizHelper.Preference.preferences.get(QuizHelper.Preference.SHOWANSWERS)));
 
@@ -85,30 +82,30 @@ public class PrintResultsScreen implements Initializable {
 
     private void loadBarChart() {
 
-        int[] subjs = {0, 0, 0, 0};
-
-        for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
-
-            switch (questionNode.getSubject()) {
-
-                case INTBUS -> subjs[0]++;
-
-                case NETWORKDESIGN -> subjs[1]++;
-
-                case MARKETING -> subjs[2]++;
-
-                case BUSMATH -> subjs[3]++;
-            }
-        }
-
-        XYChart.Series<String, Integer> series = new XYChart.Series<>();
-        series.setName("Amount of each question");
-        series.getData().add(new XYChart.Data<>("Intro to Business", subjs[0]));
-        series.getData().add(new XYChart.Data<>("Network Design", subjs[1]));
-        series.getData().add(new XYChart.Data<>("Marketing", subjs[2]));
-        series.getData().add(new XYChart.Data<>("Business Math", subjs[3]));
-
-        barChart.getData().add(series);
+//        int[] subjs = {0, 0, 0, 0};
+//
+//        for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
+//
+//            switch (questionNode.getSubject()) {
+//
+//                case INTBUS -> subjs[0]++;
+//
+//                case NETWORKDESIGN -> subjs[1]++;
+//
+//                case MARKETING -> subjs[2]++;
+//
+//                case BUSMATH -> subjs[3]++;
+//            }
+//        }
+//
+//        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+//        series.setName("Amount of each question");
+//        series.getData().add(new XYChart.Data<>("Intro to Business", subjs[0]));
+//        series.getData().add(new XYChart.Data<>("Network Design", subjs[1]));
+//        series.getData().add(new XYChart.Data<>("Marketing", subjs[2]));
+//        series.getData().add(new XYChart.Data<>("Business Math", subjs[3]));
+//
+//        barChart.getData().add(series);
 
     }
 
@@ -154,7 +151,7 @@ public class PrintResultsScreen implements Initializable {
 
             try {
 
-                key = DatabaseRequest.uploadTestKey(bitMap.getBitMap());
+                key = DatabaseRequest.uploadQuizRetakeCode(bitMap.getBitMap());
 
                 if (!key.isEmpty()) {
 
