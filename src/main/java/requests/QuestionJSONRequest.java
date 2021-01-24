@@ -36,7 +36,7 @@ public class QuestionJSONRequest {
     public QuestionJSONRequest initializeRequest() throws InterruptedException, IOException, JSONException {
 
         //Make the request from the path built by the constructor.
-        this.json = Request.getJSONFromURL(path.toString(), Account.AUTH_TOKEN());
+        this.json = Request.getJSONFromURL(path.toString(), Account.getAuth());
 
         //If no questions could be found with given parameters
         if (json.length() == 0) {

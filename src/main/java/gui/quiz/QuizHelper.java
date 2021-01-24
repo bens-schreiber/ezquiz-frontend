@@ -40,7 +40,7 @@ public class QuizHelper {
             PrimaryStageHolder.getPrimaryStage().show();
 
         } catch (Exception e) {
-            new ErrorNotifier("A page failed to load", true).display();
+            new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());
             e.printStackTrace();
         }
 
@@ -52,7 +52,7 @@ public class QuizHelper {
         try {
             PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.PRINTRESULTS));
         } catch (IOException e) {
-            new ErrorNotifier("Results could not display.", true).display();
+            new ErrorNotifier("Results could not display.", true).display(PrimaryStageHolder.getPrimaryStage());
         }
 
     }

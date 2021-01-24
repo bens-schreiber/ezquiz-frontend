@@ -1,5 +1,6 @@
 package questions;
 
+import gui.PrimaryStageHolder;
 import gui.popup.error.ErrorNotifier;
 import org.json.JSONException;
 import questions.question.Question;
@@ -86,7 +87,7 @@ public class QuizQuestions {
             QuestionAnswerHelper.setAnswers(questionNodes, new AnswerJSONRequest(questionNodes).initializeRequest().getJson());
 
         } catch (Exception e) {
-            new ErrorNotifier("A question failed to be graded.", true).display();
+            new ErrorNotifier("A question failed to be graded.", true).display(PrimaryStageHolder.getPrimaryStage());
             e.printStackTrace();
         }
 

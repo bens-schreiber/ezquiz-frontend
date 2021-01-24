@@ -20,27 +20,6 @@ public class ErrorNotifier {
         this.fatal = fatal;
     }
 
-    public void display() {
-        try {
-
-
-            Stage stage = FXHelper.getPopupStage(FXHelper.Window.ERROR, true);
-
-            //Pass stage to ErrorScreenController so it can close it.
-            ErrorScreenController.setStage(stage);
-
-            stage.showAndWait();
-
-
-            if (this.fatal) {
-                Platform.exit();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void display(Stage owner) {
         try {
 

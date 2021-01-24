@@ -32,7 +32,7 @@ public class AnswerJSONRequest {
         }
 
         //get rid of the last "," because it isn't needed
-        this.json = Request.getJSONFromURL(stringBuilder.substring(0, stringBuilder.length() - 1), Account.AUTH_TOKEN());
+        this.json = Request.getJSONFromURL(stringBuilder.substring(0, stringBuilder.length() - 1), Account.getAuth());
 
 
         return this;

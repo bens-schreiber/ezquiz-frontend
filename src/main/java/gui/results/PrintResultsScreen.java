@@ -113,11 +113,11 @@ public class PrintResultsScreen implements Initializable {
         try {
 
             PrimaryStageHolder.getPrimaryStage().close();
-            PrimaryStageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.STARTPAGE, false));
+            PrimaryStageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.MAINMENU, false));
             PrimaryStageHolder.getPrimaryStage().show();
 
         } catch (IOException e) {
-            new ErrorNotifier("Results could not display.", true).display();
+            new ErrorNotifier("Results could not display.", true).display(PrimaryStageHolder.getPrimaryStage());
             e.printStackTrace();
         }
     }
@@ -138,7 +138,7 @@ public class PrintResultsScreen implements Initializable {
 
         } catch (IOException ex) {
 
-            new ErrorNotifier("An error occurred trying to screenshot", false).display();
+            new ErrorNotifier("An error occurred trying to screenshot", false).display(PrimaryStageHolder.getPrimaryStage());
             ex.printStackTrace();
 
         }
@@ -191,7 +191,7 @@ public class PrintResultsScreen implements Initializable {
             PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.SEERESULTS));
 
         } catch (IOException e) {
-            new ErrorNotifier("Results could not display.", true).display();
+            new ErrorNotifier("Results could not display.", true).display(PrimaryStageHolder.getPrimaryStage());
             e.printStackTrace();
         }
     }

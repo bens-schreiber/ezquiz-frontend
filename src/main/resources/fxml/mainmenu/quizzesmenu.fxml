@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="800.0" prefWidth="1064.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.QuizzesMenu">
+    <children>
+        <AnchorPane layoutX="100.0" layoutY="100.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0"
+                    AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+            <children>
+                <Label layoutY="384.0" text="Previous Quizzes"/>
+                <TableView fx:id="savedQuizKeys" prefHeight="200.0" prefWidth="864.0"
+                           stylesheets="@../css/tableview.css">
+                    <columns>
+                        <TableColumn fx:id="nameColumn" prefWidth="89.0" text="Name"/>
+                        <TableColumn fx:id="classColumn" prefWidth="93.0" text="Class"/>
+                        <TableColumn fx:id="keyColumn" prefWidth="75.0" text="Key"/>
+                    </columns>
+                </TableView>
+                <TableView layoutY="400.0" prefHeight="200.0" prefWidth="864.0" stylesheets="@../css/tableview.css">
+                    <columns>
+                        <TableColumn prefWidth="75.0" text="Name"/>
+                        <TableColumn prefWidth="75.0" text="Class"/>
+                        <TableColumn prefWidth="75.0" text="Score"/>
+                        <TableColumn prefWidth="100.0" text="Retake Code"/>
+                    </columns>
+                </TableView>
+            </children>
+        </AnchorPane>
+        <HBox layoutX="737.0" layoutY="76.0" spacing="15.0" stylesheets="@../css/standard_button.css">
+            <children>
+                <Button mnemonicParsing="false" onAction="#addKeyClicked" text="Add Key"/>
+                <Button mnemonicParsing="false" onAction="#removeKeyClicked" text="Remove Key"/>
+            </children>
+        </HBox>
+        <Label layoutX="100.0" layoutY="79.0" text="Saved Quizzes"/>
+    </children>
+</AnchorPane>

@@ -4,6 +4,7 @@ import gui.PrimaryStageHolder;
 import gui.popup.error.ErrorNotifier;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -26,6 +27,10 @@ public class FXHelper {
     //Get a Scene from Window
     public static Scene getScene(Window window) throws IOException {
         return new Scene(FXMLLoader.load(FXHelper.class.getResource(window.getPath())));
+    }
+
+    public static Pane getPane(Window window) throws IOException {
+        return FXMLLoader.load(FXHelper.class.getResource(window.getPath()));
     }
 
     /**
@@ -54,20 +59,21 @@ public class FXHelper {
 
     //Window names, hashmap of window names and their corresponding fxml location
     public enum Window {
-        STARTPAGE("/startpage.fxml"),
-        LOGIN("/login.fxml"),
-        REGISTER("/register.fxml"),
-        QUIZ("/quiz.fxml"),
-        ENTERCODE("/entercode.fxml"),
-        ENTERKEY("/enterkey.fxml"),
-        CALCULATOR("/calculator.fxml"),
-        DRAWINGPAD("/drawingpad.fxml"),
-        NOTEPAD("/notepad.fxml"),
-        PRINTRESULTS("/printableresults.fxml"),
-        SEERESULTS("/questionresults.fxml"),
+        MAINMENU("/fxml/mainmenu/mainmenu.fxml"),
+        LOGIN("/fxml/mainmenu/login.fxml"),
+        REGISTER("/fxml/mainmenu/register.fxml"),
+        QUIZ("/fxml/quiz/quiz.fxml"),
+        SAVEDQUIZZES("/fxml/mainmenu/quizzesmenu.fxml"),
+        ENTERCODE("/fxml/popup/entercode.fxml"),
+        ENTERKEY("/fxml/popup/enterkey.fxml"),
+        CALCULATOR("/fxml/quiz/tools/calculator.fxml"),
+        DRAWINGPAD("/fxml/quiz/tools/drawingpad.fxml"),
+        NOTEPAD("/fxml/quiz/tools/notepad.fxml"),
+        PRINTRESULTS("/fxml/results/printableresults.fxml"),
+        SEERESULTS("/fxml/results/questionresults.fxml"),
         CUSTOMQUIZ("/customquiz.fxml"),
-        ERROR("/errorscreen.fxml"),
-        CONFIRM("/confirmscreen.fxml"),
+        ERROR("/fxml/popup/errorscreen.fxml"),
+        CONFIRM("/fxml/popup/confirmscreen.fxml"),
         UPLOADQUIZ("/uploadquiz.fxml");
 
         private final String path;

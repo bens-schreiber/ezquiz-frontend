@@ -83,7 +83,7 @@ public class QuestionResultsScreen implements Initializable {
             PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.PRINTRESULTS));
 
         } catch (IOException e) {
-            new ErrorNotifier("Results could not display.", true).display();
+            new ErrorNotifier("Results could not display.", true).display(PrimaryStageHolder.getPrimaryStage());
         }
     }
 }

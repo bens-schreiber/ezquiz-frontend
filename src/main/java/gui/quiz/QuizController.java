@@ -1,6 +1,7 @@
 package gui.quiz;
 
 import etc.Constants;
+import gui.PrimaryStageHolder;
 import gui.etc.Account;
 import gui.etc.FXHelper;
 import gui.popup.confirm.ConfirmNotifier;
@@ -69,6 +70,7 @@ public class QuizController implements Initializable {
         currentQuestionIndex = 0;
 
         //Establish preferences
+        //todo: preferences
         if (!Boolean.parseBoolean(QuizHelper.Preference.preferences.get(QuizHelper.Preference.NOTEPAD))) {
             addonVBox.getChildren().remove(notePadButton);
         }
@@ -81,7 +83,7 @@ public class QuizController implements Initializable {
             addonVBox.getChildren().remove(drawingPadButton);
         }
 
-        quizName.setText(QuizHelper.Preference.preferences.get(QuizHelper.Preference.QUIZNAME));
+        quizName.setText(Account.getQuiz().getName());
 
         seconds = Integer.parseInt(QuizHelper.Preference.preferences.get(QuizHelper.Preference.TIME));
 
@@ -255,7 +257,7 @@ public class QuizController implements Initializable {
 
         } catch (Exception e) {
 
-            new ErrorNotifier("A page failed to load", true).display();
+            new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());
 
             e.printStackTrace();
 
@@ -285,7 +287,7 @@ public class QuizController implements Initializable {
 
         } catch (Exception e) {
 
-            new ErrorNotifier("A page failed to load", true).display();
+            new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());
 
             e.printStackTrace();
 
@@ -323,7 +325,7 @@ public class QuizController implements Initializable {
 
         } catch (Exception e) {
 
-            new ErrorNotifier("A page failed to load", true).display();
+            new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());
 
             e.printStackTrace();
 
