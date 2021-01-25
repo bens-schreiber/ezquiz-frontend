@@ -71,10 +71,9 @@ public class FXHelper {
         NOTEPAD("/fxml/quiz/tools/notepad.fxml"),
         PRINTRESULTS("/fxml/results/printableresults.fxml"),
         SEERESULTS("/fxml/results/questionresults.fxml"),
-        CUSTOMQUIZ("/customquiz.fxml"),
         ERROR("/fxml/popup/errorscreen.fxml"),
         CONFIRM("/fxml/popup/confirmscreen.fxml"),
-        UPLOADQUIZ("/uploadquiz.fxml");
+        ADMINMENU("/fxml/mainmenu/adminmenu.fxml");
 
         private final String path;
 

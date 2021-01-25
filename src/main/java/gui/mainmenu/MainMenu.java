@@ -3,7 +3,6 @@ package gui.mainmenu;
 import gui.PrimaryStageHolder;
 import gui.etc.Account;
 import gui.etc.FXHelper;
-import gui.mainmenu.login.Login;
 import gui.popup.confirm.ConfirmNotifier;
 import gui.popup.error.ErrorNotifier;
 import gui.quiz.QuizHelper;
@@ -14,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import org.json.JSONException;
 import questions.QuizQuestions;
 import requests.QuestionJSONRequest;
@@ -42,34 +40,14 @@ public class MainMenu implements Initializable {
 
         quizzesButtonClicked();
 
-        if (!Account.isLoggedIn()) {
+        usernameLabel.setText(Account.getUsername());
 
-            try {
-
-                Stage stage = FXHelper.getPopupStage(FXHelper.Window.LOGIN, true);
-                Login.setStage(stage);
-                stage.showAndWait();
-
-                if (Account.isLoggedIn()) {
-
-                    usernameLabel.setText(Account.getUsername());
-
-                    if (!Account.isAdmin()) {
-                        buttonContainer.getChildren().remove(adminContainer);
-                    }
-
-                }
-
-            } catch (Exception e) {
-
-                new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());
-
-                e.printStackTrace();
-
-            }
+        if (!Account.isAdmin()) {
+            buttonContainer.getChildren().remove(adminContainer);
         }
 
     }
+
 
     public void randomQuizClicked() {
 
@@ -85,28 +63,40 @@ public class MainMenu implements Initializable {
 
             mainDisplay.getChildren().setAll(FXHelper.getPane(FXHelper.Window.SAVEDQUIZZES));
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            new ErrorNotifier("Page failed to load", false).display(PrimaryStageHolder.getPrimaryStage());
         }
     }
 
     public void adminButtonClicked() {
 
-//        mainDisplay = FXHelper.getPane(FXHelper.Window())
+        try {
+            mainDisplay.getChildren().setAll(FXHelper.getPane(FXHelper.Window.ADMINMENU));
+        } catch (Exception e) {
+            e.printStackTrace();
+            new ErrorNotifier("Page failed to load", false).display(PrimaryStageHolder.getPrimaryStage());
+        }
 
     }
 
     public void takeQuizClicked() {
 
         if (Account.getQuiz() != null) {
-            if (new ConfirmNotifier("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
+
+            if (new ConfirmNotifier("Are you sure you want to take: " + Account.getQuiz().getName())
+                    .display().getResponse()) {
                 try {
+
                     QuizQuestions.initializeQuestions(0, new QuestionJSONRequest());
+
+                    QuizHelper.startQuiz(false);
                 } catch (JSONException | IOException | InterruptedException e) {
+
                     new ErrorNotifier("Quiz failed to load", false).display(PrimaryStageHolder.getPrimaryStage());
+
                 }
             }
-            QuizHelper.startQuiz(false);
+
         } else new ErrorNotifier("You have not selected a Quiz", false).display(PrimaryStageHolder.getPrimaryStage());
 
     }
@@ -119,7 +109,7 @@ public class MainMenu implements Initializable {
 
             PrimaryStageHolder.getPrimaryStage().close();
 
-            PrimaryStageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.MAINMENU, true));
+            PrimaryStageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.LOGIN, false));
 
             PrimaryStageHolder.getPrimaryStage().show();
 

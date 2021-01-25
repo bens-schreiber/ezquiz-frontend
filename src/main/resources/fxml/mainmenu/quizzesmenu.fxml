@@ -1,38 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="800.0" prefWidth="1064.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.QuizzesMenu">
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.mainmenu.QuizzesMenu">
     <children>
-        <AnchorPane layoutX="100.0" layoutY="100.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0"
-                    AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+        <AnchorPane layoutX="65.0" layoutY="43.0" maxWidth="850.0">
             <children>
-                <Label layoutY="384.0" text="Previous Quizzes"/>
-                <TableView fx:id="savedQuizKeys" prefHeight="200.0" prefWidth="864.0"
-                           stylesheets="@../css/tableview.css">
-                    <columns>
-                        <TableColumn fx:id="nameColumn" prefWidth="89.0" text="Name"/>
-                        <TableColumn fx:id="classColumn" prefWidth="93.0" text="Class"/>
-                        <TableColumn fx:id="keyColumn" prefWidth="75.0" text="Key"/>
-                    </columns>
-                </TableView>
-                <TableView layoutY="400.0" prefHeight="200.0" prefWidth="864.0" stylesheets="@../css/tableview.css">
-                    <columns>
-                        <TableColumn prefWidth="75.0" text="Name"/>
-                        <TableColumn prefWidth="75.0" text="Class"/>
-                        <TableColumn prefWidth="75.0" text="Score"/>
-                        <TableColumn prefWidth="100.0" text="Retake Code"/>
-                    </columns>
-                </TableView>
+                <VBox layoutX="4.0" layoutY="-22.0" prefHeight="600.0" prefWidth="864.0" spacing="55.0">
+                    <children>
+                        <Label text="Previous Quizzes">
+                            <VBox.margin>
+                                <Insets bottom="-50.0"/>
+                            </VBox.margin>
+                            <font>
+                                <Font size="15.0"/>
+                            </font>
+                        </Label>
+                        <TableView prefHeight="350.0" prefWidth="850.0" stylesheets="@../css/tableview.css">
+                            <columns>
+                                <TableColumn prefWidth="75.0" text="Name"/>
+                                <TableColumn prefWidth="75.0" text="Class"/>
+                                <TableColumn prefWidth="75.0" text="Score"/>
+                                <TableColumn prefWidth="100.0" text="Retake Code"/>
+                            </columns>
+                        </TableView>
+                        <HBox spacing="525.0">
+                            <children>
+                                <Label text="Saved Quizzes">
+                                    <HBox.margin>
+                                        <Insets/>
+                                    </HBox.margin>
+                                    <font>
+                                        <Font size="15.0"/>
+                                    </font>
+                                </Label>
+                                <HBox spacing="15.0" stylesheets="@../css/standard_button.css">
+                                    <children>
+                                        <Button mnemonicParsing="false" onAction="#addKeyClicked" text="Add Key"/>
+                                        <Button mnemonicParsing="false" onAction="#removeKeyClicked" text="Remove Key"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                            <VBox.margin>
+                                <Insets bottom="-50.0"/>
+                            </VBox.margin>
+                        </HBox>
+                        <TableView fx:id="savedQuizKeys" onMouseClicked="#tableViewClicked" prefHeight="350.0"
+                                   prefWidth="864.0" stylesheets="@../css/tableview.css">
+                            <columns>
+                                <TableColumn fx:id="nameColumn" prefWidth="89.0" text="Name"/>
+                                <TableColumn fx:id="classColumn" prefWidth="93.0" text="Class"/>
+                                <TableColumn fx:id="keyColumn" prefWidth="75.0" text="Key"/>
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
             </children>
         </AnchorPane>
-        <HBox layoutX="737.0" layoutY="76.0" spacing="15.0" stylesheets="@../css/standard_button.css">
-            <children>
-                <Button mnemonicParsing="false" onAction="#addKeyClicked" text="Add Key"/>
-                <Button mnemonicParsing="false" onAction="#removeKeyClicked" text="Remove Key"/>
-            </children>
-        </HBox>
-        <Label layoutX="100.0" layoutY="79.0" text="Saved Quizzes"/>
     </children>
 </AnchorPane>

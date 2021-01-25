@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.stage.Stage;
 import requests.DatabaseRequest;
 
 import java.net.URL;
@@ -24,13 +23,6 @@ public class Login implements Initializable {
 
     @FXML
     Label errorLabel;
-
-    //Since it is a popup window, save the stage here
-    static Stage stage;
-
-    public static void setStage(Stage stage) {
-        Login.stage = stage;
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,7 +57,7 @@ public class Login implements Initializable {
                 errorLabel.setText(correct ? "Successfully logged in" : "Could not log in. Try again.");
 
                 if (correct) {
-                    stage.close();
+                    PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAINMENU));
                 }
 
             } catch (Exception e) {
@@ -77,9 +69,7 @@ public class Login implements Initializable {
     public void registerButtonClicked() {
 
         try {
-
-            stage.setScene(FXHelper.getScene(FXHelper.Window.REGISTER));
-
+            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.REGISTER));
         } catch (Exception e) {
 
             new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());

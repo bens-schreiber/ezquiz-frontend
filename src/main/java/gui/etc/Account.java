@@ -29,7 +29,7 @@ public class Account {
 
     private static Quiz quiz;
 
-    private static class User {
+    public static class User {
 
         private final String username;
 
@@ -88,6 +88,10 @@ public class Account {
 
     public static boolean isAdmin() {
         return user.isAdmin();
+    }
+
+    public static User getUser() {
+        return user;
     }
 
 

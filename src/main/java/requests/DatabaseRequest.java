@@ -1,6 +1,8 @@
 package requests;
 
 import gui.etc.Account;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,7 +58,7 @@ public class DatabaseRequest {
      *
      * @return 4 digit test key.
      */
-    public static String uploadQuizRetakeCode(long key) throws JSONException, IOException, InterruptedException {
+    public static String postQuizRetakeCode(long key) throws JSONException, IOException, InterruptedException {
         JSONObject body = new JSONObject();
         body.put("key", String.valueOf(key));
 
@@ -94,10 +96,40 @@ public class DatabaseRequest {
     }
 
 
-    public static int uploadQuiz(JSONArray jsonObject, String url) throws IOException, InterruptedException, JSONException {
+    public static int postQuiz(JSONArray jsonObject) throws IOException, InterruptedException, JSONException {
 
-        HttpResponse<String> response = Request.postRequest(jsonObject, url, Account.getAuth());
+        HttpResponse<String> response = Request.postRequest(jsonObject, "database/questions", Account.getAuth());
         return response.statusCode();
+
+    }
+
+    public static int postQuizKey(Account.User user) throws JSONException, IOException, InterruptedException {
+        JSONObject json = new JSONObject();
+        json.put("username", user.getUsername());
+        json.put("quizKey", Account.getQuiz().getKey());
+
+        HttpResponse<String> response = Request.postRequest(json, "users/key", Account.getAuth());
+        return response.statusCode();
+    }
+
+    public static ObservableList<Account.Quiz> getSavedQuizzes() throws InterruptedException, JSONException, IOException {
+
+        JSONObject response = Request.getJSONFromURL("http://localhost:7080/api/users/key/" + Account.getUsername(), Account.getAuth());
+
+        if (response.has("obj0")) {
+
+            ObservableList<Account.Quiz> list = FXCollections.observableArrayList();
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject json = new JSONObject(response.get("obj" + i).toString());
+                list.add(new Account.Quiz(json.get("quizowner").toString(),
+                        json.get("quizname").toString(),
+                        Integer.parseInt(json.get("quizkey").toString())));
+            }
+            return list;
+        }
+        System.out.println("fail :(");
+        return FXCollections.observableArrayList();
+
 
     }
 

@@ -16,7 +16,7 @@ public class GuiRunner extends Application {
         try {
 
             primaryStage.setResizable(false);
-            primaryStage.setScene(FXHelper.getScene(FXHelper.Window.MAINMENU));
+            primaryStage.setScene(FXHelper.getScene(FXHelper.Window.LOGIN));
 
             //Pass the PrimaryStage given from start method to PrimaryStageHelper for all classes to access
             PrimaryStageHolder.setPrimaryStage(primaryStage);

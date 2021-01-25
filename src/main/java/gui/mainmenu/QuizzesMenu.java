@@ -4,12 +4,12 @@ import gui.etc.Account;
 import gui.etc.FXHelper;
 import gui.popup.enter.EnterNotifier;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import org.json.JSONException;
+import requests.DatabaseRequest;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,13 +23,29 @@ public class QuizzesMenu implements Initializable {
     @FXML
     TableColumn<Account.Quiz, String> nameColumn, classColumn, keyColumn;
 
-    private final ObservableList<Account.Quiz> quizzes = FXCollections.observableArrayList();
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         classColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOwner()));
         keyColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getKey())));
+
+        try {
+
+            savedQuizKeys.setItems(DatabaseRequest.getSavedQuizzes());
+
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        } catch (JSONException ignored) {
+        }
+
+    }
+
+    public void tableViewClicked() {
+
+        Account.setQuiz(savedQuizKeys.getSelectionModel().getSelectedItem());
+
     }
 
     public void addKeyClicked() {
@@ -38,11 +54,14 @@ public class QuizzesMenu implements Initializable {
 
             EnterNotifier enter = new EnterNotifier(FXHelper.Window.ENTERKEY).display();
             if (enter.isCodeEntered()) {
-                quizzes.add(Account.getQuiz());
-                savedQuizKeys.setItems(quizzes);
+
+                DatabaseRequest.postQuizKey(Account.getUser());
+
+                savedQuizKeys.setItems(DatabaseRequest.getSavedQuizzes());
+
             }
 
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -50,6 +69,7 @@ public class QuizzesMenu implements Initializable {
 
     public void removeKeyClicked() {
         savedQuizKeys.getItems().remove(savedQuizKeys.getSelectionModel().getSelectedItem());
+        //todo: remove from db
         Account.setQuiz(null);
     }
 

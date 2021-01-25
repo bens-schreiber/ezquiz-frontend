@@ -151,7 +151,7 @@ public class PrintResultsScreen implements Initializable {
 
             try {
 
-                key = DatabaseRequest.uploadQuizRetakeCode(bitMap.getBitMap());
+                key = DatabaseRequest.postQuizRetakeCode(bitMap.getBitMap());
 
                 if (!key.isEmpty()) {
 

@@ -58,7 +58,7 @@ public class Register implements Initializable {
 
                 if (response) {
                     DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()));
-                    Login.stage.close();
+                    PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAINMENU));
                 }
 
             } catch (Exception e) {
@@ -71,9 +71,7 @@ public class Register implements Initializable {
     public void loginButtonClicked() {
 
         try {
-
-            Login.stage.setScene(FXHelper.getScene(FXHelper.Window.LOGIN));
-
+            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.LOGIN));
         } catch (Exception e) {
 
             new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());
