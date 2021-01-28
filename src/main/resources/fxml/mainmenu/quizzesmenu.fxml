@@ -12,25 +12,9 @@
             <children>
                 <VBox layoutX="4.0" layoutY="-22.0" prefHeight="600.0" prefWidth="864.0" spacing="55.0">
                     <children>
-                        <Label text="Previous Quizzes">
-                            <VBox.margin>
-                                <Insets bottom="-50.0"/>
-                            </VBox.margin>
-                            <font>
-                                <Font size="15.0"/>
-                            </font>
-                        </Label>
-                        <TableView prefHeight="350.0" prefWidth="850.0" stylesheets="@../css/tableview.css">
-                            <columns>
-                                <TableColumn prefWidth="75.0" text="Name"/>
-                                <TableColumn prefWidth="75.0" text="Class"/>
-                                <TableColumn prefWidth="75.0" text="Score"/>
-                                <TableColumn prefWidth="100.0" text="Retake Code"/>
-                            </columns>
-                        </TableView>
                         <HBox spacing="525.0">
                             <children>
-                                <Label text="Saved Quizzes">
+                                <Label text="Your Quizzes">
                                     <HBox.margin>
                                         <Insets/>
                                     </HBox.margin>
@@ -55,6 +39,23 @@
                                 <TableColumn fx:id="nameColumn" prefWidth="89.0" text="Name"/>
                                 <TableColumn fx:id="classColumn" prefWidth="93.0" text="Class"/>
                                 <TableColumn fx:id="keyColumn" prefWidth="75.0" text="Key"/>
+                            </columns>
+                        </TableView>
+                        <Label text="Previously Taken Quizzes">
+                            <VBox.margin>
+                                <Insets bottom="-50.0"/>
+                            </VBox.margin>
+                            <font>
+                                <Font size="15.0"/>
+                            </font>
+                        </Label>
+                        <TableView fx:id="previousQuizzes" prefHeight="350.0" prefWidth="850.0"
+                                   stylesheets="@../css/tableview.css">
+                            <columns>
+                                <TableColumn fx:id="prevQuizName" prefWidth="75.0" text="Name"/>
+                                <TableColumn fx:id="prevQuizClass" prefWidth="75.0" text="Class"/>
+                                <TableColumn fx:id="prevQuizScore" prefWidth="75.0" text="Score"/>
+                                <TableColumn fx:id="prevQuizKey" prefWidth="100.0" text="Key"/>
                             </columns>
                         </TableView>
                     </children>

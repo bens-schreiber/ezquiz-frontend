@@ -1,5 +1,6 @@
 package requests;
 
+import etc.Constants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +22,7 @@ class Request {
      * @param url   where to send request
      * @param token auth token
      */
-    static JSONObject getJSONFromURL(String url, String token) throws IOException, InterruptedException, JSONException {
+    static HttpResponse<String> getFromURL(String url, String token) throws IOException, InterruptedException, JSONException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -30,9 +31,9 @@ class Request {
                 .uri(URI.create(url))
                 .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return new JSONObject(response.body());
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
+
 
     /**
      * Make HTTP post to server.
@@ -45,7 +46,7 @@ class Request {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
-                .uri(URI.create("http://localhost:7080/api/" + urlSegment))
+                .uri(URI.create(Constants.DEFAULT_PATH + urlSegment))
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
                 .build();
 
@@ -53,8 +54,29 @@ class Request {
 
     }
 
+
     /**
-     * Overloaded postRequest
+     * Make HTTP post to server.
+     *
+     * @param body  JSONArray to send
+     * @param token auth token
+     */
+    static HttpResponse<String> postRequest(JSONArray body, String token) throws IOException, InterruptedException {
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("Content-Type", "application/json")
+                .header("token", token)
+                .uri(URI.create("http://localhost:7080/api/" + "quiz/new"))
+                .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+                .build();
+
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    }
+
+
+    /**
      * Make HTTP post to server.
      *
      * @param body       JSONObject of what to send
@@ -67,7 +89,7 @@ class Request {
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
                 .header("token", token)
-                .uri(URI.create("http://localhost:7080/api/" + urlSegment))
+                .uri(URI.create(Constants.DEFAULT_PATH + urlSegment))
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
                 .build();
 
@@ -75,14 +97,21 @@ class Request {
 
     }
 
-    static HttpResponse<String> postRequest(JSONArray body, String urlSegment, String token) throws IOException, InterruptedException {
+
+    /**
+     * Delete Request to the Server.
+     *
+     * @param urlSegment where to send it
+     * @param token      auth token
+     */
+    static HttpResponse<String> deleteRequest(String urlSegment, String token) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
                 .header("token", token)
-                .uri(URI.create("http://localhost:7080/api/" + urlSegment))
-                .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+                .uri(URI.create(Constants.DEFAULT_PATH + urlSegment))
+                .DELETE()
                 .build();
 
         return client.send(request, HttpResponse.BodyHandlers.ofString());

@@ -1,11 +1,10 @@
 package gui.quiz;
 
 import etc.Constants;
-import gui.PrimaryStageHolder;
-import gui.etc.Account;
+import gui.account.Account;
 import gui.etc.FXHelper;
 import gui.popup.confirm.ConfirmNotifier;
-import gui.popup.error.ErrorNotifier;
+import gui.popup.notification.UserNotifier;
 import gui.quiz.tools.CalculatorController;
 import gui.quiz.tools.DrawingPadController;
 import gui.quiz.tools.NotePadController;
@@ -87,7 +86,7 @@ public class QuizController implements Initializable {
 
         seconds = Integer.parseInt(QuizHelper.Preference.preferences.get(QuizHelper.Preference.TIME));
 
-        userLabel.setText(userLabel.getText() + Account.getUsername());
+        userLabel.setText(userLabel.getText() + Account.getUser().getUsername());
 
         //Disable back button by default.
         backButton.setDisable(true);
@@ -257,7 +256,7 @@ public class QuizController implements Initializable {
 
         } catch (Exception e) {
 
-            new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());
+            new UserNotifier("A page failed to load").display();
 
             e.printStackTrace();
 
@@ -287,7 +286,7 @@ public class QuizController implements Initializable {
 
         } catch (Exception e) {
 
-            new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());
+            new UserNotifier("A page failed to load").display();
 
             e.printStackTrace();
 
@@ -325,7 +324,7 @@ public class QuizController implements Initializable {
 
         } catch (Exception e) {
 
-            new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());
+            new UserNotifier("A page failed to load").display();
 
             e.printStackTrace();
 

@@ -1,44 +1,59 @@
 package gui.popup.enter;
 
-import etc.BitMap;
-import gui.popup.error.ErrorNotifier;
-import gui.quiz.QuizHelper;
+import gui.account.Account;
+import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
-import questions.QuizQuestions;
 import requests.DatabaseRequest;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
-public class EnterCode implements Initializable {
+public class EnterInputScreen implements Initializable {
 
     @FXML
     TextField codeTextField;
+
     //Since it is a popup window, save the stage here
     static Stage stage;
+
+    static boolean response;
 
     public void enterCodeButtonClicked() {
         try {
 
-            long bitmap = DatabaseRequest.getQuizRetakeCode(Integer.parseInt(codeTextField.getText()));
+            switch (DatabaseRequest.getQuizPathFromKey(Integer.parseInt(codeTextField.getText()), Account.getUser())) {
+                case ACCEPTED:
+                    response = true;
+                    break;
 
-            QuizQuestions.initializeQuestions(new BitMap(bitmap).decodeToList());
+                case NO_CONTENT:
+                    response = false;
+                    new UserNotifier("Could not find Quiz from key.").display(stage);
+                    break;
 
-            QuizHelper.startQuiz(false);
+                case NO_CONNECTION:
+                    response = false;
+                    new UserNotifier("Connection to the server failed.").display(stage);
+                    break;
+            }
+
             stage.close();
 
         } catch (Exception e) {
-            new ErrorNotifier("Could not get test from code.", false).display(stage);
+            response = false;
+            e.printStackTrace();
+            new UserNotifier("An unknown error occurred.").display(stage);
         }
 
     }
 
     public void exitButtonClicked() {
+        response = false;
         stage.close();
     }
 
@@ -46,11 +61,9 @@ public class EnterCode implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         UnaryOperator<TextFormatter.Change> modifyChange = c -> {
-
             if (!c.getText().matches("[\\d]")) {
                 c.setText("");
             }
-
             if (c.isContentChange()) {
                 int newLength = c.getControlNewText().length();
                 if (newLength > 4) {

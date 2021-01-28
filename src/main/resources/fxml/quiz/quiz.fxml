@@ -151,7 +151,7 @@
             </content>
         </ScrollPane>
         <Label fx:id="quizName" layoutX="14.0" layoutY="45.0" maxHeight="1.7976931348623157E308"
-               maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="FBLA - Default Test"
+               maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Quiz"
                textFill="#303f9f">
             <font>
                 <Font name="SansSerif Regular" size="30.0"/>

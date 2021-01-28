@@ -1,10 +1,11 @@
 package gui.mainmenu;
 
+import etc.Constants;
 import gui.PrimaryStageHolder;
-import gui.etc.Account;
+import gui.account.Account;
 import gui.etc.FXHelper;
 import gui.popup.confirm.ConfirmNotifier;
-import gui.popup.error.ErrorNotifier;
+import gui.popup.notification.UserNotifier;
 import gui.quiz.QuizHelper;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -15,7 +16,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.json.JSONException;
 import questions.QuizQuestions;
-import requests.QuestionJSONRequest;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,9 +40,9 @@ public class MainMenu implements Initializable {
 
         quizzesButtonClicked();
 
-        usernameLabel.setText(Account.getUsername());
+        usernameLabel.setText(Account.getUser().getUsername());
 
-        if (!Account.isAdmin()) {
+        if (!Account.getUser().isAdmin()) {
             buttonContainer.getChildren().remove(adminContainer);
         }
 
@@ -52,29 +52,42 @@ public class MainMenu implements Initializable {
     public void randomQuizClicked() {
 
         if (Account.getQuiz() != null) {
-            if (new ConfirmNotifier("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse())
+
+            if (new ConfirmNotifier("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
+
                 QuizHelper.startQuiz(true);
-        } else new ErrorNotifier("You have not selected a Quiz", false).display(PrimaryStageHolder.getPrimaryStage());
+
+            }
+
+        } else new UserNotifier("You have not selected a Quiz").display();
 
     }
 
     public void quizzesButtonClicked() {
+
         try {
 
             mainDisplay.getChildren().setAll(FXHelper.getPane(FXHelper.Window.SAVEDQUIZZES));
 
         } catch (Exception e) {
-            new ErrorNotifier("Page failed to load", false).display(PrimaryStageHolder.getPrimaryStage());
+
+            new UserNotifier("Page failed to load").display();
+
         }
     }
 
     public void adminButtonClicked() {
 
         try {
+
             mainDisplay.getChildren().setAll(FXHelper.getPane(FXHelper.Window.ADMINMENU));
+
         } catch (Exception e) {
+
             e.printStackTrace();
-            new ErrorNotifier("Page failed to load", false).display(PrimaryStageHolder.getPrimaryStage());
+
+            new UserNotifier("Page failed to load").display();
+
         }
 
     }
@@ -83,21 +96,21 @@ public class MainMenu implements Initializable {
 
         if (Account.getQuiz() != null) {
 
-            if (new ConfirmNotifier("Are you sure you want to take: " + Account.getQuiz().getName())
-                    .display().getResponse()) {
+            if (new ConfirmNotifier("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
                 try {
 
-                    QuizQuestions.initializeQuestions(0, new QuestionJSONRequest());
+                    QuizQuestions.initializeQuestions(Constants.MAXIMUM_QUESTION_AMOUNT);
 
                     QuizHelper.startQuiz(false);
+
                 } catch (JSONException | IOException | InterruptedException e) {
 
-                    new ErrorNotifier("Quiz failed to load", false).display(PrimaryStageHolder.getPrimaryStage());
+                    new UserNotifier("Quiz failed to load").display();
 
                 }
             }
 
-        } else new ErrorNotifier("You have not selected a Quiz", false).display(PrimaryStageHolder.getPrimaryStage());
+        } else new UserNotifier("You have not selected a Quiz").display();
 
     }
 

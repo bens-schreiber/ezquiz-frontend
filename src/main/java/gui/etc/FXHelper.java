@@ -1,7 +1,7 @@
 package gui.etc;
 
 import gui.PrimaryStageHolder;
-import gui.popup.error.ErrorNotifier;
+import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -50,7 +50,7 @@ public class FXHelper {
         stage.setAlwaysOnTop(true);
         stage.setResizable(false);
 
-        Scene scene = new Scene(FXMLLoader.load(ErrorNotifier.class.getResource(window.getPath())));
+        Scene scene = new Scene(FXMLLoader.load(UserNotifier.class.getResource(window.getPath())));
         stage.setScene(scene);
 
         return stage;

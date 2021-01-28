@@ -12,12 +12,12 @@
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.MainMenu">
    <children>
       <VBox fx:id="buttonContainer" layoutX="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="802.0" prefWidth="170.0" spacing="30.0"
+            minWidth="-Infinity" prefHeight="800.0" prefWidth="166.0" spacing="30.0"
             style="-fx-background-color: #303f9f; -fx-border-color: #9E9E9E;" stylesheets="@../css/mainmenubutton.css"
             AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1035.0"
             AnchorPane.topAnchor="-1.0">
          <children>
-            <HBox alignment="CENTER_LEFT" onMouseClicked="#takeQuizClicked" prefHeight="30.0" prefWidth="148.0"
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#takeQuizClicked" prefHeight="30.0" prefWidth="121.0"
                   spacing="10.0">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0">
@@ -107,7 +107,7 @@
             </HBox>
          </children>
          <padding>
-            <Insets left="15.0" right="10.0" top="15.0"/>
+            <Insets left="15.0" right="10.0" top="30.0"/>
          </padding>
          <cursor>
             <Cursor fx:constant="CLOSED_HAND"/>
@@ -139,5 +139,16 @@
             <DropShadow/>
          </effect>
       </HBox>
+      <Label layoutX="18.0" layoutY="749.0" text="Created by Ben Schreiber" textFill="WHITE">
+         <font>
+            <Font size="10.0"/>
+         </font>
+      </Label>
+      <Label layoutX="18.0" layoutY="772.0" prefHeight="10.0" prefWidth="139.0" text="Images fontawesome.com"
+             textFill="WHITE">
+         <font>
+            <Font size="10.0"/>
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -1,7 +1,7 @@
 package requests;
 
 import etc.Constants;
-import gui.etc.Account;
+import gui.account.Account;
 import org.json.JSONException;
 import org.json.JSONObject;
 import questions.question.QuestionNode;
@@ -25,14 +25,16 @@ public class AnswerJSONRequest {
         //Create path for getting answers
         StringBuilder stringBuilder = new StringBuilder()
                 .append(Constants.DEFAULT_PATH)
-                .append("answer/").append(Account.getQuizPath()).append("/");
+                .append("questions/answer/");
 
         for (QuestionNode questionNode : this.questionNodes) {
             stringBuilder.append(questionNode.getID()).append(",");
         }
 
-        //get rid of the last "," because it isn't needed
-        this.json = Request.getJSONFromURL(stringBuilder.substring(0, stringBuilder.length() - 1), Account.getAuth());
+        //get rid of the last "," and convert string to JSON
+        this.json = new JSONObject(
+                Request.getFromURL(stringBuilder.substring(0, stringBuilder.length() - 1), Account.getUser().getAuth())
+                        .body());
 
 
         return this;

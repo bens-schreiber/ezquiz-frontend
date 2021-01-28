@@ -1,10 +1,9 @@
 package gui.mainmenu.login;
 
 import etc.Constants;
-import etc.SHA;
 import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
-import gui.popup.error.ErrorNotifier;
+import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -51,18 +50,24 @@ public class Register implements Initializable {
 
             try {
 
-                boolean response = DatabaseRequest.registerUser(usernameField.getText(), SHA.encrypt(passwordField.getText()))
-                        == Constants.STATUS_ACCEPTED;
+                //Requests return Status Enum from rest server.
+                switch (DatabaseRequest.postNewUser(usernameField.getText(), SHA.encrypt(passwordField.getText()))) {
 
-                errorLabel.setText(response ? "Account successfully created." : "Could not create account.");
+                    case ACCEPTED:
+                        DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()));
+                        PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAINMENU));
+                        break;
 
-                if (response) {
-                    DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()));
-                    PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAINMENU));
+                    case UNAUTHORIZED:
+                        errorLabel.setText("Incorrect username or password.");
+                        break;
+
+                    case NO_CONNECTION, NO_CONTENT:
+                        errorLabel.setText("Error connecting to database.");
                 }
 
             } catch (Exception e) {
-                errorLabel.setText("Error connecting to database.");
+                errorLabel.setText("An unknown error occurred.");
             }
 
         }
@@ -74,7 +79,7 @@ public class Register implements Initializable {
             PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.LOGIN));
         } catch (Exception e) {
 
-            new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());
+            new UserNotifier("A page failed to load").display();
 
             e.printStackTrace();
 

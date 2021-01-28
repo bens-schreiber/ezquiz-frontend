@@ -1,6 +1,8 @@
 package requests;
 
-import gui.etc.Account;
+import gui.account.Account;
+import gui.account.Quiz;
+import gui.account.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.json.JSONArray;
@@ -8,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.http.HttpResponse;
 
 public class DatabaseRequest {
@@ -15,129 +18,306 @@ public class DatabaseRequest {
     private DatabaseRequest() {
     }
 
+
     /**
+     * POST
+     *
      * @return status code
      */
-    public static int registerUser(String username, String password) throws IOException, InterruptedException, JSONException {
-        JSONObject body = new JSONObject();
-        body.put("username", username);
-        body.put("password", password);
-
-        HttpResponse<String> response = Request.postRequest(body, "users/register");
-
-        return response.statusCode();
-    }
-
-    /**
-     * Verify if login credentials were correct.
-     *
-     * @return status code.
-     */
-    public static boolean verifyLoginCredentials(String username, String password) throws IOException, InterruptedException, JSONException {
-
-        JSONObject body = new JSONObject();
-        body.put("password", password);
-        body.put("username", username);
-
-        HttpResponse<String> response = Request.postRequest(body, "users/login");
-
-        if (response.headers().firstValue("token").isPresent()) {
-
-            //Store token and username in static user
-            Account.login(username, response.headers().firstValue("token").get(), Boolean.parseBoolean(response.body()));
-
-            System.out.println(Account.getAuth());
-            return true;
-        }
-        return false;
-
-    }
-
-    /**
-     * Post bitmap to the server.
-     *
-     * @return 4 digit test key.
-     */
-    public static String postQuizRetakeCode(long key) throws JSONException, IOException, InterruptedException {
-        JSONObject body = new JSONObject();
-        body.put("key", String.valueOf(key));
-
-        HttpResponse<String> response = Request.postRequest(body, "database/code", Account.getAuth());
-
-        return new JSONObject(response.body()).get("key").toString();
-    }
-
-    /**
-     * Use a retake code to get a selection of quiz ids.
-     *
-     * @return bitmap
-     */
-    public static long getQuizRetakeCode(int code) throws InterruptedException, JSONException, IOException {
-        JSONObject response = (JSONObject) Request.getJSONFromURL("http://localhost:7080/api/database/code/" + code, Account.getAuth()).get("obj0");
-        return Long.parseLong(response.get("bitmap").toString());
-    }
-
-    public static boolean setQuizPathFromKey(int key) throws InterruptedException, IOException {
+    public static Status postNewUser(String username, String password) throws IOException, InterruptedException, JSONException {
         try {
 
-            JSONObject response = (JSONObject) Request.getJSONFromURL("http://localhost:7080/api/database/key/" + key, Account.getAuth()).get("obj0");
+            JSONObject body = new JSONObject()
+                    .put("username", username)
+                    .put("password", password);
 
-            //If response has the correct pieces, set the Account quiz
-            if (response.has("quizowner") && response.has("quizname")) {
-                Account.setQuiz(response.get("quizowner").toString(), response.get("quizname").toString(), key);
-                return true;
-            }
+            HttpResponse<String> response = Request.postRequest(body, "users/register");
 
-            return false;
+            return Status.getStatusFromInt(response.statusCode());
 
-        } catch (JSONException e) {
-            return false;
+        } catch (ConnectException ignore) {
+            return Status.NO_CONNECTION;
         }
     }
 
 
-    public static int postQuiz(JSONArray jsonObject) throws IOException, InterruptedException, JSONException {
+    /**
+     * POST
+     * Verify if login credentials were correct, Account.login if possible.
+     *
+     * @return status code
+     */
+    public static Status verifyLoginCredentials(String username, String password) throws IOException, InterruptedException, JSONException {
+        try {
 
-        HttpResponse<String> response = Request.postRequest(jsonObject, "database/questions", Account.getAuth());
-        return response.statusCode();
+            JSONObject body = new JSONObject()
+                    .put("password", password)
+                    .put("username", username);
 
-    }
+            HttpResponse<String> response = Request.postRequest(body, "users/login");
 
-    public static int postQuizKey(Account.User user) throws JSONException, IOException, InterruptedException {
-        JSONObject json = new JSONObject();
-        json.put("username", user.getUsername());
-        json.put("quizKey", Account.getQuiz().getKey());
-
-        HttpResponse<String> response = Request.postRequest(json, "users/key", Account.getAuth());
-        return response.statusCode();
-    }
-
-    public static ObservableList<Account.Quiz> getSavedQuizzes() throws InterruptedException, JSONException, IOException {
-
-        JSONObject response = Request.getJSONFromURL("http://localhost:7080/api/users/key/" + Account.getUsername(), Account.getAuth());
-
-        if (response.has("obj0")) {
-
-            ObservableList<Account.Quiz> list = FXCollections.observableArrayList();
-            for (int i = 0; i < response.length(); i++) {
-                JSONObject json = new JSONObject(response.get("obj" + i).toString());
-                list.add(new Account.Quiz(json.get("quizowner").toString(),
-                        json.get("quizname").toString(),
-                        Integer.parseInt(json.get("quizkey").toString())));
+            if (response.headers().firstValue("token").isPresent()) {
+                //Store token and username in static user
+                System.out.println(response.headers().firstValue("token"));
+                Account.login(username, response.headers().firstValue("token").get(), Boolean.parseBoolean(response.body()));
             }
+
+            return Status.getStatusFromInt(response.statusCode());
+
+        } catch (ConnectException ignore) {
+            return Status.NO_CONNECTION;
+        }
+
+    }
+
+    /**
+     * POST
+     * Post a Quiz Key to a User on the database.
+     *
+     * @return status code
+     */
+    public static Status postQuizKey(User user, Quiz quiz) throws JSONException, IOException, InterruptedException {
+
+        try {
+
+            //Create a JSON object with the fields username and quizKey and the current Accounts information attatched.
+            JSONObject json = new JSONObject()
+                    .put("username", user.getUsername())
+                    .put("quizKey", quiz.getKey());
+
+            HttpResponse<String> response = Request.postRequest(json, "users/key", Account.getUser().getAuth());
+
+            return Status.getStatusFromInt(response.statusCode());
+
+        } catch (ConnectException ignore) {
+            return Status.NO_CONNECTION;
+        }
+    }
+
+    /**
+     * POST
+     * Post a Quiz to the database.
+     *
+     * @return status code
+     */
+    public static Status postQuiz(JSONArray jsonObject, User user) throws IOException, InterruptedException {
+        try {
+
+            HttpResponse<String> response = Request.postRequest(jsonObject, user.getAuth());
+
+            return Status.getStatusFromInt(response.statusCode());
+
+        } catch (ConnectException ignore) {
+            return Status.NO_CONNECTION;
+        }
+
+    }
+
+    /**
+     * POST
+     * Post score to quiz to database.
+     *
+     * @return status code
+     */
+    public static Status postQuizScore(int score, User user, Quiz quiz) throws JSONException, IOException, InterruptedException {
+        try {
+
+            JSONObject json = new JSONObject().put("score", score)
+                    .put("username", user.getUsername())
+                    .put("quizKey", quiz.getKey());
+
+            HttpResponse<String> response = Request.postRequest(json, "users/score", Account.getUser().getAuth());
+
+            return Status.getStatusFromInt(response.statusCode());
+
+        } catch (ConnectException ignore) {
+            return Status.NO_CONNECTION;
+        }
+
+    }
+
+
+    /**
+     * GET
+     * From a Quiz Key, set Account.Quiz path
+     *
+     * @return status code
+     */
+    public static Status getQuizPathFromKey(int key, User user) throws InterruptedException, IOException, JSONException {
+
+        try {
+
+            HttpResponse<String> response = Request.getFromURL("http://localhost:7080/api/quiz/key/" + key, user.getAuth());
+
+            JSONObject body = new JSONObject(response.body());
+
+
+            if (body.has("obj0")) {
+
+                JSONObject json = new JSONObject(body.get("obj0").toString());
+
+                //If response has the correct pieces, set the Account quiz
+                if (json.has("quizowner") && json.has("quizname")) {
+                    Account.setQuiz(json.get("quizowner").toString(), json.get("quizname").toString(), key);
+                    return Status.ACCEPTED;
+                }
+
+            }
+
+            return Status.NO_CONTENT;
+
+        } catch (ConnectException ignore) {
+            return Status.NO_CONNECTION;
+        }
+    }
+
+
+    /**
+     * GET
+     * Get all saved quizzes to the current Account from the database.
+     *
+     * @return ObservableList that FX uses for TableView.
+     */
+    public static ObservableList<Quiz> getSavedQuizKeys(User user) throws InterruptedException, JSONException, IOException {
+
+        try {
+
+            HttpResponse<String> response = Request.getFromURL("http://localhost:7080/api/users/key/" + user.getUsername(), user.getAuth());
+
+            JSONObject body = new JSONObject(response.body());
+            ObservableList<Quiz> list = FXCollections.observableArrayList();
+            //If response contains at least a single object
+            if (body.has("obj0")) {
+
+                for (int i = 0; i < body.length(); i++) {
+
+                    JSONObject json = new JSONObject(body.get("obj" + i).toString());
+
+                    //Server will always respond with these variables, no validation needed
+                    list.add(new Quiz(json.get("quizowner").toString(),
+                            json.get("quizname").toString(),
+                            Integer.parseInt(json.get("quizkey").toString())));
+                }
+            }
+
             return list;
-        }
-        System.out.println("fail :(");
-        return FXCollections.observableArrayList();
 
+        } catch (ConnectException ignore) {
+            return FXCollections.observableArrayList();
+        }
+
+    }
+
+    /**
+     * GET
+     * Get all of users previous quizzes.
+     *
+     * @return list for tableview
+     */
+    public static ObservableList<Quiz> getPreviousQuizzes() throws InterruptedException, JSONException, IOException {
+
+        try {
+
+            HttpResponse<String> response = Request.getFromURL("http://localhost:7080/api/users/score/" + Account.getUser().getUsername(), Account.getUser().getAuth());
+
+            JSONObject body = new JSONObject(response.body());
+            //If response contains at least a single object
+            ObservableList<Quiz> list = FXCollections.observableArrayList();
+            if (body.has("obj0")) {
+
+                for (int i = 0; i < body.length(); i++) {
+
+                    JSONObject json = new JSONObject(body.get("obj" + i).toString());
+
+                    //Server will always respond with these variables, no validation needed
+                    list.add(new Quiz(json.get("quizowner").toString(),
+                            json.get("quizname").toString(),
+                            Integer.parseInt(json.get("quizkey").toString()),
+                            Integer.parseInt(json.get("score").toString())
+                    ));
+                }
+            }
+
+            return list;
+
+        } catch (ConnectException ignore) {
+            return FXCollections.observableArrayList();
+        }
+    }
+
+
+    /**
+     * GET
+     * Get all of users previous quizzes.
+     *
+     * @return status code
+     */
+    public static ObservableList<Quiz> getCreatedQuizzes(User user) throws InterruptedException, JSONException, IOException {
+
+        try {
+
+            HttpResponse<String> response = Request.getFromURL("http://localhost:7080/api/users/quizzes/" + user.getUsername(), user.getAuth());
+            JSONObject body = new JSONObject(response.body());
+
+            ObservableList<Quiz> list = FXCollections.observableArrayList();
+            //If response contains at least a single object
+            if (body.has("obj0")) {
+
+                for (int i = 0; i < body.length(); i++) {
+
+                    JSONObject json = new JSONObject(body.get("obj" + i).toString());
+
+                    //Null owner because it isn't needed for table view
+                    list.add(new Quiz(null,
+                            json.get("quizname").toString(),
+                            Integer.parseInt(json.get("quizkey").toString())));
+                }
+            }
+
+            return list;
+
+        } catch (ConnectException ignore) {
+            return FXCollections.observableArrayList();
+        }
+    }
+
+
+    /**
+     * DELETE
+     * Delete all questions, quizkeys and user saved quizkeys from database, remove quiz
+     *
+     * @return status code
+     */
+    public static Status deleteQuiz(Quiz quiz, User user) throws IOException, InterruptedException {
+
+        try {
+
+            HttpResponse<String> response = Request.deleteRequest("quiz/quizzes/" + quiz.getKey(), user.getAuth());
+            return Status.getStatusFromInt(response.statusCode());
+        } catch (ConnectException ignore) {
+            return Status.NO_CONNECTION;
+        }
 
     }
 
 
-//    private static String verifyAdmin() {}
+    /**
+     * DELETE
+     * Delete the user saved quizkey
+     *
+     * @return status code
+     */
+    public static Status deleteQuizKey(Quiz quiz, User user) throws IOException, InterruptedException {
 
-//
-//    public static int getQuizKey() {}
+        try {
 
+            HttpResponse<String> response = Request.deleteRequest("users/key/" + user.getUsername()
+                    + "/" + quiz.getKey(), user.getAuth());
 
+            return Status.getStatusFromInt(response.statusCode());
+
+        } catch (ConnectException ignore) {
+            return Status.NO_CONNECTION;
+        }
+    }
 }

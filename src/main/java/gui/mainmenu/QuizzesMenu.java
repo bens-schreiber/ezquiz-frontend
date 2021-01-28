@@ -1,8 +1,9 @@
 package gui.mainmenu;
 
-import gui.etc.Account;
-import gui.etc.FXHelper;
-import gui.popup.enter.EnterNotifier;
+import gui.account.Account;
+import gui.account.Quiz;
+import gui.popup.enter.EnterInputNotifier;
+import gui.popup.notification.UserNotifier;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,22 +19,30 @@ import java.util.ResourceBundle;
 public class QuizzesMenu implements Initializable {
 
     @FXML
-    TableView<Account.Quiz> savedQuizKeys;
+    TableView<Quiz> savedQuizKeys, previousQuizzes;
 
     @FXML
-    TableColumn<Account.Quiz, String> nameColumn, classColumn, keyColumn;
+    TableColumn<Quiz, String> nameColumn, classColumn, keyColumn,
+            prevQuizName, prevQuizClass, prevQuizScore, prevQuizKey;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
+        //Tell columns how to create data from the Quiz class.
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         classColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOwner()));
         keyColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getKey())));
 
+        prevQuizName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        prevQuizClass.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getOwner()));
+        prevQuizKey.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getKey())));
+        prevQuizScore.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getScore())));
+
         try {
 
-            savedQuizKeys.setItems(DatabaseRequest.getSavedQuizzes());
+            //Try to fetch keys from database
+            savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
+            previousQuizzes.setItems(DatabaseRequest.getPreviousQuizzes());
 
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
@@ -44,6 +53,7 @@ public class QuizzesMenu implements Initializable {
 
     public void tableViewClicked() {
 
+        //Whenever a quiz is selected in the table, set it as the Account Quiz.
         Account.setQuiz(savedQuizKeys.getSelectionModel().getSelectedItem());
 
     }
@@ -52,25 +62,56 @@ public class QuizzesMenu implements Initializable {
 
         try {
 
-            EnterNotifier enter = new EnterNotifier(FXHelper.Window.ENTERKEY).display();
-            if (enter.isCodeEntered()) {
+            //Ask for input from user for a code.
+            EnterInputNotifier enter = new EnterInputNotifier().display();
 
-                DatabaseRequest.postQuizKey(Account.getUser());
+            if (enter.isCodeValid()) {
 
-                savedQuizKeys.setItems(DatabaseRequest.getSavedQuizzes());
+                //Refresh database
+                switch (DatabaseRequest.postQuizKey(Account.getUser(), Account.getQuiz())) {
+
+                    case ACCEPTED -> savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
+
+                    case NO_CONTENT -> new UserNotifier("An error occurred uploading the key.").display();
+
+                    case NO_CONNECTION -> new UserNotifier("Connection to the server failed.").display();
+
+                }
 
             }
 
-        } catch (IOException | InterruptedException | JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            new UserNotifier("An unknown error occurred.").display();
         }
 
     }
 
     public void removeKeyClicked() {
-        savedQuizKeys.getItems().remove(savedQuizKeys.getSelectionModel().getSelectedItem());
-        //todo: remove from db
+
+        try {
+
+            //Refresh database
+            switch (DatabaseRequest.deleteQuizKey(savedQuizKeys.getSelectionModel().getSelectedItem(), Account.getUser())) {
+
+                case ACCEPTED -> savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
+
+                case NO_CONTENT -> new UserNotifier("An error occurred while deleting the key.").display();
+
+                case NO_CONNECTION -> new UserNotifier("Connection to the server failed.").display();
+
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            new UserNotifier("An unknown error occured.").display();
+
+        }
+
         Account.setQuiz(null);
+
     }
 
 

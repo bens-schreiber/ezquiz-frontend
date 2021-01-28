@@ -1,12 +1,12 @@
 package requests;
 
 import etc.Constants;
-import gui.etc.Account;
+import gui.account.Account;
+import gui.account.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Requests all questions in appropriate range and converts from JSON to Question list
@@ -15,28 +15,27 @@ public class QuestionJSONRequest {
 
     private JSONObject json;
 
-    //Initialize path as string builder. Add onto default path to create path needed for the request.
-    private StringBuilder path = new StringBuilder(Constants.DEFAULT_PATH + Account.getQuizPath());
+    private final String questionPath;
 
-    /**
-     * Constructor
-     */
+    private final String auth;
 
-    public QuestionJSONRequest(List<Integer> ids) {
-        for (Integer id : ids) {
-            path.append(id).append(",");
-        }
-        path = new StringBuilder(path.substring(0, path.toString().length() - 1));
+    public QuestionJSONRequest(User user) {
+        this.auth = user.getAuth();
+        this.questionPath = Constants.DEFAULT_PATH + "/questions/" + Account.getQuizPath();
     }
 
-    public QuestionJSONRequest() {
+    public QuestionJSONRequest(User user, String questionPath) {
+        this.auth = user.getAuth();
+        this.questionPath = questionPath;
     }
 
 
     public QuestionJSONRequest initializeRequest() throws InterruptedException, IOException, JSONException {
 
         //Make the request from the path built by the constructor.
-        this.json = Request.getJSONFromURL(path.toString(), Account.getAuth());
+        this.json = new JSONObject(
+                Request.getFromURL(questionPath, auth).body()
+        );
 
         //If no questions could be found with given parameters
         if (json.length() == 0) {

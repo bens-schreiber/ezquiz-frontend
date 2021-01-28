@@ -1,10 +1,9 @@
 package gui.mainmenu.login;
 
 import etc.Constants;
-import etc.SHA;
 import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
-import gui.popup.error.ErrorNotifier;
+import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -50,14 +49,19 @@ public class Login implements Initializable {
 
             try {
 
-                //If the request is accepted
-                boolean correct = DatabaseRequest.verifyLoginCredentials(
-                        usernameField.getText(), SHA.encrypt(passwordField.getText()));
+                //Requests return Status Enum from rest server.
+                switch (DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()))) {
 
-                errorLabel.setText(correct ? "Successfully logged in" : "Could not log in. Try again.");
+                    case ACCEPTED:
+                        PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAINMENU));
+                        break;
 
-                if (correct) {
-                    PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAINMENU));
+                    case UNAUTHORIZED:
+                        errorLabel.setText("Incorrect username or password.");
+                        break;
+
+                    case NO_CONNECTION, NO_CONTENT:
+                        errorLabel.setText("Error connecting to database.");
                 }
 
             } catch (Exception e) {
@@ -72,7 +76,7 @@ public class Login implements Initializable {
             PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.REGISTER));
         } catch (Exception e) {
 
-            new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());
+            new UserNotifier("A page failed to load").display();
 
             e.printStackTrace();
 

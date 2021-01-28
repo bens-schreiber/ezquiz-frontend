@@ -1,7 +1,7 @@
 package questions;
 
-import gui.PrimaryStageHolder;
-import gui.popup.error.ErrorNotifier;
+import gui.account.Account;
+import gui.popup.notification.UserNotifier;
 import org.json.JSONException;
 import questions.question.Question;
 import questions.question.QuestionNode;
@@ -28,24 +28,23 @@ public class QuizQuestions {
     /**
      * Initialize questionNodes with specific questions, utilizes QuestionNodeArrayFactory
      *
-     * @param amount              amount of questions wanted, corrected if impossible
-     * @param questionJSONRequest specific request object that should be utilized
+     * @param amount amount of questions wanted. 0 if maximum possible.
      */
-    public static void initializeQuestions(int amount, QuestionJSONRequest questionJSONRequest) throws IllegalArgumentException, JSONException, IOException, InterruptedException {
+    public static void initializeQuestions(int amount) throws IllegalArgumentException, JSONException, IOException, InterruptedException {
         try {
 
             //Make the request on the given QuestionJSONRequest, storing the json in the object.
-            questionJSONRequest.initializeRequest();
+            QuestionJSONRequest request = new QuestionJSONRequest(Account.getUser()).initializeRequest();
 
             //Create a pool of question id's in the size of how many questions available, randomize order
             List<Integer> idPool = new LinkedList<>();
-            for (int i = 0; i < questionJSONRequest.getJson().length(); i++) {
+            for (int i = 0; i < request.getJson().length(); i++) {
                 idPool.add(i);
             }
 
             Collections.shuffle(idPool);
 
-            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(questionJSONRequest.getJson(), amount, idPool);
+            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(request.getJson(), amount, idPool);
 
         } catch (InterruptedException | IOException | JSONException e) {
 
@@ -54,27 +53,6 @@ public class QuizQuestions {
             throw e;
 
         }
-    }
-
-    /**
-     * For loading a specific test through the test key.
-     *
-     * @param ids id of questions to load.
-     */
-    public static void initializeQuestions(List<Integer> ids) throws JSONException, IOException, InterruptedException {
-
-        try {
-
-            QuestionJSONRequest questionJSONRequest = new QuestionJSONRequest(ids).initializeRequest();
-
-            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(questionJSONRequest.getJson(), ids.size());
-
-        } catch (InterruptedException | IOException | JSONException e) {
-            e.printStackTrace();
-            questionNodes = null;
-            throw e;
-        }
-
     }
 
     /**
@@ -87,7 +65,9 @@ public class QuizQuestions {
             QuestionAnswerHelper.setAnswers(questionNodes, new AnswerJSONRequest(questionNodes).initializeRequest().getJson());
 
         } catch (Exception e) {
-            new ErrorNotifier("A question failed to be graded.", true).display(PrimaryStageHolder.getPrimaryStage());
+
+            new UserNotifier("A question failed to be graded.").display();
+
             e.printStackTrace();
         }
 

@@ -1,7 +1,8 @@
 package gui.mainmenu.excel;
 
-import gui.etc.Account;
+import gui.account.Account;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,15 +16,25 @@ import java.util.stream.Stream;
 
 public class ExcelReader {
 
-    private final File file;
+    private File file;
     private Sheet sheet;
+    private JSONObject json;
     private String quizName;
 
     public ExcelReader(File file) {
         this.file = file;
     }
 
-    public void readFile() throws IOException {
+    public ExcelReader(JSONObject json) {
+        this.json = json;
+    }
+
+    /**
+     * Read the File. If valid, turn into Excel sheet.
+     *
+     * @throws ExcelValidateException if not properly formatted for toJSON().
+     */
+    public void validateFile() throws IOException {
 
         FileInputStream fis = new FileInputStream(file);
         Workbook workbook = new XSSFWorkbook(fis);
@@ -38,7 +49,59 @@ public class ExcelReader {
 
     }
 
-    public JSONArray toJSON() throws JSONException {
+    /**
+     * Get an excel sheet from the JSONObject.
+     */
+    public XSSFWorkbook jsonToExcel() throws JSONException, IOException {
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Your Quiz");
+
+        //Set guidelines
+        Row row = sheet.createRow(0);
+        for (int i = 0; i < JSONKey.values().length; i++) {
+            Cell key = row.createCell(i);
+            key.setCellValue(JSONKey.getKeyAtIndex(i).toString());
+        }
+
+        int rowCount = 1;
+        for (int i = 0; i < this.json.length(); i++) {
+
+            JSONObject internalJson = (JSONObject) this.json.get("obj" + i);
+            row = sheet.createRow(rowCount++);
+
+            Cell subject = row.createCell(0);
+            subject.setCellValue(internalJson.get(JSONKey.SUBJECT.toString().toLowerCase()).toString());
+
+            Cell question = row.createCell(1);
+            question.setCellValue(internalJson.get(JSONKey.QUESTION.toString().toLowerCase()).toString());
+
+            Cell options = row.createCell(2);
+            options.setCellValue(internalJson.get(JSONKey.OPTIONS.toString().toLowerCase()).toString());
+
+            Cell answer = row.createCell(3);
+            answer.setCellValue(internalJson.get(JSONKey.ANSWER.toString().toLowerCase()).toString());
+
+            Cell directions = row.createCell(4);
+            directions.setCellValue(internalJson.get(JSONKey.DIRECTIONS.toString().toLowerCase()).toString());
+
+            Cell type = row.createCell(5);
+            type.setCellValue(internalJson.get(JSONKey.TYPE.toString().toLowerCase()).toString());
+
+            if (i == 0) {
+                Cell quizName = row.createCell(6);
+                quizName.setCellValue(internalJson.get(JSONKey.QUIZNAME.toString().toLowerCase()).toString());
+            }
+        }
+
+        return workbook;
+
+    }
+
+    /**
+     * Get the JSONArray translation of Excel sheet.
+     */
+    public JSONArray sheetToJSONArray() throws JSONException {
 
         JSONArray jsonArray = new JSONArray();
 
@@ -68,7 +131,7 @@ public class ExcelReader {
             //Attach  quiz name to every question
             internalJSON.put(JSONKey.getKeyAtIndex(6).toString().toLowerCase(), quizName);
 
-            internalJSON.put("quizowner", Account.getUsername());
+            internalJSON.put("quizowner", Account.getUser().getUsername());
         }
 
         return jsonArray;
@@ -93,7 +156,7 @@ public class ExcelReader {
                             && row.getCell(3).getStringCellValue().equalsIgnoreCase(JSONKey.ANSWER.toString())
                             && row.getCell(4).getStringCellValue().equalsIgnoreCase(JSONKey.DIRECTIONS.toString())
                             && row.getCell(5).getStringCellValue().equalsIgnoreCase(JSONKey.TYPE.toString())
-                            && row.getCell(6).getStringCellValue().equals("Quiz Name");
+                            && row.getCell(6).getStringCellValue().equals(JSONKey.QUIZNAME.toString());
 
                     if (!valid) {
                         throw new ExcelValidateException("First row not correctly formatted.");

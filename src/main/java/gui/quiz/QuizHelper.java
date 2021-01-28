@@ -3,10 +3,9 @@ package gui.quiz;
 import etc.Constants;
 import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
-import gui.popup.error.ErrorNotifier;
+import gui.popup.notification.UserNotifier;
 import javafx.stage.StageStyle;
 import questions.QuizQuestions;
-import requests.QuestionJSONRequest;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -30,7 +29,7 @@ public class QuizHelper {
             PrimaryStageHolder.getPrimaryStage().close();
 
             if (loadDefault) {
-                QuizQuestions.initializeQuestions(Constants.DEFAULT_QUESTION_AMOUNT, new QuestionJSONRequest());
+                QuizQuestions.initializeQuestions(Constants.DEFAULT_QUESTION_AMOUNT);
             }
 
             //Make a PopupStage because the test window shares their qualities.
@@ -40,7 +39,7 @@ public class QuizHelper {
             PrimaryStageHolder.getPrimaryStage().show();
 
         } catch (Exception e) {
-            new ErrorNotifier("A page failed to load", true).display(PrimaryStageHolder.getPrimaryStage());
+            new UserNotifier("A page failed to load").display();
             e.printStackTrace();
         }
 
@@ -52,7 +51,7 @@ public class QuizHelper {
         try {
             PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.PRINTRESULTS));
         } catch (IOException e) {
-            new ErrorNotifier("Results could not display.", true).display(PrimaryStageHolder.getPrimaryStage());
+            new UserNotifier("Results could not display.").display();
         }
 
     }

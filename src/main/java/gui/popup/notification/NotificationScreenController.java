@@ -1,4 +1,4 @@
-package gui.popup.error;
+package gui.popup.notification;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,18 +8,18 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ErrorScreenController implements Initializable {
+public class NotificationScreenController implements Initializable {
 
     private static String error;
 
     private static Stage stage;
 
     public static void setStage(Stage stage) {
-        ErrorScreenController.stage = stage;
+        NotificationScreenController.stage = stage;
     }
 
     public static void setError(String error) {
-        ErrorScreenController.error = error;
+        NotificationScreenController.error = error;
     }
 
     @FXML

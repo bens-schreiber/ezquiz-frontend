@@ -28,10 +28,13 @@ class QuestionNodeFactory {
             int id = Integer.parseInt(json.get("id").toString());
 
             //Only need to iterate through options, use linked list ds
+            //todo: make options better
             LinkedList<String> options = null;
             if (json.has("options")) {
+
                 options = new LinkedList<>(Arrays.asList(json.get("options").toString()
                         .split(", ")));
+
             }
 
             String directions = json.has("directions") ? json.get("directions").toString() : switch (type) {
@@ -76,21 +79,4 @@ class QuestionNodeFactory {
         return nodes;
 
     }
-
-    static QuestionNode[] nodeArrayFromJSON(JSONObject json, int amount) throws JSONException {
-
-        //If the amount is greater than possible, or less than 0, make maximum amount possible.
-        if (amount > json.length() || amount <= 0) amount = json.length();
-
-        QuestionNode[] nodes = new QuestionNode[amount];
-
-        for (int i = 0; i < amount; i++) {
-            nodes[i] = (QuestionNodeFactory.questionFromJSON((JSONObject) json.get("obj" + i)));
-        }
-
-        return nodes;
-
-    }
-
-
 }

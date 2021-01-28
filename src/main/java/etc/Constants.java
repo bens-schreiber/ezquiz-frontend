@@ -5,11 +5,11 @@ package etc;
  */
 public class Constants {
 
-    public static int STATUS_ACCEPTED = 202;
-
-    public static String DEFAULT_PATH = "http://localhost:7080/api/database/questions/";
+    public static String DEFAULT_PATH = "http://localhost:7080/api/";
 
     public static int DEFAULT_QUESTION_AMOUNT = 5;
+
+    public static int MAXIMUM_QUESTION_AMOUNT = 0;
 
     public static int MAX_NOTEPAD_TEXT = 250;
 

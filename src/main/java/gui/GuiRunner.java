@@ -1,7 +1,7 @@
 package gui;
 
 import gui.etc.FXHelper;
-import gui.popup.error.ErrorNotifier;
+import gui.popup.notification.UserNotifier;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -23,7 +23,7 @@ public class GuiRunner extends Application {
             PrimaryStageHolder.getPrimaryStage().show();
 
         } catch (Exception e) {
-            new ErrorNotifier("The program failed to load", true).display(primaryStage);
+            new UserNotifier("The program failed to load").display();
             e.printStackTrace();
         }
 

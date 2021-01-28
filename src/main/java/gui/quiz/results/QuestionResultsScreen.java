@@ -1,8 +1,8 @@
-package gui.results;
+package gui.quiz.results;
 
 import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
-import gui.popup.error.ErrorNotifier;
+import gui.popup.notification.UserNotifier;
 import gui.quiz.QuizHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -83,7 +83,7 @@ public class QuestionResultsScreen implements Initializable {
             PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.PRINTRESULTS));
 
         } catch (IOException e) {
-            new ErrorNotifier("Results could not display.", true).display(PrimaryStageHolder.getPrimaryStage());
+            new UserNotifier("Results could not display.").display();
         }
     }
 }
