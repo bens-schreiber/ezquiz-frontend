@@ -26,7 +26,7 @@ public class EnterInputScreen implements Initializable {
     public void enterCodeButtonClicked() {
         try {
 
-            switch (DatabaseRequest.getQuizPathFromKey(Integer.parseInt(codeTextField.getText()), Account.getUser())) {
+            switch (DatabaseRequest.setQuizPathFromKey(Integer.parseInt(codeTextField.getText()), Account.getUser())) {
                 case ACCEPTED:
                     response = true;
                     break;

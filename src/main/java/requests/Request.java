@@ -2,7 +2,6 @@ package requests;
 
 import etc.Constants;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ class Request {
      * @param url   where to send request
      * @param token auth token
      */
-    static HttpResponse<String> getFromURL(String url, String token) throws IOException, InterruptedException, JSONException {
+    static HttpResponse<String> getFromURL(String url, String token) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()

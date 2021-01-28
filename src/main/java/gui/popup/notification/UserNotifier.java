@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Displays errors to user. Uses ErrorScreenController as the actual display, this initializes it.
+ * Displays information to user with only OK button. Mainly for Errors.
  */
 public class UserNotifier {
 

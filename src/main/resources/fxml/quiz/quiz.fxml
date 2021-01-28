@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -48,34 +48,33 @@
             </children>
         </AnchorPane>
         <AnchorPane fx:id="questionPane" layoutX="20.0" layoutY="169.0" prefHeight="797.0" prefWidth="1880.0"
-                    style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
+                    style="-fx-border-color: #000000; -fx-border-radius: 10; -fx-border-insets: 0; -fx-border-width: 1.5;">
             <children>
-                <Rectangle fx:id="questionBorder" arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="797.0"
-                           layoutX="-5.0" layoutY="-5.0" stroke="#303f9f" strokeType="OUTSIDE" strokeWidth="0.0"
-                           width="1890.0"/>
-                <Label layoutX="430.0" layoutY="496.0" prefHeight="119.0" prefWidth="36.0"/>
                 <VBox layoutX="14.0" layoutY="14.0" maxHeight="1.7976931348623157E308" spacing="15.0">
                     <children>
-                        <Label fx:id="questionPrompt" maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
-                               prefWidth="1133.0" text="Label" wrapText="true">
+                        <Label fx:id="questionPrompt" text="Label" wrapText="true">
                             <font>
                                 <Font size="18.0"/>
                             </font>
+                            <VBox.margin>
+                                <Insets/>
+                            </VBox.margin>
                         </Label>
                         <VBox fx:id="questionArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                               prefHeight="469.0" prefWidth="885.0" spacing="50.0"/>
                     </children>
+                    <padding>
+                        <Insets left="15.0" top="15.0"/>
+                    </padding>
                 </VBox>
-                <Canvas fx:id="paintCanvas" height="779.0" layoutX="-1.0" onMouseDragged="#canvasOnDragged"
-                        onMousePressed="#canvasOnPressed" width="1880.0"/>
-                <VBox fx:id="addonVBox" layoutX="1755.0" layoutY="34.0" prefHeight="192.0" prefWidth="60.0"
-                      spacing="10.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;"
+                <VBox fx:id="addonVBox" layoutX="1789.0" spacing="10.0"
+                      style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;"
                       stylesheets="@../css/standard_button.css">
                     <children>
                         <Button fx:id="notePadButton" mnemonicParsing="false" onAction="#notepadButtonClicked"
-                                prefHeight="56.0" prefWidth="88.0">
+                                prefHeight="50.0" prefWidth="50.0">
                             <graphic>
-                                <ImageView>
+                                <ImageView fitHeight="35.0" fitWidth="30.0">
                                     <image>
                                         <Image url="@../../pictures/clipboard-solid.png"/>
                                     </image>
@@ -83,9 +82,9 @@
                             </graphic>
                         </Button>
                         <Button fx:id="calculatorButton" mnemonicParsing="false" onAction="#calculatorButtonClicked"
-                                prefHeight="56.0" prefWidth="99.0">
+                                prefHeight="50.0" prefWidth="50.0">
                             <graphic>
-                                <ImageView>
+                                <ImageView fitHeight="35.0" fitWidth="30.0">
                                     <image>
                                         <Image url="@../../pictures/calculator-solid.png"/>
                                     </image>
@@ -93,9 +92,9 @@
                             </graphic>
                         </Button>
                         <Button fx:id="drawingPadButton" mnemonicParsing="false" onAction="#drawingPadButtonClicked"
-                                prefHeight="58.0" prefWidth="96.0">
+                                prefHeight="50.0" prefWidth="50.0">
                             <graphic>
-                                <ImageView>
+                                <ImageView fitHeight="35.0" fitWidth="30.0">
                                     <image>
                                         <Image url="@../../pictures/palette-solid.png"/>
                                     </image>
@@ -103,16 +102,21 @@
                             </graphic>
                         </Button>
                     </children>
+                    <padding>
+                        <Insets right="15.0" top="15.0"/>
+                    </padding>
                 </VBox>
+                <Canvas fx:id="paintCanvas" height="779.0" layoutX="-1.0" onMouseDragged="#canvasOnDragged"
+                        onMousePressed="#canvasOnPressed" width="1880.0"/>
             </children>
         </AnchorPane>
-        <Label fx:id="questionDirections" layoutX="20.0" layoutY="135.0" prefHeight="36.0" prefWidth="548.0"
+        <Label fx:id="questionDirections" layoutX="24.0" layoutY="135.0" prefHeight="36.0" prefWidth="544.0"
                text="Label">
             <font>
                 <Font size="16.0"/>
             </font>
             <padding>
-                <Insets bottom="5.0"/>
+                <Insets bottom="5.0" left="15.0"/>
             </padding>
         </Label>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="10.0" layoutX="5.0" layoutY="88.0"

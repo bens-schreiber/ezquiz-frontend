@@ -1,25 +1,18 @@
 package gui.account;
 
-//Records all necessary user side information
+/**
+ * Stores all user information, and currently selected Quiz.
+ */
 public class Account {
 
     private static Quiz quiz;
     private static User user;
 
-    public static void login(String username, String AUTH_TOKEN, boolean admin) {
-        user = new User(username, AUTH_TOKEN, admin);
-    }
-
-    //If there is no User then there is not a logged in user
-    public static boolean isLoggedIn() {
-        return user != null;
-    }
-
+    //Null all values
     public static void logout() {
         user = null;
         quiz = null;
     }
-
 
     public static User getUser() {
         return user;
@@ -33,6 +26,11 @@ public class Account {
         return quiz;
     }
 
+
+    //Change Account.user to the new user.
+    public static void setUser(User user) {
+        Account.user = user;
+    }
 
     public static void setQuiz(String owner, String name, int key) {
         Account.quiz = new Quiz(owner, name, key);

@@ -17,10 +17,8 @@ import java.util.ResourceBundle;
 
 
 /**
- * Provides methods for ActionEvents on Results page.
- * Shows the missed questions, if enabled.
+ * Scene for showing missed questions, if enabled.
  */
-
 public class QuestionResultsScreen implements Initializable {
 
     @FXML

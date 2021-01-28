@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Main controller for test.
+ * Stage for Quiz.
  */
 public class QuizController implements Initializable {
 

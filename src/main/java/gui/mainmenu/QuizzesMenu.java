@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Pane for displaying in MainMenu.
+ */
 public class QuizzesMenu implements Initializable {
 
     @FXML

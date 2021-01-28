@@ -37,17 +37,27 @@ class QuestionNodeFactory {
 
             }
 
-            String directions = json.has("directions") ? json.get("directions").toString() : switch (type) {
+            String directions = json.get("directions").toString().length() > 1 ? json.get("directions").toString() : switch (type) {
+
                 case MULTIPLECHOICE -> "Select the correct answer.";
+
                 case TRUEORFALSE -> "Determine if the problem is true or false.";
+
                 case CHECKBOX -> "Check all the boxes that apply.";
+
                 case WRITTEN -> "Correctly type the solution.";
+
             };
 
+            //shut up
             TypeNode node = switch (type) {
-                case MULTIPLECHOICE -> new MultipleChoice(options); //shut up
+
+                case MULTIPLECHOICE -> new MultipleChoice(options);
+
                 case TRUEORFALSE -> new TrueOrFalse();
+
                 case CHECKBOX -> new CheckBoxNode(options);
+
                 case WRITTEN -> new Written();
             };
 

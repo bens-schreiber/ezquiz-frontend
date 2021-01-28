@@ -6,7 +6,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * JavaFX GUIRunner, get a Primary Stage and assign it to the start menu.
+ * Create and initialize Primary Stage
  */
 public class GuiRunner extends Application {
 

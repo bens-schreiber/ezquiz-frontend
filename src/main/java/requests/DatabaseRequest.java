@@ -59,7 +59,7 @@ public class DatabaseRequest {
             if (response.headers().firstValue("token").isPresent()) {
                 //Store token and username in static user
                 System.out.println(response.headers().firstValue("token"));
-                Account.login(username, response.headers().firstValue("token").get(), Boolean.parseBoolean(response.body()));
+                Account.setUser(new User(username, response.headers().firstValue("token").get(), Boolean.parseBoolean(response.body())));
             }
 
             return Status.getStatusFromInt(response.statusCode());
@@ -143,15 +143,13 @@ public class DatabaseRequest {
      *
      * @return status code
      */
-    public static Status getQuizPathFromKey(int key, User user) throws InterruptedException, IOException, JSONException {
+    public static Status setQuizPathFromKey(int key, User user) throws InterruptedException, IOException, JSONException {
 
         try {
 
             HttpResponse<String> response = Request.getFromURL("http://localhost:7080/api/quiz/key/" + key, user.getAuth());
 
             JSONObject body = new JSONObject(response.body());
-
-
             if (body.has("obj0")) {
 
                 JSONObject json = new JSONObject(body.get("obj0").toString());

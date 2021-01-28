@@ -1,9 +1,12 @@
 package gui.account;
 
+/**
+ * Pojo for storing currently selected quiz values.
+ */
 public class Quiz {
 
     private final String owner;
-    private String name;
+    private final String name;
     private final int key;
     private int score;
 
@@ -28,10 +31,6 @@ public class Quiz {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getKey() {

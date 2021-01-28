@@ -1,5 +1,9 @@
 package gui.mainmenu.excel;
 
+/**
+ * Exception that is thrown when attempting to validate an Excel file for reading to server.
+ * Contains errorMsg to display to user.
+ */
 public class ExcelValidateException extends RuntimeException {
 
     private final String errorMsg;

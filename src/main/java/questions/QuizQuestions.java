@@ -48,7 +48,7 @@ public class QuizQuestions {
 
         } catch (InterruptedException | IOException | JSONException e) {
 
-            //Rethrow exception but get rid of any questions that could have been invalidly loaded
+            //Rethrow exception but get rid of any questions that are invalidly loaded.
             questionNodes = null;
             throw e;
 

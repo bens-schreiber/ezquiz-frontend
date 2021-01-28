@@ -18,6 +18,9 @@ public class FXHelper {
     private FXHelper() {
     }
 
+    /**
+     * Opened instances of the Quiz.tools fx scenes.
+     */
     private static final Set<Window> openedInstances = new HashSet<>();
 
     public static Set<Window> getOpenedInstances() {
@@ -29,13 +32,16 @@ public class FXHelper {
         return new Scene(FXMLLoader.load(FXHelper.class.getResource(window.getPath())));
     }
 
+    //Get a Pane from a Window.
     public static Pane getPane(Window window) throws IOException {
         return FXMLLoader.load(FXHelper.class.getResource(window.getPath()));
     }
 
     /**
      * @param requireResponse if the stage should take priority out of all others.
+     * @return Stage with unique values to make for a popup.
      */
+    //Get a stage from a window.
     public static Stage getPopupStage(Window window, boolean requireResponse) throws IOException {
 
         //Set stage, take ownership from primary stage so it stays on the same window
@@ -57,14 +63,13 @@ public class FXHelper {
 
     }
 
-    //Window names, hashmap of window names and their corresponding fxml location
+    //FXML Window names and locations.
     public enum Window {
         MAINMENU("/fxml/mainmenu/mainmenu.fxml"),
         LOGIN("/fxml/mainmenu/login.fxml"),
         REGISTER("/fxml/mainmenu/register.fxml"),
         QUIZ("/fxml/quiz/quiz.fxml"),
         SAVEDQUIZZES("/fxml/mainmenu/quizzesmenu.fxml"),
-        ENTERCODE("/fxml/popup/entercode.fxml"),
         ENTERKEY("/fxml/popup/enterkey.fxml"),
         CALCULATOR("/fxml/quiz/tools/calculator.fxml"),
         DRAWINGPAD("/fxml/quiz/tools/drawingpad.fxml"),

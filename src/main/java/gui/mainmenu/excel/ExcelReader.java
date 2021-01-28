@@ -14,6 +14,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.stream.Stream;
 
+/**
+ * Read JSON to Excel or Excel to JSON.
+ */
 public class ExcelReader {
 
     private File file;
@@ -31,7 +34,6 @@ public class ExcelReader {
 
     /**
      * Read the File. If valid, turn into Excel sheet.
-     *
      * @throws ExcelValidateException if not properly formatted for toJSON().
      */
     public void validateFile() throws IOException {
@@ -49,8 +51,9 @@ public class ExcelReader {
 
     }
 
+
     /**
-     * Get an excel sheet from the JSONObject.
+     * @return Excel workbook from a JSONObject.
      */
     public XSSFWorkbook jsonToExcel() throws JSONException, IOException {
 
@@ -99,7 +102,7 @@ public class ExcelReader {
     }
 
     /**
-     * Get the JSONArray translation of Excel sheet.
+     * @return JSONArray of an Excel sheet
      */
     public JSONArray sheetToJSONArray() throws JSONException {
 

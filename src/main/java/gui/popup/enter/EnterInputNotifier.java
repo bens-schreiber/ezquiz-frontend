@@ -5,10 +5,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Popup stage to alert user for an input.
+ */
 public class EnterInputNotifier {
 
     boolean codeValid;
-
 
     public EnterInputNotifier display() throws IOException {
 
