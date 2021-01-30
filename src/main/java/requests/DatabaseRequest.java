@@ -5,7 +5,6 @@ import gui.account.Quiz;
 import gui.account.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -76,14 +75,14 @@ public class DatabaseRequest {
      *
      * @return status code
      */
-    public static Status postQuizKey(User user, Quiz quiz) throws JSONException, IOException, InterruptedException {
+    public static Status postQuizKey(User user, int key) throws JSONException, IOException, InterruptedException {
 
         try {
 
             //Create a JSON object with the fields username and quizKey and the current Accounts information attatched.
             JSONObject json = new JSONObject()
                     .put("username", user.getUsername())
-                    .put("quizKey", quiz.getKey());
+                    .put("quizKey", key);
 
             HttpResponse<String> response = Request.postRequest(json, "users/key", Account.getUser().getAuth());
 
@@ -100,10 +99,12 @@ public class DatabaseRequest {
      *
      * @return status code
      */
-    public static Status postQuiz(JSONArray jsonObject, User user) throws IOException, InterruptedException {
+    public static Status postQuiz(JSONObject jsonObject, User user) throws IOException, InterruptedException {
         try {
 
-            HttpResponse<String> response = Request.postRequest(jsonObject, user.getAuth());
+
+            HttpResponse<String> response = Request.postRequest(jsonObject, "quiz/new", user.getAuth());
+            System.out.println(jsonObject);
 
             return Status.getStatusFromInt(response.statusCode());
 
@@ -139,30 +140,17 @@ public class DatabaseRequest {
 
     /**
      * GET
-     * From a Quiz Key, set Account.Quiz path
+     * Determine if quiz key exists
      *
      * @return status code
      */
-    public static Status setQuizPathFromKey(int key, User user) throws InterruptedException, IOException, JSONException {
+    public static Status validateQuizKey(int key, User user) throws InterruptedException, IOException {
 
         try {
 
             HttpResponse<String> response = Request.getFromURL("http://localhost:7080/api/quiz/key/" + key, user.getAuth());
 
-            JSONObject body = new JSONObject(response.body());
-            if (body.has("obj0")) {
-
-                JSONObject json = new JSONObject(body.get("obj0").toString());
-
-                //If response has the correct pieces, set the Account quiz
-                if (json.has("quizowner") && json.has("quizname")) {
-                    Account.setQuiz(json.get("quizowner").toString(), json.get("quizname").toString(), key);
-                    return Status.ACCEPTED;
-                }
-
-            }
-
-            return Status.NO_CONTENT;
+            return Status.getStatusFromInt(response.statusCode());
 
         } catch (ConnectException ignore) {
             return Status.NO_CONNECTION;

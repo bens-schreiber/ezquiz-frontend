@@ -17,7 +17,7 @@
             <HBox prefHeight="26.0" prefWidth="258.0" spacing="16.0">
                <children>
                   <Label prefHeight="31.0" prefWidth="67.0" text="Password"/>
-                  <TextField fx:id="passwordField"/>
+                  <PasswordField fx:id="passwordField"/>
                </children>
             </HBox>
             <Label fx:id="errorLabel" prefHeight="16.0" prefWidth="285.0" textFill="RED"/>

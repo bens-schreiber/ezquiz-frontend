@@ -57,7 +57,7 @@ public class QuestionResultsScreen implements Initializable {
                 answeredQuestion.setStyle("-fx-background-color: rgba(255, 158, 173, .7);");
 
                 //Show correct answer if desired in preferences
-                if (Boolean.parseBoolean(QuizHelper.Preference.preferences.get(QuizHelper.Preference.SHOWANSWERS))) {
+                if (Boolean.parseBoolean(QuizHelper.Preference.getPreferences().get(QuizHelper.Preference.SHOWANSWERS))) {
 
                     answeredQuestion.getChildren().add(new Label("Correct answer: "
                             + questionNode.getAnswer()

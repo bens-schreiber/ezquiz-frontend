@@ -18,14 +18,9 @@ public class Account {
         return user;
     }
 
-    public static String getQuizPath() {
-        return (quiz.getOwner() + "/" + quiz.getName()).replace(" ", "%20");
-    }
-
     public static Quiz getQuiz() {
         return quiz;
     }
-
 
     //Change Account.user to the new user.
     public static void setUser(User user) {

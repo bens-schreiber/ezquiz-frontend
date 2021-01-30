@@ -68,10 +68,10 @@ public class QuizzesMenu implements Initializable {
             //Ask for input from user for a code.
             EnterInputNotifier enter = new EnterInputNotifier().display();
 
-            if (enter.isCodeValid()) {
+            if (enter.isKeyValid()) {
 
                 //Refresh database
-                switch (DatabaseRequest.postQuizKey(Account.getUser(), Account.getQuiz())) {
+                switch (DatabaseRequest.postQuizKey(Account.getUser(), enter.getKey())) {
 
                     case ACCEPTED -> savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
 
@@ -85,7 +85,7 @@ public class QuizzesMenu implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            new UserNotifier("An unknown error occurred.").display();
+            new UserNotifier("An unknown internal error occurred.").display();
         }
 
     }
@@ -109,7 +109,7 @@ public class QuizzesMenu implements Initializable {
 
             e.printStackTrace();
 
-            new UserNotifier("An unknown error occured.").display();
+            new UserNotifier("An unknown internal error occurred.").display();
 
         }
 

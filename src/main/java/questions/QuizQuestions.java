@@ -2,11 +2,12 @@ package questions;
 
 import gui.account.Account;
 import gui.popup.notification.UserNotifier;
+import gui.quiz.QuizHelper;
 import org.json.JSONException;
 import questions.question.Question;
 import questions.question.QuestionNode;
 import requests.AnswerJSONRequest;
-import requests.QuestionJSONRequest;
+import requests.QuizJSONRequest;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Stores a static array of questionNodes to be accessed by QuizController for display
+ * Stores a static array of questionNodes to be accessed by QuizController for display, initializes preferences
  */
 public class QuizQuestions {
 
@@ -30,28 +31,32 @@ public class QuizQuestions {
      *
      * @param amount amount of questions wanted. 0 if maximum possible.
      */
-    public static void initializeQuestions(int amount) throws IllegalArgumentException, JSONException, IOException, InterruptedException {
+    public static void initializeQuiz(int amount) throws IllegalArgumentException, JSONException, IOException, InterruptedException {
         try {
 
-            //Make the request on the given QuestionJSONRequest, storing the json in the object.
-            QuestionJSONRequest request = new QuestionJSONRequest(Account.getUser()).initializeRequest();
+            //Initialize the request, storing json in the object.
+            QuizJSONRequest request = new QuizJSONRequest(Account.getUser()).initializeRequest();
 
             //Create a pool of question id's in the size of how many questions available, randomize order
             List<Integer> idPool = new LinkedList<>();
-            for (int i = 0; i < request.getJson().length(); i++) {
+            for (int i = 0; i < request.getQuestionJSON().length(); i++) {
                 idPool.add(i);
             }
 
             Collections.shuffle(idPool);
 
-            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(request.getJson(), amount, idPool);
+            //Initialize preferences
+            System.out.println(request.getPreferenceJSON());
+            QuizHelper.Preference.initializePreferences(request.getPreferenceJSON());
 
-        } catch (InterruptedException | IOException | JSONException e) {
+            //Initialize questions
+            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(request.getQuestionJSON(), amount, idPool);
+
+        } catch (Exception e) {
 
             //Rethrow exception but get rid of any questions that are invalidly loaded.
             questionNodes = null;
             throw e;
-
         }
     }
 

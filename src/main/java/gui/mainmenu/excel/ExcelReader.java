@@ -22,7 +22,6 @@ public class ExcelReader {
     private File file;
     private Sheet sheet;
     private JSONObject json;
-    private String quizName;
 
     public ExcelReader(File file) {
         this.file = file;
@@ -55,22 +54,27 @@ public class ExcelReader {
     /**
      * @return Excel workbook from a JSONObject.
      */
-    public XSSFWorkbook jsonToExcel() throws JSONException, IOException {
+    public XSSFWorkbook jsonToExcel() throws JSONException {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Your Quiz");
 
-        //Set guidelines
+        //Set guideline upper row with JSONKeys
         Row row = sheet.createRow(0);
         for (int i = 0; i < JSONKey.values().length; i++) {
             Cell key = row.createCell(i);
             key.setCellValue(JSONKey.getKeyAtIndex(i).toString());
         }
 
+        //Since the JSON comes from the rest server it will always be formatted in this way
+        //Set all JSON to Excel in the order of the JSONKey guideline row.
         int rowCount = 1;
         for (int i = 0; i < this.json.length(); i++) {
 
+            //Get "obj0" to "obj json.length", because that is how the server will format each question.
             JSONObject internalJson = (JSONObject) this.json.get("obj" + i);
+
+            //Create new row below existing.
             row = sheet.createRow(rowCount++);
 
             Cell subject = row.createCell(0);
@@ -91,6 +95,7 @@ public class ExcelReader {
             Cell type = row.createCell(5);
             type.setCellValue(internalJson.get(JSONKey.TYPE.toString().toLowerCase()).toString());
 
+            //QuizName is only needed to be displayed on the first row, redundant otherwise.
             if (i == 0) {
                 Cell quizName = row.createCell(6);
                 quizName.setCellValue(internalJson.get(JSONKey.QUIZNAME.toString().toLowerCase()).toString());
@@ -104,23 +109,24 @@ public class ExcelReader {
     /**
      * @return JSONArray of an Excel sheet
      */
-    public JSONArray sheetToJSONArray() throws JSONException {
+    public JSONObject sheetToJSON(String quizName) throws JSONException {
 
+        //Initialize jsonArray to write too
         JSONArray jsonArray = new JSONArray();
 
+        //Initialize dataFormatter for formatting all excel information to a string.
         DataFormatter dataFormatter = new DataFormatter();
 
         for (Row row : sheet) {
 
-            //If the first cell is Subject then skip the entire row
+            //If the first cell is Subject then skip guideline row.
             if (row.getCell(0).toString().toUpperCase().equals(JSONKey.SUBJECT.toString())) {
                 continue;
             }
 
+            //Initialize internal JSONObject that represents an individual question
             JSONObject internalJSON = new JSONObject();
-            jsonArray.put(internalJSON);
 
-            //Only use the first 6 cells, if there is more ignore it
             for (int cellIndex = 0; cellIndex < 5; cellIndex++) {
 
                 Cell cell = row.getCell(cellIndex);
@@ -134,10 +140,14 @@ public class ExcelReader {
             //Attach  quiz name to every question
             internalJSON.put(JSONKey.getKeyAtIndex(6).toString().toLowerCase(), quizName);
 
+            //Attach quiz owner to every question
             internalJSON.put("quizowner", Account.getUser().getUsername());
+
+            //Write to jsonArray
+            jsonArray.put(internalJSON);
         }
 
-        return jsonArray;
+        return new JSONObject().put("questions", jsonArray);
 
     }
 
@@ -145,45 +155,18 @@ public class ExcelReader {
     //use logic to make sure all required values are there and properly formatted
     private boolean validateExcel(Sheet sheet) {
 
+        //Format excel data to proper java object.
         DataFormatter dataFormatter = new DataFormatter();
 
         for (Row row : sheet) {
 
-            if (row.getRowNum() == 0) {
-                try {
+            //If the first cell is Subject then skip guideline row.
+            if (row.getCell(0).toString().toUpperCase().equals(JSONKey.SUBJECT.toString())) {
+                continue;
+            }
 
-                    //must confine to this exact order
-                    boolean valid = row.getCell(0).getStringCellValue().equalsIgnoreCase(JSONKey.SUBJECT.toString())
-                            && row.getCell(1).getStringCellValue().equalsIgnoreCase(JSONKey.QUESTION.toString())
-                            && row.getCell(2).getStringCellValue().equalsIgnoreCase(JSONKey.OPTIONS.toString())
-                            && row.getCell(3).getStringCellValue().equalsIgnoreCase(JSONKey.ANSWER.toString())
-                            && row.getCell(4).getStringCellValue().equalsIgnoreCase(JSONKey.DIRECTIONS.toString())
-                            && row.getCell(5).getStringCellValue().equalsIgnoreCase(JSONKey.TYPE.toString())
-                            && row.getCell(6).getStringCellValue().equals(JSONKey.QUIZNAME.toString());
-
-                    if (!valid) {
-                        throw new ExcelValidateException("First row not correctly formatted.");
-                    }
-
-                    continue;
-
-                } catch (Exception e) {
-
-                    throw new ExcelValidateException("First row not correctly formatted.");
-
-                }
-
-
-            } else if (row.getRowNum() == 1) {
-
-                //row 1 must have a value.
-                try {
-                    quizName = row.getCell(6).getStringCellValue();
-                } catch (Exception e) {
-                    throw new ExcelValidateException("Second row must specify Quiz Name", row.getRowNum(), 6);
-                }
-
-            } else if (row.getRowNum() > 50) {
+            //50 Questions maximum
+            if (row.getRowNum() > 50) {
 
                 throw new ExcelValidateException("File exceeds question limit.", row.getRowNum());
 
@@ -223,6 +206,10 @@ public class ExcelReader {
 
         }
         return true;
+    }
+
+    public String getFilePath() {
+        return file.getPath();
     }
 
     private enum JSONKey {

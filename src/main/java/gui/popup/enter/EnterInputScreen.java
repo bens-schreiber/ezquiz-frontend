@@ -22,12 +22,14 @@ public class EnterInputScreen implements Initializable {
     static Stage stage;
 
     static boolean response;
+    static int key;
 
     public void enterCodeButtonClicked() {
         try {
 
-            switch (DatabaseRequest.setQuizPathFromKey(Integer.parseInt(codeTextField.getText()), Account.getUser())) {
+            switch (DatabaseRequest.validateQuizKey(Integer.parseInt(codeTextField.getText()), Account.getUser())) {
                 case ACCEPTED:
+                    key = Integer.parseInt(codeTextField.getText());
                     response = true;
                     break;
 

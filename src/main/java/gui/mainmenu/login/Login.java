@@ -7,6 +7,7 @@ import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import requests.DatabaseRequest;
@@ -18,7 +19,10 @@ import java.util.ResourceBundle;
 public class Login implements Initializable {
 
     @FXML
-    TextField passwordField, usernameField;
+    TextField usernameField;
+
+    @FXML
+    PasswordField passwordField;
 
     @FXML
     Label errorLabel;
@@ -52,16 +56,13 @@ public class Login implements Initializable {
                 //Requests return Status Enum from rest server.
                 switch (DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()))) {
 
-                    case ACCEPTED:
-                        PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAINMENU));
-                        break;
+                    case ACCEPTED -> PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAINMENU));
 
-                    case UNAUTHORIZED:
-                        errorLabel.setText("Incorrect username or password.");
-                        break;
+                    case UNAUTHORIZED -> errorLabel.setText("Incorrect username or password.");
 
-                    case NO_CONNECTION, NO_CONTENT:
-                        errorLabel.setText("Error connecting to database.");
+                    case NO_CONNECTION, NO_CONTENT -> errorLabel.setText("Error connecting to database.");
+
+
                 }
 
             } catch (Exception e) {

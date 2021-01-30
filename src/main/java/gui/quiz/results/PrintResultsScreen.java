@@ -4,12 +4,10 @@ import gui.PrimaryStageHolder;
 import gui.account.Account;
 import gui.etc.FXHelper;
 import gui.popup.notification.UserNotifier;
-import gui.quiz.QuizHelper;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
@@ -35,17 +33,11 @@ public class PrintResultsScreen implements Initializable {
     @FXML
     Button seeQuestionsButton;
 
-    @FXML
-    BarChart<String, Integer> barChart;
-
     /**
      * Initial startup method.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        //Disable button if in preferences
-        seeQuestionsButton.setDisable(!Boolean.parseBoolean(QuizHelper.Preference.preferences.get(QuizHelper.Preference.SHOWANSWERS)));
 
         //Set test name
         testName.setText(Account.getQuiz().getName());

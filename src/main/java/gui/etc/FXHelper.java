@@ -66,6 +66,7 @@ public class FXHelper {
     //FXML Window names and locations.
     public enum Window {
         MAINMENU("/fxml/mainmenu/mainmenu.fxml"),
+        QUIZCREATOR("/fxml/mainmenu/quizcreatormenu.fxml"),
         LOGIN("/fxml/mainmenu/login.fxml"),
         REGISTER("/fxml/mainmenu/register.fxml"),
         QUIZ("/fxml/quiz/quiz.fxml"),

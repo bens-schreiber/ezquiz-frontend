@@ -5,6 +5,8 @@ import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
 import gui.popup.notification.UserNotifier;
 import javafx.stage.StageStyle;
+import org.json.JSONException;
+import org.json.JSONObject;
 import questions.QuizQuestions;
 
 import java.io.IOException;
@@ -29,7 +31,7 @@ public class QuizHelper {
             PrimaryStageHolder.getPrimaryStage().close();
 
             if (loadDefault) {
-                QuizQuestions.initializeQuestions(Constants.DEFAULT_QUESTION_AMOUNT);
+                QuizQuestions.initializeQuiz(Constants.DEFAULT_QUESTION_AMOUNT);
             }
 
             //Make a PopupStage because the test window shares their qualities.
@@ -60,6 +62,7 @@ public class QuizHelper {
      * Preferences for the quiz, determines what tools are displayed
      */
     public enum Preference {
+        //todo: make quiz name a preference
         NOTEPAD,
         CALCULATOR,
         DRAWINGPAD,
@@ -68,15 +71,29 @@ public class QuizHelper {
         TIME;
 
         //Hashmap of user preferences, initialize with default preferences
-        public static HashMap<Preference, String> preferences = new HashMap<>();
+        private static final HashMap<Preference, String> preferences = new HashMap<>();
 
-        static {
-            preferences.put(Preference.NOTEPAD, "true");
-            preferences.put(Preference.CALCULATOR, "true");
-            preferences.put(Preference.DRAWINGPAD, "true");
-            preferences.put(Preference.QUIZNAME, "FBLA QUIZ - 5 Questions, Random");
-            preferences.put(Preference.SHOWANSWERS, "true");
-            preferences.put(Preference.TIME, "1800");
+        public static void initializePreferences(JSONObject jsonObject) throws JSONException {
+
+            System.out.println(validateJSON(jsonObject));
+            if (validateJSON(jsonObject)) {
+                preferences.put(CALCULATOR, jsonObject.get("calculator").toString());
+                preferences.put(SHOWANSWERS, jsonObject.get("answers").toString());
+                preferences.put(DRAWINGPAD, jsonObject.get("drawingpad").toString());
+                preferences.put(NOTEPAD, jsonObject.get("notepad").toString());
+
+                System.out.println(preferences.get(NOTEPAD));
+            }
+
+        }
+
+        private static boolean validateJSON(JSONObject jsonObject) {
+            return jsonObject.has("answers") && jsonObject.has("calculator") && jsonObject.has("notepad")
+                    && jsonObject.has("drawingpad");
+        }
+
+        public static HashMap<Preference, String> getPreferences() {
+            return preferences;
         }
     }
 }

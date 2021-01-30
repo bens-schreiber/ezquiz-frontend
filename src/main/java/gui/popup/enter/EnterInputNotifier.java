@@ -10,7 +10,7 @@ import java.io.IOException;
  */
 public class EnterInputNotifier {
 
-    boolean codeValid;
+    boolean keyValid;
 
     public EnterInputNotifier display() throws IOException {
 
@@ -18,12 +18,16 @@ public class EnterInputNotifier {
 
         EnterInputScreen.stage = stage;
         stage.showAndWait();
-        this.codeValid = EnterInputScreen.response;
+        this.keyValid = EnterInputScreen.response;
 
         return this;
     }
 
-    public boolean isCodeValid() {
-        return codeValid;
+    public boolean isKeyValid() {
+        return keyValid;
+    }
+
+    public int getKey() {
+        return EnterInputScreen.key;
     }
 }

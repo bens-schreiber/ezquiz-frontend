@@ -1,7 +1,6 @@
 package requests;
 
 import etc.Constants;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -46,27 +45,6 @@ class Request {
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
                 .uri(URI.create(Constants.DEFAULT_PATH + urlSegment))
-                .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
-                .build();
-
-        return client.send(request, HttpResponse.BodyHandlers.ofString());
-
-    }
-
-
-    /**
-     * Make HTTP post to server.
-     *
-     * @param body  JSONArray to send
-     * @param token auth token
-     */
-    static HttpResponse<String> postRequest(JSONArray body, String token) throws IOException, InterruptedException {
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .header("Content-Type", "application/json")
-                .header("token", token)
-                .uri(URI.create("http://localhost:7080/api/" + "quiz/new"))
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
                 .build();
 

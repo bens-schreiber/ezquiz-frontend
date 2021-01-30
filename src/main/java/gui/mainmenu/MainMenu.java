@@ -14,10 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.json.JSONException;
 import questions.QuizQuestions;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -71,7 +69,8 @@ public class MainMenu implements Initializable {
 
         } catch (Exception e) {
 
-            new UserNotifier("Page failed to load").display();
+            e.printStackTrace();
+            new UserNotifier("An unknown internal error occurred.").display();
 
         }
     }
@@ -86,7 +85,7 @@ public class MainMenu implements Initializable {
 
             e.printStackTrace();
 
-            new UserNotifier("Page failed to load").display();
+            new UserNotifier("An unknown internal error occurred.").display();
 
         }
 
@@ -99,13 +98,14 @@ public class MainMenu implements Initializable {
             if (new ConfirmNotifier("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
                 try {
 
-                    QuizQuestions.initializeQuestions(Constants.MAXIMUM_QUESTION_AMOUNT);
+                    QuizQuestions.initializeQuiz(Constants.MAXIMUM_QUESTION_AMOUNT);
 
                     QuizHelper.startQuiz(false);
 
-                } catch (JSONException | IOException | InterruptedException e) {
+                } catch (Exception e) {
 
-                    new UserNotifier("Quiz failed to load").display();
+                    e.printStackTrace();
+                    new UserNotifier("An unknown internal error occurred.").display();
 
                 }
             }
@@ -127,7 +127,8 @@ public class MainMenu implements Initializable {
             PrimaryStageHolder.getPrimaryStage().show();
 
 
-        } catch (IOException e) {
+        } catch (Exception e) {
+            new UserNotifier("An unknown internal error occurred.").display();
             e.printStackTrace();
         }
 

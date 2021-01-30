@@ -69,22 +69,19 @@ public class QuizController implements Initializable {
         currentQuestionIndex = 0;
 
         //Establish preferences
-        //todo: preferences
-        if (!Boolean.parseBoolean(QuizHelper.Preference.preferences.get(QuizHelper.Preference.NOTEPAD))) {
+        if (!Boolean.parseBoolean(QuizHelper.Preference.getPreferences().get(QuizHelper.Preference.NOTEPAD))) {
             addonVBox.getChildren().remove(notePadButton);
         }
 
-        if (!Boolean.parseBoolean(QuizHelper.Preference.preferences.get(QuizHelper.Preference.CALCULATOR))) {
+        if (!Boolean.parseBoolean(QuizHelper.Preference.getPreferences().get(QuizHelper.Preference.CALCULATOR))) {
             addonVBox.getChildren().remove(calculatorButton);
         }
 
-        if (!Boolean.parseBoolean(QuizHelper.Preference.preferences.get(QuizHelper.Preference.DRAWINGPAD))) {
+        if (!Boolean.parseBoolean(QuizHelper.Preference.getPreferences().get(QuizHelper.Preference.DRAWINGPAD))) {
             addonVBox.getChildren().remove(drawingPadButton);
         }
 
         quizName.setText(Account.getQuiz().getName());
-
-        seconds = Integer.parseInt(QuizHelper.Preference.preferences.get(QuizHelper.Preference.TIME));
 
         userLabel.setText(userLabel.getText() + Account.getUser().getUsername());
 

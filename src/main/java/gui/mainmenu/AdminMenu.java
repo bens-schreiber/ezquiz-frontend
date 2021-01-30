@@ -1,25 +1,28 @@
 package gui.mainmenu;
 
 import etc.Constants;
+import gui.PrimaryStageHolder;
 import gui.account.Account;
 import gui.account.Quiz;
+import gui.etc.FXHelper;
 import gui.mainmenu.excel.ExcelReader;
-import gui.mainmenu.excel.ExcelValidateException;
+import gui.popup.confirm.ConfirmNotifier;
 import gui.popup.notification.UserNotifier;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.FileChooser;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.json.JSONException;
 import requests.DatabaseRequest;
-import requests.QuestionJSONRequest;
+import requests.QuizJSONRequest;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -59,39 +62,19 @@ public class AdminMenu implements Initializable {
 
     public void uploadQuizClicked() {
 
-        //Open a FileChooser to select the excel file.
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Excel File");
-        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        try {
 
-        if (selectedFile != null) {
+            Stage stage = FXHelper.getPopupStage(FXHelper.Window.QUIZCREATOR, false);
+            QuizCreatorMenu.stage = stage;
+            stage.showAndWait();
+            quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
 
-            //Attempt to read as a valid excel file in the specific format required.
-            try {
+        } catch (Exception e) {
 
-                ExcelReader excelReader = new ExcelReader(selectedFile);
-                excelReader.validateFile();
+            new UserNotifier("An unknown internal error occurred.").display();
 
-                switch (DatabaseRequest.postQuiz(excelReader.sheetToJSONArray(), Account.getUser())) {
-
-                    case ACCEPTED -> quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
-
-                    case NO_CONTENT -> new UserNotifier("An error occurred while posting to the server.").display();
-
-                    case NO_CONNECTION -> new UserNotifier("Connection to the server failed.").display();
-                }
-
-
-            } catch (ExcelValidateException e) {
-
-                new UserNotifier(e.getErrorMsg()).display();
-
-            } catch (Exception e) {
-
-                new UserNotifier("An unknown error occurred.").display();
-
-            }
         }
+
     }
 
     public void deleteQuizClicked() {
@@ -100,14 +83,23 @@ public class AdminMenu implements Initializable {
 
             if (quizzesTable.getSelectionModel().getSelectedItem() != null) {
 
-                switch (DatabaseRequest.deleteQuiz(quizzesTable.getSelectionModel().getSelectedItem(), Account.getUser())) {
+                if (new ConfirmNotifier("Are you sure you want to delete: "
+                        + quizzesTable.getSelectionModel().getSelectedItem().getName() +
+                        "? All existing keys and scores will be lost.").display().getResponse()) {
 
-                    case ACCEPTED -> quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
+                    switch (DatabaseRequest.deleteQuiz(quizzesTable.getSelectionModel().getSelectedItem(), Account.getUser())) {
 
-                    case NO_CONTENT -> new UserNotifier("An error occurred while deleting the quiz.").display();
+                        case ACCEPTED -> quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
 
-                    case NO_CONNECTION -> new UserNotifier("Connection to the server failed.").display();
+                        case NO_CONTENT -> new UserNotifier("An error occurred while deleting the quiz.").display();
+
+                        case NO_CONNECTION -> new UserNotifier("Connection to the server failed.").display();
+                    }
                 }
+
+            } else {
+
+                new UserNotifier("Please select a created Quiz.").display();
 
             }
 
@@ -115,7 +107,7 @@ public class AdminMenu implements Initializable {
 
             e.printStackTrace();
 
-            new UserNotifier("An unknown error occurred.").display();
+            new UserNotifier("An unknown internal error occurred.").display();
 
         }
 
@@ -132,22 +124,37 @@ public class AdminMenu implements Initializable {
                 Account.setQuiz(Account.getUser().getUsername(), quiz.getName(), quiz.getKey());
 
                 //Request for answers along with the questions.
-                QuestionJSONRequest request = new QuestionJSONRequest(Account.getUser(),
-                        Constants.DEFAULT_PATH + "/questions/answer/" + Account.getQuizPath());
+                QuizJSONRequest request = new QuizJSONRequest(Account.getUser(),
+                        Constants.DEFAULT_PATH + "questions/answers/" + Account.getQuiz().getKey());
 
                 request.initializeRequest();
 
-                ExcelReader excelReader = new ExcelReader(request.getJson());
+                ExcelReader excelReader = new ExcelReader(request.getQuestionJSON());
 
-                //todo: error handle, choose where to store file on pc
-                FileOutputStream outputStream = new FileOutputStream("/home/benschreiber/Documents/quiz.xlsx");
+                //Open a DirectoryChooser to choose where to store the excel
+                DirectoryChooser directoryChooser = new DirectoryChooser();
+                File selectedDirectory = directoryChooser.showDialog(PrimaryStageHolder.getPrimaryStage());
+
+                FileOutputStream outputStream = new FileOutputStream(selectedDirectory.getAbsolutePath() + "/quiz.xlsx");
+
                 excelReader.jsonToExcel().write(outputStream);
                 outputStream.close();
 
 
-            } catch (InterruptedException | IOException | JSONException e) {
-                e.printStackTrace();
+            } catch (ConnectException e) {
+
+                new UserNotifier("Could not connect to server.").display();
+
+            } catch (Exception e) {
+
+                new UserNotifier("An unknown error occurred").display();
+
             }
+
+        } else {
+
+            new UserNotifier("Please select a created Quiz.").display();
+
         }
 
     }
