@@ -10,27 +10,19 @@ import java.io.IOException;
 import java.net.ConnectException;
 
 /**
- * Requests all questions in appropriate range and converts from JSON to Question list
+ * Requests all questions from a quiz key, along with the stored quiz preferences.
  */
 public class QuizJSONRequest {
 
     private JSONObject questions;
     private JSONObject preferences;
 
-    private final String questionPath;
-
+    private final String questionPath = Constants.DEFAULT_PATH + "/quiz/" + Account.getQuiz().getKey();
     private final String auth;
 
     public QuizJSONRequest(User user) {
         this.auth = user.getAuth();
-        this.questionPath = Constants.DEFAULT_PATH + "/questions/" + Account.getQuiz().getKey();
     }
-
-    public QuizJSONRequest(User user, String questionPath) {
-        this.auth = user.getAuth();
-        this.questionPath = questionPath;
-    }
-
 
     public QuizJSONRequest initializeRequest() throws InterruptedException, IOException, JSONException {
 
@@ -40,14 +32,22 @@ public class QuizJSONRequest {
         );
 
         //If no questions could be found
-        if (json.length() == 0 || !json.has("preferences") || !json.has("questions")) {
-            throw new ConnectException("Could not connect to rest server.");
+        if (json.length() == 0 || !validate(json)) {
+            System.out.println(json);
+            throw new ConnectException();
         }
 
+
         this.preferences = (JSONObject) ((JSONObject) json.get("preferences")).get("obj0");
+
         this.questions = (JSONObject) json.get("questions");
 
         return this;
+    }
+
+    //Determine if the required variables are in the server response
+    private static boolean validate(JSONObject jsonObject) {
+        return jsonObject.has("preferences") && jsonObject.has("questions");
     }
 
     public JSONObject getPreferenceJSON() {

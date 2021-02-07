@@ -1,6 +1,7 @@
 package gui.mainmenu;
 
 import gui.account.Account;
+import gui.etc.FXHelper;
 import gui.mainmenu.excel.ExcelReader;
 import gui.mainmenu.excel.ExcelValidateException;
 import gui.popup.notification.UserNotifier;
@@ -12,15 +13,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.json.JSONException;
 import org.json.JSONObject;
 import requests.DatabaseRequest;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class QuizCreatorMenu implements Initializable {
+public class QuizUpload implements Initializable {
 
     @FXML
     TextField quizNameTextField;
@@ -48,11 +49,23 @@ public class QuizCreatorMenu implements Initializable {
                 //Throws ExcelValidateException if invalid
                 excelReader.validateFile();
 
-                //Put preferences into the jsonobject
-                JSONObject quiz = excelReader.sheetToJSON(quizNameTextField.getText())
-                        .put("preferences", collectCheckBoxPreferences());
+                //Assemble json to send to the server
+                JSONObject quizJSON = excelReader.sheetToJSON()
+                        .put("preferences",
+                                new JSONObject()
+                                        .put("calculator", enableCalculatorCheckBox.isSelected() ? 1 : 0)
+                                        .put("answers", revealAnswersCheckBox.isSelected() ? 1 : 0)
+                                        .put("notepad", enableNotePadCheckBox.isSelected() ? 1 : 0)
+                                        .put("drawingpad", enableDrawingPadCheckBox.isSelected() ? 1 : 0)
+                        )
+                        .put("quiz",
+                                new JSONObject()
+                                        .put("quizname", quizNameTextField.getText())
+                                        .put("quizowner", Account.getUser().getUsername())
+                        );
 
-                switch (DatabaseRequest.postQuiz(quiz, Account.getUser())) {
+                //Attempt to post the Quiz to the server. Handle errors
+                switch (DatabaseRequest.postQuiz(quizJSON, Account.getUser())) {
 
                     case ACCEPTED -> stage.close();
 
@@ -61,9 +74,11 @@ public class QuizCreatorMenu implements Initializable {
                     case NO_CONNECTION -> new UserNotifier("Connection to the server failed.").display(stage);
                 }
 
+
             } catch (ExcelValidateException e) {
 
                 new UserNotifier(e.getErrorMsg()).display(stage);
+
 
             } catch (Exception e) {
 
@@ -71,11 +86,17 @@ public class QuizCreatorMenu implements Initializable {
                 e.printStackTrace();
 
             }
+
         }
 
     }
 
     public void questionBuilderButtonClicked() {
+        try {
+            stage.setScene(FXHelper.getScene(FXHelper.Window.QUIZ_BUILDER));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void uploadExcelButtonClicked() {
@@ -93,20 +114,9 @@ public class QuizCreatorMenu implements Initializable {
 
     }
 
-    private JSONObject collectCheckBoxPreferences() throws JSONException {
-
-        JSONObject preferences = new JSONObject();
-        preferences.put("calculator", enableCalculatorCheckBox.isSelected() ? 1 : 0);
-        preferences.put("answers", revealAnswersCheckBox.isSelected() ? 1 : 0);
-        preferences.put("notepad", enableNotePadCheckBox.isSelected() ? 1 : 0);
-        preferences.put("drawingpad", enableDrawingPadCheckBox.isSelected() ? 1 : 0);
-
-        return preferences;
-
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         //No special characters, size of 8 only
         quizNameTextField.setTextFormatter(new TextFormatter<>(change -> {
             if (change.getText().matches("[ $&+,:;=\\\\?@#|/'<>.^*()%!-]")) {

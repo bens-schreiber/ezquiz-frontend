@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-class QuestionNodeFactory {
+public class QuestionNodeFactory {
 
     /**
      * @return new Question object built from JSONObject.
@@ -28,13 +28,10 @@ class QuestionNodeFactory {
             int id = Integer.parseInt(json.get("id").toString());
 
             //Only need to iterate through options, use linked list ds
-            //todo: make options better
             LinkedList<String> options = null;
             if (json.has("options")) {
-
                 options = new LinkedList<>(Arrays.asList(json.get("options").toString()
-                        .split(", ")));
-
+                        .split("/")));
             }
 
             String directions = json.get("directions").toString().length() > 1 ? json.get("directions").toString() : switch (type) {
@@ -52,13 +49,13 @@ class QuestionNodeFactory {
             //shut up
             TypeNode node = switch (type) {
 
-                case MULTIPLECHOICE -> new MultipleChoice(options);
+                case MULTIPLECHOICE -> new MultipleChoice(options, directions, question);
 
-                case TRUEORFALSE -> new TrueOrFalse();
+                case TRUEORFALSE -> new TrueOrFalse(directions, question);
 
-                case CHECKBOX -> new CheckBoxNode(options);
+                case CHECKBOX -> new CheckBoxNode(options, directions, question);
 
-                case WRITTEN -> new Written();
+                case WRITTEN -> new Written(directions, question);
             };
 
 
@@ -74,7 +71,7 @@ class QuestionNodeFactory {
         return json.has("type") && json.has("subject") && json.has("question") && json.has("id");
     }
 
-    static QuestionNode[] nodeArrayFromJSON(JSONObject json, int amount, List<Integer> ids) throws JSONException {
+    public static QuestionNode[] nodeArrayFromJSON(JSONObject json, int amount, List<Integer> ids) throws JSONException {
 
         //If the amount is greater than possible, or less than 0, make maximum amount possible.
         if (amount > json.length() || amount <= 0) amount = json.length();

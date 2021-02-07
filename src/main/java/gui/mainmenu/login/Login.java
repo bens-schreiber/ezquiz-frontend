@@ -56,7 +56,7 @@ public class Login implements Initializable {
                 //Requests return Status Enum from rest server.
                 switch (DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()))) {
 
-                    case ACCEPTED -> PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAINMENU));
+                    case ACCEPTED -> PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAIN_MENU));
 
                     case UNAUTHORIZED -> errorLabel.setText("Incorrect username or password.");
 

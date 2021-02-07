@@ -1,6 +1,5 @@
 package gui.mainmenu.excel;
 
-import gui.account.Account;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -94,12 +93,11 @@ public class ExcelReader {
 
             Cell type = row.createCell(5);
             type.setCellValue(internalJson.get(JSONKey.TYPE.toString().toLowerCase()).toString());
+        }
 
-            //QuizName is only needed to be displayed on the first row, redundant otherwise.
-            if (i == 0) {
-                Cell quizName = row.createCell(6);
-                quizName.setCellValue(internalJson.get(JSONKey.QUIZNAME.toString().toLowerCase()).toString());
-            }
+        //autosize all columns to make it look good
+        for (int i = 0; i < this.json.length(); i++) {
+            sheet.autoSizeColumn(i);
         }
 
         return workbook;
@@ -109,7 +107,7 @@ public class ExcelReader {
     /**
      * @return JSONArray of an Excel sheet
      */
-    public JSONObject sheetToJSON(String quizName) throws JSONException {
+    public JSONObject sheetToJSON() throws JSONException {
 
         //Initialize jsonArray to write too
         JSONArray jsonArray = new JSONArray();
@@ -136,12 +134,6 @@ public class ExcelReader {
 
             //Format to uppercase for SQL
             internalJSON.put(JSONKey.getKeyAtIndex(5).toString().toLowerCase(), dataFormatter.formatCellValue(row.getCell(5)).toUpperCase());
-
-            //Attach  quiz name to every question
-            internalJSON.put(JSONKey.getKeyAtIndex(6).toString().toLowerCase(), quizName);
-
-            //Attach quiz owner to every question
-            internalJSON.put("quizowner", Account.getUser().getUsername());
 
             //Write to jsonArray
             jsonArray.put(internalJSON);
@@ -190,7 +182,6 @@ public class ExcelReader {
                 throw new ExcelValidateException("Unsupported question type", row.getRowNum(), 5);
 
             }
-
 
             //if options is empty it must be true or false / written
             if (dataFormatter.formatCellValue(row.getCell(2)).isEmpty()) {

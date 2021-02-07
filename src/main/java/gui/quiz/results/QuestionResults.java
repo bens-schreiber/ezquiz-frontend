@@ -4,11 +4,11 @@ import gui.PrimaryStageHolder;
 import gui.etc.FXHelper;
 import gui.popup.notification.UserNotifier;
 import gui.quiz.QuizHelper;
+import gui.quiz.QuizQuestions;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import questions.QuizQuestions;
 import questions.question.QuestionNode;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 /**
  * Scene for showing missed questions, if enabled.
  */
-public class QuestionResultsScreen implements Initializable {
+public class QuestionResults implements Initializable {
 
     @FXML
     VBox correctAnswersVBox;
@@ -78,7 +78,7 @@ public class QuestionResultsScreen implements Initializable {
 
         try {
 
-            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.PRINTRESULTS));
+            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.PRINT_RESULTS));
 
         } catch (IOException e) {
             new UserNotifier("Results could not display.").display();

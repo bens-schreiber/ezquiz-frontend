@@ -2,13 +2,15 @@ package questions.nodes;
 
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 public class TrueOrFalse extends TypeNode {
-    {
+
+    public TrueOrFalse(String directions, String prompt) {
+        super(directions, prompt);
+
         //Establish options
         RadioButton radio1 = new RadioButton("true");
         RadioButton radio2 = new RadioButton("false");
@@ -23,11 +25,7 @@ public class TrueOrFalse extends TypeNode {
             radioButton.setOnMouseClicked(e -> this.response = Collections.singletonList(radioButton.getText()));
         }
 
-        //Set spacing to 15
-        VBox vbox = new VBox(15);
-        vbox.getChildren().addAll(radio1, radio2);
-
-        this.node = vbox;
+        this.node.getChildren().addAll(radio1, radio2);
     }
 
 }

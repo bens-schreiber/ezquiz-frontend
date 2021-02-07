@@ -59,7 +59,7 @@ public class Register implements Initializable {
 
                     case ACCEPTED:
                         DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()));
-                        PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAINMENU));
+                        PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAIN_MENU));
                         break;
 
                     case UNAUTHORIZED:

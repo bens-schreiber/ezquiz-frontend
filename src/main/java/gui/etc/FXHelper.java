@@ -4,6 +4,7 @@ import gui.PrimaryStageHolder;
 import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -32,14 +33,18 @@ public class FXHelper {
         return new Scene(FXMLLoader.load(FXHelper.class.getResource(window.getPath())));
     }
 
-    //Get a Pane from a Window.
+    //Get a Tab from a Window.
+    public static Tab getTab(Window window) throws IOException {
+        return FXMLLoader.load(FXHelper.class.getResource(window.getPath()));
+    }
+
     public static Pane getPane(Window window) throws IOException {
         return FXMLLoader.load(FXHelper.class.getResource(window.getPath()));
     }
 
     /**
      * @param requireResponse if the stage should take priority out of all others.
-     * @return Stage with unique values to make for a popup.
+     * @return Stage with values to make a popup.
      */
     //Get a stage from a window.
     public static Stage getPopupStage(Window window, boolean requireResponse) throws IOException {
@@ -63,23 +68,26 @@ public class FXHelper {
 
     }
 
+
     //FXML Window names and locations.
     public enum Window {
-        MAINMENU("/fxml/mainmenu/mainmenu.fxml"),
-        QUIZCREATOR("/fxml/mainmenu/quizcreatormenu.fxml"),
+        MAIN_MENU("/fxml/mainmenu/mainmenu.fxml"),
+        QUIZ_UPLOAD("/fxml/mainmenu/quizupload.fxml"),
         LOGIN("/fxml/mainmenu/login.fxml"),
         REGISTER("/fxml/mainmenu/register.fxml"),
         QUIZ("/fxml/quiz/quiz.fxml"),
-        SAVEDQUIZZES("/fxml/mainmenu/quizzesmenu.fxml"),
-        ENTERKEY("/fxml/popup/enterkey.fxml"),
+        QUIZZES_MENU("/fxml/mainmenu/quizzesmenu.fxml"),
+        ENTER_KEY("/fxml/popup/enterkey.fxml"),
         CALCULATOR("/fxml/quiz/tools/calculator.fxml"),
-        DRAWINGPAD("/fxml/quiz/tools/drawingpad.fxml"),
+        DRAWING_PAD("/fxml/quiz/tools/drawingpad.fxml"),
         NOTEPAD("/fxml/quiz/tools/notepad.fxml"),
-        PRINTRESULTS("/fxml/results/printableresults.fxml"),
-        SEERESULTS("/fxml/results/questionresults.fxml"),
-        ERROR("/fxml/popup/errorscreen.fxml"),
-        CONFIRM("/fxml/popup/confirmscreen.fxml"),
-        ADMINMENU("/fxml/mainmenu/adminmenu.fxml");
+        PRINT_RESULTS("/fxml/results/printresults.fxml"),
+        QUESTION_RESULTS("/fxml/results/questionresults.fxml"),
+        ERROR("/fxml/popup/error.fxml"),
+        CONFIRM("/fxml/popup/confirm.fxml"),
+        ADMIN_MENU("/fxml/mainmenu/adminmenu.fxml"),
+        QUIZ_BUILDER("/fxml/mainmenu/quizbuilder/quizbuildertool.fxml"),
+        QUESTION_TAB("/fxml/mainmenu/quizbuilder/questiondisplaytab.fxml");
 
         private final String path;
 

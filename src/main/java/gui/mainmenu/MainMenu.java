@@ -7,14 +7,14 @@ import gui.etc.FXHelper;
 import gui.popup.confirm.ConfirmNotifier;
 import gui.popup.notification.UserNotifier;
 import gui.quiz.QuizHelper;
+import gui.quiz.QuizQuestions;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import questions.QuizQuestions;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 public class MainMenu implements Initializable {
 
     @FXML
-    AnchorPane mainDisplay;
+    Pane mainDisplay;
 
     @FXML
     VBox buttonContainer;
@@ -65,7 +65,7 @@ public class MainMenu implements Initializable {
 
         try {
 
-            mainDisplay.getChildren().setAll(FXHelper.getPane(FXHelper.Window.SAVEDQUIZZES));
+            mainDisplay.getChildren().setAll(FXHelper.getPane(FXHelper.Window.QUIZZES_MENU));
 
         } catch (Exception e) {
 
@@ -79,7 +79,7 @@ public class MainMenu implements Initializable {
 
         try {
 
-            mainDisplay.getChildren().setAll(FXHelper.getPane(FXHelper.Window.ADMINMENU));
+            mainDisplay.getChildren().setAll(FXHelper.getPane(FXHelper.Window.ADMIN_MENU));
 
         } catch (Exception e) {
 
@@ -119,11 +119,8 @@ public class MainMenu implements Initializable {
         try {
 
             Account.logout();
-
             PrimaryStageHolder.getPrimaryStage().close();
-
             PrimaryStageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.LOGIN, false));
-
             PrimaryStageHolder.getPrimaryStage().show();
 
 

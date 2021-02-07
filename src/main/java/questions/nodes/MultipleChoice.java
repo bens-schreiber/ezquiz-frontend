@@ -2,14 +2,14 @@ package questions.nodes;
 
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.VBox;
 
 import java.util.Collections;
 import java.util.List;
 
 public class MultipleChoice extends TypeNode {
 
-    public MultipleChoice(List<String> options) {
+    public MultipleChoice(List<String> options, String directions, String prompt) {
+        super(directions, prompt);
 
         //Find how many RadioButtons are needed
         int buttonAmount = options.size();
@@ -33,12 +33,7 @@ public class MultipleChoice extends TypeNode {
             radioButton.setOnMouseClicked(e -> this.response = Collections.singletonList(radioButton.getText()));
 
         }
-
-        //Set spacing to 15
-        VBox vbox = new VBox(15);
-        vbox.getChildren().addAll(radioButtons);
-
-        this.node = vbox;
+        this.node.getChildren().addAll(radioButtons);
     }
 
 }

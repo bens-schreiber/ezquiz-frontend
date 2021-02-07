@@ -4,6 +4,7 @@ import gui.PrimaryStageHolder;
 import gui.account.Account;
 import gui.etc.FXHelper;
 import gui.popup.notification.UserNotifier;
+import gui.quiz.QuizQuestions;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
 import javafx.stage.DirectoryChooser;
-import questions.QuizQuestions;
 import questions.question.QuestionNode;
 import requests.DatabaseRequest;
 
@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 /**
  * Scene containing results you can print.
  */
-public class PrintResultsScreen implements Initializable {
+public class PrintResults implements Initializable {
 
     @FXML
     Label testName, outOfLabel, percentageLabel;
@@ -78,7 +78,7 @@ public class PrintResultsScreen implements Initializable {
         try {
 
             PrimaryStageHolder.getPrimaryStage().close();
-            PrimaryStageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.MAINMENU, false));
+            PrimaryStageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.MAIN_MENU, false));
             PrimaryStageHolder.getPrimaryStage().show();
 
         } catch (IOException e) {
@@ -121,7 +121,7 @@ public class PrintResultsScreen implements Initializable {
 
         try {
 
-            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.SEERESULTS));
+            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.QUESTION_RESULTS));
 
         } catch (IOException e) {
             new UserNotifier("Results could not display.").display();

@@ -1,11 +1,9 @@
 package gui.mainmenu;
 
-import etc.Constants;
-import gui.PrimaryStageHolder;
 import gui.account.Account;
 import gui.account.Quiz;
 import gui.etc.FXHelper;
-import gui.mainmenu.excel.ExcelReader;
+import gui.mainmenu.quizbuilder.QuizBuilderTool;
 import gui.popup.confirm.ConfirmNotifier;
 import gui.popup.notification.UserNotifier;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,16 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.json.JSONException;
 import requests.DatabaseRequest;
-import requests.QuizJSONRequest;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.ConnectException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -64,8 +57,8 @@ public class AdminMenu implements Initializable {
 
         try {
 
-            Stage stage = FXHelper.getPopupStage(FXHelper.Window.QUIZCREATOR, false);
-            QuizCreatorMenu.stage = stage;
+            Stage stage = FXHelper.getPopupStage(FXHelper.Window.QUIZ_UPLOAD, false);
+            QuizUpload.stage = stage;
             stage.showAndWait();
             quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
 
@@ -75,6 +68,22 @@ public class AdminMenu implements Initializable {
 
         }
 
+    }
+
+    public void quizBuilderClicked() {
+        try {
+
+            Stage stage = FXHelper.getPopupStage(FXHelper.Window.QUIZ_BUILDER, false);
+            QuizBuilderTool.setStage(stage);
+            stage.show();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            new UserNotifier("An unknown internal error occurred.").display();
+
+        }
     }
 
     public void deleteQuizClicked() {
@@ -115,47 +124,47 @@ public class AdminMenu implements Initializable {
 
     public void getExcelClicked() {
 
-        if (quizzesTable.getSelectionModel().getSelectedItem() != null) {
-
-            try {
-
-                //Table only records name and key, use Account.getUser to get remaining parts for path.
-                Quiz quiz = quizzesTable.getSelectionModel().getSelectedItem();
-                Account.setQuiz(Account.getUser().getUsername(), quiz.getName(), quiz.getKey());
-
-                //Request for answers along with the questions.
-                QuizJSONRequest request = new QuizJSONRequest(Account.getUser(),
-                        Constants.DEFAULT_PATH + "questions/answers/" + Account.getQuiz().getKey());
-
-                request.initializeRequest();
-
-                ExcelReader excelReader = new ExcelReader(request.getQuestionJSON());
-
-                //Open a DirectoryChooser to choose where to store the excel
-                DirectoryChooser directoryChooser = new DirectoryChooser();
-                File selectedDirectory = directoryChooser.showDialog(PrimaryStageHolder.getPrimaryStage());
-
-                FileOutputStream outputStream = new FileOutputStream(selectedDirectory.getAbsolutePath() + "/quiz.xlsx");
-
-                excelReader.jsonToExcel().write(outputStream);
-                outputStream.close();
-
-
-            } catch (ConnectException e) {
-
-                new UserNotifier("Could not connect to server.").display();
-
-            } catch (Exception e) {
-
-                new UserNotifier("An unknown error occurred").display();
-
-            }
-
-        } else {
-
-            new UserNotifier("Please select a created Quiz.").display();
-
-        }
+//        if (quizzesTable.getSelectionModel().getSelectedItem() != null) {
+//
+//            try {
+//
+//                //Table only records name and key, use Account.getUser to get remaining parts for path.
+//                Quiz quiz = quizzesTable.getSelectionModel().getSelectedItem();
+//                Account.setQuiz(Account.getUser().getUsername(), quiz.getName(), quiz.getKey());
+//
+//                //Request for answers along with the questions.
+//                QuizJSONRequest request = new QuizJSONRequest(Account.getUser(),
+//                        Constants.DEFAULT_PATH + "questions/answers/" + Account.getQuiz().getKey());
+//
+//                request.initializeRequest();
+//
+//                ExcelReader excelReader = new ExcelReader(request.getQuestionJSON());
+//
+//                //Open a DirectoryChooser to choose where to store the excel
+//                DirectoryChooser directoryChooser = new DirectoryChooser();
+//                File selectedDirectory = directoryChooser.showDialog(PrimaryStageHolder.getPrimaryStage());
+//
+//                FileOutputStream outputStream = new FileOutputStream(selectedDirectory.getAbsolutePath() + "/quiz.xlsx");
+//
+//                excelReader.jsonToExcel().write(outputStream);
+//                outputStream.close();
+//
+//
+//            } catch (ConnectException e) {
+//
+//                new UserNotifier("Could not connect to server.").display();
+//
+//            } catch (Exception e) {
+//
+//                new UserNotifier("An unknown error occurred").display();
+//
+//            }
+//
+//        } else {
+//
+//            new UserNotifier("Please select a created Quiz.").display();
+//
+//        }
 
     }
 

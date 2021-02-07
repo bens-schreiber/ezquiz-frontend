@@ -15,13 +15,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import questions.QuizQuestions;
 import questions.question.QuestionNode;
 
 import java.net.URL;
@@ -37,13 +36,13 @@ public class QuizController implements Initializable {
     Button backButton, nextButton, notePadButton, calculatorButton, drawingPadButton;
 
     @FXML
-    Label questionPrompt, questionDirections, quizName, quizTimer, currQuestionLabel, userLabel, subjAndQuestion;
+    Label quizName, quizTimer, currQuestionLabel, userLabel, subjAndQuestion;
 
     @FXML
-    VBox questionArea, addonVBox;
+    VBox addonVBox;
 
     @FXML
-    AnchorPane questionPane;
+    TabPane tabWizard;
 
     @FXML
     HBox questionHBox;
@@ -57,16 +56,11 @@ public class QuizController implements Initializable {
     //Default test is 30 minutes
     static Integer seconds = 1800;
 
-    //Index of the QuizNodes the quiz is currently showing
-    static int currentQuestionIndex;
-
     /**
      * Initial run method
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        currentQuestionIndex = 0;
 
         //Establish preferences
         if (!Boolean.parseBoolean(QuizHelper.Preference.getPreferences().get(QuizHelper.Preference.NOTEPAD))) {
@@ -93,7 +87,12 @@ public class QuizController implements Initializable {
         gc = paintCanvas.getGraphicsContext2D();
         gc.setStroke(Color.WHITE);
 
-        //Establish flag button amount
+        //Load all questions into the tabWizard
+        for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
+            tabWizard.getTabs().add(questionNode.getTab());
+        }
+
+        //Establish flag buttons
         //Whenever the button is clicked use the individualQuestionClicked handler
         for (int i = 0; i < QuizQuestions.getQuestionNodes().length; i++) {
 
@@ -114,19 +113,13 @@ public class QuizController implements Initializable {
      */
     private void displayNewQuestion() {
 
+        int currentQuestionIndex = tabWizard.getSelectionModel().getSelectedIndex();
+
+        //Disable/enable next and back based on position
+        backButton.setDisable(currentQuestionIndex == 0);
+        nextButton.setDisable(currentQuestionIndex + 1 == QuizQuestions.getQuestionNodes().length);
+
         QuestionNode currentQuestionNode = QuizQuestions.getQuestionNodes()[currentQuestionIndex];
-
-        questionArea.getChildren().clear();
-
-        //Set new question to questionArea
-        questionArea.getChildren().add(currentQuestionNode.getNode());
-
-        //Set prompt, determine text color based on if the question is flagged or not
-        questionPrompt.setText(currentQuestionIndex + 1 + ".) " + currentQuestionNode.getPrompt());
-        questionPrompt.setStyle(currentFlagButton().isFlagged() ? "-fx-text-fill: " + Constants.FLAGGED_COLOR : "-fx-text-fill: black");
-
-        //Set directions
-        questionDirections.setText(currentQuestionNode.getDirections());
 
         //Change top right label to current question num / question amount
         currQuestionLabel.setText(currentQuestionIndex + 1 + " / " + QuizQuestions.getQuestionNodes().length);
@@ -145,13 +138,10 @@ public class QuizController implements Initializable {
 
         //Grab the spot of the question
         //Set current question to the spot
-        currentQuestionIndex = questionHBox.getChildren().indexOf(mouseEvent.getSource());
+        tabWizard.getSelectionModel().select(questionHBox.getChildren().indexOf(mouseEvent.getSource()));
 
         //display the new question
         displayNewQuestion();
-
-        backButton.setDisable(currentQuestionIndex == 0);
-        nextButton.setDisable(currentQuestionIndex + 1 == QuizQuestions.getQuestionNodes().length);
 
     }
 
@@ -159,12 +149,9 @@ public class QuizController implements Initializable {
     //When next button is clicked
     public void nextButtonClicked() {
 
-        currentQuestionIndex++;
+        //Display the next question
+        tabWizard.getSelectionModel().selectNext();
         displayNewQuestion();
-
-        //Disable/enable next and back based on position
-        backButton.setDisable(currentQuestionIndex == 0);
-        nextButton.setDisable(currentQuestionIndex + 1 == QuizQuestions.getQuestionNodes().length);
 
     }
 
@@ -172,12 +159,8 @@ public class QuizController implements Initializable {
     //When back button is clicked
     public void backButtonClicked() {
 
-        currentQuestionIndex--;
+        tabWizard.getSelectionModel().selectPrevious();
         displayNewQuestion();
-
-        //Disable/enable next and back based on position
-        backButton.setDisable(currentQuestionIndex == 0);
-        nextButton.setDisable(currentQuestionIndex + 1 == QuizQuestions.getQuestionNodes().length);
 
     }
 
@@ -189,11 +172,9 @@ public class QuizController implements Initializable {
 
             currentFlagButton().setFlagged(false);
             highlightSelected();
-            questionPrompt.setStyle("-fx-text-fill: black");
 
         } else {
             currentFlagButton().setFlagged(true);
-            questionPrompt.setStyle("-fx-text-fill: " + Constants.FLAGGED_COLOR);
         }
     }
 
@@ -296,22 +277,22 @@ public class QuizController implements Initializable {
 
         try {
 
-            if (FXHelper.getOpenedInstances().contains(FXHelper.Window.DRAWINGPAD)) {
+            if (FXHelper.getOpenedInstances().contains(FXHelper.Window.DRAWING_PAD)) {
 
                 paintCanvas.setDisable(true);
 
-                FXHelper.getOpenedInstances().remove(FXHelper.Window.DRAWINGPAD);
+                FXHelper.getOpenedInstances().remove(FXHelper.Window.DRAWING_PAD);
                 DrawingPadController.getStage().close();
             } else {
 
                 paintCanvas.setDisable(false);
 
-                Stage stage = FXHelper.getPopupStage(FXHelper.Window.DRAWINGPAD, false);
-                FXHelper.getOpenedInstances().add(FXHelper.Window.DRAWINGPAD);
+                Stage stage = FXHelper.getPopupStage(FXHelper.Window.DRAWING_PAD, false);
+                FXHelper.getOpenedInstances().add(FXHelper.Window.DRAWING_PAD);
                 DrawingPadController.setStage(stage);
 
                 stage.setOnCloseRequest(e -> {
-                    FXHelper.getOpenedInstances().remove(FXHelper.Window.DRAWINGPAD);
+                    FXHelper.getOpenedInstances().remove(FXHelper.Window.DRAWING_PAD);
                     paintCanvas.setDisable(true);
                 });
 
@@ -331,7 +312,7 @@ public class QuizController implements Initializable {
 
 
     private FlagButton currentFlagButton() {
-        return (FlagButton) questionHBox.getChildren().get(currentQuestionIndex);
+        return (FlagButton) questionHBox.getChildren().get(tabWizard.getSelectionModel().getSelectedIndex());
     }
 
 

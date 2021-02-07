@@ -2,12 +2,12 @@ package questions.nodes;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 
 import java.util.Collections;
 
 public class Written extends TypeNode {
-    {
+    public Written(String directions, String prompt) {
+        super(directions, prompt);
 
         TextField textField = new TextField();
         textField.setMaxSize(115, 10);
@@ -15,11 +15,6 @@ public class Written extends TypeNode {
 
         //Set functionality
         textField.setOnKeyTyped(e -> this.response = Collections.singletonList(textField.getText()));
-
-        VBox vbox = new VBox(15);
-        vbox.getChildren().addAll(label, textField);
-
-        this.node = vbox;
-
+        this.node.getChildren().addAll(label, textField);
     }
 }

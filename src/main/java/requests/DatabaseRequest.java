@@ -12,11 +12,13 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.http.HttpResponse;
 
+/**
+ * Simple request methods that generally return a Status, not needing their own object
+ */
 public class DatabaseRequest {
 
     private DatabaseRequest() {
     }
-
 
     /**
      * POST
@@ -104,7 +106,6 @@ public class DatabaseRequest {
 
 
             HttpResponse<String> response = Request.postRequest(jsonObject, "quiz/new", user.getAuth());
-            System.out.println(jsonObject);
 
             return Status.getStatusFromInt(response.statusCode());
 
@@ -278,7 +279,7 @@ public class DatabaseRequest {
 
         try {
 
-            HttpResponse<String> response = Request.deleteRequest("quiz/quizzes/" + quiz.getKey(), user.getAuth());
+            HttpResponse<String> response = Request.deleteRequest("quiz/" + quiz.getKey(), user.getAuth());
             return Status.getStatusFromInt(response.statusCode());
         } catch (ConnectException ignore) {
             return Status.NO_CONNECTION;

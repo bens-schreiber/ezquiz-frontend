@@ -1,14 +1,29 @@
 package questions.nodes;
 
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-abstract public class TypeNode {
+
+/**
+ * Contains the JavaFX display node and response.
+ */
+public class TypeNode {
 
     protected List<String> response;
 
-    protected Node node;
+    protected VBox node;
+
+    protected TypeNode(String directions, String prompt) {
+
+        VBox vBox = new VBox(15);
+
+        vBox.getChildren().addAll(new Label(directions), new Label(prompt));
+
+        this.node = vBox;
+    }
 
     public Node getNode() {
         return this.node;

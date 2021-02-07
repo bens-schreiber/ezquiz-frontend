@@ -1,6 +1,7 @@
 package questions.question;
 
 import javafx.scene.Node;
+import javafx.scene.control.Tab;
 import questions.nodes.TypeNode;
 
 import java.util.List;
@@ -26,9 +27,12 @@ public class QuestionNode extends Question {
 
     }
 
-    /**
-     * Getters
-     */
+    public Tab getTab() {
+        Tab tab = new Tab();
+        tab.setContent(node.getNode());
+        return tab;
+    }
+
     public Node getNode() {
         return this.node.getNode();
     }

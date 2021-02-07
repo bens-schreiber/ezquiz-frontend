@@ -36,10 +36,13 @@
                         <TableView fx:id="savedQuizKeys" onMouseClicked="#tableViewClicked" prefHeight="350.0"
                                    prefWidth="864.0" stylesheets="@../css/tableview.css">
                             <columns>
-                                <TableColumn fx:id="nameColumn" prefWidth="89.0" text="Name"/>
-                                <TableColumn fx:id="classColumn" prefWidth="93.0" text="Class"/>
+                                <TableColumn fx:id="nameColumn" prefWidth="89.0" text="Quiz"/>
+                                <TableColumn fx:id="classColumn" prefWidth="93.0" text="Creator"/>
                                 <TableColumn fx:id="keyColumn" prefWidth="75.0" text="Key"/>
                             </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            </columnResizePolicy>
                         </TableView>
                         <Label text="Previously Taken Quizzes">
                             <VBox.margin>
@@ -52,11 +55,14 @@
                         <TableView fx:id="previousQuizzes" prefHeight="350.0" prefWidth="850.0"
                                    stylesheets="@../css/tableview.css">
                             <columns>
-                                <TableColumn fx:id="prevQuizName" prefWidth="75.0" text="Name"/>
-                                <TableColumn fx:id="prevQuizClass" prefWidth="75.0" text="Class"/>
+                                <TableColumn fx:id="prevQuizName" prefWidth="75.0" text="Quiz"/>
+                                <TableColumn fx:id="prevQuizClass" prefWidth="75.0" text="Creator"/>
                                 <TableColumn fx:id="prevQuizScore" prefWidth="75.0" text="Score"/>
                                 <TableColumn fx:id="prevQuizKey" prefWidth="100.0" text="Key"/>
                             </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            </columnResizePolicy>
                         </TableView>
                     </children>
                 </VBox>

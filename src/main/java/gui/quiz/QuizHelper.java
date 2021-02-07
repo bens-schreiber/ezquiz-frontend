@@ -7,7 +7,6 @@ import gui.popup.notification.UserNotifier;
 import javafx.stage.StageStyle;
 import org.json.JSONException;
 import org.json.JSONObject;
-import questions.QuizQuestions;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,17 +19,15 @@ public class QuizHelper {
     private QuizHelper() {
     }
 
-    //private static String quizAuthToken;
-
     /**
-     * @param loadDefault if the test should be default questions. False if otherwise.
+     * @param randomQuestions if the test should be random questions. False otherwise.
      */
-    public static void startQuiz(boolean loadDefault) {
+    public static void startQuiz(boolean randomQuestions) {
         try {
 
             PrimaryStageHolder.getPrimaryStage().close();
 
-            if (loadDefault) {
+            if (randomQuestions) {
                 QuizQuestions.initializeQuiz(Constants.DEFAULT_QUESTION_AMOUNT);
             }
 
@@ -51,7 +48,7 @@ public class QuizHelper {
     //Ends the entire test and begins the results page
     static void endQuiz() {
         try {
-            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.PRINTRESULTS));
+            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.PRINT_RESULTS));
         } catch (IOException e) {
             new UserNotifier("Results could not display.").display();
         }

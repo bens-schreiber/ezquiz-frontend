@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <AnchorPane style="-fx-background-color: #E9E9E9;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.QuizCreatorMenu">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.QuizUpload">
    <children>
       <ButtonBar layoutX="486.0" layoutY="318.0" stylesheets="@../css/standard_button.css">
          <buttons>

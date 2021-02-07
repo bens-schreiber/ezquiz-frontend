@@ -14,7 +14,7 @@ public class EnterInputNotifier {
 
     public EnterInputNotifier display() throws IOException {
 
-        Stage stage = FXHelper.getPopupStage(FXHelper.Window.ENTERKEY, true);
+        Stage stage = FXHelper.getPopupStage(FXHelper.Window.ENTER_KEY, true);
 
         EnterInputScreen.stage = stage;
         stage.showAndWait();
