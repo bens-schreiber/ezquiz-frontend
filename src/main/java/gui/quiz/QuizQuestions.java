@@ -41,17 +41,17 @@ public class QuizQuestions {
 
             //Create a pool of question id's in the size of how many questions available, randomize order
             List<Integer> idPool = new LinkedList<>();
-            for (int i = 0; i < request.getQuestionJSON().length(); i++) {
+            for (int i = 0; i < request.getQuestions().length(); i++) {
                 idPool.add(i);
             }
 
             Collections.shuffle(idPool);
 
             //Initialize preferences
-            QuizHelper.Preference.initializePreferences(request.getPreferenceJSON());
+            QuizHelper.Preference.initializePreferences(request.getPreferences());
 
             //Initialize questions
-            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(request.getQuestionJSON(), amount, idPool);
+            questionNodes = QuestionNodeFactory.nodeArrayFromJSON(request.getQuestions(), amount, idPool);
 
         } catch (Exception e) {
 

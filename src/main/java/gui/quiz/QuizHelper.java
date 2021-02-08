@@ -1,14 +1,12 @@
 package gui.quiz;
 
 import etc.Constants;
-import gui.PrimaryStageHolder;
+import gui.StageHolder;
 import gui.etc.FXHelper;
 import gui.popup.notification.UserNotifier;
-import javafx.stage.StageStyle;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -25,17 +23,12 @@ public class QuizHelper {
     public static void startQuiz(boolean randomQuestions) {
         try {
 
-            PrimaryStageHolder.getPrimaryStage().close();
-
             if (randomQuestions) {
                 QuizQuestions.initializeQuiz(Constants.DEFAULT_QUESTION_AMOUNT);
             }
 
             //Make a PopupStage because the test window shares their qualities.
-            PrimaryStageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.QUIZ, false));
-
-            PrimaryStageHolder.getPrimaryStage().initStyle(StageStyle.UNDECORATED);
-            PrimaryStageHolder.getPrimaryStage().show();
+            StageHolder.setPrimaryStage(FXHelper.getSecureStage(FXHelper.Window.QUIZ));
 
         } catch (Exception e) {
             new UserNotifier("A page failed to load").display();
@@ -45,12 +38,15 @@ public class QuizHelper {
     }
 
 
-    //Ends the entire test and begins the results page
+    //Ends the entire test and shows the results page
     static void endQuiz() {
         try {
-            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.PRINT_RESULTS));
-        } catch (IOException e) {
-            new UserNotifier("Results could not display.").display();
+
+            StageHolder.setPrimaryStage(FXHelper.getSecureStage(FXHelper.Window.PRINT_RESULTS));
+
+        } catch (Exception e) {
+            new UserNotifier("A page failed to load").display();
+            e.printStackTrace();
         }
 
     }
@@ -63,7 +59,6 @@ public class QuizHelper {
         NOTEPAD,
         CALCULATOR,
         DRAWINGPAD,
-        QUIZNAME,
         SHOWANSWERS,
         TIME;
 
@@ -72,14 +67,11 @@ public class QuizHelper {
 
         public static void initializePreferences(JSONObject jsonObject) throws JSONException {
 
-            System.out.println(validateJSON(jsonObject));
             if (validateJSON(jsonObject)) {
                 preferences.put(CALCULATOR, jsonObject.get("calculator").toString());
                 preferences.put(SHOWANSWERS, jsonObject.get("answers").toString());
                 preferences.put(DRAWINGPAD, jsonObject.get("drawingpad").toString());
                 preferences.put(NOTEPAD, jsonObject.get("notepad").toString());
-
-                System.out.println(preferences.get(NOTEPAD));
             }
 
         }

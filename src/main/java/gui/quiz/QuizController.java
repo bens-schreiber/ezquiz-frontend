@@ -1,25 +1,22 @@
 package gui.quiz;
 
 import etc.Constants;
+import gui.StageHolder;
 import gui.account.Account;
 import gui.etc.FXHelper;
-import gui.popup.confirm.ConfirmNotifier;
-import gui.popup.notification.UserNotifier;
 import gui.quiz.tools.CalculatorController;
 import gui.quiz.tools.DrawingPadController;
 import gui.quiz.tools.NotePadController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import questions.question.QuestionNode;
 
@@ -30,7 +27,7 @@ import java.util.ResourceBundle;
 /**
  * Stage for Quiz.
  */
-public class QuizController implements Initializable {
+public class QuizController extends StageHolder implements Initializable {
 
     @FXML
     Button backButton, nextButton, notePadButton, calculatorButton, drawingPadButton;
@@ -45,16 +42,19 @@ public class QuizController implements Initializable {
     TabPane tabWizard;
 
     @FXML
-    HBox questionHBox;
+    AnchorPane questionPane;
 
-    //Drawing pad canvas is apart of test stage, utilized by DrawingPadController
     @FXML
-    Canvas paintCanvas;
-
-    static GraphicsContext gc;
+    HBox questionHBox;
 
     //Default test is 30 minutes
     static Integer seconds = 1800;
+
+    private Stage drawingPad = new Stage();
+    private Stage calculator = new Stage();
+    private Stage notepad = new Stage();
+
+    static QuizController quizController;
 
     /**
      * Initial run method
@@ -75,34 +75,26 @@ public class QuizController implements Initializable {
             addonVBox.getChildren().remove(drawingPadButton);
         }
 
+        //Set up permanent labels
         quizName.setText(Account.getQuiz().getName());
-
         userLabel.setText(userLabel.getText() + Account.getUser().getUsername());
 
         //Disable back button by default.
         backButton.setDisable(true);
 
-        //Establish canvas properties
-        paintCanvas.setDisable(true);
-        gc = paintCanvas.getGraphicsContext2D();
-        gc.setStroke(Color.WHITE);
-
         //Load all questions into the tabWizard
         for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
+
             tabWizard.getTabs().add(questionNode.getTab());
-        }
 
-        //Establish flag buttons
-        //Whenever the button is clicked use the individualQuestionClicked handler
-        for (int i = 0; i < QuizQuestions.getQuestionNodes().length; i++) {
-
+            //Establish flag button
+            //Whenever the button is clicked use the individualQuestionClicked handler
             FlagButton button = new FlagButton();
-
             button.setOnMouseClicked(this::individualQuestionClicked);
-
             questionHBox.getChildren().add(button);
-
         }
+
+        quizController = this;
 
         displayNewQuestion();
 
@@ -182,14 +174,14 @@ public class QuizController implements Initializable {
     public void submitButtonClicked() {
 
         if (!List.of(QuizQuestions.getQuestionNodes()).stream().allMatch(QuestionNode::isAnswered)) {
-            if (new ConfirmNotifier("Some answers are unfinished. Are sure you want to submit?").display().getResponse()) {
+            if (confirmNotifier.setPrompt("Some answers are unfinished. Are sure you want to submit?").display().getResponse()) {
                 QuizHelper.endQuiz();
             }
         }
 
         //If any questions are flagged
         else if (questionHBox.getChildren().stream().anyMatch(node -> ((FlagButton) node).isFlagged())) {
-            if (new ConfirmNotifier("Some questions are flagged. Are you sure you want to submit?").display().getResponse()) {
+            if (confirmNotifier.setPrompt("Some questions are flagged. Are you sure you want to submit?").display().getResponse()) {
                 QuizHelper.endQuiz();
             }
         }
@@ -197,7 +189,7 @@ public class QuizController implements Initializable {
 
         //If all questions are answered.
         else {
-            if (new ConfirmNotifier("Are you sure you want to submit?").display().getResponse()) {
+            if (confirmNotifier.setPrompt("Are you sure you want to submit?").display().getResponse()) {
                 QuizHelper.endQuiz();
             }
         }
@@ -211,30 +203,23 @@ public class QuizController implements Initializable {
 
         try {
 
-            //If an instance of Calculator is already open
-            if (FXHelper.getOpenedInstances().contains(FXHelper.Window.CALCULATOR)) {
+            if (!calculator.isShowing()) {
 
-                //Remove from stages
-                FXHelper.getOpenedInstances().remove(FXHelper.Window.CALCULATOR);
+                calculator = FXHelper.getPopupStage(FXHelper.Window.CALCULATOR, false);
 
-                //Close
-                CalculatorController.getStage().close();
+                CalculatorController.setStage(calculator);
+
+                calculator.show();
+
             } else {
 
-                Stage stage = FXHelper.getPopupStage(FXHelper.Window.CALCULATOR, false);
-
-                stage.setOnCloseRequest(e -> FXHelper.getOpenedInstances().remove(FXHelper.Window.CALCULATOR));
-
-                //Add to saved stages
-                FXHelper.getOpenedInstances().add(FXHelper.Window.CALCULATOR);
-                CalculatorController.setStage(stage);
-                stage.show();
+                calculator.close();
 
             }
 
         } catch (Exception e) {
 
-            new UserNotifier("A page failed to load").display();
+            userNotifier.setText("A page failed to load").display();
 
             e.printStackTrace();
 
@@ -247,24 +232,24 @@ public class QuizController implements Initializable {
     public void notepadButtonClicked() {
 
         try {
-            if (FXHelper.getOpenedInstances().contains(FXHelper.Window.NOTEPAD)) {
-                FXHelper.getOpenedInstances().remove(FXHelper.Window.NOTEPAD);
-                NotePadController.getStage().close();
+
+            if (!notepad.isShowing()) {
+
+                notepad = FXHelper.getPopupStage(FXHelper.Window.NOTEPAD, false);
+
+                NotePadController.setStage(notepad);
+
+                notepad.show();
+
             } else {
 
-                Stage stage = FXHelper.getPopupStage(FXHelper.Window.NOTEPAD, false);
-
-                stage.setOnCloseRequest(e -> FXHelper.getOpenedInstances().remove(FXHelper.Window.NOTEPAD));
-
-                FXHelper.getOpenedInstances().add(FXHelper.Window.NOTEPAD);
-                NotePadController.setStage(stage);
-                stage.show();
+                notepad.close();
 
             }
 
         } catch (Exception e) {
 
-            new UserNotifier("A page failed to load").display();
+            userNotifier.setText("A page failed to load").display();
 
             e.printStackTrace();
 
@@ -277,32 +262,29 @@ public class QuizController implements Initializable {
 
         try {
 
-            if (FXHelper.getOpenedInstances().contains(FXHelper.Window.DRAWING_PAD)) {
+            if (!drawingPad.isShowing()) {
 
-                paintCanvas.setDisable(true);
 
-                FXHelper.getOpenedInstances().remove(FXHelper.Window.DRAWING_PAD);
-                DrawingPadController.getStage().close();
+                drawingPad = FXHelper.getPopupStage(FXHelper.Window.DRAWING_PAD, false);
+
+                drawingPad.setOnCloseRequest(e -> questionPane.getChildren().remove(1));
+
+                DrawingPadController.setStage(drawingPad);
+
+                drawingPad.show();
+
             } else {
 
-                paintCanvas.setDisable(false);
+                //Disable the drawing pad canvas added by DrawingPadController
+                questionPane.getChildren().remove(1);
 
-                Stage stage = FXHelper.getPopupStage(FXHelper.Window.DRAWING_PAD, false);
-                FXHelper.getOpenedInstances().add(FXHelper.Window.DRAWING_PAD);
-                DrawingPadController.setStage(stage);
-
-                stage.setOnCloseRequest(e -> {
-                    FXHelper.getOpenedInstances().remove(FXHelper.Window.DRAWING_PAD);
-                    paintCanvas.setDisable(true);
-                });
-
-                stage.show();
+                drawingPad.close();
 
             }
 
         } catch (Exception e) {
 
-            new UserNotifier("A page failed to load").display();
+            userNotifier.setText("A page failed to load").display();
 
             e.printStackTrace();
 
@@ -332,36 +314,9 @@ public class QuizController implements Initializable {
     /**
      * Paint Canvas
      */
-    //When pressing mouse
-    public void canvasOnPressed(MouseEvent e) {
-        //begin drawing
-        gc.beginPath();
-        gc.lineTo(e.getX(), e.getY());
-        gc.stroke();
-    }
 
-
-    //When dragging mouse
-    public void canvasOnDragged(MouseEvent event) {
-
-        gc.lineTo(event.getX(), event.getY());
-
-        gc.stroke();
-    }
-
-
-    public static void changeColor(Color color) {
-        gc.setStroke(color);
-    }
-
-
-    public static void changeWidth(Double width) {
-        gc.setLineWidth(width);
-    }
-
-
-    public static void clearCanvas() {
-        gc.clearRect(0, 0, 1920, 1080);
+    public static AnchorPane getQuestionPane() {
+        return quizController.questionPane;
     }
 
 

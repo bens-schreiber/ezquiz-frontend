@@ -1,4 +1,4 @@
-package gui.mainmenu.login;
+package gui.login;
 
 import com.google.common.hash.Hashing;
 

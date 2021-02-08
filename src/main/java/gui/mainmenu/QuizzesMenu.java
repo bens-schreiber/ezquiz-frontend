@@ -1,9 +1,9 @@
 package gui.mainmenu;
 
+import gui.StageHolder;
 import gui.account.Account;
 import gui.account.Quiz;
 import gui.popup.enter.EnterInputNotifier;
-import gui.popup.notification.UserNotifier;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 /**
  * Pane for displaying in MainMenu.
  */
-public class QuizzesMenu implements Initializable {
+public class QuizzesMenu extends StageHolder implements Initializable {
 
     @FXML
     TableView<Quiz> savedQuizKeys, previousQuizzes;
@@ -75,9 +75,9 @@ public class QuizzesMenu implements Initializable {
 
                     case ACCEPTED -> savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
 
-                    case NO_CONTENT -> new UserNotifier("An error occurred uploading the key.").display();
+                    case NO_CONTENT -> userNotifier.setText("An error occurred uploading the key.").display();
 
-                    case NO_CONNECTION -> new UserNotifier("Connection to the server failed.").display();
+                    case NO_CONNECTION -> userNotifier.setText("Connection to the server failed.").display();
 
                 }
 
@@ -85,7 +85,7 @@ public class QuizzesMenu implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            new UserNotifier("An unknown internal error occurred.").display();
+            userNotifier.setText("An unknown internal error occurred.").display();
         }
 
     }
@@ -99,9 +99,9 @@ public class QuizzesMenu implements Initializable {
 
                 case ACCEPTED -> savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
 
-                case NO_CONTENT -> new UserNotifier("An error occurred while deleting the key.").display();
+                case NO_CONTENT -> userNotifier.setText("An error occurred while deleting the key.").display();
 
-                case NO_CONNECTION -> new UserNotifier("Connection to the server failed.").display();
+                case NO_CONNECTION -> userNotifier.setText("Connection to the server failed.").display();
 
             }
 
@@ -109,7 +109,7 @@ public class QuizzesMenu implements Initializable {
 
             e.printStackTrace();
 
-            new UserNotifier("An unknown internal error occurred.").display();
+            userNotifier.setText("An unknown internal error occurred.").display();
 
         }
 

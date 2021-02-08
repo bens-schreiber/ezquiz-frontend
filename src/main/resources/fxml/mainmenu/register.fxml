@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane prefHeight="122.0" prefWidth="261.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.login.Register">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.login.Register">
    <children>
       <VBox layoutX="8.0" layoutY="8.0" prefHeight="122.0" prefWidth="273.0" spacing="10.0">
          <children>

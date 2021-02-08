@@ -15,8 +15,9 @@
                   AnchorPane.rightAnchor="15.0"/>
       <VBox fx:id="buttonContainer" layoutX="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
             minWidth="-Infinity" prefHeight="800.0" prefWidth="165.0" spacing="30.0"
-            style="-fx-background-color: #303f9f; -fx-border-color: #9E9E9E;" AnchorPane.bottomAnchor="-1.0"
-            AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1035.0" AnchorPane.topAnchor="-1.0">
+            style="-fx-background-color: #303f9f; -fx-border-color: #9E9E9E;" stylesheets="@../css/mainmenubutton.css"
+            AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1035.0"
+            AnchorPane.topAnchor="-1.0">
          <children>
             <HBox alignment="CENTER_LEFT" onMouseClicked="#takeQuizClicked" prefHeight="30.0" prefWidth="121.0"
                   spacing="10.0">

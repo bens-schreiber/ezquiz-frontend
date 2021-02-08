@@ -1,11 +1,9 @@
 package gui.mainmenu;
 
 import etc.Constants;
-import gui.PrimaryStageHolder;
+import gui.StageHolder;
 import gui.account.Account;
 import gui.etc.FXHelper;
-import gui.popup.confirm.ConfirmNotifier;
-import gui.popup.notification.UserNotifier;
 import gui.quiz.QuizHelper;
 import gui.quiz.QuizQuestions;
 import javafx.application.Platform;
@@ -19,7 +17,7 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainMenu implements Initializable {
+public class MainMenu extends StageHolder implements Initializable {
 
     @FXML
     Pane mainDisplay;
@@ -51,13 +49,13 @@ public class MainMenu implements Initializable {
 
         if (Account.getQuiz() != null) {
 
-            if (new ConfirmNotifier("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
+            if (confirmNotifier.setPrompt("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
 
                 QuizHelper.startQuiz(true);
 
             }
 
-        } else new UserNotifier("You have not selected a Quiz").display();
+        } else userNotifier.setText("You have not selected a Quiz").display();
 
     }
 
@@ -70,7 +68,7 @@ public class MainMenu implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            new UserNotifier("An unknown internal error occurred.").display();
+            userNotifier.setText("An unknown internal error occurred.").display();
 
         }
     }
@@ -85,7 +83,7 @@ public class MainMenu implements Initializable {
 
             e.printStackTrace();
 
-            new UserNotifier("An unknown internal error occurred.").display();
+            userNotifier.setText("An unknown internal error occurred.").display();
 
         }
 
@@ -95,7 +93,7 @@ public class MainMenu implements Initializable {
 
         if (Account.getQuiz() != null) {
 
-            if (new ConfirmNotifier("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
+            if (confirmNotifier.setPrompt("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
                 try {
 
                     QuizQuestions.initializeQuiz(Constants.MAXIMUM_QUESTION_AMOUNT);
@@ -105,12 +103,12 @@ public class MainMenu implements Initializable {
                 } catch (Exception e) {
 
                     e.printStackTrace();
-                    new UserNotifier("An unknown internal error occurred.").display();
+                    userNotifier.setText("An unknown internal error occurred.").display();
 
                 }
             }
 
-        } else new UserNotifier("You have not selected a Quiz").display();
+        } else userNotifier.setText("You have not selected a Quiz").display();
 
     }
 
@@ -119,13 +117,13 @@ public class MainMenu implements Initializable {
         try {
 
             Account.logout();
-            PrimaryStageHolder.getPrimaryStage().close();
-            PrimaryStageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.LOGIN, false));
-            PrimaryStageHolder.getPrimaryStage().show();
+            StageHolder.getPrimaryStage().close();
+            StageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.LOGIN, false));
+            StageHolder.getPrimaryStage().show();
 
 
         } catch (Exception e) {
-            new UserNotifier("An unknown internal error occurred.").display();
+            userNotifier.setText("An unknown internal error occurred.").display();
             e.printStackTrace();
         }
 

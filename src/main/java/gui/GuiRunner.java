@@ -19,8 +19,7 @@ public class GuiRunner extends Application {
             primaryStage.setScene(FXHelper.getScene(FXHelper.Window.LOGIN));
 
             //Pass the PrimaryStage given from start method to PrimaryStageHelper for all classes to access
-            PrimaryStageHolder.setPrimaryStage(primaryStage);
-            PrimaryStageHolder.getPrimaryStage().show();
+            StageHolder.setPrimaryStage(primaryStage);
 
         } catch (Exception e) {
             new UserNotifier("The program failed to load").display();

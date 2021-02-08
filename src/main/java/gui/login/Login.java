@@ -1,9 +1,8 @@
-package gui.mainmenu.login;
+package gui.login;
 
 import etc.Constants;
-import gui.PrimaryStageHolder;
+import gui.StageHolder;
 import gui.etc.FXHelper;
-import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -13,11 +12,10 @@ import javafx.scene.control.TextFormatter;
 import requests.DatabaseRequest;
 
 import java.net.URL;
-import java.util.List;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
-
-public class Register implements Initializable {
+public class Login extends StageHolder implements Initializable {
 
     @FXML
     TextField usernameField;
@@ -32,7 +30,7 @@ public class Register implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         //No special characters, size of 8 only
-        for (TextField node : List.of(usernameField, passwordField))
+        for (TextField node : Arrays.asList(usernameField, passwordField))
             node.setTextFormatter(new TextFormatter<>(change -> {
                 if (change.getText().matches("[ $&+,:;=\\\\?@#|/'<>.^*()%!-]")) {
                     change.setText("");
@@ -44,7 +42,7 @@ public class Register implements Initializable {
             }));
     }
 
-    public void registerButtonClicked() {
+    public void loginButtonClicked() {
 
         if (usernameField.getText().length() < 3) {
 
@@ -55,38 +53,36 @@ public class Register implements Initializable {
             try {
 
                 //Requests return Status Enum from rest server.
-                switch (DatabaseRequest.postNewUser(usernameField.getText(), SHA.encrypt(passwordField.getText()))) {
-
-                    case ACCEPTED:
-                        DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()));
-                        PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAIN_MENU));
-                        break;
-
-                    case UNAUTHORIZED:
-                        errorLabel.setText("Incorrect username or password.");
-                        break;
-
-                    case NO_CONNECTION, NO_CONTENT:
-                        errorLabel.setText("Error connecting to database.");
+                switch (DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()))) {
+                    case ACCEPTED -> {
+                        StageHolder.getPrimaryStage().close();
+                        StageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAIN_MENU));
+                        StageHolder.getPrimaryStage().show();
+                    }
+                    case UNAUTHORIZED -> errorLabel.setText("Incorrect username or password.");
+                    case NO_CONNECTION, NO_CONTENT -> errorLabel.setText("Error connecting to database.");
                 }
 
             } catch (Exception e) {
-                errorLabel.setText("An unknown error occurred.");
+                errorLabel.setText("Error connecting to database.");
             }
-
         }
     }
 
-    public void loginButtonClicked() {
+    public void registerButtonClicked() {
 
         try {
-            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.LOGIN));
+            StageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.REGISTER));
         } catch (Exception e) {
 
-            new UserNotifier("A page failed to load").display();
+            userNotifier.setText("A page failed to load").display();
 
             e.printStackTrace();
 
         }
+
+
     }
+
+
 }

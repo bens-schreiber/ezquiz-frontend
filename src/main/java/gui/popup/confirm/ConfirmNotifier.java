@@ -12,6 +12,9 @@ public class ConfirmNotifier {
 
     private boolean response;
 
+    public ConfirmNotifier() {
+    }
+
     public ConfirmNotifier(String prompt) {
 
         //Pass error to ConfirmScreenController so it knows what to display
@@ -39,5 +42,10 @@ public class ConfirmNotifier {
 
     public boolean getResponse() {
         return this.response;
+    }
+
+    public ConfirmNotifier setPrompt(String prompt) {
+        ConfirmScreenController.setPrompt(prompt);
+        return this;
     }
 }

@@ -1,10 +1,9 @@
 package gui.mainmenu;
 
+import gui.StageHolder;
 import gui.account.Account;
-import gui.etc.FXHelper;
 import gui.mainmenu.excel.ExcelReader;
 import gui.mainmenu.excel.ExcelValidateException;
-import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -17,11 +16,10 @@ import org.json.JSONObject;
 import requests.DatabaseRequest;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class QuizUpload implements Initializable {
+public class QuizUpload extends StageHolder implements Initializable {
 
     @FXML
     TextField quizNameTextField;
@@ -32,16 +30,20 @@ public class QuizUpload implements Initializable {
     @FXML
     Label fileDisplay;
 
-    static Stage stage;
+    private static Stage stage;
 
     private ExcelReader excelReader;
 
     public void submitButtonClicked() {
 
         if (this.excelReader == null) {
-            new UserNotifier("Upload questions before submitting.").display(stage);
+
+            userNotifier.setText("Upload questions before submitting.").display(stage);
+
         } else if (quizNameTextField.getText().isEmpty()) {
-            new UserNotifier("Set a quiz name before submitting.").display(stage);
+
+            userNotifier.setText("Set a quiz name before submitting.").display(stage);
+
         } else {
 
             try {
@@ -69,34 +71,26 @@ public class QuizUpload implements Initializable {
 
                     case ACCEPTED -> stage.close();
 
-                    case NO_CONTENT -> new UserNotifier("An error occurred while posting to the server.").display(stage);
+                    case NO_CONTENT -> userNotifier.setText("An error occurred while posting to the server.").display(stage);
 
-                    case NO_CONNECTION -> new UserNotifier("Connection to the server failed.").display(stage);
+                    case NO_CONNECTION -> userNotifier.setText("Connection to the server failed.").display(stage);
                 }
 
 
             } catch (ExcelValidateException e) {
 
-                new UserNotifier(e.getErrorMsg()).display(stage);
+                userNotifier.setText(e.getErrorMsg()).display(stage);
 
 
             } catch (Exception e) {
 
-                new UserNotifier("An unknown internal error occurred.").display(stage);
+                userNotifier.setText("An unknown internal error occurred.").display(stage);
                 e.printStackTrace();
 
             }
 
         }
 
-    }
-
-    public void questionBuilderButtonClicked() {
-        try {
-            stage.setScene(FXHelper.getScene(FXHelper.Window.QUIZ_BUILDER));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void uploadExcelButtonClicked() {
@@ -127,5 +121,9 @@ public class QuizUpload implements Initializable {
 
             return change;
         }));
+    }
+
+    public static void setStage(Stage stage) {
+        QuizUpload.stage = stage;
     }
 }

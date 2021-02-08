@@ -1,17 +1,18 @@
 package gui.quiz.results;
 
-import gui.PrimaryStageHolder;
+import gui.StageHolder;
 import gui.account.Account;
 import gui.etc.FXHelper;
 import gui.popup.notification.UserNotifier;
+import gui.quiz.QuizHelper;
 import gui.quiz.QuizQuestions;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import questions.question.QuestionNode;
 import requests.DatabaseRequest;
@@ -28,10 +29,10 @@ import java.util.ResourceBundle;
 public class PrintResults implements Initializable {
 
     @FXML
-    Label testName, outOfLabel, percentageLabel;
+    Label outOfLabel, percentageLabel;
 
     @FXML
-    Button seeQuestionsButton;
+    VBox questionsVBox;
 
     /**
      * Initial startup method.
@@ -39,11 +40,11 @@ public class PrintResults implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //Set test name
-        testName.setText(Account.getQuiz().getName());
-
         //Check all answers
         QuizQuestions.gradeAnswers();
+
+        //todo: make all this better now
+        loadQuestions();
 
         //Get the amount of correct answers, get ID's for bitmap storage
         int correctAnswers = 0;
@@ -77,9 +78,7 @@ public class PrintResults implements Initializable {
     public void backToMainMenuClicked() {
         try {
 
-            PrimaryStageHolder.getPrimaryStage().close();
-            PrimaryStageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.MAIN_MENU, false));
-            PrimaryStageHolder.getPrimaryStage().show();
+            StageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.MAIN_MENU, false));
 
         } catch (IOException e) {
             new UserNotifier("Results could not display.").display();
@@ -90,11 +89,11 @@ public class PrintResults implements Initializable {
     public void screenshotButtonClicked() {
 
         try {
-            Scene scene = PrimaryStageHolder.getPrimaryStage().getScene();
+            Scene scene = StageHolder.getPrimaryStage().getScene();
             WritableImage writableImage = scene.snapshot(null);
 
             DirectoryChooser directoryChooser = new DirectoryChooser();
-            File file = directoryChooser.showDialog(PrimaryStageHolder.getPrimaryStage());
+            File file = directoryChooser.showDialog(StageHolder.getPrimaryStage());
 
             ImageIO.write(
                     SwingFXUtils.fromFXImage(writableImage, null),
@@ -109,23 +108,56 @@ public class PrintResults implements Initializable {
         }
     }
 
-    public void copyRetakeButtonClicked() {
-
-    }
-
     public void printButtonClicked() {
 
     }
 
-    public void seeQuestionsButtonClicked() {
 
-        try {
+    public void loadQuestions() {
+        //Create question answers
+        int quizNumber = 1;
+        for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
 
-            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.QUESTION_RESULTS));
+            //Make a container for the answered question, add question to it
+            VBox answeredQuestion = new VBox(15);
 
-        } catch (IOException e) {
-            new UserNotifier("Results could not display.").display();
-            e.printStackTrace();
+            //Display question number before question, make bold
+            Label label = new Label("Question " + quizNumber + ":");
+            label.setStyle("-fx-font-weight: bold;");
+            answeredQuestion.getChildren().add(label);
+
+            answeredQuestion.getChildren().add(new Label(questionNode.getPrompt()));
+            answeredQuestion.getChildren().add(questionNode.getNode());
+
+            //Make un-intractable.
+            questionNode.getNode().setFocusTraversable(false);
+            questionNode.getNode().setMouseTransparent(true);
+
+            if (questionNode.isCorrect()) {
+
+                //Set background to green with low opacity
+                answeredQuestion.setStyle("-fx-background-color: rgba(86, 234, 99, .5);");
+
+            } else {
+
+                //Set background to red with low opacity
+                answeredQuestion.setStyle("-fx-background-color: rgba(255, 158, 173, .7);");
+
+                //Show correct answer if desired in preferences
+                if (Boolean.parseBoolean(QuizHelper.Preference.getPreferences().get(QuizHelper.Preference.SHOWANSWERS))) {
+
+                    answeredQuestion.getChildren().add(new Label("Correct answer: "
+                            + questionNode.getAnswer()
+                            .toString()
+                            .replace("[", "")
+                            .replace("]", "")
+                    ));
+                }
+
+            }
+            //Add container to correct answers container.
+            questionsVBox.getChildren().add(answeredQuestion);
+            quizNumber++;
         }
     }
 

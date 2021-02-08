@@ -4,7 +4,10 @@ import etc.Constants;
 import gui.quiz.QuizController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -29,6 +32,8 @@ public class DrawingPadController implements Initializable {
     @FXML
     private Button clearButton;
 
+    private GraphicsContext gc;
+
     //Make a Stage variable because these are their own PopupStage and must be closed from inside
     private static Stage stage;
 
@@ -47,19 +52,29 @@ public class DrawingPadController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        QuizController.changeColor(Color.WHITE);
+        Canvas paintCanvas = new Canvas(QuizController.getQuestionPane().getWidth(), QuizController.getQuestionPane().getHeight());
+        paintCanvas.setOnMouseDragged(this::canvasOnDragged);
+        paintCanvas.setOnMousePressed(this::canvasOnPressed);
 
-        colorPicker.setOnAction(e -> QuizController.changeColor(colorPicker.getValue()));
+        gc = paintCanvas.getGraphicsContext2D();
+        gc.setStroke(Color.WHITE);
+
+        QuizController.getQuestionPane().getChildren().add(1, paintCanvas);
+
+
+        gc.setStroke(Color.WHITE);
+
+        colorPicker.setOnAction(e -> gc.setStroke(colorPicker.getValue()));
 
         brushSize.setOnKeyTyped(e -> {
 
             if (!brushSize.getText().isEmpty()) {
-                QuizController.changeWidth(Double.parseDouble(brushSize.getText()));
+                gc.setLineWidth((Double.parseDouble(brushSize.getText())));
             }
 
         });
 
-        eraser.setOnAction(event -> QuizController.changeColor(Color.rgb(225, 225, 225)));
+        eraser.setOnAction(event -> gc.setStroke(Color.rgb(225, 225, 225)));
 
 
         UnaryOperator<TextFormatter.Change> modifyChange = c -> {
@@ -80,8 +95,28 @@ public class DrawingPadController implements Initializable {
 
         brushSize.setTextFormatter(new TextFormatter<>(modifyChange));
 
-        clearButton.setOnAction(event -> QuizController.clearCanvas());
+        clearButton.setOnAction(event -> clearCanvas());
 
 
+    }
+
+    private void canvasOnPressed(MouseEvent e) {
+        //begin drawing
+        gc.beginPath();
+        gc.lineTo(e.getX(), e.getY());
+        gc.stroke();
+    }
+
+    //When dragging mouse
+    private void canvasOnDragged(MouseEvent event) {
+
+        gc.lineTo(event.getX(), event.getY());
+
+        gc.stroke();
+
+    }
+
+    private void clearCanvas() {
+        gc.clearRect(0, 0, QuizController.getQuestionPane().getWidth(), QuizController.getQuestionPane().getHeight());
     }
 }

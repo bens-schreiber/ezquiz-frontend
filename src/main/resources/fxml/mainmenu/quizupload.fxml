@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -9,9 +8,11 @@
 <AnchorPane style="-fx-background-color: #E9E9E9;" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.QuizUpload">
    <children>
-      <ButtonBar layoutX="486.0" layoutY="318.0" stylesheets="@../css/standard_button.css">
+      <ButtonBar layoutX="460.0" layoutY="318.0" prefHeight="52.0" prefWidth="123.0"
+                 stylesheets="@../css/standard_button.css">
          <buttons>
-            <Button mnemonicParsing="false" onAction="#submitButtonClicked" text="Submit">
+            <Button mnemonicParsing="false" onAction="#submitButtonClicked" prefHeight="22.0" prefWidth="101.0"
+                    text="Submit">
                <padding>
                   <Insets bottom="15.0" right="15.0" top="15.0"/>
                </padding>
@@ -39,7 +40,7 @@
             </VBox>
             <VBox spacing="30.0">
                <children>
-                  <VBox prefHeight="47.0" prefWidth="284.0" spacing="15.0"
+                  <VBox spacing="15.0"
                         style="-fx-border-radius: 10; -fx-border-color: #303f9f; -fx-border-width: 3; -fx-padding: 10;">
                      <children>
                         <Label text="Quiz Name">
@@ -70,8 +71,6 @@
                         </Label>
                         <HBox spacing="15.0" stylesheets="@../css/standard_button.css">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#questionBuilderButtonClicked"
-                                      text="Question Builder"/>
                               <Button mnemonicParsing="false" onAction="#uploadExcelButtonClicked" text="Upload Excel"/>
                            </children>
                         </HBox>

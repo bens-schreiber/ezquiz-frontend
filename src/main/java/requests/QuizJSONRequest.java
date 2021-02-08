@@ -32,31 +32,22 @@ public class QuizJSONRequest {
         );
 
         //If no questions could be found
-        if (json.length() == 0 || !validate(json)) {
-            System.out.println(json);
+        if (json.length() == 0 || !json.has("questions") && !json.has("preferences")) {
             throw new ConnectException();
         }
 
+        this.questions = (JSONObject) json.get("questions");
 
         this.preferences = (JSONObject) ((JSONObject) json.get("preferences")).get("obj0");
-
-        this.questions = (JSONObject) json.get("questions");
 
         return this;
     }
 
-    //Determine if the required variables are in the server response
-    private static boolean validate(JSONObject jsonObject) {
-        return jsonObject.has("preferences") && jsonObject.has("questions");
-    }
-
-    public JSONObject getPreferenceJSON() {
-        return this.preferences;
-    }
-
-    public JSONObject getQuestionJSON() {
+    public JSONObject getQuestions() {
         return this.questions;
     }
 
-
+    public JSONObject getPreferences() {
+        return preferences;
+    }
 }

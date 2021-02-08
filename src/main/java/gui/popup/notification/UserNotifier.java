@@ -1,6 +1,6 @@
 package gui.popup.notification;
 
-import gui.PrimaryStageHolder;
+import gui.StageHolder;
 import gui.etc.FXHelper;
 import javafx.stage.Stage;
 
@@ -17,13 +17,16 @@ public class UserNotifier {
         NotificationScreenController.setError(error);
     }
 
+    public UserNotifier() {
+    }
+
     public void display() {
 
         try {
 
             //Create the popup stage
             Stage stage = FXHelper.getPopupStage(FXHelper.Window.ERROR, true);
-            stage.initOwner(PrimaryStageHolder.getPrimaryStage());
+            stage.initOwner(StageHolder.getPrimaryStage());
 
             //Pass stage to ErrorScreenController so it can close it.
             NotificationScreenController.setStage(stage);
@@ -51,5 +54,10 @@ public class UserNotifier {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public UserNotifier setText(String text) {
+        NotificationScreenController.setError(text);
+        return this;
     }
 }

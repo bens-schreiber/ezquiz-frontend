@@ -1,9 +1,8 @@
-package gui.mainmenu.login;
+package gui.login;
 
 import etc.Constants;
-import gui.PrimaryStageHolder;
+import gui.StageHolder;
 import gui.etc.FXHelper;
-import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -13,10 +12,11 @@ import javafx.scene.control.TextFormatter;
 import requests.DatabaseRequest;
 
 import java.net.URL;
-import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class Login implements Initializable {
+
+public class Register extends StageHolder implements Initializable {
 
     @FXML
     TextField usernameField;
@@ -31,7 +31,7 @@ public class Login implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         //No special characters, size of 8 only
-        for (TextField node : Arrays.asList(usernameField, passwordField))
+        for (TextField node : List.of(usernameField, passwordField))
             node.setTextFormatter(new TextFormatter<>(change -> {
                 if (change.getText().matches("[ $&+,:;=\\\\?@#|/'<>.^*()%!-]")) {
                     change.setText("");
@@ -43,7 +43,7 @@ public class Login implements Initializable {
             }));
     }
 
-    public void loginButtonClicked() {
+    public void registerButtonClicked() {
 
         if (usernameField.getText().length() < 3) {
 
@@ -54,37 +54,34 @@ public class Login implements Initializable {
             try {
 
                 //Requests return Status Enum from rest server.
-                switch (DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()))) {
-
-                    case ACCEPTED -> PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAIN_MENU));
-
+                switch (DatabaseRequest.postNewUser(usernameField.getText(), SHA.encrypt(passwordField.getText()))) {
+                    case ACCEPTED -> {
+                        DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()));
+                        StageHolder.getPrimaryStage().close();
+                        StageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAIN_MENU));
+                        StageHolder.getPrimaryStage().show();
+                    }
                     case UNAUTHORIZED -> errorLabel.setText("Incorrect username or password.");
-
                     case NO_CONNECTION, NO_CONTENT -> errorLabel.setText("Error connecting to database.");
-
-
                 }
 
             } catch (Exception e) {
-                errorLabel.setText("Error connecting to database.");
+                errorLabel.setText("An unknown error occurred.");
             }
+
         }
     }
 
-    public void registerButtonClicked() {
+    public void loginButtonClicked() {
 
         try {
-            PrimaryStageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.REGISTER));
+            StageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.LOGIN));
         } catch (Exception e) {
 
-            new UserNotifier("A page failed to load").display();
+            userNotifier.setText("A page failed to load").display();
 
             e.printStackTrace();
 
         }
-
-
     }
-
-
 }

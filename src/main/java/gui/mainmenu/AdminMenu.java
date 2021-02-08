@@ -1,11 +1,10 @@
 package gui.mainmenu;
 
+import gui.StageHolder;
 import gui.account.Account;
 import gui.account.Quiz;
 import gui.etc.FXHelper;
 import gui.mainmenu.quizbuilder.QuizBuilderTool;
-import gui.popup.confirm.ConfirmNotifier;
-import gui.popup.notification.UserNotifier;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,13 +21,17 @@ import java.util.ResourceBundle;
 /**
  * Pane for displaying in MainMenu.
  */
-public class AdminMenu implements Initializable {
+public class AdminMenu extends StageHolder implements Initializable {
 
     @FXML
     TableView<Quiz> quizzesTable;
 
     @FXML
     TableColumn<Quiz, String> nameColumn, keyColumn;
+
+    //Instances of other stages this scene can open
+    private Stage quizBuilder = new Stage();
+    private Stage quizUpload = new Stage();
 
 
     @Override
@@ -57,14 +60,22 @@ public class AdminMenu implements Initializable {
 
         try {
 
-            Stage stage = FXHelper.getPopupStage(FXHelper.Window.QUIZ_UPLOAD, false);
-            QuizUpload.stage = stage;
-            stage.showAndWait();
-            quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
+            if (!quizUpload.isShowing()) {
+
+                this.quizUpload = FXHelper.getPopupStage(FXHelper.Window.QUIZ_UPLOAD, false);
+
+                //Pass the stage to the quizUpload so it can close itself
+                QuizUpload.setStage(quizUpload);
+
+                quizUpload.showAndWait();
+
+                quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
+
+            }
 
         } catch (Exception e) {
 
-            new UserNotifier("An unknown internal error occurred.").display();
+            userNotifier.setText("An unknown internal error occurred.").display();
 
         }
 
@@ -73,15 +84,23 @@ public class AdminMenu implements Initializable {
     public void quizBuilderClicked() {
         try {
 
-            Stage stage = FXHelper.getPopupStage(FXHelper.Window.QUIZ_BUILDER, false);
-            QuizBuilderTool.setStage(stage);
-            stage.show();
+            //Check if an instance is already open
+            if (!quizBuilder.isShowing()) {
+
+                quizBuilder = FXHelper.getPopupStage(FXHelper.Window.QUIZ_BUILDER, false);
+
+                //Give stage to QuizBuilderTool so it can close itself
+                QuizBuilderTool.setStage(quizBuilder);
+
+                quizBuilder.show();
+
+            }
 
         } catch (Exception e) {
 
             e.printStackTrace();
 
-            new UserNotifier("An unknown internal error occurred.").display();
+            userNotifier.setText("An unknown internal error occurred.").display();
 
         }
     }
@@ -92,7 +111,7 @@ public class AdminMenu implements Initializable {
 
             if (quizzesTable.getSelectionModel().getSelectedItem() != null) {
 
-                if (new ConfirmNotifier("Are you sure you want to delete: "
+                if (confirmNotifier.setPrompt("Are you sure you want to delete: "
                         + quizzesTable.getSelectionModel().getSelectedItem().getName() +
                         "? All existing keys and scores will be lost.").display().getResponse()) {
 
@@ -100,15 +119,15 @@ public class AdminMenu implements Initializable {
 
                         case ACCEPTED -> quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
 
-                        case NO_CONTENT -> new UserNotifier("An error occurred while deleting the quiz.").display();
+                        case NO_CONTENT -> userNotifier.setText("An error occurred while deleting the quiz.").display();
 
-                        case NO_CONNECTION -> new UserNotifier("Connection to the server failed.").display();
+                        case NO_CONNECTION -> userNotifier.setText("Connection to the server failed.").display();
                     }
                 }
 
             } else {
 
-                new UserNotifier("Please select a created Quiz.").display();
+                userNotifier.setText("Please select a created Quiz.").display();
 
             }
 
@@ -116,7 +135,7 @@ public class AdminMenu implements Initializable {
 
             e.printStackTrace();
 
-            new UserNotifier("An unknown internal error occurred.").display();
+            userNotifier.setText("An unknown internal error occurred.").display();
 
         }
 
@@ -152,17 +171,17 @@ public class AdminMenu implements Initializable {
 //
 //            } catch (ConnectException e) {
 //
-//                new UserNotifier("Could not connect to server.").display();
+//                userNotifier.setText("Could not connect to server.").display();
 //
 //            } catch (Exception e) {
 //
-//                new UserNotifier("An unknown error occurred").display();
+//                userNotifier.setText("An unknown error occurred").display();
 //
 //            }
 //
 //        } else {
 //
-//            new UserNotifier("Please select a created Quiz.").display();
+//            userNotifier.setText("Please select a created Quiz.").display();
 //
 //        }
 

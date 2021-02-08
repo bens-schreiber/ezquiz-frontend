@@ -1,31 +1,22 @@
 package gui.etc;
 
-import gui.PrimaryStageHolder;
-import gui.popup.notification.UserNotifier;
+import gui.StageHolder;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 public class FXHelper {
 
     private FXHelper() {
-    }
-
-    /**
-     * Opened instances of the Quiz.tools fx scenes.
-     */
-    private static final Set<Window> openedInstances = new HashSet<>();
-
-    public static Set<Window> getOpenedInstances() {
-        return openedInstances;
     }
 
     //Get a Scene from Window
@@ -51,7 +42,7 @@ public class FXHelper {
 
         //Set stage, take ownership from primary stage so it stays on the same window
         Stage stage = new Stage();
-        stage.initOwner(PrimaryStageHolder.getPrimaryStage());
+        stage.initOwner(StageHolder.getPrimaryStage());
 
         //Make stage required to be answered if needed
         if (requireResponse) {
@@ -61,11 +52,30 @@ public class FXHelper {
         stage.setAlwaysOnTop(true);
         stage.setResizable(false);
 
-        Scene scene = new Scene(FXMLLoader.load(UserNotifier.class.getResource(window.getPath())));
+        Scene scene = getScene(window);
         stage.setScene(scene);
 
         return stage;
 
+    }
+
+    public static Stage getSecureStage(Window window) throws IOException {
+
+        Stage stage = new Stage();
+
+        //Secure the stage
+        stage.setAlwaysOnTop(true);
+        stage.setFullScreen(true);
+        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        stage.setFullScreenExitHint(null);
+        Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+        stage.setHeight(visualBounds.getHeight());
+        stage.setWidth(visualBounds.getWidth());
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+
+        stage.setScene(getScene(window));
+        return stage;
     }
 
 
@@ -82,7 +92,6 @@ public class FXHelper {
         DRAWING_PAD("/fxml/quiz/tools/drawingpad.fxml"),
         NOTEPAD("/fxml/quiz/tools/notepad.fxml"),
         PRINT_RESULTS("/fxml/results/printresults.fxml"),
-        QUESTION_RESULTS("/fxml/results/questionresults.fxml"),
         ERROR("/fxml/popup/error.fxml"),
         CONFIRM("/fxml/popup/confirm.fxml"),
         ADMIN_MENU("/fxml/mainmenu/adminmenu.fxml"),
