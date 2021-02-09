@@ -1,6 +1,6 @@
 package gui.etc;
 
-import gui.StageHolder;
+import gui.FXController;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -42,7 +42,7 @@ public class FXHelper {
 
         //Set stage, take ownership from primary stage so it stays on the same window
         Stage stage = new Stage();
-        stage.initOwner(StageHolder.getPrimaryStage());
+        stage.initOwner(FXController.getPrimaryStage());
 
         //Make stage required to be answered if needed
         if (requireResponse) {
@@ -83,8 +83,8 @@ public class FXHelper {
     public enum Window {
         MAIN_MENU("/fxml/mainmenu/mainmenu.fxml"),
         QUIZ_UPLOAD("/fxml/mainmenu/quizupload.fxml"),
-        LOGIN("/fxml/mainmenu/login.fxml"),
-        REGISTER("/fxml/mainmenu/register.fxml"),
+        LOGIN("/fxml/login/login.fxml"),
+        REGISTER("/fxml/login/register.fxml"),
         QUIZ("/fxml/quiz/quiz.fxml"),
         QUIZZES_MENU("/fxml/mainmenu/quizzesmenu.fxml"),
         ENTER_KEY("/fxml/popup/enterkey.fxml"),

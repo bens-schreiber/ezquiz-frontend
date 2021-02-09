@@ -1,5 +1,6 @@
-package gui.popup.enter;
+package gui.popup.quizkey;
 
+import gui.FXController;
 import gui.account.Account;
 import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXML;
@@ -13,7 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
-public class EnterInputScreen implements Initializable {
+public class EnterQuizKeyScreen extends FXController implements Initializable {
 
     @FXML
     TextField codeTextField;
@@ -28,20 +29,18 @@ public class EnterInputScreen implements Initializable {
         try {
 
             switch (DatabaseRequest.validateQuizKey(Integer.parseInt(codeTextField.getText()), Account.getUser())) {
-                case ACCEPTED:
+                case ACCEPTED -> {
                     key = Integer.parseInt(codeTextField.getText());
                     response = true;
-                    break;
-
-                case NO_CONTENT:
+                }
+                case NO_CONTENT -> {
                     response = false;
                     new UserNotifier("Could not find Quiz from key.").display(stage);
-                    break;
-
-                case NO_CONNECTION:
+                }
+                case NO_CONNECTION -> {
                     response = false;
-                    new UserNotifier("Connection to the server failed.").display(stage);
-                    break;
+                    userNotifier.setText(AlertText.NO_CONNECTION).display(stage);
+                }
             }
 
             stage.close();
@@ -49,7 +48,7 @@ public class EnterInputScreen implements Initializable {
         } catch (Exception e) {
             response = false;
             e.printStackTrace();
-            new UserNotifier("An unknown error occurred.").display(stage);
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display(stage);
         }
 
     }

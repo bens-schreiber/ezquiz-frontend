@@ -1,7 +1,7 @@
 package gui.login;
 
 import etc.Constants;
-import gui.StageHolder;
+import gui.FXController;
 import gui.etc.FXHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-public class Login extends StageHolder implements Initializable {
+public class Login extends FXController implements Initializable {
 
     @FXML
     TextField usernameField;
@@ -55,16 +55,16 @@ public class Login extends StageHolder implements Initializable {
                 //Requests return Status Enum from rest server.
                 switch (DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()))) {
                     case ACCEPTED -> {
-                        StageHolder.getPrimaryStage().close();
-                        StageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAIN_MENU));
-                        StageHolder.getPrimaryStage().show();
+                        FXController.getPrimaryStage().close();
+                        FXController.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAIN_MENU));
+                        FXController.getPrimaryStage().show();
                     }
                     case UNAUTHORIZED -> errorLabel.setText("Incorrect username or password.");
-                    case NO_CONNECTION, NO_CONTENT -> errorLabel.setText("Error connecting to database.");
+                    case NO_CONNECTION, NO_CONTENT -> errorLabel.setText(AlertText.EXTERNAL_ERROR.toString());
                 }
 
             } catch (Exception e) {
-                errorLabel.setText("Error connecting to database.");
+                errorLabel.setText(AlertText.INTERNAL_ERROR.toString());
             }
         }
     }
@@ -72,7 +72,7 @@ public class Login extends StageHolder implements Initializable {
     public void registerButtonClicked() {
 
         try {
-            StageHolder.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.REGISTER));
+            FXController.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.REGISTER));
         } catch (Exception e) {
 
             userNotifier.setText("A page failed to load").display();

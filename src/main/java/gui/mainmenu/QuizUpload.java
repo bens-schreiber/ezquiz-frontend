@@ -1,6 +1,6 @@
 package gui.mainmenu;
 
-import gui.StageHolder;
+import gui.FXController;
 import gui.account.Account;
 import gui.mainmenu.excel.ExcelReader;
 import gui.mainmenu.excel.ExcelValidateException;
@@ -19,7 +19,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class QuizUpload extends StageHolder implements Initializable {
+public class QuizUpload extends FXController implements Initializable {
 
     @FXML
     TextField quizNameTextField;
@@ -71,9 +71,9 @@ public class QuizUpload extends StageHolder implements Initializable {
 
                     case ACCEPTED -> stage.close();
 
-                    case NO_CONTENT -> userNotifier.setText("An error occurred while posting to the server.").display(stage);
+                    case NO_CONTENT -> userNotifier.setText(AlertText.EXTERNAL_ERROR).display(stage);
 
-                    case NO_CONNECTION -> userNotifier.setText("Connection to the server failed.").display(stage);
+                    case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION).display(stage);
                 }
 
 
@@ -84,8 +84,8 @@ public class QuizUpload extends StageHolder implements Initializable {
 
             } catch (Exception e) {
 
-                userNotifier.setText("An unknown internal error occurred.").display(stage);
                 e.printStackTrace();
+                userNotifier.setText(AlertText.INTERNAL_ERROR).display();
 
             }
 

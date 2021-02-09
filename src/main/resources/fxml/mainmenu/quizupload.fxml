@@ -9,7 +9,7 @@
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.QuizUpload">
    <children>
       <ButtonBar layoutX="460.0" layoutY="318.0" prefHeight="52.0" prefWidth="123.0"
-                 stylesheets="@../css/standard_button.css">
+                 stylesheets="@../css/standard_button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <buttons>
             <Button mnemonicParsing="false" onAction="#submitButtonClicked" prefHeight="22.0" prefWidth="101.0"
                     text="Submit">
@@ -22,10 +22,9 @@
             <Insets bottom="15.0" right="15.0" top="15.0"/>
          </padding>
       </ButtonBar>
-      <HBox layoutX="7.0" layoutY="97.0" spacing="50.0">
+      <HBox layoutX="7.0" layoutY="97.0" spacing="50.0" stylesheets="@../css/squareborder.css">
          <children>
-            <VBox spacing="15.0"
-                  style="-fx-border-radius: 10; -fx-border-color: #303f9f; -fx-border-width: 3; -fx-padding: 15;">
+            <VBox spacing="15.0">
                <children>
                   <Label text="Quiz Tools">
                      <font>
@@ -38,10 +37,9 @@
                   <CheckBox fx:id="enableDrawingPadCheckBox" mnemonicParsing="false" text="Enable Drawing Pad"/>
                </children>
             </VBox>
-            <VBox spacing="30.0">
+            <VBox spacing="30.0" style="-fx-border-width: 0;">
                <children>
-                  <VBox spacing="15.0"
-                        style="-fx-border-radius: 10; -fx-border-color: #303f9f; -fx-border-width: 3; -fx-padding: 10;">
+                  <VBox spacing="15.0">
                      <children>
                         <Label text="Quiz Name">
                            <font>
@@ -56,8 +54,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox spacing="15.0"
-                        style="-fx-border-color: #303f9f; -fx-border-radius: 10; -fx-border-width: 3; -fx-padding: 10;">
+                  <VBox spacing="15.0">
                      <children>
                         <Label text="Questions">
                            <font>
@@ -73,6 +70,9 @@
                            <children>
                               <Button mnemonicParsing="false" onAction="#uploadExcelButtonClicked" text="Upload Excel"/>
                            </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                           </padding>
                         </HBox>
                      </children>
                      <padding>
@@ -80,10 +80,13 @@
                      </padding>
                   </VBox>
                </children>
+               <padding>
+                  <Insets bottom="5.0"/>
+               </padding>
             </VBox>
          </children>
          <padding>
-            <Insets left="15.0" right="15.0"/>
+            <Insets bottom="50.0" left="15.0" right="15.0"/>
          </padding>
       </HBox>
       <VBox layoutX="9.0" layoutY="14.0" spacing="5.0">

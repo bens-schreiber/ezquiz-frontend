@@ -1,9 +1,8 @@
 package gui.quiz.results;
 
-import gui.StageHolder;
+import gui.FXController;
 import gui.account.Account;
 import gui.etc.FXHelper;
-import gui.popup.notification.UserNotifier;
 import gui.quiz.QuizHelper;
 import gui.quiz.QuizQuestions;
 import javafx.embed.swing.SwingFXUtils;
@@ -19,14 +18,13 @@ import requests.DatabaseRequest;
 
 import javax.imageio.ImageIO;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
  * Scene containing results you can print.
  */
-public class PrintResults implements Initializable {
+public class PrintResults extends FXController implements Initializable {
 
     @FXML
     Label outOfLabel, percentageLabel;
@@ -58,15 +56,15 @@ public class PrintResults implements Initializable {
 
             switch (DatabaseRequest.postQuizScore(correctAnswers, Account.getUser(), Account.getQuiz())) {
 
-                case NO_CONNECTION -> new UserNotifier("Connection to the server failed.").display();
+                case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION).display();
 
-                case NO_CONTENT -> new UserNotifier("An error occurred while uploading score to server.");
+                case NO_CONTENT -> userNotifier.setText(AlertText.EXTERNAL_ERROR);
 
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            new UserNotifier("An unknown error occurred.").display();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
         }
 
         //add how many correct out of possible, percentage, put bitmap to Base64
@@ -78,33 +76,32 @@ public class PrintResults implements Initializable {
     public void backToMainMenuClicked() {
         try {
 
-            StageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.MAIN_MENU, false));
+            FXController.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.MAIN_MENU, false));
 
-        } catch (IOException e) {
-            new UserNotifier("Results could not display.").display();
+        } catch (Exception e) {
             e.printStackTrace();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
         }
     }
 
     public void screenshotButtonClicked() {
 
         try {
-            Scene scene = StageHolder.getPrimaryStage().getScene();
+
+            Scene scene = FXController.getPrimaryStage().getScene();
             WritableImage writableImage = scene.snapshot(null);
 
             DirectoryChooser directoryChooser = new DirectoryChooser();
-            File file = directoryChooser.showDialog(StageHolder.getPrimaryStage());
+            File file = directoryChooser.showDialog(FXController.getPrimaryStage());
 
             ImageIO.write(
                     SwingFXUtils.fromFXImage(writableImage, null),
                     "png", new File(file.getAbsolutePath() + "/screenshot")
             );
 
-        } catch (IOException ex) {
-
-            new UserNotifier("An error occurred trying to screenshot").display();
-            ex.printStackTrace();
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
         }
     }
 

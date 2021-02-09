@@ -1,4 +1,4 @@
-package gui.popup.enter;
+package gui.popup.quizkey;
 
 import gui.etc.FXHelper;
 import javafx.stage.Stage;
@@ -8,17 +8,17 @@ import java.io.IOException;
 /**
  * Popup stage to alert user for an input.
  */
-public class EnterInputNotifier {
+public class EnterQuizKeyNotifier {
 
     boolean keyValid;
 
-    public EnterInputNotifier display() throws IOException {
+    public EnterQuizKeyNotifier display() throws IOException {
 
         Stage stage = FXHelper.getPopupStage(FXHelper.Window.ENTER_KEY, true);
 
-        EnterInputScreen.stage = stage;
+        EnterQuizKeyScreen.stage = stage;
         stage.showAndWait();
-        this.keyValid = EnterInputScreen.response;
+        this.keyValid = EnterQuizKeyScreen.response;
 
         return this;
     }
@@ -28,6 +28,6 @@ public class EnterInputNotifier {
     }
 
     public int getKey() {
-        return EnterInputScreen.key;
+        return EnterQuizKeyScreen.key;
     }
 }

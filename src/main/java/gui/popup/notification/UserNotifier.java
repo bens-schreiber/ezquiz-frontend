@@ -1,6 +1,6 @@
 package gui.popup.notification;
 
-import gui.StageHolder;
+import gui.FXController;
 import gui.etc.FXHelper;
 import javafx.stage.Stage;
 
@@ -26,7 +26,7 @@ public class UserNotifier {
 
             //Create the popup stage
             Stage stage = FXHelper.getPopupStage(FXHelper.Window.ERROR, true);
-            stage.initOwner(StageHolder.getPrimaryStage());
+            stage.initOwner(FXController.getPrimaryStage());
 
             //Pass stage to ErrorScreenController so it can close it.
             NotificationScreenController.setStage(stage);
@@ -58,6 +58,11 @@ public class UserNotifier {
 
     public UserNotifier setText(String text) {
         NotificationScreenController.setError(text);
+        return this;
+    }
+
+    public UserNotifier setText(FXController.AlertText text) {
+        NotificationScreenController.setError(text.toString());
         return this;
     }
 }

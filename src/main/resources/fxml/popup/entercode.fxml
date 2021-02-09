@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="117.0"
             prefWidth="210.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.popup.enter.EnterCode">
+            fx:controller="gui.popup.quizkey.EnterCode">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="5.0" layoutY="7.0" prefHeight="104.0" prefWidth="202.0" spacing="20.0">
          <children>

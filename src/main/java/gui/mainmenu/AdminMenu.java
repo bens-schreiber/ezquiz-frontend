@@ -1,6 +1,6 @@
 package gui.mainmenu;
 
-import gui.StageHolder;
+import gui.FXController;
 import gui.account.Account;
 import gui.account.Quiz;
 import gui.etc.FXHelper;
@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 /**
  * Pane for displaying in MainMenu.
  */
-public class AdminMenu extends StageHolder implements Initializable {
+public class AdminMenu extends FXController implements Initializable {
 
     @FXML
     TableView<Quiz> quizzesTable;
@@ -47,9 +47,8 @@ public class AdminMenu extends StageHolder implements Initializable {
             quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
 
         } catch (InterruptedException | IOException e) {
-
             e.printStackTrace();
-
+            userNotifier.setText(AlertText.NO_CONNECTION).display();
 
         } catch (JSONException ignored) {
         }
@@ -74,9 +73,8 @@ public class AdminMenu extends StageHolder implements Initializable {
             }
 
         } catch (Exception e) {
-
-            userNotifier.setText("An unknown internal error occurred.").display();
-
+            e.printStackTrace();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
         }
 
     }
@@ -97,11 +95,8 @@ public class AdminMenu extends StageHolder implements Initializable {
             }
 
         } catch (Exception e) {
-
             e.printStackTrace();
-
-            userNotifier.setText("An unknown internal error occurred.").display();
-
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
         }
     }
 
@@ -119,9 +114,9 @@ public class AdminMenu extends StageHolder implements Initializable {
 
                         case ACCEPTED -> quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
 
-                        case NO_CONTENT -> userNotifier.setText("An error occurred while deleting the quiz.").display();
+                        case NO_CONTENT -> userNotifier.setText(AlertText.EXTERNAL_ERROR).display();
 
-                        case NO_CONNECTION -> userNotifier.setText("Connection to the server failed.").display();
+                        case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION).display();
                     }
                 }
 
@@ -134,8 +129,7 @@ public class AdminMenu extends StageHolder implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-
-            userNotifier.setText("An unknown internal error occurred.").display();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
 
         }
 

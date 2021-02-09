@@ -1,6 +1,6 @@
 package gui.mainmenu.quizbuilder;
 
-import gui.StageHolder;
+import gui.FXController;
 import gui.mainmenu.excel.ExcelReader;
 import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXML;
@@ -111,7 +111,7 @@ public class QuizBuilderTool implements Initializable {
 
                 //Open a DirectoryChooser to choose where to store the excel
                 DirectoryChooser directoryChooser = new DirectoryChooser();
-                File selectedDirectory = directoryChooser.showDialog(StageHolder.getPrimaryStage());
+                File selectedDirectory = directoryChooser.showDialog(FXController.getPrimaryStage());
 
                 FileOutputStream outputStream = new FileOutputStream(selectedDirectory.getAbsolutePath() + "/quizbuilderquiz.xlsx");
 

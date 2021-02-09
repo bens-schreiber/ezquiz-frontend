@@ -1,7 +1,7 @@
 package gui.quiz;
 
 import etc.Constants;
-import gui.StageHolder;
+import gui.FXController;
 import gui.account.Account;
 import gui.etc.FXHelper;
 import gui.quiz.tools.CalculatorController;
@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 /**
  * Stage for Quiz.
  */
-public class QuizController extends StageHolder implements Initializable {
+public class QuizController extends FXController implements Initializable {
 
     @FXML
     Button backButton, nextButton, notePadButton, calculatorButton, drawingPadButton;
@@ -173,25 +173,30 @@ public class QuizController extends StageHolder implements Initializable {
 
     public void submitButtonClicked() {
 
-        if (!List.of(QuizQuestions.getQuestionNodes()).stream().allMatch(QuestionNode::isAnswered)) {
-            if (confirmNotifier.setPrompt("Some answers are unfinished. Are sure you want to submit?").display().getResponse()) {
-                QuizHelper.endQuiz();
+        try {
+            if (!List.of(QuizQuestions.getQuestionNodes()).stream().allMatch(QuestionNode::isAnswered)) {
+                if (confirmNotifier.setPrompt("Some answers are unfinished. Are sure you want to submit?").display().getResponse()) {
+                    QuizHelper.endQuiz();
+                }
             }
-        }
 
-        //If any questions are flagged
-        else if (questionHBox.getChildren().stream().anyMatch(node -> ((FlagButton) node).isFlagged())) {
-            if (confirmNotifier.setPrompt("Some questions are flagged. Are you sure you want to submit?").display().getResponse()) {
-                QuizHelper.endQuiz();
+            //If any questions are flagged
+            else if (questionHBox.getChildren().stream().anyMatch(node -> ((FlagButton) node).isFlagged())) {
+                if (confirmNotifier.setPrompt("Some questions are flagged. Are you sure you want to submit?").display().getResponse()) {
+                    QuizHelper.endQuiz();
+                }
             }
-        }
 
 
-        //If all questions are answered.
-        else {
-            if (confirmNotifier.setPrompt("Are you sure you want to submit?").display().getResponse()) {
-                QuizHelper.endQuiz();
+            //If all questions are answered.
+            else {
+                if (confirmNotifier.setPrompt("Are you sure you want to submit?").display().getResponse()) {
+                    QuizHelper.endQuiz();
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
         }
     }
 
@@ -219,9 +224,8 @@ public class QuizController extends StageHolder implements Initializable {
 
         } catch (Exception e) {
 
-            userNotifier.setText("A page failed to load").display();
-
             e.printStackTrace();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
 
         }
 
@@ -249,9 +253,8 @@ public class QuizController extends StageHolder implements Initializable {
 
         } catch (Exception e) {
 
-            userNotifier.setText("A page failed to load").display();
-
             e.printStackTrace();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
 
         }
     }
@@ -284,9 +287,8 @@ public class QuizController extends StageHolder implements Initializable {
 
         } catch (Exception e) {
 
-            userNotifier.setText("A page failed to load").display();
-
             e.printStackTrace();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
 
         }
 

@@ -1,7 +1,6 @@
 package gui;
 
 import gui.etc.FXHelper;
-import gui.popup.notification.UserNotifier;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -18,11 +17,10 @@ public class GuiRunner extends Application {
             primaryStage.setResizable(false);
             primaryStage.setScene(FXHelper.getScene(FXHelper.Window.LOGIN));
 
-            //Pass the PrimaryStage given from start method to PrimaryStageHelper for all classes to access
-            StageHolder.setPrimaryStage(primaryStage);
+            //Pass the PrimaryStage given from start method to FXController for future controllers to access
+            FXController.setPrimaryStage(primaryStage);
 
         } catch (Exception e) {
-            new UserNotifier("The program failed to load").display();
             e.printStackTrace();
         }
 

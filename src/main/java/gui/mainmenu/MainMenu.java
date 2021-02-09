@@ -1,7 +1,7 @@
 package gui.mainmenu;
 
 import etc.Constants;
-import gui.StageHolder;
+import gui.FXController;
 import gui.account.Account;
 import gui.etc.FXHelper;
 import gui.quiz.QuizHelper;
@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainMenu extends StageHolder implements Initializable {
+public class MainMenu extends FXController implements Initializable {
 
     @FXML
     Pane mainDisplay;
@@ -51,7 +51,15 @@ public class MainMenu extends StageHolder implements Initializable {
 
             if (confirmNotifier.setPrompt("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
 
-                QuizHelper.startQuiz(true);
+                try {
+
+                    QuizHelper.startQuiz(true);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+
+                }
 
             }
 
@@ -68,7 +76,7 @@ public class MainMenu extends StageHolder implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            userNotifier.setText("An unknown internal error occurred.").display();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
 
         }
     }
@@ -82,8 +90,7 @@ public class MainMenu extends StageHolder implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-
-            userNotifier.setText("An unknown internal error occurred.").display();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
 
         }
 
@@ -103,7 +110,7 @@ public class MainMenu extends StageHolder implements Initializable {
                 } catch (Exception e) {
 
                     e.printStackTrace();
-                    userNotifier.setText("An unknown internal error occurred.").display();
+                    userNotifier.setText(AlertText.INTERNAL_ERROR).display();
 
                 }
             }
@@ -117,14 +124,14 @@ public class MainMenu extends StageHolder implements Initializable {
         try {
 
             Account.logout();
-            StageHolder.getPrimaryStage().close();
-            StageHolder.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.LOGIN, false));
-            StageHolder.getPrimaryStage().show();
+            FXController.getPrimaryStage().close();
+            FXController.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.LOGIN, false));
+            FXController.getPrimaryStage().show();
 
 
         } catch (Exception e) {
-            userNotifier.setText("An unknown internal error occurred.").display();
             e.printStackTrace();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
         }
 
 

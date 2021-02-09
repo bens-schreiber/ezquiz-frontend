@@ -1,9 +1,9 @@
 package gui.mainmenu;
 
-import gui.StageHolder;
+import gui.FXController;
 import gui.account.Account;
 import gui.account.Quiz;
-import gui.popup.enter.EnterInputNotifier;
+import gui.popup.quizkey.EnterQuizKeyNotifier;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 /**
  * Pane for displaying in MainMenu.
  */
-public class QuizzesMenu extends StageHolder implements Initializable {
+public class QuizzesMenu extends FXController implements Initializable {
 
     @FXML
     TableView<Quiz> savedQuizKeys, previousQuizzes;
@@ -27,6 +27,8 @@ public class QuizzesMenu extends StageHolder implements Initializable {
     @FXML
     TableColumn<Quiz, String> nameColumn, classColumn, keyColumn,
             prevQuizName, prevQuizClass, prevQuizScore, prevQuizKey;
+
+    private final EnterQuizKeyNotifier enterQuizKeyNotifier = new EnterQuizKeyNotifier();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -49,6 +51,7 @@ public class QuizzesMenu extends StageHolder implements Initializable {
 
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
+            userNotifier.setText(AlertText.NO_CONNECTION).display();
         } catch (JSONException ignored) {
         }
 
@@ -66,18 +69,18 @@ public class QuizzesMenu extends StageHolder implements Initializable {
         try {
 
             //Ask for input from user for a code.
-            EnterInputNotifier enter = new EnterInputNotifier().display();
+            enterQuizKeyNotifier.display();
 
-            if (enter.isKeyValid()) {
+            if (enterQuizKeyNotifier.isKeyValid()) {
 
                 //Refresh database
-                switch (DatabaseRequest.postQuizKey(Account.getUser(), enter.getKey())) {
+                switch (DatabaseRequest.postQuizKey(Account.getUser(), enterQuizKeyNotifier.getKey())) {
 
                     case ACCEPTED -> savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
 
-                    case NO_CONTENT -> userNotifier.setText("An error occurred uploading the key.").display();
+                    case NO_CONTENT -> userNotifier.setText(AlertText.EXTERNAL_ERROR).display();
 
-                    case NO_CONNECTION -> userNotifier.setText("Connection to the server failed.").display();
+                    case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION).display();
 
                 }
 
@@ -85,7 +88,7 @@ public class QuizzesMenu extends StageHolder implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            userNotifier.setText("An unknown internal error occurred.").display();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
         }
 
     }
@@ -99,17 +102,16 @@ public class QuizzesMenu extends StageHolder implements Initializable {
 
                 case ACCEPTED -> savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
 
-                case NO_CONTENT -> userNotifier.setText("An error occurred while deleting the key.").display();
+                case NO_CONTENT -> userNotifier.setText(AlertText.EXTERNAL_ERROR).display();
 
-                case NO_CONNECTION -> userNotifier.setText("Connection to the server failed.").display();
+                case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION).display();
 
             }
 
         } catch (Exception e) {
 
             e.printStackTrace();
-
-            userNotifier.setText("An unknown internal error occurred.").display();
+            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
 
         }
 

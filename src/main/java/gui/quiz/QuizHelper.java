@@ -1,18 +1,18 @@
 package gui.quiz;
 
 import etc.Constants;
-import gui.StageHolder;
+import gui.FXController;
 import gui.etc.FXHelper;
-import gui.popup.notification.UserNotifier;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
  * Starts and ends quizzes
  */
-public class QuizHelper {
+public class QuizHelper extends FXController {
 
     private QuizHelper() {
     }
@@ -20,42 +20,30 @@ public class QuizHelper {
     /**
      * @param randomQuestions if the test should be random questions. False otherwise.
      */
-    public static void startQuiz(boolean randomQuestions) {
-        try {
+    public static void startQuiz(boolean randomQuestions) throws InterruptedException, IOException, JSONException {
 
-            if (randomQuestions) {
-                QuizQuestions.initializeQuiz(Constants.DEFAULT_QUESTION_AMOUNT);
-            }
-
-            //Make a PopupStage because the test window shares their qualities.
-            StageHolder.setPrimaryStage(FXHelper.getSecureStage(FXHelper.Window.QUIZ));
-
-        } catch (Exception e) {
-            new UserNotifier("A page failed to load").display();
-            e.printStackTrace();
+        if (randomQuestions) {
+            QuizQuestions.initializeQuiz(Constants.DEFAULT_QUESTION_AMOUNT);
         }
+
+        //Make a PopupStage because the test window shares their qualities.
+        FXController.setPrimaryStage(FXHelper.getSecureStage(FXHelper.Window.QUIZ));
 
     }
 
 
     //Ends the entire test and shows the results page
-    static void endQuiz() {
-        try {
+    static void endQuiz() throws IOException {
 
-            StageHolder.setPrimaryStage(FXHelper.getSecureStage(FXHelper.Window.PRINT_RESULTS));
-
-        } catch (Exception e) {
-            new UserNotifier("A page failed to load").display();
-            e.printStackTrace();
-        }
-
+        FXController.setPrimaryStage(FXHelper.getSecureStage(FXHelper.Window.PRINT_RESULTS));
     }
 
     /**
      * Preferences for the quiz, determines what tools are displayed
      */
     public enum Preference {
-        //todo: make quiz name a preference
+
+        //todo: time
         NOTEPAD,
         CALCULATOR,
         DRAWINGPAD,
