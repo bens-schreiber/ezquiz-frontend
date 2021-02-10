@@ -2,7 +2,6 @@ package gui.mainmenu.quizbuilder.nodes;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -40,12 +39,13 @@ class CheckBoxNode extends OptionNode {
 
             //Add a new TextField to options, which is the user input.
             options.add(new TextField());
+            options.get(i).setPromptText("Option #" + (i + 1));
 
             //Add a CheckBox to answers, which determines if the question is the answer.
             answers.add(new CheckBox());
 
             //Add nodes to hBox
-            hBox.getChildren().addAll(answers.get(i), new Label("Option #" + (i + 1), options.get(i)));
+            hBox.getChildren().addAll(answers.get(i), options.get(i));
 
             //Add hBox to vbox
             vBox.getChildren().add(hBox);

@@ -61,7 +61,7 @@ public class Register extends FXController implements Initializable {
                         FXController.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAIN_MENU));
                         FXController.getPrimaryStage().show();
                     }
-                    case UNAUTHORIZED -> errorLabel.setText("Incorrect username or password.");
+                    case UNAUTHORIZED -> errorLabel.setText("Account name taken.");
                     case NO_CONNECTION, NO_CONTENT -> errorLabel.setText(AlertText.EXTERNAL_ERROR.toString());
                 }
 

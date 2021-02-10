@@ -1,7 +1,6 @@
 package gui.mainmenu.quizbuilder.nodes;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -46,6 +45,7 @@ class MultipleChoice extends OptionNode {
 
             //Add a new TextField for the user to input their option into
             options.add(new TextField());
+            options.get(i).setPromptText("Option #" + (i + 1));
 
             //Create a RadioButton and add it to the toggleGroup
             RadioButton radioButton = new RadioButton();
@@ -53,7 +53,7 @@ class MultipleChoice extends OptionNode {
             answers.add(radioButton);
 
             //Add nodes to hBox
-            hBox.getChildren().addAll(answers.get(i), new Label("Option #" + (i + 1), options.get(i)));
+            hBox.getChildren().addAll(answers.get(i), options.get(i));
 
             vBox.getChildren().add(hBox);
         }

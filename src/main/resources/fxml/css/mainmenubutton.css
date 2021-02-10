@@ -1,5 +1,6 @@
 HBox {
   -fx-text-fill: #ffffff;
+  -fx-background-radius: 10;
 }
 
 HBox:focus{
