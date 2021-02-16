@@ -2,13 +2,13 @@ package gui.popup.quizkey;
 
 import gui.FXController;
 import gui.account.Account;
-import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import requests.DatabaseRequest;
+import requests.Status;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,11 +35,11 @@ public class EnterQuizKeyScreen extends FXController implements Initializable {
                 }
                 case NO_CONTENT -> {
                     response = false;
-                    new UserNotifier("Could not find Quiz from key.").display(stage);
+                    userNotifier.setText("Could not find Quiz from key.").display(stage);
                 }
-                case NO_CONNECTION -> {
+                case NO_CONNECTION, UNAUTHORIZED -> {
                     response = false;
-                    userNotifier.setText(AlertText.NO_CONNECTION).display(stage);
+                    errorHandle(Status.UNAUTHORIZED, stage);
                 }
             }
 
@@ -48,7 +48,7 @@ public class EnterQuizKeyScreen extends FXController implements Initializable {
         } catch (Exception e) {
             response = false;
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display(stage);
+            errorHandle(stage);
         }
 
     }

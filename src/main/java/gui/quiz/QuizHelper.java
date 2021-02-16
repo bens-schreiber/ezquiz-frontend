@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * Starts and ends quizzes
@@ -16,6 +15,8 @@ public class QuizHelper extends FXController {
 
     private QuizHelper() {
     }
+
+    private static Preference preferences;
 
     /**
      * @param randomQuestions if the test should be random questions. False otherwise.
@@ -31,46 +32,71 @@ public class QuizHelper extends FXController {
 
     }
 
-
     //Ends the entire test and shows the results page
-    static void endQuiz() throws IOException {
+    public static void endQuiz() throws IOException {
 
         FXController.setPrimaryStage(FXHelper.getSecureStage(FXHelper.Window.PRINT_RESULTS));
     }
 
     /**
+     * Load JSONObject containing preferences into QuizHelper.preferences
+     */
+    public static void initializePreferences(JSONObject jsonObject) throws JSONException {
+        if (validateJSON(jsonObject)) {
+            preferences = new Preference(
+                    Boolean.parseBoolean(jsonObject.get("calculator").toString()),
+                    Boolean.parseBoolean(jsonObject.get("answers").toString()),
+                    Boolean.parseBoolean(jsonObject.get("drawingpad").toString()),
+                    Boolean.parseBoolean(jsonObject.get("notepad").toString()),
+                    1800
+            );
+        }
+    }
+
+    //Validate all required json is there.
+    private static boolean validateJSON(JSONObject jsonObject) {
+        return jsonObject.has("answers") && jsonObject.has("calculator") && jsonObject.has("notepad")
+                && jsonObject.has("drawingpad");
+    }
+
+    public static Preference getPreferences() {
+        return preferences;
+    }
+
+    /**
      * Preferences for the quiz, determines what tools are displayed
      */
-    public enum Preference {
+    public static class Preference {
 
-        //todo: time
-        NOTEPAD,
-        CALCULATOR,
-        DRAWINGPAD,
-        SHOWANSWERS,
-        TIME;
+        private final boolean calculator, showAnswers, drawingPad, notePad;
+        private final int time;
 
-        //Hashmap of user preferences, initialize with default preferences
-        private static final HashMap<Preference, String> preferences = new HashMap<>();
-
-        public static void initializePreferences(JSONObject jsonObject) throws JSONException {
-
-            if (validateJSON(jsonObject)) {
-                preferences.put(CALCULATOR, jsonObject.get("calculator").toString());
-                preferences.put(SHOWANSWERS, jsonObject.get("answers").toString());
-                preferences.put(DRAWINGPAD, jsonObject.get("drawingpad").toString());
-                preferences.put(NOTEPAD, jsonObject.get("notepad").toString());
-            }
-
+        private Preference(boolean calculator, boolean showAnswers, boolean drawingPad, boolean notePad, int time) {
+            this.calculator = calculator;
+            this.showAnswers = showAnswers;
+            this.drawingPad = drawingPad;
+            this.notePad = notePad;
+            this.time = time;
         }
 
-        private static boolean validateJSON(JSONObject jsonObject) {
-            return jsonObject.has("answers") && jsonObject.has("calculator") && jsonObject.has("notepad")
-                    && jsonObject.has("drawingpad");
+        public boolean isCalculator() {
+            return calculator;
         }
 
-        public static HashMap<Preference, String> getPreferences() {
-            return preferences;
+        public boolean isShowAnswers() {
+            return showAnswers;
+        }
+
+        public boolean isDrawingPad() {
+            return drawingPad;
+        }
+
+        public boolean isNotePad() {
+            return notePad;
+        }
+
+        public int getTime() {
+            return time;
         }
     }
 }

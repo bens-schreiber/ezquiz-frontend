@@ -7,6 +7,7 @@ import gui.etc.FXHelper;
 import gui.quiz.tools.CalculatorController;
 import gui.quiz.tools.DrawingPadController;
 import gui.quiz.tools.NotePadController;
+import gui.quiz.tools.QuizTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -54,37 +55,27 @@ public class QuizController extends FXController implements Initializable {
     private Stage calculator = new Stage();
     private Stage notepad = new Stage();
 
-    static QuizController quizController;
-
     /**
      * Initial run method
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //Establish preferences
-        if (!Boolean.parseBoolean(QuizHelper.Preference.getPreferences().get(QuizHelper.Preference.NOTEPAD))) {
-            addonVBox.getChildren().remove(notePadButton);
-        }
-
-        if (!Boolean.parseBoolean(QuizHelper.Preference.getPreferences().get(QuizHelper.Preference.CALCULATOR))) {
-            addonVBox.getChildren().remove(calculatorButton);
-        }
-
-        if (!Boolean.parseBoolean(QuizHelper.Preference.getPreferences().get(QuizHelper.Preference.DRAWINGPAD))) {
-            addonVBox.getChildren().remove(drawingPadButton);
-        }
+        addonVBox.getChildren().remove(QuizHelper.getPreferences().isCalculator() ? null : calculatorButton);
+        addonVBox.getChildren().remove(QuizHelper.getPreferences().isDrawingPad() ? null : drawingPadButton);
+        addonVBox.getChildren().remove(QuizHelper.getPreferences().isNotePad() ? null : notePadButton);
 
         //Set up permanent labels
         quizName.setText(Account.getQuiz().getName());
         userLabel.setText(userLabel.getText() + Account.getUser().getUsername());
 
-        //Disable back button by default.
-        backButton.setDisable(true);
+        QuizTimer timer = new QuizTimer(quizTimer, seconds);
+        timer.startTimer();
 
         //Load all questions into the tabWizard
         for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
 
+            //Add every questionNode to the tab wizard to be displayed.
             tabWizard.getTabs().add(questionNode.getTab());
 
             //Establish flag button
@@ -94,33 +85,11 @@ public class QuizController extends FXController implements Initializable {
             questionHBox.getChildren().add(button);
         }
 
-        quizController = this;
-
-        displayNewQuestion();
-
-    }
-
-    /**
-     * change display to current question
-     */
-    private void displayNewQuestion() {
-
-        int currentQuestionIndex = tabWizard.getSelectionModel().getSelectedIndex();
-
-        //Disable/enable next and back based on position
-        backButton.setDisable(currentQuestionIndex == 0);
-        nextButton.setDisable(currentQuestionIndex + 1 == QuizQuestions.getQuestionNodes().length);
-
-        QuestionNode currentQuestionNode = QuizQuestions.getQuestionNodes()[currentQuestionIndex];
-
-        //Change top right label to current question num / question amount
-        currQuestionLabel.setText(currentQuestionIndex + 1 + " / " + QuizQuestions.getQuestionNodes().length);
-
-        subjAndQuestion.setText(currentQuestionNode.getSubject() + " QID:" + currentQuestionNode.getID());
-
-        highlightSelected();
+        //Sets the questionPane to the currently selected question.
+        displayCurrentQuestion();
 
     }
+
 
     /**
      * on buttons clicked
@@ -133,7 +102,7 @@ public class QuizController extends FXController implements Initializable {
         tabWizard.getSelectionModel().select(questionHBox.getChildren().indexOf(mouseEvent.getSource()));
 
         //display the new question
-        displayNewQuestion();
+        displayCurrentQuestion();
 
     }
 
@@ -143,7 +112,7 @@ public class QuizController extends FXController implements Initializable {
 
         //Display the next question
         tabWizard.getSelectionModel().selectNext();
-        displayNewQuestion();
+        displayCurrentQuestion();
 
     }
 
@@ -152,21 +121,21 @@ public class QuizController extends FXController implements Initializable {
     public void backButtonClicked() {
 
         tabWizard.getSelectionModel().selectPrevious();
-        displayNewQuestion();
+        displayCurrentQuestion();
 
     }
 
 
     public void flagButtonClicked() {
 
-        //Un-flag if already flagged.
-        if (currentFlagButton().isFlagged()) {
+        //Un-flag if the button selected is already flagged
+        if (currentlySelectedFlagButton().isFlagged()) {
 
-            currentFlagButton().setFlagged(false);
+            currentlySelectedFlagButton().setFlagged(false);
             highlightSelected();
 
         } else {
-            currentFlagButton().setFlagged(true);
+            currentlySelectedFlagButton().setFlagged(true);
         }
     }
 
@@ -194,9 +163,10 @@ public class QuizController extends FXController implements Initializable {
                     QuizHelper.endQuiz();
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
         }
     }
 
@@ -225,12 +195,11 @@ public class QuizController extends FXController implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
 
         }
 
     }
-
 
     //When the notepad button is clicked
     public void notepadButtonClicked() {
@@ -246,19 +215,16 @@ public class QuizController extends FXController implements Initializable {
                 notepad.show();
 
             } else {
-
                 notepad.close();
-
             }
 
         } catch (Exception e) {
 
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
 
         }
     }
-
 
     //On drawing button clicked
     public void drawingPadButtonClicked() {
@@ -267,6 +233,8 @@ public class QuizController extends FXController implements Initializable {
 
             if (!drawingPad.isShowing()) {
 
+
+                DrawingPadController.setPane(questionPane);
 
                 drawingPad = FXHelper.getPopupStage(FXHelper.Window.DRAWING_PAD, false);
 
@@ -280,7 +248,6 @@ public class QuizController extends FXController implements Initializable {
 
                 //Disable the drawing pad canvas added by DrawingPadController
                 questionPane.getChildren().remove(1);
-
                 drawingPad.close();
 
             }
@@ -288,42 +255,54 @@ public class QuizController extends FXController implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
 
         }
 
     }
 
+    /**
+     * Helper methods
+     */
+    //Displays whichever question the tabWizard is on
+    private void displayCurrentQuestion() {
 
-    private FlagButton currentFlagButton() {
+        int currentQuestionIndex = tabWizard.getSelectionModel().getSelectedIndex();
+
+        //Disable/enable next and back based on position
+        backButton.setDisable(currentQuestionIndex == 0);
+        nextButton.setDisable(currentQuestionIndex + 1 == QuizQuestions.getQuestionNodes().length);
+
+        QuestionNode currentQuestionNode = QuizQuestions.getQuestionNodes()[currentQuestionIndex];
+
+        //Change top right label to current question num / question amount
+        currQuestionLabel.setText(currentQuestionIndex + 1 + " / " + QuizQuestions.getQuestionNodes().length);
+        subjAndQuestion.setText(" QID:" + currentQuestionNode.getID());
+
+        highlightSelected();
+
+    }
+
+    private FlagButton currentlySelectedFlagButton() {
         return (FlagButton) questionHBox.getChildren().get(tabWizard.getSelectionModel().getSelectedIndex());
     }
 
-
     private void highlightSelected() {
+
         //unhighlight all nodes unless flagged
         for (Node node : questionHBox.getChildren()) {
             if (!((FlagButton) node).isFlagged()) node.setStyle(Constants.UNSELECTED_COLOR_FX);
         }
 
         //highlight unless flagged
-        if (!currentFlagButton().isFlagged()) {
-            currentFlagButton().setStyle(Constants.SELECTED_COLOR_FX);
+        if (!currentlySelectedFlagButton().isFlagged()) {
+            currentlySelectedFlagButton().setStyle(Constants.SELECTED_COLOR_FX);
         }
     }
 
 
-    /**
-     * Paint Canvas
-     */
-
-    public static AnchorPane getQuestionPane() {
-        return quizController.questionPane;
-    }
-
-
     //Special button that has the property of a flagged boolean
-    static class FlagButton extends Button {
+    private static class FlagButton extends Button {
 
         private boolean flagged;
 

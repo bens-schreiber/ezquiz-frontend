@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.json.JSONException;
 import requests.DatabaseRequest;
+import requests.Status;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,7 +49,7 @@ public class AdminMenu extends FXController implements Initializable {
 
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
-            userNotifier.setText(AlertText.NO_CONNECTION).display();
+            errorHandle(Status.NO_CONNECTION);
 
         } catch (JSONException ignored) {
         }
@@ -74,7 +75,7 @@ public class AdminMenu extends FXController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
         }
 
     }
@@ -96,7 +97,7 @@ public class AdminMenu extends FXController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
         }
     }
 
@@ -110,13 +111,11 @@ public class AdminMenu extends FXController implements Initializable {
                         + quizzesTable.getSelectionModel().getSelectedItem().getName() +
                         "? All existing keys and scores will be lost.").display().getResponse()) {
 
-                    switch (DatabaseRequest.deleteQuiz(quizzesTable.getSelectionModel().getSelectedItem(), Account.getUser())) {
-
-                        case ACCEPTED -> quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
-
-                        case NO_CONTENT -> userNotifier.setText(AlertText.EXTERNAL_ERROR).display();
-
-                        case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION).display();
+                    Status status = DatabaseRequest.deleteQuiz(quizzesTable.getSelectionModel().getSelectedItem(), Account.getUser());
+                    if (status == Status.ACCEPTED) {
+                        quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
+                    } else {
+                        errorHandle(status);
                     }
                 }
 
@@ -129,7 +128,7 @@ public class AdminMenu extends FXController implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
 
         }
 

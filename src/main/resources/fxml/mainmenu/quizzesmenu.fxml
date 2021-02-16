@@ -22,7 +22,7 @@
                                         <Font size="15.0"/>
                                     </font>
                                 </Label>
-                                <HBox spacing="15.0" stylesheets="@../css/standard_button.css">
+                                <HBox spacing="15.0" stylesheets="@../css/button.css">
                                     <children>
                                         <Button mnemonicParsing="false" onAction="#addKeyClicked" text="Add Key"/>
                                         <Button mnemonicParsing="false" onAction="#removeKeyClicked" text="Remove Key"/>

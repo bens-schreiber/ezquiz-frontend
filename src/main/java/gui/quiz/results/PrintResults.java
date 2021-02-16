@@ -38,38 +38,73 @@ public class PrintResults extends FXController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //Check all answers
-        QuizQuestions.gradeAnswers();
-
-        //todo: make all this better now
-        loadQuestions();
-
-        //Get the amount of correct answers, get ID's for bitmap storage
-        int correctAnswers = 0;
-        for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
-            if (questionNode.isCorrect()) {
-                correctAnswers++;
-            }
-        }
-
         try {
 
-            switch (DatabaseRequest.postQuizScore(correctAnswers, Account.getUser(), Account.getQuiz())) {
+            //Check all answers
+            QuizQuestions.gradeAnswers();
 
-                case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION).display();
+            //Create question answers display
+            int quizNumber = 1;
+            int correctAnswers = 0;
+            for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
 
-                case NO_CONTENT -> userNotifier.setText(AlertText.EXTERNAL_ERROR);
+                //Make a container for the answered question, add question to it
+                VBox answeredQuestion = new VBox(15);
 
+                //Display question number before question, make bold
+                Label label = new Label("Question " + quizNumber + ":");
+                label.setStyle("-fx-font-weight: bold;");
+                answeredQuestion.getChildren().add(label);
+
+                answeredQuestion.getChildren().add(new Label(questionNode.getPrompt()));
+                answeredQuestion.getChildren().add(questionNode.getNode());
+
+                //Make un-intractable.
+                questionNode.getNode().setFocusTraversable(false);
+                questionNode.getNode().setMouseTransparent(true);
+
+                if (questionNode.isCorrect()) {
+
+                    //Add to correct answers for later use.
+                    correctAnswers++;
+
+                    //Set background to green with low opacity
+                    answeredQuestion.setStyle("-fx-background-color: rgba(86, 234, 99, .5);");
+
+                } else {
+
+                    //Set background to red with low opacity
+                    answeredQuestion.setStyle("-fx-background-color: rgba(255, 158, 173, .7);");
+
+                    //Show correct answer only if desired in preferences
+                    if (QuizHelper.getPreferences().isShowAnswers()) {
+
+                        answeredQuestion.getChildren().add(new Label("Correct answer: "
+                                + questionNode.getAnswer()
+                                .toString()
+                                .replace("[", "")
+                                .replace("]", "")
+                        ));
+                    }
+
+                }
+
+                //Add container to correct answers container.
+                questionsVBox.getChildren().add(answeredQuestion);
+                quizNumber++;
             }
+
+            //If any Status aside from Accepted is given, handle the error accordingly.
+            errorHandle(DatabaseRequest.postQuizScore(correctAnswers, Account.getUser(), Account.getQuiz()));
+
+            //add how many correct out of possible, percentage, put bitmap to Base64
+            outOfLabel.setText(correctAnswers + " out of " + QuizQuestions.getQuestionNodes().length);
+            percentageLabel.setText(((double) correctAnswers / (double) QuizQuestions.getQuestionNodes().length * 100) + "%");
 
         } catch (Exception e) {
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
         }
-
-        //add how many correct out of possible, percentage, put bitmap to Base64
-        outOfLabel.setText(correctAnswers + " out of " + QuizQuestions.getQuestionNodes().length);
-        percentageLabel.setText(((double) correctAnswers / (double) QuizQuestions.getQuestionNodes().length * 100) + "%");
 
     }
 
@@ -80,7 +115,7 @@ public class PrintResults extends FXController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
         }
     }
 
@@ -94,68 +129,22 @@ public class PrintResults extends FXController implements Initializable {
             DirectoryChooser directoryChooser = new DirectoryChooser();
             File file = directoryChooser.showDialog(FXController.getPrimaryStage());
 
-            ImageIO.write(
-                    SwingFXUtils.fromFXImage(writableImage, null),
-                    "png", new File(file.getAbsolutePath() + "/screenshot")
-            );
+            if (file.isFile()) {
+
+                ImageIO.write(
+                        SwingFXUtils.fromFXImage(writableImage, null),
+                        "png", new File(file.getAbsolutePath() + "/screenshot")
+                );
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
         }
     }
 
+    //todo: this
     public void printButtonClicked() {
 
-    }
-
-
-    public void loadQuestions() {
-        //Create question answers
-        int quizNumber = 1;
-        for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
-
-            //Make a container for the answered question, add question to it
-            VBox answeredQuestion = new VBox(15);
-
-            //Display question number before question, make bold
-            Label label = new Label("Question " + quizNumber + ":");
-            label.setStyle("-fx-font-weight: bold;");
-            answeredQuestion.getChildren().add(label);
-
-            answeredQuestion.getChildren().add(new Label(questionNode.getPrompt()));
-            answeredQuestion.getChildren().add(questionNode.getNode());
-
-            //Make un-intractable.
-            questionNode.getNode().setFocusTraversable(false);
-            questionNode.getNode().setMouseTransparent(true);
-
-            if (questionNode.isCorrect()) {
-
-                //Set background to green with low opacity
-                answeredQuestion.setStyle("-fx-background-color: rgba(86, 234, 99, .5);");
-
-            } else {
-
-                //Set background to red with low opacity
-                answeredQuestion.setStyle("-fx-background-color: rgba(255, 158, 173, .7);");
-
-                //Show correct answer if desired in preferences
-                if (Boolean.parseBoolean(QuizHelper.Preference.getPreferences().get(QuizHelper.Preference.SHOWANSWERS))) {
-
-                    answeredQuestion.getChildren().add(new Label("Correct answer: "
-                            + questionNode.getAnswer()
-                            .toString()
-                            .replace("[", "")
-                            .replace("]", "")
-                    ));
-                }
-
-            }
-            //Add container to correct answers container.
-            questionsVBox.getChildren().add(answeredQuestion);
-            quizNumber++;
-        }
     }
 
 }

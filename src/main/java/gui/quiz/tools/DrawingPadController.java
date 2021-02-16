@@ -1,13 +1,13 @@
 package gui.quiz.tools;
 
 import etc.Constants;
-import gui.quiz.QuizController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -45,6 +45,12 @@ public class DrawingPadController implements Initializable {
         DrawingPadController.stage = stage;
     }
 
+    public static void setPane(Pane pane) {
+        DrawingPadController.pane = pane;
+    }
+
+    private static Pane pane;
+
 
     /**
      * Initial run method.
@@ -52,14 +58,14 @@ public class DrawingPadController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        Canvas paintCanvas = new Canvas(QuizController.getQuestionPane().getWidth(), QuizController.getQuestionPane().getHeight());
+        Canvas paintCanvas = new Canvas(pane.getWidth(), pane.getHeight());
         paintCanvas.setOnMouseDragged(this::canvasOnDragged);
         paintCanvas.setOnMousePressed(this::canvasOnPressed);
 
         gc = paintCanvas.getGraphicsContext2D();
         gc.setStroke(Color.WHITE);
 
-        QuizController.getQuestionPane().getChildren().add(1, paintCanvas);
+        pane.getChildren().add(1, paintCanvas);
 
 
         gc.setStroke(Color.WHITE);
@@ -117,6 +123,6 @@ public class DrawingPadController implements Initializable {
     }
 
     private void clearCanvas() {
-        gc.clearRect(0, 0, QuizController.getQuestionPane().getWidth(), QuizController.getQuestionPane().getHeight());
+        gc.clearRect(0, 0, pane.getWidth(), pane.getHeight());
     }
 }

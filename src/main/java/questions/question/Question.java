@@ -13,7 +13,6 @@ public class Question {
         MULTIPLECHOICE, TRUEORFALSE, CHECKBOX, WRITTEN
     }
 
-    private final String subject;
     private final int id;
     private final String prompt, directions;
     private final List<String> options;
@@ -23,9 +22,8 @@ public class Question {
      * Class constructor.
      * Answer is null until specifically set.
      */
-    public Question(Type type, String subject, List<String> options, String prompt, String directions, int id) {
+    public Question(Type type, List<String> options, String prompt, String directions, int id) {
         this.type = type;
-        this.subject = subject;
         this.options = options;
         this.prompt = prompt;
         this.id = id;
@@ -47,10 +45,6 @@ public class Question {
 
     public Type getType() {
         return this.type;
-    }
-
-    public String getSubject() {
-        return this.subject;
     }
 
     public String getPrompt() {

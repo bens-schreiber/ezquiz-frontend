@@ -13,10 +13,10 @@ class TrueOrFalse extends OptionNode {
 
     //Dropdown menu with only two answers of true or false. Width set according to width of other Nodes text fields
     public ComboBox<String> answers = new ComboBox<>();
-
     {
-        answers.setPrefWidth(190);
         answers.setItems(FXCollections.observableArrayList("true", "false"));
+
+        answers.setPrefWidth(150);
 
         //Select true by default
         answers.getSelectionModel().selectFirst();

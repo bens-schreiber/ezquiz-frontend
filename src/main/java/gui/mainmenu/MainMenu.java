@@ -57,7 +57,7 @@ public class MainMenu extends FXController implements Initializable {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+                    errorHandle();
 
                 }
 
@@ -76,7 +76,7 @@ public class MainMenu extends FXController implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
 
         }
     }
@@ -90,7 +90,7 @@ public class MainMenu extends FXController implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
 
         }
 
@@ -110,7 +110,7 @@ public class MainMenu extends FXController implements Initializable {
                 } catch (Exception e) {
 
                     e.printStackTrace();
-                    userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+                    errorHandle();
 
                 }
             }
@@ -131,7 +131,7 @@ public class MainMenu extends FXController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
         }
 
 

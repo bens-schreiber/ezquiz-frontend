@@ -11,7 +11,7 @@
             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label fx:id="errorLabel" text="error"/>
-            <Button mnemonicParsing="false" onAction="#buttonClicked" stylesheets="@../css/standard_button.css"
+            <Button mnemonicParsing="false" onAction="#buttonClicked" stylesheets="@../css/button.css"
                     text="OK"/>
          </children>
          <padding>

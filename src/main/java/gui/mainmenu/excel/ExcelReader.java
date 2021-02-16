@@ -76,26 +76,23 @@ public class ExcelReader {
             //Create new row below existing.
             row = sheet.createRow(rowCount++);
 
-            Cell subject = row.createCell(0);
-            subject.setCellValue(internalJson.get(JSONKey.SUBJECT.toString().toLowerCase()).toString());
-
-            Cell question = row.createCell(1);
+            Cell question = row.createCell(0);
             question.setCellValue(internalJson.get(JSONKey.QUESTION.toString().toLowerCase()).toString());
 
-            Cell options = row.createCell(2);
+            Cell options = row.createCell(1);
             options.setCellValue(internalJson.get(JSONKey.OPTIONS.toString().toLowerCase()).toString());
 
-            Cell answer = row.createCell(3);
+            Cell answer = row.createCell(2);
             answer.setCellValue(internalJson.get(JSONKey.ANSWER.toString().toLowerCase()).toString());
 
-            Cell directions = row.createCell(4);
+            Cell directions = row.createCell(3);
             directions.setCellValue(internalJson.get(JSONKey.DIRECTIONS.toString().toLowerCase()).toString());
 
-            Cell type = row.createCell(5);
+            Cell type = row.createCell(4);
             type.setCellValue(internalJson.get(JSONKey.TYPE.toString().toLowerCase()).toString());
         }
 
-        //autosize all columns to make it look good
+        //auto size all columns to make it look good
         for (int i = 0; i < this.json.length(); i++) {
             sheet.autoSizeColumn(i);
         }
@@ -117,15 +114,15 @@ public class ExcelReader {
 
         for (Row row : sheet) {
 
-            //If the first cell is Subject then skip guideline row.
-            if (row.getCell(0).toString().toUpperCase().equals(JSONKey.SUBJECT.toString())) {
+            //If the first cell is Question then skip guideline row.
+            if (row.getCell(0).toString().toUpperCase().equals(JSONKey.QUESTION.toString())) {
                 continue;
             }
 
             //Initialize internal JSONObject that represents an individual question
             JSONObject internalJSON = new JSONObject();
 
-            for (int cellIndex = 0; cellIndex < 5; cellIndex++) {
+            for (int cellIndex = 0; cellIndex < 4; cellIndex++) {
 
                 Cell cell = row.getCell(cellIndex);
                 internalJSON.put(JSONKey.getKeyAtIndex(cellIndex).toString().toLowerCase(), dataFormatter.formatCellValue(cell));
@@ -133,7 +130,7 @@ public class ExcelReader {
             }
 
             //Format to uppercase for SQL
-            internalJSON.put(JSONKey.getKeyAtIndex(5).toString().toLowerCase(), dataFormatter.formatCellValue(row.getCell(5)).toUpperCase());
+            internalJSON.put(JSONKey.getKeyAtIndex(4).toString().toLowerCase(), dataFormatter.formatCellValue(row.getCell(4)).toUpperCase());
 
             //Write to jsonArray
             jsonArray.put(internalJSON);
@@ -152,8 +149,8 @@ public class ExcelReader {
 
         for (Row row : sheet) {
 
-            //If the first cell is Subject then skip guideline row.
-            if (row.getCell(0).toString().toUpperCase().equals(JSONKey.SUBJECT.toString())) {
+            //If the first cell is Question then skip guideline row.
+            if (row.getCell(0).toString().toUpperCase().equals(JSONKey.QUESTION.toString())) {
                 continue;
             }
 
@@ -175,11 +172,11 @@ public class ExcelReader {
             //if not in possible types
             try {
 
-                Question.Type.valueOf(dataFormatter.formatCellValue(row.getCell(5)).toUpperCase());
+                Question.Type.valueOf(dataFormatter.formatCellValue(row.getCell(4)).toUpperCase());
 
             } catch (IllegalArgumentException e) {
 
-                throw new ExcelValidateException("Unsupported question type", row.getRowNum(), 5);
+                throw new ExcelValidateException("Unsupported question type", row.getRowNum(), 4);
 
             }
 
@@ -204,13 +201,11 @@ public class ExcelReader {
     }
 
     private enum JSONKey {
-        SUBJECT,
         QUESTION,
         OPTIONS,
         ANSWER,
         DIRECTIONS,
-        TYPE,
-        QUIZNAME;
+        TYPE;
 
         public static JSONKey getKeyAtIndex(int index) {
             return JSONKey.values()[index];

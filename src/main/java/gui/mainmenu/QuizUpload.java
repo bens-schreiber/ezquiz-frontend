@@ -14,6 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.json.JSONObject;
 import requests.DatabaseRequest;
+import requests.Status;
 
 import java.io.File;
 import java.net.URL;
@@ -51,7 +52,7 @@ public class QuizUpload extends FXController implements Initializable {
                 //Throws ExcelValidateException if invalid
                 excelReader.validateFile();
 
-                //Assemble json to send to the server
+                //Assemble json to send to the server. True/False is represented as 1 or 0 bit in SQL.
                 JSONObject quizJSON = excelReader.sheetToJSON()
                         .put("preferences",
                                 new JSONObject()
@@ -67,13 +68,11 @@ public class QuizUpload extends FXController implements Initializable {
                         );
 
                 //Attempt to post the Quiz to the server. Handle errors
-                switch (DatabaseRequest.postQuiz(quizJSON, Account.getUser())) {
-
-                    case ACCEPTED -> stage.close();
-
-                    case NO_CONTENT -> userNotifier.setText(AlertText.EXTERNAL_ERROR).display(stage);
-
-                    case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION).display(stage);
+                Status status = DatabaseRequest.postQuiz(quizJSON, Account.getUser());
+                if (status == Status.ACCEPTED) {
+                    stage.close();
+                } else {
+                    errorHandle(status, stage);
                 }
 
 
@@ -81,11 +80,10 @@ public class QuizUpload extends FXController implements Initializable {
 
                 userNotifier.setText(e.getErrorMsg()).display(stage);
 
-
             } catch (Exception e) {
 
                 e.printStackTrace();
-                userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+                errorHandle(stage);
 
             }
 

@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import org.json.JSONException;
 import requests.DatabaseRequest;
+import requests.Status;
 
 import java.io.IOException;
 import java.net.URL;
@@ -51,7 +52,7 @@ public class QuizzesMenu extends FXController implements Initializable {
 
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
-            userNotifier.setText(AlertText.NO_CONNECTION).display();
+            errorHandle(Status.NO_CONNECTION);
         } catch (JSONException ignored) {
         }
 
@@ -74,21 +75,18 @@ public class QuizzesMenu extends FXController implements Initializable {
             if (enterQuizKeyNotifier.isKeyValid()) {
 
                 //Refresh database
-                switch (DatabaseRequest.postQuizKey(Account.getUser(), enterQuizKeyNotifier.getKey())) {
-
-                    case ACCEPTED -> savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
-
-                    case NO_CONTENT -> userNotifier.setText(AlertText.EXTERNAL_ERROR).display();
-
-                    case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION).display();
-
+                Status status = DatabaseRequest.postQuizKey(Account.getUser(), enterQuizKeyNotifier.getKey());
+                if (status == Status.ACCEPTED) {
+                    savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
+                } else {
+                    errorHandle(status);
                 }
 
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
         }
 
     }
@@ -98,20 +96,19 @@ public class QuizzesMenu extends FXController implements Initializable {
         try {
 
             //Refresh database
-            switch (DatabaseRequest.deleteQuizKey(savedQuizKeys.getSelectionModel().getSelectedItem(), Account.getUser())) {
-
-                case ACCEPTED -> savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
-
-                case NO_CONTENT -> userNotifier.setText(AlertText.EXTERNAL_ERROR).display();
-
-                case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION).display();
-
+            if (Account.getQuiz() != null) {
+                Status status = DatabaseRequest.deleteQuizKey(savedQuizKeys.getSelectionModel().getSelectedItem(), Account.getUser());
+                if (status == Status.ACCEPTED) {
+                    savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
+                } else {
+                    errorHandle(status);
+                }
             }
 
         } catch (Exception e) {
 
             e.printStackTrace();
-            userNotifier.setText(AlertText.INTERNAL_ERROR).display();
+            errorHandle();
 
         }
 

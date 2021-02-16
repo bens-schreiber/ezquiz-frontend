@@ -17,7 +17,7 @@
                </padding>
             </Label>
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="200.0" spacing="10.0"
-                  stylesheets="@../css/standard_button.css">
+                  stylesheets="@../css/button.css">
                <children>
                   <Button mnemonicParsing="false" onAction="#confirmButtonClicked" text="Confirm"/>
                   <Button mnemonicParsing="false" onAction="#denyButtonClicked" prefHeight="22.0" prefWidth="86.0"

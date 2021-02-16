@@ -2,8 +2,10 @@
   -fx-background-color: #303f9f;
   -fx-min-height: 35px;
   -fx-min-width: 40px;
+  -fx-background-radius: 1;
 }
 
 .button:hover{
   -fx-border-color: black;
+  -fx-border-radius: 1;
 }

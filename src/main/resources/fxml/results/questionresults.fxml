@@ -10,7 +10,7 @@
             fx:controller="gui.quiz.results.QuestionResults">
     <content>
         <AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #e1e1e1;"
-                    stylesheets="@../css/standard_button.css">
+                    stylesheets="@../css/button.css">
             <children>
                 <VBox fx:id="correctAnswersVBox" alignment="TOP_CENTER" layoutX="500.0" layoutY="164.0"
                       maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="850.0"

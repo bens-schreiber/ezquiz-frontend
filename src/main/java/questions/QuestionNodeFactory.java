@@ -21,8 +21,6 @@ public class QuestionNodeFactory {
 
             Question.Type type = Question.Type.valueOf(json.get("type").toString());
 
-            String subject = json.get("subject").toString();
-
             String question = json.get("question").toString();
 
             int id = Integer.parseInt(json.get("id").toString());
@@ -59,7 +57,7 @@ public class QuestionNodeFactory {
             };
 
 
-            return new QuestionNode(type, subject, options, question, directions, id, node);
+            return new QuestionNode(type, options, question, directions, id, node);
         }
 
         throw new JSONException("Required values not found");
@@ -68,7 +66,7 @@ public class QuestionNodeFactory {
 
     //Make sure all required json pieces are here
     private static boolean verify(JSONObject json) {
-        return json.has("type") && json.has("subject") && json.has("question") && json.has("id");
+        return json.has("type") && json.has("question") && json.has("id");
     }
 
     public static QuestionNode[] nodeArrayFromJSON(JSONObject json, int amount, List<Integer> ids) throws JSONException {

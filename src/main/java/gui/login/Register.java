@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import requests.DatabaseRequest;
+import requests.Status;
 
 import java.net.URL;
 import java.util.List;
@@ -62,11 +63,11 @@ public class Register extends FXController implements Initializable {
                         FXController.getPrimaryStage().show();
                     }
                     case UNAUTHORIZED -> errorLabel.setText("Account name taken.");
-                    case NO_CONNECTION, NO_CONTENT -> errorLabel.setText(AlertText.EXTERNAL_ERROR.toString());
+                    case NO_CONNECTION, NO_CONTENT -> errorHandle(Status.NO_CONNECTION);
                 }
 
             } catch (Exception e) {
-                errorLabel.setText(AlertText.INTERNAL_ERROR.toString());
+                errorHandle();
             }
 
         }

@@ -17,6 +17,8 @@ class Written extends OptionNode {
      */
     Written() {
 
+        answer.setPrefWidth(150);
+
         //Place text field in hbox with label
         HBox hBox = new HBox();
         hBox.getChildren().addAll(new Label("Answer: "), answer);

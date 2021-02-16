@@ -1,7 +1,12 @@
 package gui;
+import gui.account.Account;
+import gui.etc.FXHelper;
 import gui.popup.confirm.ConfirmNotifier;
 import gui.popup.notification.UserNotifier;
 import javafx.stage.Stage;
+import requests.Status;
+
+import java.io.IOException;
 
 public class FXController {
 
@@ -23,12 +28,70 @@ public class FXController {
         primaryStage.show();
     }
 
-    //General alert / error messages
-    public enum AlertText {
+    protected void errorHandle() {
+        userNotifier.setText(AlertText.INTERNAL_ERROR.toString()).display();
+    }
+
+    protected void errorHandle(Stage stage) {
+        userNotifier.setText(AlertText.INTERNAL_ERROR.toString()).display(stage);
+    }
+
+    protected void errorHandle(Status status) {
+
+        switch (status) {
+
+            case NO_CONTENT -> userNotifier.setText(AlertText.EXTERNAL_ERROR.toString()).display();
+
+            case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION.toString()).display();
+
+            //Session expired, log out, go to login screen
+            case UNAUTHORIZED -> {
+                userNotifier.setText(AlertText.EXPIRED_SESSION.toString()).display();
+                Account.logout();
+                FXController.getPrimaryStage().close();
+                try {
+                    FXController.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.LOGIN, false));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                FXController.getPrimaryStage().show();
+
+            }
+        }
+    }
+
+    protected void errorHandle(Status status, Stage stage) {
+
+        switch (status) {
+
+            case NO_CONTENT -> userNotifier.setText(AlertText.EXTERNAL_ERROR.toString()).display(stage);
+
+            case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION.toString()).display(stage);
+
+            //Session expired, log out
+            case UNAUTHORIZED -> {
+                userNotifier.setText(AlertText.EXPIRED_SESSION.toString()).display(stage);
+                Account.logout();
+                FXController.getPrimaryStage().close();
+                try {
+                    FXController.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.LOGIN, false));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                FXController.getPrimaryStage().show();
+
+            }
+        }
+    }
+
+    //General alert or error messages
+    private enum AlertText {
 
         INTERNAL_ERROR("Whoops, an internal error has occurred."),
         EXTERNAL_ERROR("Whoops, a problem occurred with the server."),
-        NO_CONNECTION("Connection to the server has failed. Log out and try again.");
+        NO_CONNECTION("Connection to the server has failed. Log out and try again."),
+        EXPIRED_SESSION("Session has expired. Logging out.");
 
         private final String text;
 

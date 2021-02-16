@@ -1,7 +1,6 @@
 package gui.quiz;
 
 import gui.account.Account;
-import gui.popup.notification.UserNotifier;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +47,7 @@ public class QuizQuestions {
             Collections.shuffle(idPool);
 
             //Initialize preferences
-            QuizHelper.Preference.initializePreferences(request.getPreferences());
+            QuizHelper.initializePreferences(request.getPreferences());
 
             //Initialize questions
             questionNodes = QuestionNodeFactory.nodeArrayFromJSON(request.getQuestions(), amount, idPool);
@@ -64,18 +63,10 @@ public class QuizQuestions {
     /**
      * Grades stored QuestionNodes utilizing QuestionAnswerHelper class
      */
-    public static void gradeAnswers() {
-        try {
+    public static void gradeAnswers() throws InterruptedException, IOException, JSONException {
 
-            //Attempt to set answers for all questions
-            QuestionAnswerHelper.setAnswers(questionNodes, new AnswerJSONRequest(questionNodes).initializeRequest().getJson());
-
-        } catch (Exception e) {
-
-            new UserNotifier("A question failed to be graded.").display();
-
-            e.printStackTrace();
-        }
+        //Attempt to set answers for all questions
+        QuestionAnswerHelper.setAnswers(questionNodes, new AnswerJSONRequest(questionNodes).initializeRequest().getJson());
 
         for (QuestionNode questionNode : questionNodes) {
 

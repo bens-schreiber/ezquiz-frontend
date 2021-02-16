@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import requests.DatabaseRequest;
+import requests.Status;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -54,17 +55,18 @@ public class Login extends FXController implements Initializable {
 
                 //Requests return Status Enum from rest server.
                 switch (DatabaseRequest.verifyLoginCredentials(usernameField.getText(), SHA.encrypt(passwordField.getText()))) {
+
                     case ACCEPTED -> {
                         FXController.getPrimaryStage().close();
                         FXController.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.MAIN_MENU));
                         FXController.getPrimaryStage().show();
                     }
                     case UNAUTHORIZED -> errorLabel.setText("Incorrect username or password.");
-                    case NO_CONNECTION, NO_CONTENT -> errorLabel.setText(AlertText.EXTERNAL_ERROR.toString());
+                    case NO_CONNECTION, NO_CONTENT -> errorHandle(Status.NO_CONNECTION);
                 }
 
             } catch (Exception e) {
-                errorLabel.setText(AlertText.INTERNAL_ERROR.toString());
+                errorHandle();
             }
         }
     }
@@ -75,8 +77,7 @@ public class Login extends FXController implements Initializable {
             FXController.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.REGISTER));
         } catch (Exception e) {
 
-            userNotifier.setText("A page failed to load").display();
-
+            errorHandle();
             e.printStackTrace();
 
         }

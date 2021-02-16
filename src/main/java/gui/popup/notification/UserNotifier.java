@@ -60,9 +60,4 @@ public class UserNotifier {
         NotificationScreenController.setError(text);
         return this;
     }
-
-    public UserNotifier setText(FXController.AlertText text) {
-        NotificationScreenController.setError(text.toString());
-        return this;
-    }
 }

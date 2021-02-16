@@ -18,21 +18,23 @@ public class QuestionNode extends Question {
     /**
      * Class constructor. Create a Question and assign JavaFX node.
      */
-    public QuestionNode(Type type, String subject, List<String> options, String prompt, String directions, int id, TypeNode node) {
+    public QuestionNode(Type type, List<String> options, String prompt, String directions, int id, TypeNode node) {
 
-        super(type, subject, options, prompt, directions, id);
+        super(type, options, prompt, directions, id);
         super.shuffleOptions();
 
         this.node = node;
 
     }
 
+    //For use in the quizzes tabWizard
     public Tab getTab() {
         Tab tab = new Tab();
         tab.setContent(node.getNode());
         return tab;
     }
 
+    //For use in results
     public Node getNode() {
         return this.node.getNode();
     }
