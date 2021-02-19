@@ -91,9 +91,10 @@
             <Region VBox.vgrow="ALWAYS"/>
             <HBox alignment="CENTER">
                <children>
-                  <ScrollPane>
+                  <ScrollPane style="-fx-background-color: #E1E1E1;">
                      <content>
-                        <VBox fx:id="questionsVBox" alignment="CENTER" spacing="30.0"/>
+                        <VBox fx:id="questionsVBox" alignment="CENTER" spacing="30.0"
+                              style="-fx-background-color: #E1E1E1;"/>
                      </content>
                   </ScrollPane>
                </children>
@@ -107,8 +108,8 @@
                </VBox.margin>
                <children>
                   <HBox alignment="CENTER" fillHeight="false" layoutX="14.0" layoutY="6.0" spacing="10.0"
-                        stylesheets="@../css/button.css" AnchorPane.bottomAnchor="0.0"
-                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        stylesheets="@../css/button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                      </padding>

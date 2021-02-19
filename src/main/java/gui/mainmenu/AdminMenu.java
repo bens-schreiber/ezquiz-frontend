@@ -1,21 +1,28 @@
 package gui.mainmenu;
 
+import etc.Constants;
 import gui.FXController;
 import gui.account.Account;
 import gui.account.Quiz;
 import gui.etc.FXHelper;
+import gui.mainmenu.excel.ExcelReader;
 import gui.mainmenu.quizbuilder.QuizBuilderTool;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.json.JSONException;
 import requests.DatabaseRequest;
+import requests.QuizJSONRequest;
 import requests.Status;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -136,47 +143,49 @@ public class AdminMenu extends FXController implements Initializable {
 
     public void getExcelClicked() {
 
-//        if (quizzesTable.getSelectionModel().getSelectedItem() != null) {
-//
-//            try {
-//
-//                //Table only records name and key, use Account.getUser to get remaining parts for path.
-//                Quiz quiz = quizzesTable.getSelectionModel().getSelectedItem();
-//                Account.setQuiz(Account.getUser().getUsername(), quiz.getName(), quiz.getKey());
-//
-//                //Request for answers along with the questions.
-//                QuizJSONRequest request = new QuizJSONRequest(Account.getUser(),
-//                        Constants.DEFAULT_PATH + "questions/answers/" + Account.getQuiz().getKey());
-//
-//                request.initializeRequest();
-//
-//                ExcelReader excelReader = new ExcelReader(request.getQuestionJSON());
-//
-//                //Open a DirectoryChooser to choose where to store the excel
-//                DirectoryChooser directoryChooser = new DirectoryChooser();
-//                File selectedDirectory = directoryChooser.showDialog(PrimaryStageHolder.getPrimaryStage());
-//
-//                FileOutputStream outputStream = new FileOutputStream(selectedDirectory.getAbsolutePath() + "/quiz.xlsx");
-//
-//                excelReader.jsonToExcel().write(outputStream);
-//                outputStream.close();
-//
-//
-//            } catch (ConnectException e) {
-//
-//                userNotifier.setText("Could not connect to server.").display();
-//
-//            } catch (Exception e) {
-//
-//                userNotifier.setText("An unknown error occurred").display();
-//
-//            }
-//
-//        } else {
-//
-//            userNotifier.setText("Please select a created Quiz.").display();
-//
-//        }
+        if (quizzesTable.getSelectionModel().getSelectedItem() != null) {
+
+            try {
+
+                //Table only records name and key, use Account.getUser to get remaining parts for path.
+                Quiz quiz = quizzesTable.getSelectionModel().getSelectedItem();
+                Account.setQuiz(Account.getUser().getUsername(), quiz.getName(), quiz.getKey());
+
+                //Request for answers along with the questions.
+                QuizJSONRequest request = new QuizJSONRequest(Account.getUser(),
+                        Constants.DEFAULT_PATH + "questions/answers/" + Account.getQuiz().getKey());
+
+                request.initializeRequest();
+
+                ExcelReader excelReader = new ExcelReader(request.getQuestions());
+
+                //Open a DirectoryChooser to choose where to store the excel
+                DirectoryChooser directoryChooser = new DirectoryChooser();
+                File selectedDirectory = directoryChooser.showDialog(FXController.getPrimaryStage());
+
+                FileOutputStream outputStream = new FileOutputStream(selectedDirectory.getAbsolutePath() + "/quiz.xlsx");
+
+                excelReader.jsonToExcel().write(outputStream);
+                outputStream.close();
+
+
+            } catch (ConnectException e) {
+
+                userNotifier.setText("Could not connect to server.").display();
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+                userNotifier.setText("An unknown error occurred").display();
+
+            }
+
+        } else {
+
+            userNotifier.setText("Please select a created Quiz.").display();
+
+        }
 
     }
 

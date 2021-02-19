@@ -195,6 +195,7 @@ public class DatabaseRequest {
 
     }
 
+
     /**
      * GET
      * Get all of users previous quizzes.

@@ -127,9 +127,9 @@
             </VBox.margin>
         </HBox>
         <AnchorPane fx:id="buttonPane" style="-fx-background-color: #9E9E9E;">
-            <HBox alignment="CENTER" fillHeight="false" layoutX="14.0" layoutY="6.0"
-                  stylesheets="@../css/button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox alignment="CENTER" fillHeight="false" layoutX="14.0" layoutY="6.0" stylesheets="@../css/button.css"
+                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                  AnchorPane.topAnchor="0.0">
                 <Button mnemonicParsing="false" onAction="#flagButtonClicked" style="-fx-background-color: #fb8804;"
                         text="Flag"/>
                 <Region HBox.hgrow="ALWAYS"/>

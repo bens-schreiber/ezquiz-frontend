@@ -129,7 +129,7 @@ public class ExcelReader {
 
             }
 
-            //Format to uppercase for SQL
+            //Format Type to uppercase for SQL
             internalJSON.put(JSONKey.getKeyAtIndex(4).toString().toLowerCase(), dataFormatter.formatCellValue(row.getCell(4)).toUpperCase());
 
             //Write to jsonArray
