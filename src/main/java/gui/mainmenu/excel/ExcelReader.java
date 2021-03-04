@@ -6,7 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import questions.question.Question;
+import question.Question;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -136,7 +136,7 @@ public class ExcelReader {
             jsonArray.put(internalJSON);
         }
 
-        return new JSONObject().put("questions", jsonArray);
+        return new JSONObject().put("question", jsonArray);
 
     }
 

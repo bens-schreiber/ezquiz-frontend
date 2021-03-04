@@ -1,8 +1,8 @@
-package questions.question;
+package question;
 
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
-import questions.nodes.TypeNode;
+import question.fxnodes.TypeNode;
 
 import java.util.List;
 
@@ -27,8 +27,9 @@ public class QuestionNode extends Question {
 
     }
 
+
     //For use in the quizzes tabWizard
-    public Tab getTab() {
+    public Tab getAsTab() {
         Tab tab = new Tab();
         tab.setContent(node.getNode());
         return tab;

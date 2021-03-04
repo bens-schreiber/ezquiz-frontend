@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import questions.question.QuestionNode;
+import question.QuestionNode;
 
 import java.net.URL;
 import java.util.List;
@@ -76,7 +76,7 @@ public class QuizController extends FXController implements Initializable {
         for (QuestionNode questionNode : QuizQuestions.getQuestionNodes()) {
 
             //Add every questionNode to the tab wizard to be displayed.
-            tabWizard.getTabs().add(questionNode.getTab());
+            tabWizard.getTabs().add(questionNode.getAsTab());
 
             //Establish flag button
             //Whenever the button is clicked use the individualQuestionClicked handler

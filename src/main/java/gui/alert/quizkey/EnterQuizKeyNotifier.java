@@ -1,4 +1,4 @@
-package gui.popup.quizkey;
+package gui.alert.quizkey;
 
 import gui.etc.FXHelper;
 import javafx.stage.Stage;

@@ -1,4 +1,4 @@
-package questions.nodes;
+package question.fxnodes;
 
 import javafx.scene.control.CheckBox;
 

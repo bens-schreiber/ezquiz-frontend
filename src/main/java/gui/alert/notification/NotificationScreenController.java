@@ -1,4 +1,4 @@
-package gui.popup.notification;
+package gui.alert.notification;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

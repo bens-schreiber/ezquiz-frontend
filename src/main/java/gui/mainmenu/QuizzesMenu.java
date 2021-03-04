@@ -3,7 +3,7 @@ package gui.mainmenu;
 import gui.FXController;
 import gui.account.Account;
 import gui.account.Quiz;
-import gui.popup.quizkey.EnterQuizKeyNotifier;
+import gui.alert.quizkey.EnterQuizKeyNotifier;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

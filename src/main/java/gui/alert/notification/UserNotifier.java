@@ -1,4 +1,4 @@
-package gui.popup.notification;
+package gui.alert.notification;
 
 import gui.FXController;
 import gui.etc.FXHelper;

@@ -1,13 +1,18 @@
 package gui;
+
 import gui.account.Account;
+import gui.alert.confirm.ConfirmNotifier;
+import gui.alert.notification.UserNotifier;
 import gui.etc.FXHelper;
-import gui.popup.confirm.ConfirmNotifier;
-import gui.popup.notification.UserNotifier;
 import javafx.stage.Stage;
 import requests.Status;
 
 import java.io.IOException;
 
+/**
+ * Base for all FX Controllers to extend. Contains UserNotifier and ConfirmNotifier for reuse, error handling,
+ * and the Primary Stage
+ */
 public class FXController {
 
     protected FXController() {

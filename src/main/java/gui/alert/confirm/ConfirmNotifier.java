@@ -1,4 +1,4 @@
-package gui.popup.confirm;
+package gui.alert.confirm;
 
 import gui.etc.FXHelper;
 import javafx.stage.Stage;

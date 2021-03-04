@@ -4,9 +4,9 @@ import gui.account.Account;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
-import questions.QuestionNodeFactory;
-import questions.question.Question;
-import questions.question.QuestionNode;
+import question.Question;
+import question.QuestionNode;
+import question.QuestionNodeFactory;
 import requests.AnswerJSONRequest;
 import requests.QuizJSONRequest;
 

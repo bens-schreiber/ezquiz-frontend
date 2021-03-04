@@ -1,8 +1,8 @@
 package gui.mainmenu.quizbuilder;
 
 import gui.FXController;
+import gui.alert.notification.UserNotifier;
 import gui.mainmenu.excel.ExcelReader;
-import gui.popup.notification.UserNotifier;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

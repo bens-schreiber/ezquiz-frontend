@@ -14,7 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import org.json.JSONException;
 import org.json.JSONObject;
-import questions.question.Question;
+import question.Question;
 
 import java.io.IOException;
 import java.net.URL;

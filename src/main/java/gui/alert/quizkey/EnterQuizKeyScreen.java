@@ -1,4 +1,4 @@
-package gui.popup.quizkey;
+package gui.alert.quizkey;
 
 import gui.FXController;
 import gui.account.Account;

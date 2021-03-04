@@ -1,10 +1,8 @@
-package questions;
+package question;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import questions.nodes.*;
-import questions.question.Question;
-import questions.question.QuestionNode;
+import question.fxnodes.*;
 
 import java.util.Arrays;
 import java.util.LinkedList;

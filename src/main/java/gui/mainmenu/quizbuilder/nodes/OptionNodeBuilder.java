@@ -1,6 +1,6 @@
 package gui.mainmenu.quizbuilder.nodes;
 
-import questions.question.Question;
+import question.Question;
 
 public class OptionNodeBuilder {
 

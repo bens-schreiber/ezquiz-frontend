@@ -4,7 +4,7 @@ import etc.Constants;
 import gui.account.Account;
 import org.json.JSONException;
 import org.json.JSONObject;
-import questions.question.QuestionNode;
+import question.QuestionNode;
 
 import java.io.IOException;
 

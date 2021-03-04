@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
-import questions.question.QuestionNode;
+import question.QuestionNode;
 import requests.DatabaseRequest;
 
 import javax.imageio.ImageIO;

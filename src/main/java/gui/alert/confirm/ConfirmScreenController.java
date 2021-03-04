@@ -1,4 +1,4 @@
-package gui.popup.confirm;
+package gui.alert.confirm;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

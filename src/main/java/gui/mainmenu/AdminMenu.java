@@ -153,7 +153,7 @@ public class AdminMenu extends FXController implements Initializable {
 
                 //Request for answers along with the questions.
                 QuizJSONRequest request = new QuizJSONRequest(Account.getUser(),
-                        Constants.DEFAULT_PATH + "questions/answers/" + Account.getQuiz().getKey());
+                        Constants.DEFAULT_PATH + "question/answers/" + Account.getQuiz().getKey());
 
                 request.initializeRequest();
 
