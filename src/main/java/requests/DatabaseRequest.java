@@ -1,8 +1,8 @@
 package requests;
 
-import gui.account.Account;
-import gui.account.Quiz;
-import gui.account.User;
+import etc.Account;
+import etc.Quiz;
+import etc.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.json.JSONException;

@@ -1,7 +1,7 @@
 package requests;
 
+import etc.Account;
 import etc.Constants;
-import gui.account.Account;
 import org.json.JSONException;
 import org.json.JSONObject;
 import question.QuestionNode;
@@ -9,7 +9,7 @@ import question.QuestionNode;
 import java.io.IOException;
 
 /**
- * Makes a request to the database that assigns the correct answers to each question of the quiz node array.
+ * Makes a request to the database that sets the correct answers to each question of the quiz node array.
  */
 public class AnswerJSONRequest {
 

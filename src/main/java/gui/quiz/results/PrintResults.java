@@ -1,8 +1,8 @@
 package gui.quiz.results;
 
+import etc.Account;
 import gui.FXController;
-import gui.account.Account;
-import gui.etc.FXHelper;
+import gui.FXHelper;
 import gui.quiz.QuizHelper;
 import gui.quiz.QuizQuestions;
 import javafx.embed.swing.SwingFXUtils;

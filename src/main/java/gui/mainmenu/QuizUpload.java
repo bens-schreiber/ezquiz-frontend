@@ -1,7 +1,7 @@
 package gui.mainmenu;
 
+import etc.Account;
 import gui.FXController;
-import gui.account.Account;
 import gui.mainmenu.excel.ExcelReader;
 import gui.mainmenu.excel.ExcelValidateException;
 import javafx.fxml.FXML;

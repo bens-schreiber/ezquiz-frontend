@@ -1,6 +1,6 @@
 package gui.mainmenu.quizbuilder;
 
-import gui.etc.FXHelper;
+import gui.FXHelper;
 import gui.mainmenu.quizbuilder.nodes.OptionNode;
 import gui.mainmenu.quizbuilder.nodes.OptionNodeBuilder;
 import javafx.collections.FXCollections;

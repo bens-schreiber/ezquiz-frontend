@@ -1,9 +1,8 @@
 package gui;
 
-import gui.account.Account;
+import etc.Account;
 import gui.alert.confirm.ConfirmNotifier;
 import gui.alert.notification.UserNotifier;
-import gui.etc.FXHelper;
 import javafx.stage.Stage;
 import requests.Status;
 

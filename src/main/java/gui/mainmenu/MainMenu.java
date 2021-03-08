@@ -1,9 +1,9 @@
 package gui.mainmenu;
 
+import etc.Account;
 import etc.Constants;
 import gui.FXController;
-import gui.account.Account;
-import gui.etc.FXHelper;
+import gui.FXHelper;
 import gui.quiz.QuizHelper;
 import gui.quiz.QuizQuestions;
 import javafx.application.Platform;

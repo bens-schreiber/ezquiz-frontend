@@ -1,6 +1,6 @@
 package gui.quiz;
 
-import gui.account.Account;
+import etc.Account;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Stores a static array of questionNodes to be accessed by QuizController for display, initializes preferences
+ * Static methods to initialize and grade question nodes
  */
 public class QuizQuestions {
 
@@ -60,6 +60,12 @@ public class QuizQuestions {
         }
     }
 
+    public static QuestionNode[] getQuestionNodes() {
+
+        return questionNodes;
+
+    }
+
     /**
      * Grades stored QuestionNodes utilizing QuestionAnswerHelper class
      */
@@ -98,13 +104,6 @@ public class QuizQuestions {
             }
         }
     }
-
-    public static QuestionNode[] getQuestionNodes() {
-
-        return questionNodes;
-
-    }
-
 
     private static class QuestionAnswerHelper {
 

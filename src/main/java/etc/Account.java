@@ -1,4 +1,4 @@
-package gui.account;
+package etc;
 
 /**
  * Stores all user information, and currently selected Quiz.

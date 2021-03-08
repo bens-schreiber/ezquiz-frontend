@@ -1,10 +1,8 @@
-package gui.etc;
+package gui;
 
-import gui.FXController;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -22,11 +20,6 @@ public class FXHelper {
     //Get a Scene from Window
     public static Scene getScene(Window window) throws IOException {
         return new Scene(FXMLLoader.load(FXHelper.class.getResource(window.getPath())));
-    }
-
-    //Get a Tab from a Window.
-    public static Tab getTab(Window window) throws IOException {
-        return FXMLLoader.load(FXHelper.class.getResource(window.getPath()));
     }
 
     public static Pane getPane(Window window) throws IOException {

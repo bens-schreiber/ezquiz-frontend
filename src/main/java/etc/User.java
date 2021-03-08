@@ -1,4 +1,4 @@
-package gui.account;
+package etc;
 
 /**
  * Pojo for storing logged in user values

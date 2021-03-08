@@ -9,9 +9,7 @@ import java.util.List;
 public class Question {
 
     private final Type type;
-    public enum Type {
-        MULTIPLECHOICE, TRUEORFALSE, CHECKBOX, WRITTEN
-    }
+    public enum Type {MULTIPLECHOICE, TRUEORFALSE, CHECKBOX, WRITTEN}
 
     private final int id;
     private final String prompt, directions;
@@ -42,7 +40,6 @@ public class Question {
     /**
      * Getters
      */
-
     public Type getType() {
         return this.type;
     }

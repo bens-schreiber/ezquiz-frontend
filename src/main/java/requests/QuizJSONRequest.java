@@ -1,8 +1,8 @@
 package requests;
 
+import etc.Account;
 import etc.Constants;
-import gui.account.Account;
-import gui.account.User;
+import etc.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 

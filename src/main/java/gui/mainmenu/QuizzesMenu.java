@@ -1,8 +1,8 @@
 package gui.mainmenu;
 
+import etc.Account;
+import etc.Quiz;
 import gui.FXController;
-import gui.account.Account;
-import gui.account.Quiz;
 import gui.alert.quizkey.EnterQuizKeyNotifier;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;

@@ -1,7 +1,7 @@
 package gui.alert.notification;
 
 import gui.FXController;
-import gui.etc.FXHelper;
+import gui.FXHelper;
 import javafx.stage.Stage;
 
 import java.io.IOException;

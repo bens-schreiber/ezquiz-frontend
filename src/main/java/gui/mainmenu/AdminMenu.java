@@ -1,10 +1,10 @@
 package gui.mainmenu;
 
+import etc.Account;
 import etc.Constants;
+import etc.Quiz;
 import gui.FXController;
-import gui.account.Account;
-import gui.account.Quiz;
-import gui.etc.FXHelper;
+import gui.FXHelper;
 import gui.mainmenu.excel.ExcelReader;
 import gui.mainmenu.quizbuilder.QuizBuilderTool;
 import javafx.beans.property.SimpleStringProperty;

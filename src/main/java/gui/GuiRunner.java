@@ -1,6 +1,5 @@
 package gui;
 
-import gui.etc.FXHelper;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

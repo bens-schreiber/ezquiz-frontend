@@ -1,6 +1,6 @@
 package gui.alert.quizkey;
 
-import gui.etc.FXHelper;
+import gui.FXHelper;
 import javafx.stage.Stage;
 
 import java.io.IOException;

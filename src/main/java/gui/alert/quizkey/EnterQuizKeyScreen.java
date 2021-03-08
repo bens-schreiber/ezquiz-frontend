@@ -1,7 +1,7 @@
 package gui.alert.quizkey;
 
+import etc.Account;
 import gui.FXController;
-import gui.account.Account;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;

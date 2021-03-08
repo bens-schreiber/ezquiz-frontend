@@ -2,7 +2,7 @@ package gui.login;
 
 import etc.Constants;
 import gui.FXController;
-import gui.etc.FXHelper;
+import gui.FXHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;

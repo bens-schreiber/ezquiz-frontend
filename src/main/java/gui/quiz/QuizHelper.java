@@ -2,7 +2,7 @@ package gui.quiz;
 
 import etc.Constants;
 import gui.FXController;
-import gui.etc.FXHelper;
+import gui.FXHelper;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +16,9 @@ public class QuizHelper extends FXController {
     private QuizHelper() {
     }
 
+
     private static Preference preferences;
+
 
     /**
      * @param randomQuestions if the test should be random questions. False otherwise.
@@ -36,6 +38,7 @@ public class QuizHelper extends FXController {
     public static void endQuiz() throws IOException {
 
         FXController.setPrimaryStage(FXHelper.getSecureStage(FXHelper.Window.PRINT_RESULTS));
+
     }
 
     /**

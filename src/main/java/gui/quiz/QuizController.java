@@ -1,9 +1,9 @@
 package gui.quiz;
 
+import etc.Account;
 import etc.Constants;
 import gui.FXController;
-import gui.account.Account;
-import gui.etc.FXHelper;
+import gui.FXHelper;
 import gui.quiz.tools.CalculatorController;
 import gui.quiz.tools.DrawingPadController;
 import gui.quiz.tools.NotePadController;
