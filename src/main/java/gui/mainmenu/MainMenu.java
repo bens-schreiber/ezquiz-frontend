@@ -44,23 +44,23 @@ public class MainMenu extends FXController implements Initializable {
 
     }
 
-
-    public void randomQuizClicked() {
+    public void takeQuizClicked() {
 
         if (Account.getQuiz() != null) {
 
             if (confirmNotifier.setPrompt("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
-
                 try {
 
-                    QuizHelper.startQuiz(true);
+                    QuizQuestions.initializeQuiz(Constants.MAXIMUM_QUESTION_AMOUNT);
+
+                    QuizHelper.startQuiz(false);
 
                 } catch (Exception e) {
+
                     e.printStackTrace();
-                    errorHandle();
+                    generalErrorHandle();
 
                 }
-
             }
 
         } else userNotifier.setText("You have not selected a Quiz").display();
@@ -76,7 +76,7 @@ public class MainMenu extends FXController implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
 
         }
     }
@@ -90,32 +90,9 @@ public class MainMenu extends FXController implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
 
         }
-
-    }
-
-    public void takeQuizClicked() {
-
-        if (Account.getQuiz() != null) {
-
-            if (confirmNotifier.setPrompt("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
-                try {
-
-                    QuizQuestions.initializeQuiz(Constants.MAXIMUM_QUESTION_AMOUNT);
-
-                    QuizHelper.startQuiz(false);
-
-                } catch (Exception e) {
-
-                    e.printStackTrace();
-                    errorHandle();
-
-                }
-            }
-
-        } else userNotifier.setText("You have not selected a Quiz").display();
 
     }
 
@@ -131,7 +108,7 @@ public class MainMenu extends FXController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
         }
 
 

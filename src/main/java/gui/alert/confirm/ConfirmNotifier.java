@@ -15,12 +15,6 @@ public class ConfirmNotifier {
     public ConfirmNotifier() {
     }
 
-    public ConfirmNotifier(String prompt) {
-
-        //Pass error to ConfirmScreenController so it knows what to display
-        ConfirmScreenController.setPrompt(prompt);
-    }
-
     public ConfirmNotifier display() {
         try {
 

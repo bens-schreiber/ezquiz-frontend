@@ -85,7 +85,7 @@ public class QuestionDisplayTab extends Tab implements Initializable {
                 .put("question", questionText.getText())
                 .put("options", optionsNode.getOptions() != null ? String.join("/", optionsNode.getOptions()) : "")
                 .put("answer", String.join("/", optionsNode.getAnswer()))
-                .put("directions", directionsText.getText().isEmpty() ? directionsText.getText() : "")
+                .put("directions", directionsText.getText().isEmpty() ? "" : directionsText.getText())
                 .put("type", typeDropDownMenu.getSelectionModel().getSelectedItem());
     }
 }

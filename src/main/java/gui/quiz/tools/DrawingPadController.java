@@ -67,10 +67,13 @@ public class DrawingPadController implements Initializable {
 
         pane.getChildren().add(1, paintCanvas);
 
-
         gc.setStroke(Color.WHITE);
 
-        colorPicker.setOnAction(e -> gc.setStroke(colorPicker.getValue()));
+
+        colorPicker.setOnAction(e -> {
+            eraser.setSelected(false);
+            gc.setStroke(colorPicker.getValue());
+        });
 
         brushSize.setOnKeyTyped(e -> {
 
@@ -80,7 +83,15 @@ public class DrawingPadController implements Initializable {
 
         });
 
-        eraser.setOnAction(event -> gc.setStroke(Color.rgb(225, 225, 225)));
+
+        eraser.setOnAction(event -> {
+
+            if (eraser.isSelected()) {
+                gc.setStroke(Color.rgb(225, 225, 225));
+            } else {
+                gc.setStroke(colorPicker.getValue());
+            }
+        });
 
 
         UnaryOperator<TextFormatter.Change> modifyChange = c -> {

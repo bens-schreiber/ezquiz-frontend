@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.effect.DropShadow?>
@@ -11,10 +11,10 @@
             prefWidth="1200.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.MainMenu">
    <children>
-      <AnchorPane fx:id="mainDisplay" prefHeight="735.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="180.0"
-                  AnchorPane.rightAnchor="15.0"/>
-      <VBox fx:id="buttonContainer" layoutX="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" spacing="30.0" style="-fx-background-color: #303f9f; -fx-border-color: #9E9E9E;"
+      <AnchorPane fx:id="mainDisplay" layoutX="194.0" layoutY="33.0" AnchorPane.bottomAnchor="15.0"
+                  AnchorPane.leftAnchor="196.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0"/>
+      <VBox fx:id="buttonContainer" layoutX="-1.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            spacing="40.0" style="-fx-background-color: #303f9f; -fx-border-color: #9E9E9E;"
             stylesheets="@../css/mainmenuvboxbutton.css" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0"
             AnchorPane.topAnchor="-1.0">
          <children>
@@ -27,28 +27,16 @@
                   </ImageView>
                   <Label alignment="CENTER" text="Take Quiz" textFill="WHITE">
                      <font>
-                        <Font size="14.0"/>
+                        <Font size="18.0"/>
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" onMouseClicked="#randomQuizClicked" spacing="10.0">
-               <children>
-                  <ImageView fitHeight="30.0" fitWidth="30.0">
-                     <image>
-                        <Image url="@../../pictures/menu/play-circle-regular.png"/>
-                     </image>
-                  </ImageView>
-                  <Label alignment="CENTER" text="Random Quiz" textFill="WHITE">
-                     <font>
-                        <Font size="14.0"/>
-                     </font>
-                  </Label>
-               </children>
-               <cursor>
-                  <Cursor fx:constant="CLOSED_HAND"/>
-               </cursor>
-            </HBox>
+            <Region style="-fx-border-color: white;">
+               <VBox.margin>
+                  <Insets top="-30.0"/>
+               </VBox.margin>
+            </Region>
             <HBox alignment="CENTER_LEFT" onMouseClicked="#quizzesButtonClicked" spacing="10.0">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0">
@@ -58,21 +46,24 @@
                   </ImageView>
                   <Label alignment="CENTER" text="My Quizzes" textFill="WHITE">
                      <font>
-                        <Font size="14.0"/>
+                        <Font size="18.0"/>
                      </font>
                   </Label>
                </children>
+               <VBox.margin>
+                  <Insets top="5.0"/>
+               </VBox.margin>
             </HBox>
             <HBox fx:id="adminContainer" alignment="CENTER_LEFT" onMouseClicked="#adminButtonClicked" spacing="10.0">
                <children>
-                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                  <ImageView fitHeight="35.0" fitWidth="30.0">
                      <image>
-                        <Image url="@../../pictures/menu/user-shield-solid.png"/>
+                        <Image url="@../../pictures/menu/plus-square-regular.png"/>
                      </image>
                   </ImageView>
-                  <Label alignment="CENTER" text="Admin" textFill="WHITE">
+                  <Label alignment="CENTER" text="Quiz Creator" textFill="WHITE">
                      <font>
-                        <Font size="14.0"/>
+                        <Font size="18.0"/>
                      </font>
                   </Label>
                </children>
@@ -86,7 +77,7 @@
                   </ImageView>
                   <Label alignment="CENTER" text="Logout" textFill="WHITE">
                      <font>
-                        <Font size="14.0"/>
+                        <Font size="18.0"/>
                      </font>
                   </Label>
                </children>
@@ -100,11 +91,28 @@
                   </ImageView>
                   <Label alignment="CENTER" text="Exit" textFill="WHITE">
                      <font>
-                        <Font size="14.0"/>
+                        <Font size="18.0"/>
                      </font>
                   </Label>
                </children>
             </HBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label text="Images @ fontawesome.com" textFill="WHITE">
+                     <font>
+                        <Font size="10.0"/>
+                     </font>
+                  </Label>
+                  <Label text="Created by Ben Schreiber" textFill="WHITE">
+                     <font>
+                        <Font size="10.0"/>
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="350.0"/>
+               </VBox.margin>
+            </VBox>
          </children>
          <padding>
             <Insets left="15.0" right="10.0" top="30.0"/>
@@ -112,9 +120,6 @@
          <cursor>
             <Cursor fx:constant="CLOSED_HAND"/>
          </cursor>
-         <effect>
-            <DropShadow/>
-         </effect>
       </VBox>
       <HBox alignment="CENTER_LEFT" layoutX="1074.0" layoutY="-1.0" maxWidth="1.7976931348623157E308" spacing="30.0"
             style="-fx-background-color: #303f9f;" AnchorPane.rightAnchor="0.0">
@@ -124,7 +129,11 @@
                   <Image url="@../../pictures/menu/user-circle-solid.png"/>
                </image>
             </ImageView>
-            <Label fx:id="usernameLabel" text="Username" textFill="WHITE"/>
+            <Label fx:id="usernameLabel" text="Username" textFill="WHITE">
+               <font>
+                  <Font size="18.0"/>
+               </font>
+            </Label>
          </children>
          <padding>
             <Insets bottom="5.0" left="10.0" right="15.0" top="5.0"/>
@@ -136,16 +145,5 @@
             <DropShadow/>
          </effect>
       </HBox>
-      <Label layoutX="18.0" layoutY="749.0" text="Created by Ben Schreiber" textFill="WHITE">
-         <font>
-            <Font size="10.0"/>
-         </font>
-      </Label>
-      <Label layoutX="18.0" layoutY="772.0" prefHeight="10.0" prefWidth="139.0" text="Images fontawesome.com"
-             textFill="WHITE">
-         <font>
-            <Font size="10.0"/>
-         </font>
-      </Label>
    </children>
 </AnchorPane>

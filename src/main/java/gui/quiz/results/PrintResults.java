@@ -95,7 +95,7 @@ public class PrintResults extends FXController implements Initializable {
             }
 
             //If any Status aside from Accepted is given, handle the error accordingly.
-            errorHandle(DatabaseRequest.postQuizScore(correctAnswers, Account.getUser(), Account.getQuiz()));
+            generalErrorHandle(DatabaseRequest.postQuizScore(correctAnswers, Account.getUser(), Account.getQuiz()));
 
             //add how many correct out of possible, percentage, put bitmap to Base64
             outOfLabel.setText(correctAnswers + " out of " + QuizQuestions.getQuestionNodes().length);
@@ -103,7 +103,7 @@ public class PrintResults extends FXController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
         }
 
     }
@@ -115,7 +115,7 @@ public class PrintResults extends FXController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
         }
     }
 

@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class QuizUpload extends FXController implements Initializable {
 
     @FXML
-    TextField quizNameTextField;
+    TextField quizNameTextField, timerTextField;
 
     @FXML
     CheckBox revealAnswersCheckBox, enableNotePadCheckBox, enableCalculatorCheckBox, enableDrawingPadCheckBox;
@@ -60,6 +60,7 @@ public class QuizUpload extends FXController implements Initializable {
                                         .put("answers", revealAnswersCheckBox.isSelected() ? 1 : 0)
                                         .put("notepad", enableNotePadCheckBox.isSelected() ? 1 : 0)
                                         .put("drawingpad", enableDrawingPadCheckBox.isSelected() ? 1 : 0)
+                                        .put("timer", timerTextField.getText().isEmpty() ? 1800 : Integer.parseInt(timerTextField.getText()))
                         )
                         .put("quiz",
                                 new JSONObject()
@@ -72,7 +73,7 @@ public class QuizUpload extends FXController implements Initializable {
                 if (status == Status.ACCEPTED) {
                     stage.close();
                 } else {
-                    errorHandle(status, stage);
+                    generalErrorHandle(status, stage);
                 }
 
 
@@ -83,7 +84,7 @@ public class QuizUpload extends FXController implements Initializable {
             } catch (Exception e) {
 
                 e.printStackTrace();
-                errorHandle(stage);
+                generalErrorHandle(stage);
 
             }
 
@@ -91,17 +92,32 @@ public class QuizUpload extends FXController implements Initializable {
 
     }
 
+    private String getFileExtension(File file) {
+        String name = file.getName();
+        int lastIndexOf = name.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return ""; // empty extension
+        }
+        return name.substring(lastIndexOf);
+    }
+
     public void uploadExcelButtonClicked() {
 
         //Open a FileChooser to select the excel file.
         FileChooser fileChooser = new FileChooser();
+
+
         fileChooser.setTitle("Open Excel File");
         File selectedFile = fileChooser.showOpenDialog(new Stage());
 
         if (selectedFile != null) {
-            //Attempt to read as a valid excel file in the specific format required.
-            this.excelReader = new ExcelReader(selectedFile);
-            fileDisplay.setText(fileDisplay.getText() + excelReader.getFilePath());
+            if (getFileExtension(selectedFile).equals(".xlsx")) {
+                //Attempt to read as a valid excel file in the specific format required.
+                this.excelReader = new ExcelReader(selectedFile);
+                fileDisplay.setText(excelReader.getFileName());
+            } else {
+                userNotifier.setText("File must be Excel (.xlsx)").display(stage);
+            }
         }
 
     }

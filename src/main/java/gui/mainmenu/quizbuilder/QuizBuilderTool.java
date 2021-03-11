@@ -65,10 +65,10 @@ public class QuizBuilderTool implements Initializable {
 
     public void removeButtonClicked() {
 
-        tabWizard.getTabs().remove(tabWizard.getSelectionModel().getSelectedItem());
-        displayPane();
-
-
+        if (tabWizard.getSelectionModel().getSelectedIndex() != 0) {
+            tabWizard.getTabs().remove(tabWizard.getSelectionModel().getSelectedItem());
+            displayPane();
+        }
     }
 
     public void nextButtonClicked() {

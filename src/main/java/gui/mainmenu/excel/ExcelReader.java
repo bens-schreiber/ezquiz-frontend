@@ -37,14 +37,17 @@ public class ExcelReader {
     public void validateFile() throws IOException {
 
         FileInputStream fis = new FileInputStream(file);
-        Workbook workbook = new XSSFWorkbook(fis);
-        Sheet sheet = workbook.getSheetAt(0);
 
-        if (validateExcel(sheet)) {
-            this.sheet = sheet;
+        try (Workbook workbook = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = workbook.getSheetAt(0);
+
+            if (validateExcel(sheet)) {
+                this.sheet = sheet;
+            }
+
         }
 
-        workbook.close();
         fis.close();
 
     }
@@ -136,7 +139,7 @@ public class ExcelReader {
             jsonArray.put(internalJSON);
         }
 
-        return new JSONObject().put("question", jsonArray);
+        return new JSONObject().put("questions", jsonArray);
 
     }
 
@@ -196,8 +199,8 @@ public class ExcelReader {
         return true;
     }
 
-    public String getFilePath() {
-        return file.getPath();
+    public String getFileName() {
+        return file.getName();
     }
 
     private enum JSONKey {

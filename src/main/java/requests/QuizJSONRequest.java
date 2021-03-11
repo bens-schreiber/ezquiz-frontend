@@ -33,8 +33,6 @@ public class QuizJSONRequest {
         //Make the request from the path built by the constructor.
         JSONObject json = new JSONObject(Request.getFromURL(questionPath, auth).body());
 
-        System.out.println(json);
-
         if (json.has("questions") && json.has("preferences")) {
             this.questions = (JSONObject) json.get("questions");
             this.preferences = (JSONObject) ((JSONObject) json.get("preferences")).get("obj0");
@@ -44,6 +42,7 @@ public class QuizJSONRequest {
 
 
         return this;
+
     }
 
     public JSONObject getQuestions() {

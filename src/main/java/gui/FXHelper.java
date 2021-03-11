@@ -87,9 +87,9 @@ public class FXHelper {
         PRINT_RESULTS("/fxml/results/printresults.fxml"),
         ERROR("/fxml/popup/error.fxml"),
         CONFIRM("/fxml/popup/confirm.fxml"),
-        ADMIN_MENU("/fxml/mainmenu/adminmenu.fxml"),
+        ADMIN_MENU("/fxml/mainmenu/creatormenu.fxml"),
         QUIZ_BUILDER("/fxml/mainmenu/quizbuilder/quizbuildertool.fxml"),
-        QUESTION_TAB("/fxml/mainmenu/questiondisplaytab.fxml");
+        QUESTION_TAB("/fxml/mainmenu/quizbuilder/questiondisplaytab.fxml");
 
         private final String path;
 

@@ -39,7 +39,7 @@ public class EnterQuizKeyScreen extends FXController implements Initializable {
                 }
                 case NO_CONNECTION, UNAUTHORIZED -> {
                     response = false;
-                    errorHandle(Status.UNAUTHORIZED, stage);
+                    generalErrorHandle(Status.UNAUTHORIZED, stage);
                 }
             }
 
@@ -48,7 +48,7 @@ public class EnterQuizKeyScreen extends FXController implements Initializable {
         } catch (Exception e) {
             response = false;
             e.printStackTrace();
-            errorHandle(stage);
+            generalErrorHandle(stage);
         }
 
     }

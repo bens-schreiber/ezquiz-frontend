@@ -51,7 +51,7 @@ public class QuizHelper extends FXController {
                     Boolean.parseBoolean(jsonObject.get("answers").toString()),
                     Boolean.parseBoolean(jsonObject.get("drawingpad").toString()),
                     Boolean.parseBoolean(jsonObject.get("notepad").toString()),
-                    1800
+                    Integer.parseInt(jsonObject.get("timer").toString())
             );
         }
     }
@@ -59,7 +59,7 @@ public class QuizHelper extends FXController {
     //Validate all required json is there.
     private static boolean validateJSON(JSONObject jsonObject) {
         return jsonObject.has("answers") && jsonObject.has("calculator") && jsonObject.has("notepad")
-                && jsonObject.has("drawingpad");
+                && jsonObject.has("drawingpad") && jsonObject.has("timer");
     }
 
     public static Preference getPreferences() {

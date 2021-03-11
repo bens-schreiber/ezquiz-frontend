@@ -1,12 +1,17 @@
 package gui.mainmenu;
 
 import etc.Account;
+import etc.Constants;
 import etc.Quiz;
 import gui.FXController;
 import gui.alert.quizkey.EnterQuizKeyNotifier;
+import gui.quiz.QuizHelper;
+import gui.quiz.QuizQuestions;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import org.json.JSONException;
@@ -31,6 +36,20 @@ public class QuizzesMenu extends FXController implements Initializable {
 
     private final EnterQuizKeyNotifier enterQuizKeyNotifier = new EnterQuizKeyNotifier();
 
+
+    //Right click menu
+    private final ContextMenu contextMenu = new ContextMenu();
+
+    {
+        MenuItem takeQuiz = new MenuItem("Take Quiz");
+        MenuItem takeRandomQuiz = new MenuItem("Take Randomized Quiz");
+
+        takeQuiz.setOnAction(e -> takeQuizClicked());
+        takeRandomQuiz.setOnAction(e -> randomQuizClicked());
+
+        contextMenu.getItems().addAll(takeQuiz, takeRandomQuiz);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -52,9 +71,11 @@ public class QuizzesMenu extends FXController implements Initializable {
 
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
-            errorHandle(Status.NO_CONNECTION);
+            generalErrorHandle(Status.NO_CONNECTION);
         } catch (JSONException ignored) {
         }
+
+        savedQuizKeys.setContextMenu(contextMenu);
 
     }
 
@@ -79,14 +100,14 @@ public class QuizzesMenu extends FXController implements Initializable {
                 if (status == Status.ACCEPTED) {
                     savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
                 } else {
-                    errorHandle(status);
+                    generalErrorHandle(status);
                 }
 
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
         }
 
     }
@@ -101,18 +122,64 @@ public class QuizzesMenu extends FXController implements Initializable {
                 if (status == Status.ACCEPTED) {
                     savedQuizKeys.setItems(DatabaseRequest.getSavedQuizKeys(Account.getUser()));
                 } else {
-                    errorHandle(status);
+                    generalErrorHandle(status);
                 }
             }
 
         } catch (Exception e) {
 
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
 
         }
 
         Account.setQuiz(null);
+
+    }
+
+
+    private void takeQuizClicked() {
+
+        if (Account.getQuiz() != null) {
+
+            if (confirmNotifier.setPrompt("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
+                try {
+
+                    QuizQuestions.initializeQuiz(Constants.MAXIMUM_QUESTION_AMOUNT);
+
+                    QuizHelper.startQuiz(false);
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                    generalErrorHandle();
+
+                }
+            }
+
+        } else userNotifier.setText("You have not selected a Quiz").display();
+
+    }
+
+    private void randomQuizClicked() {
+
+        if (Account.getQuiz() != null) {
+
+            if (confirmNotifier.setPrompt("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
+
+                try {
+
+                    QuizHelper.startQuiz(true);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    generalErrorHandle();
+
+                }
+
+            }
+
+        } else userNotifier.setText("You have not selected a Quiz").display();
 
     }
 

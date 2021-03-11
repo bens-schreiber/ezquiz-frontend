@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 /**
  * Pane for displaying in MainMenu.
  */
-public class AdminMenu extends FXController implements Initializable {
+public class CreatorMenu extends FXController implements Initializable {
 
     @FXML
     TableView<Quiz> quizzesTable;
@@ -56,7 +56,7 @@ public class AdminMenu extends FXController implements Initializable {
 
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
-            errorHandle(Status.NO_CONNECTION);
+            generalErrorHandle(Status.NO_CONNECTION);
 
         } catch (JSONException ignored) {
         }
@@ -82,7 +82,7 @@ public class AdminMenu extends FXController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
         }
 
     }
@@ -104,7 +104,7 @@ public class AdminMenu extends FXController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
         }
     }
 
@@ -122,7 +122,7 @@ public class AdminMenu extends FXController implements Initializable {
                     if (status == Status.ACCEPTED) {
                         quizzesTable.setItems(DatabaseRequest.getCreatedQuizzes(Account.getUser()));
                     } else {
-                        errorHandle(status);
+                        generalErrorHandle(status);
                     }
                 }
 
@@ -135,7 +135,7 @@ public class AdminMenu extends FXController implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
 
         }
 
@@ -153,7 +153,7 @@ public class AdminMenu extends FXController implements Initializable {
 
                 //Request for answers along with the questions.
                 QuizJSONRequest request = new QuizJSONRequest(Account.getUser(),
-                        Constants.DEFAULT_PATH + "question/answers/" + Account.getQuiz().getKey());
+                        Constants.DEFAULT_PATH + "questions/answers/" + Account.getQuiz().getKey());
 
                 request.initializeRequest();
 

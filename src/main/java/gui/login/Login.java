@@ -62,11 +62,11 @@ public class Login extends FXController implements Initializable {
                         FXController.getPrimaryStage().show();
                     }
                     case UNAUTHORIZED -> errorLabel.setText("Incorrect username or password.");
-                    case NO_CONNECTION, NO_CONTENT -> errorHandle(Status.NO_CONNECTION);
+                    case NO_CONNECTION, NO_CONTENT -> generalErrorHandle(Status.NO_CONNECTION);
                 }
 
             } catch (Exception e) {
-                errorHandle();
+                generalErrorHandle();
             }
         }
     }
@@ -77,7 +77,7 @@ public class Login extends FXController implements Initializable {
             FXController.getPrimaryStage().setScene(FXHelper.getScene(FXHelper.Window.REGISTER));
         } catch (Exception e) {
 
-            errorHandle();
+            generalErrorHandle();
             e.printStackTrace();
 
         }

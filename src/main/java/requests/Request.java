@@ -38,6 +38,26 @@ class Request {
      *
      * @param body       JSONObject of what to send
      * @param urlSegment where to send it
+     */
+    static HttpResponse<String> postRequest(JSONObject body, String urlSegment) throws IOException, InterruptedException {
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .header("Content-Type", "application/json")
+                .uri(URI.create(Constants.DEFAULT_PATH + urlSegment))
+                .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
+                .build();
+
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    }
+
+
+    /**
+     * Make HTTP post to server.
+     *
+     * @param body       JSONObject of what to send
+     * @param urlSegment where to send it
      * @param token      auth token
      */
     static HttpResponse<String> postRequest(JSONObject body, String urlSegment, String token) throws IOException, InterruptedException {
@@ -52,10 +72,6 @@ class Request {
 
         return client.send(request, HttpResponse.BodyHandlers.ofString());
 
-    }
-
-    static HttpResponse<String> postRequest(JSONObject body, String urlSegment) throws IOException, InterruptedException {
-        return postRequest(body, urlSegment, "");
     }
 
 

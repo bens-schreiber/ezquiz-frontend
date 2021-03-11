@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="740.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.AdminMenu">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.CreatorMenu">
     <children>
         <HBox layoutX="398.0" layoutY="81.0" spacing="15.0" stylesheets="@../css/button.css">
             <children>

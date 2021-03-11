@@ -32,15 +32,15 @@ public class FXController {
         primaryStage.show();
     }
 
-    protected void errorHandle() {
+    protected void generalErrorHandle() {
         userNotifier.setText(AlertText.INTERNAL_ERROR.toString()).display();
     }
 
-    protected void errorHandle(Stage stage) {
+    protected void generalErrorHandle(Stage stage) {
         userNotifier.setText(AlertText.INTERNAL_ERROR.toString()).display(stage);
     }
 
-    protected void errorHandle(Status status) {
+    protected void generalErrorHandle(Status status) {
 
         switch (status) {
 
@@ -64,7 +64,7 @@ public class FXController {
         }
     }
 
-    protected void errorHandle(Status status, Stage stage) {
+    protected void generalErrorHandle(Status status, Stage stage) {
 
         switch (status) {
 

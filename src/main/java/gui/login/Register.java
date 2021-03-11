@@ -63,11 +63,11 @@ public class Register extends FXController implements Initializable {
                         FXController.getPrimaryStage().show();
                     }
                     case UNAUTHORIZED -> errorLabel.setText("Account name taken.");
-                    case NO_CONNECTION, NO_CONTENT -> errorHandle(Status.NO_CONNECTION);
+                    case NO_CONNECTION, NO_CONTENT -> generalErrorHandle(Status.NO_CONNECTION);
                 }
 
             } catch (Exception e) {
-                errorHandle();
+                generalErrorHandle();
             }
 
         }

@@ -48,9 +48,6 @@ public class QuizController extends FXController implements Initializable {
     @FXML
     HBox questionHBox;
 
-    //Default test is 30 minutes
-    static Integer seconds = 1800;
-
     private Stage drawingPad = new Stage();
     private Stage calculator = new Stage();
     private Stage notepad = new Stage();
@@ -69,7 +66,7 @@ public class QuizController extends FXController implements Initializable {
         quizName.setText(Account.getQuiz().getName());
         userLabel.setText(userLabel.getText() + Account.getUser().getUsername());
 
-        QuizTimer timer = new QuizTimer(quizTimer, seconds);
+        QuizTimer timer = new QuizTimer(quizTimer, QuizHelper.getPreferences().getTime());
         timer.startTimer();
 
         //Load all questions into the tabWizard
@@ -166,7 +163,7 @@ public class QuizController extends FXController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
         }
     }
 
@@ -195,7 +192,7 @@ public class QuizController extends FXController implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
 
         }
 
@@ -221,7 +218,7 @@ public class QuizController extends FXController implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
 
         }
     }
@@ -255,7 +252,7 @@ public class QuizController extends FXController implements Initializable {
         } catch (Exception e) {
 
             e.printStackTrace();
-            errorHandle();
+            generalErrorHandle();
 
         }
 
