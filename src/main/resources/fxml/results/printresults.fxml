@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <AnchorPane fx:id="mainAnchor1" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.quiz.results.PrintResults">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="classes.gui.quiz.results.PrintResults">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
             AnchorPane.topAnchor="0.0">
@@ -118,7 +118,7 @@
                                 text="Screenshot"/>
                         <Button fx:id="printButton1" mnemonicParsing="false" onAction="#printButtonClicked"
                                 text="Print"/>
-                        <Button mnemonicParsing="false" onAction="#backToMainMenuClicked" text="Main Menu"/>
+                        <Button mnemonicParsing="false" onAction="#backToMainMenuClicked" text="classes.Main Menu"/>
                      </children>
                   </HBox>
                </children>

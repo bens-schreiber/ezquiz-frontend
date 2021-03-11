@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <AnchorPane style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.quizbuilder.QuizBuilderTool">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="classes.gui.mainmenu.quizbuilder.QuizBuilderTool">
    <children>
       <AnchorPane fx:id="questionPane" layoutX="15.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="15.0"
                   AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">

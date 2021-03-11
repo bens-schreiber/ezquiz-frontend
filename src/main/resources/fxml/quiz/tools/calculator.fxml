@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane id="AnchorPane" onKeyReleased="#onKeyReleased" prefHeight="314.0" prefWidth="227.0"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.quiz.tools.CalculatorController">
+            fx:controller="classes.gui.quiz.tools.CalculatorController">
     <fx:define>
         <Font fx:id="FONT" size="18"/>
     </fx:define>

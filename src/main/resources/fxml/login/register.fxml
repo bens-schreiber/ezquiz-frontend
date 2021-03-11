@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane style="-fx-background-color: #E9E9E9;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.login.Register">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="classes.gui.login.Register">
    <children>
       <VBox alignment="CENTER" layoutX="4.0" layoutY="7.0" stylesheets="@../css/textfield.css"
             AnchorPane.bottomAnchor="0.0"

@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane fx:id="mainAnchor" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #E1E1E1;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.quiz.QuizController">
+            fx:controller="classes.gui.quiz.QuizController">
     <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
           AnchorPane.topAnchor="0.0">
         <AnchorPane fx:id="topPane" style="-fx-background-color: #9E9E9E;">

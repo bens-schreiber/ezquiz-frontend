@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
             prefWidth="1200.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.mainmenu.MainMenu">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="classes.gui.mainmenu.MainMenu">
    <children>
       <AnchorPane fx:id="mainDisplay" layoutX="194.0" layoutY="33.0" AnchorPane.bottomAnchor="15.0"
                   AnchorPane.leftAnchor="196.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0"/>

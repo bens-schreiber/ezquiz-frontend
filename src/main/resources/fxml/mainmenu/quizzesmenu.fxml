@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.mainmenu.QuizzesMenu">
+            fx:controller="classes.gui.mainmenu.QuizzesMenu">
     <children>
         <AnchorPane layoutX="65.0" layoutY="43.0" maxWidth="850.0">
             <children>
