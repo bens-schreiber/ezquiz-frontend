@@ -15,11 +15,13 @@ public class QuestionNodeFactory {
      */
     private static QuestionNode questionFromJSON(JSONObject json) throws JSONException {
 
+        System.out.println(json);
+
         if (verify(json)) {
 
             Question.Type type = Question.Type.valueOf(json.get("type").toString());
 
-            String question = json.get("classes/question").toString();
+            String question = json.get("question").toString();
 
             int id = Integer.parseInt(json.get("id").toString());
 
@@ -64,7 +66,7 @@ public class QuestionNodeFactory {
 
     //Make sure all required json pieces are here
     private static boolean verify(JSONObject json) {
-        return json.has("type") && json.has("classes/question") && json.has("id");
+        return json.has("type") && json.has("question") && json.has("id");
     }
 
     public static QuestionNode[] nodeArrayFromJSON(JSONObject json, int amount, List<Integer> ids) throws JSONException {
