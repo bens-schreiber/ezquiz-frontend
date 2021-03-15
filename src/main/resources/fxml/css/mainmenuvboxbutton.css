@@ -1,0 +1,12 @@
+HBox {
+  -fx-text-fill: #ffffff;
+  -fx-background-radius: 10;
+}
+
+HBox:focus{
+  -fx-background-color: rgba(0,0,0, .25);
+}
+
+HBox:hover{
+  -fx-background-color: rgba(0,0,0, .25);
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<AnchorPane prefHeight="47.0" prefWidth="418.0" style="-fx-background-color: #BDBDBD;"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="classes.gui.quiz.tools.DrawingPadController">
+    <children>
+        <HBox layoutX="7.0" layoutY="10.0">
+            <children>
+                <ColorPicker fx:id="colorPicker" prefHeight="26.0" prefWidth="100.0"/>
+                <TextField fx:id="brushSize" alignment="TOP_LEFT" prefHeight="26.0" prefWidth="39.0">
+                    <HBox.margin>
+                        <Insets left="25.0"/>
+                    </HBox.margin>
+                </TextField>
+                <Label prefHeight="27.0" prefWidth="79.0" text="Brush Size">
+                    <padding>
+                        <Insets left="5.0"/>
+                    </padding>
+                </Label>
+                <CheckBox fx:id="eraser" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Eraser">
+                    <padding>
+                        <Insets left="25.0"/>
+                    </padding>
+                </CheckBox>
+                <Button fx:id="clearButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Clear">
+                    <HBox.margin>
+                        <Insets left="25.0"/>
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

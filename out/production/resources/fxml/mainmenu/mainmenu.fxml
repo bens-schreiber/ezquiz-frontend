@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+            prefWidth="1200.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="classes.gui.mainmenu.MainMenu">
+   <children>
+      <AnchorPane fx:id="mainDisplay" layoutX="194.0" layoutY="33.0" AnchorPane.bottomAnchor="15.0"
+                  AnchorPane.leftAnchor="196.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0"/>
+      <VBox fx:id="buttonContainer" layoutX="-1.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            spacing="40.0" style="-fx-background-color: #303f9f; -fx-border-color: #9E9E9E;"
+            stylesheets="@../css/mainmenuvboxbutton.css" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0"
+            AnchorPane.topAnchor="-1.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#takeQuizClicked" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../../pictures/menu/play-circle-regular.png"/>
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" text="Take Quiz" textFill="WHITE">
+                     <font>
+                        <Font size="18.0"/>
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Region style="-fx-border-color: white;">
+               <VBox.margin>
+                  <Insets top="-30.0"/>
+               </VBox.margin>
+            </Region>
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#quizzesButtonClicked" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../../pictures/menu/user-circle-solid.png"/>
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" text="My Quizzes" textFill="WHITE">
+                     <font>
+                        <Font size="18.0"/>
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0"/>
+               </VBox.margin>
+            </HBox>
+            <HBox fx:id="adminContainer" alignment="CENTER_LEFT" onMouseClicked="#adminButtonClicked" spacing="10.0">
+               <children>
+                  <ImageView fitHeight="35.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../../pictures/menu/plus-square-regular.png"/>
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" text="Quiz Creator" textFill="WHITE">
+                     <font>
+                        <Font size="18.0"/>
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#logoutButtonClicked" spacing="10.0">
+               <children>
+                  <ImageView>
+                     <image>
+                        <Image url="@../../pictures/menu/sign-out-alt-solid.png"/>
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" text="Logout" textFill="WHITE">
+                     <font>
+                        <Font size="18.0"/>
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#exitButtonClicked" spacing="10.0">
+               <children>
+                  <ImageView>
+                     <image>
+                        <Image url="@../../pictures/menu/times-circle-regular.png"/>
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" text="Exit" textFill="WHITE">
+                     <font>
+                        <Font size="18.0"/>
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label text="Images @ fontawesome.com" textFill="WHITE">
+                     <font>
+                        <Font size="10.0"/>
+                     </font>
+                  </Label>
+                  <Label text="Created by Ben Schreiber" textFill="WHITE">
+                     <font>
+                        <Font size="10.0"/>
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="350.0"/>
+               </VBox.margin>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="15.0" right="10.0" top="30.0"/>
+         </padding>
+         <cursor>
+            <Cursor fx:constant="CLOSED_HAND"/>
+         </cursor>
+      </VBox>
+      <HBox alignment="CENTER_LEFT" layoutX="1074.0" layoutY="-1.0" maxWidth="1.7976931348623157E308" spacing="30.0"
+            style="-fx-background-color: #303f9f;" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ImageView fitHeight="30.0" fitWidth="30.0">
+               <image>
+                  <Image url="@../../pictures/menu/user-circle-solid.png"/>
+               </image>
+            </ImageView>
+            <Label fx:id="usernameLabel" text="Username" textFill="WHITE">
+               <font>
+                  <Font size="18.0"/>
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="10.0" right="15.0" top="5.0"/>
+         </padding>
+         <opaqueInsets>
+            <Insets/>
+         </opaqueInsets>
+         <effect>
+            <DropShadow/>
+         </effect>
+      </HBox>
+   </children>
+</AnchorPane>
