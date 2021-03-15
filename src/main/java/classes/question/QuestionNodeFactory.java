@@ -15,8 +15,6 @@ public class QuestionNodeFactory {
      */
     private static QuestionNode questionFromJSON(JSONObject json) throws JSONException {
 
-        System.out.println(json);
-
         if (verify(json)) {
 
             Question.Type type = Question.Type.valueOf(json.get("type").toString());

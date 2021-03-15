@@ -81,6 +81,18 @@ public class MainMenu extends FXController implements Initializable {
         }
     }
 
+    public void helpButtonClicked() {
+        try {
+
+            mainDisplay.getChildren().setAll(FXHelper.getPane(FXHelper.Window.HELP_MENU));
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            generalErrorHandle();
+        }
+    }
+
     public void adminButtonClicked() {
 
         try {

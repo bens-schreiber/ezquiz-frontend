@@ -17,7 +17,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -148,3 +155,5 @@ public class PrintResults extends FXController implements Initializable {
     }
 
 }
+
+

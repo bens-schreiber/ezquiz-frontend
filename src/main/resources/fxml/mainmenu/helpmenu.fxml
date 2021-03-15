@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="General Help / FAQ">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1000.0">
+               <VBox.margin>
+                  <Insets top="-30.0" />
+               </VBox.margin>
+            </Rectangle>
+            <Accordion>
+               <panes>
+                  <TitledPane fx:id="pane4" text="Using the Quiz Builder">
+                     <content>
+                        <ScrollPane>
+                           <content>
+                              <VBox spacing="15.0">
+                                 <children>
+                                    <Label text="1.) Navigate to the Quiz Creator menu">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitWidth="172.0">
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/quizcreator.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label text="2.) Choose the &quot;Quiz Builder&quot; button">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView>
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/quizbuildercircle.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label text="3.) Create an Excel Sheet of Quiz Questions">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Write the question you want answered in the &quot;Question&quot; text area">
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Write any directions for answering the question in the &quot;Directions&quot; text area. EX: &quot;Choose 3 options&quot; (LEAVE BLANK FOR DEFAULT DIRECTIONS)">
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Give the Question a type from the &quot;Type&quot; dropdown menu. The question will appear as on the right for the quiz taker.">
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="On the right side panel, put all options into the &quot;Options#1 - Option#4&quot; text area. Click the option(s) that is the answer to your question.">
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView>
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/quizbuildertutorial.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label text="4.) Add up to 50 questions, and click &quot;Submit&quot; when ready to download the resulting Excel file.">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane fx:id="pane1" text="Taking a Quiz">
+                     <content>
+                        <ScrollPane>
+                           <content>
+                              <VBox spacing="15.0">
+                                 <children>
+                                    <Label text="1.) Select your deisred Quiz">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="If you do not have any saved Quiz Key's, see &quot;Managing Quiz Key's&quot;">
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView>
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/myquizzespage.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label text="2.) Take the Quiz">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="With your desired Quiz Selected, click the &quot;Take the Quiz&quot; button on the top left panel.">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="To take a 5 Question Random variety of the Quiz, right click your selected Quiz and select the Random option">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ImageView>
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/takequizbutton.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label text="3.) Complete the Quiz">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Navigate through questions by using the Left and Right arrow buttons, or individually selecting each Question.">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="If unsure of an answer, try Flagging it for review with the button on the bottom left.">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="If enabled on this Quiz, use the Quiz Tools buttons on the right to access a Calculator, Notepad or Drawing Pad.">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="When all Questions are answered, click &quot;Submit&quot; to finish the Quiz.">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ImageView>
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/quiz.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane fx:id="pane2" text="Managing Quiz Keys">
+                     <content>
+                        <ScrollPane>
+                           <content>
+                              <VBox spacing="20.0">
+                                 <children>
+                                    <Label text="1.) Navigate to the &quot;My Quizzes&quot; page and click Add Key">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="On the top Table, you will see all of your stored Quiz Key's.">
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="On the bottom table, you will see all scores to quizzes you have taken.">
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView>
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/mainpageaddkey.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label text="2.) Enter a valid Quiz Key">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Pass in a Quiz Key and click submit. To create a Quiz Key, see &quot;Creating a Quiz&quot;">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ImageView>
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/enterkey.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+                  <TitledPane fx:id="pane3" text="Creating a Quiz">
+                     <content>
+                        <ScrollPane>
+                           <content>
+                              <VBox spacing="20.0">
+                                 <children>
+                                    <Label text="1.) Navigate to the Quiz Creator menu">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ImageView fitWidth="172.0">
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/quizcreator.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="15.0" top="-5.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label text="2.) Choose the &quot;Upload New Quiz&quot; button">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView>
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/quizcreatorentirepage.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label text="3.) Establish preferences, upload a valid Excel Sheet ">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Name your Quiz, upload an Excel Sheet (see QuizBuilder tutorial) and give a Time in seconds">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="Under Quiz Tools, select any tools you would like to be available during the Quiz">
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView>
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/quizprefs.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="15.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label text="4.) Submit">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </TitledPane>
+               </panes>
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </Accordion>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
