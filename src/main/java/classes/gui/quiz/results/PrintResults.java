@@ -10,6 +10,7 @@ import classes.requests.DatabaseRequest;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.print.PrinterJob;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
@@ -17,14 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -149,8 +143,16 @@ public class PrintResults extends FXController implements Initializable {
         }
     }
 
-    //todo: this
     public void printButtonClicked() {
+
+        // Create a printer job for the default printer
+        PrinterJob job = PrinterJob.createPrinterJob();
+        if (job != null && job.showPrintDialog(getPrimaryStage())){
+            boolean success = job.printPage(getPrimaryStage().getScene().getRoot());
+            if (success) {
+                job.endJob();
+            }
+        }
 
     }
 
