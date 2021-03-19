@@ -51,6 +51,7 @@ public class PrintResults extends FXController implements Initializable {
 
                 //Make a container for the answered classes.question, add classes.question to it
                 VBox answeredQuestion = new VBox(15);
+                answeredQuestion.setPrefWidth(1000);
 
                 //Display classes.question number before classes.question, make bold
                 Label label = new Label("Question " + quizNumber + ":");
