@@ -82,7 +82,7 @@ public class QuestionDisplayTab extends Tab implements Initializable {
     JSONObject getJSONQuestion() throws JSONException {
 
         return new JSONObject()
-                .put("classes/question", questionText.getText())
+                .put("question", questionText.getText())
                 .put("options", optionsNode.getOptions() != null ? String.join("/", optionsNode.getOptions()) : "")
                 .put("answer", String.join("/", optionsNode.getAnswer()))
                 .put("directions", directionsText.getText().isEmpty() ? "" : directionsText.getText())
