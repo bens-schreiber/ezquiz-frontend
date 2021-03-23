@@ -46,9 +46,9 @@ public class Register extends FXController implements Initializable {
 
     public void registerButtonClicked() {
 
-        if (usernameField.getText().length() < 3) {
+        if (usernameField.getText().length() < 3 || passwordField.getText().length()  < 3) {
 
-            errorLabel.setText("Username must be at least 3 characters.");
+            errorLabel.setText("Username and password must be at least 3 characters.");
 
         } else {
 

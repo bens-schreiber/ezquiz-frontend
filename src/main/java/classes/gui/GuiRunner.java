@@ -1,6 +1,7 @@
 package classes.gui;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -12,6 +13,12 @@ public class GuiRunner extends Application {
     public void start(Stage primaryStage) {
 
         try {
+
+            //Set stage title and icon
+            primaryStage.setTitle("EZQuiz");
+            Image icon = new Image(getClass().getResourceAsStream("/pictures/ezquiz_logos-04.png"));
+            primaryStage.getIcons().add(icon);
+
 
             primaryStage.setResizable(false);
             primaryStage.setScene(FXHelper.getScene(FXHelper.Window.LOGIN));

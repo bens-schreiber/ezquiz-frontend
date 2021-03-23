@@ -8,7 +8,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -31,11 +30,6 @@
                   </Label>
                </children>
             </HBox>
-            <Region style="-fx-border-color: white;">
-               <VBox.margin>
-                  <Insets top="-30.0" />
-               </VBox.margin>
-            </Region>
             <HBox alignment="CENTER_LEFT" onMouseClicked="#quizzesButtonClicked" spacing="10.0">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0">
@@ -50,7 +44,7 @@
                   </Label>
                </children>
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets />
                </VBox.margin>
             </HBox>
             <HBox fx:id="adminContainer" alignment="CENTER_LEFT" onMouseClicked="#adminButtonClicked" spacing="10.0">
@@ -123,7 +117,7 @@
                   </Label>
                </children>
                <VBox.margin>
-                  <Insets top="280.0" />
+                  <Insets top="300.0" />
                </VBox.margin>
             </VBox>
          </children>
@@ -157,5 +151,10 @@
             <DropShadow />
          </effect>
       </HBox>
+      <ImageView fitHeight="112.0" fitWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <image>
+            <Image url="@../../pictures/ezquiz_logos-03.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

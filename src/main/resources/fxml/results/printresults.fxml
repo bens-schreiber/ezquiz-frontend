@@ -36,9 +36,9 @@
                         </Label>
                      </children>
                   </HBox>
-                  <ImageView fitHeight="43.0" fitWidth="60.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+                  <ImageView layoutX="4.0" layoutY="5.0">
                      <image>
-                        <Image url="@../../pictures/menu/FBLA-Color-web.png" />
+                        <Image url="@../../pictures/4-tiny.png" />
                      </image>
                   </ImageView>
                </children>
