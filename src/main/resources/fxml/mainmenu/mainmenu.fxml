@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="classes.gui.mainmenu.MainMenu">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.mainmenu.MainMenu">
    <children>
       <AnchorPane fx:id="mainDisplay" layoutX="194.0" layoutY="33.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="196.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0" />
       <VBox fx:id="buttonContainer" layoutX="-1.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="40.0" style="-fx-background-color: #303f9f; -fx-border-color: #9E9E9E;" stylesheets="@../css/mainmenuvboxbutton.css" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="-1.0">

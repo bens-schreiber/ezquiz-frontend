@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <AnchorPane prefHeight="47.0" prefWidth="418.0" style="-fx-background-color: #BDBDBD;"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="classes.gui.quiz.tools.DrawingPadController">
+            fx:controller="com.benschreiber.gui.quiz.tools.DrawingPadController">
     <children>
         <HBox layoutX="7.0" layoutY="10.0">
             <children>
