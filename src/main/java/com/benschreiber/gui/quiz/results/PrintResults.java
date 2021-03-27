@@ -58,7 +58,6 @@ public class PrintResults extends FXController implements Initializable {
                 label.setStyle("-fx-font-weight: bold;");
                 answeredQuestion.getChildren().add(label);
 
-                answeredQuestion.getChildren().add(new Label(questionNode.getPrompt()));
                 answeredQuestion.getChildren().add(questionNode.getNode());
 
                 //Make un-intractable.

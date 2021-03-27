@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,6 +34,8 @@ public class QuestionNodeFactory {
                     ? new LinkedList<>(Arrays.asList(json.get("options").toString()
                     .split("/"))) : null;
 
+            if (options != null) Collections.shuffle(options);
+
 
             //apply default directions if no given directions
             String directions = json.get("directions").toString().length() > 1
@@ -59,7 +62,7 @@ public class QuestionNodeFactory {
                 case WRITTEN -> new Written(directions, question);
             };
 
-            return new QuestionNode(type, options, question, directions, id, node);
+            return new QuestionNode(type, question, directions, id, node);
         } //build the QuestionNode
 
         throw new JSONException("Required values not found");

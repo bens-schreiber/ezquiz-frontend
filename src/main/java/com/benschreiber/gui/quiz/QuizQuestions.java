@@ -97,6 +97,8 @@ public class QuizQuestions {
 
                 //Answer may be larger than one, so .containsAll is used
                 //Check if answer is correct, if no response then mark wrong.
+                System.out.println(answer);
+                System.out.println(response);
                 questionNode.setCorrect(answer.containsAll(response));
 
             } else {
@@ -137,7 +139,7 @@ public class QuizQuestions {
         private static List<String> answerFromJSON(JSONObject json) throws JSONException {
             return new ArrayList<>(
                     Arrays.asList(json.get("answer").toString()
-                            .split(", ")));
+                            .split("/")));
         }
 
         private static class Pair implements Comparable<Pair> {
