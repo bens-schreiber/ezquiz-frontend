@@ -33,7 +33,7 @@ public class AnswerJSONRequest {
 
         //get rid of the last "," and convert string to JSON
         this.json = new JSONObject(
-                Request.getFromURL(stringBuilder.substring(0, stringBuilder.length() - 1), Account.getUser().getAuth())
+                Request.getRequest(stringBuilder.substring(0, stringBuilder.length() - 1), Account.getUser().getAuth())
                         .body());
 
 

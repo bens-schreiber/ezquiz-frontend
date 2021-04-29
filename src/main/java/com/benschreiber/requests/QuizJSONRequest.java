@@ -31,7 +31,7 @@ public class QuizJSONRequest {
     public QuizJSONRequest initializeRequest() throws InterruptedException, IOException, JSONException {
 
         //Make the request from the path built by the constructor.
-        JSONObject json = new JSONObject(Request.getFromURL(questionPath, auth).body());
+        JSONObject json = new JSONObject(Request.getRequest(questionPath, auth).body());
 
         if (json.has("questions") && json.has("preferences")) {
             this.questions = (JSONObject) json.get("questions");

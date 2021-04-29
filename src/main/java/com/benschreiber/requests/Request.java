@@ -20,7 +20,7 @@ class Request {
      * @param url   where to send request
      * @param token auth token
      */
-    static HttpResponse<String> getFromURL(String url, String token) throws IOException, InterruptedException {
+    static HttpResponse<String> getRequest(String url, String token) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
