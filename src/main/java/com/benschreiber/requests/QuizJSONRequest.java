@@ -1,7 +1,6 @@
 package com.benschreiber.requests;
 
 import com.benschreiber.etc.Account;
-import com.benschreiber.etc.Constants;
 import com.benschreiber.etc.User;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +15,7 @@ public class QuizJSONRequest {
     private JSONObject questions;
     private JSONObject preferences;
 
-    private String questionPath = Constants.DEFAULT_PATH + "/quiz/" + Account.getQuiz().getKey();
+    private String questionPath = DatabaseRequest.DEFAULT_PATH + "/quiz/" + Account.getQuiz().getKey();
     private final String auth;
 
     public QuizJSONRequest(User user) {

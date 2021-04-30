@@ -17,6 +17,8 @@ import java.net.http.HttpResponse;
  */
 public class DatabaseRequest {
 
+    public static String DEFAULT_PATH = "http://localhost:7080/api/";
+
     private DatabaseRequest() {
     }
 
@@ -149,7 +151,7 @@ public class DatabaseRequest {
 
         try {
 
-            HttpResponse<String> response = Request.getRequest("http://localhost:7080/api/quiz/key/" + key, user.getAuth());
+            HttpResponse<String> response = Request.getRequest(DEFAULT_PATH + "quiz/key/" + key, user.getAuth());
 
             return Status.getStatusFromInt(response.statusCode());
 
@@ -169,7 +171,7 @@ public class DatabaseRequest {
 
         try {
 
-            HttpResponse<String> response = Request.getRequest("http://localhost:7080/api/users/key/" + user.getUsername(), user.getAuth());
+            HttpResponse<String> response = Request.getRequest(DEFAULT_PATH + "users/key/" + user.getUsername(), user.getAuth());
 
             JSONObject body = new JSONObject(response.body());
             ObservableList<Quiz> list = FXCollections.observableArrayList();
@@ -206,7 +208,7 @@ public class DatabaseRequest {
 
         try {
 
-            HttpResponse<String> response = Request.getRequest("http://localhost:7080/api/users/score/" + Account.getUser().getUsername(), Account.getUser().getAuth());
+            HttpResponse<String> response = Request.getRequest(DEFAULT_PATH + "users/score/" + Account.getUser().getUsername(), Account.getUser().getAuth());
 
             JSONObject body = new JSONObject(response.body());
             //If response contains at least a single object
@@ -244,7 +246,7 @@ public class DatabaseRequest {
 
         try {
 
-            HttpResponse<String> response = Request.getRequest("http://localhost:7080/api/users/quizzes/" + user.getUsername(), user.getAuth());
+            HttpResponse<String> response = Request.getRequest(DEFAULT_PATH + "users/quizzes/" + user.getUsername(), user.getAuth());
             JSONObject body = new JSONObject(response.body());
 
             ObservableList<Quiz> list = FXCollections.observableArrayList();

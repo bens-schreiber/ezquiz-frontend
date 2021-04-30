@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchor" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.quiz.QuizController">
+<AnchorPane fx:id="mainAnchor" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.quiz.QuizController">
     <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <AnchorPane fx:id="topPane" style="-fx-background-color: #9E9E9E;">
             <HBox alignment="CENTER_RIGHT" layoutX="828.0" layoutY="14.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">

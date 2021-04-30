@@ -1,8 +1,7 @@
 package com.benschreiber.requests;
 
 import com.benschreiber.etc.Account;
-import com.benschreiber.etc.Constants;
-import com.benschreiber.question.QuestionNode;
+import com.benschreiber.gui.fxobjs.QuestionNode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,7 +23,7 @@ public class AnswerJSONRequest {
 
         //Create path for getting answers
         StringBuilder stringBuilder = new StringBuilder()
-                .append(Constants.DEFAULT_PATH)
+                .append(DatabaseRequest.DEFAULT_PATH)
                 .append("questions/answer/");
 
         for (QuestionNode questionNode : this.questionNodes) {

@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class FXHelper {
 
@@ -19,11 +20,11 @@ public class FXHelper {
 
     //Get a Scene from Window
     public static Scene getScene(Window window) throws IOException {
-        return new Scene(FXMLLoader.load(FXHelper.class.getResource(window.getPath())));
+        return new Scene(FXMLLoader.load(Objects.requireNonNull(FXHelper.class.getResource(window.getPath()))));
     }
 
     public static Pane getPane(Window window) throws IOException {
-        return FXMLLoader.load(FXHelper.class.getResource(window.getPath()));
+        return FXMLLoader.load(Objects.requireNonNull(FXHelper.class.getResource(window.getPath())));
     }
 
     /**

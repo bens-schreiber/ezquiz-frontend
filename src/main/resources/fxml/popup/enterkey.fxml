@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.benschreiber.gui.alert.quizkey.EnterQuizKeyScreen">
+            fx:controller="com.benschreiber.gui.windows.alert.quizkey.EnterQuizKeyScreen">
    <children>
       <VBox alignment="CENTER" layoutX="4.0" layoutY="7.0" prefHeight="104.0" prefWidth="202.0" spacing="20.0"
             stylesheets="@../css/textfield.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"

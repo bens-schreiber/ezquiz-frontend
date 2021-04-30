@@ -2,8 +2,8 @@ package com.benschreiber.gui;
 
 import com.benschreiber.etc.Account;
 import com.benschreiber.requests.Status;
-import com.benschreiber.gui.alert.confirm.ConfirmNotifier;
-import com.benschreiber.gui.alert.notification.UserNotifier;
+import com.benschreiber.gui.windows.alert.confirm.ConfirmNotifier;
+import com.benschreiber.gui.windows.alert.notification.UserNotifier;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,8 +14,7 @@ import java.io.IOException;
  */
 public class FXController {
 
-    protected FXController() {
-    }
+    protected FXController() {}
 
     protected UserNotifier userNotifier = new UserNotifier();
     protected ConfirmNotifier confirmNotifier = new ConfirmNotifier();
@@ -32,15 +31,15 @@ public class FXController {
         primaryStage.show();
     }
 
-    protected void generalErrorHandle() {
+    protected void errorHandle() {
         userNotifier.setText(AlertText.INTERNAL_ERROR.toString()).display();
     }
 
-    protected void generalErrorHandle(Stage stage) {
+    protected void errorHandle(Stage stage) {
         userNotifier.setText(AlertText.INTERNAL_ERROR.toString()).display(stage);
     }
 
-    protected void generalErrorHandle(Status status) {
+    protected void errorHandle(Status status) {
 
         switch (status) {
 
@@ -64,7 +63,7 @@ public class FXController {
         }
     }
 
-    protected void generalErrorHandle(Status status, Stage stage) {
+    protected void errorHandle(Status status, Stage stage) {
 
         switch (status) {
 

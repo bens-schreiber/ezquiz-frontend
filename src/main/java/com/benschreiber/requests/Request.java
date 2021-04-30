@@ -1,6 +1,5 @@
 package com.benschreiber.requests;
 
-import com.benschreiber.etc.Constants;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -44,7 +43,7 @@ class Request {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
-                .uri(URI.create(Constants.DEFAULT_PATH + urlSegment))
+                .uri(URI.create(DatabaseRequest.DEFAULT_PATH + urlSegment))
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
                 .build();
 
@@ -66,7 +65,7 @@ class Request {
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
                 .header("token", token)
-                .uri(URI.create(Constants.DEFAULT_PATH + urlSegment))
+                .uri(URI.create(DatabaseRequest.DEFAULT_PATH + urlSegment))
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
                 .build();
 
@@ -87,7 +86,7 @@ class Request {
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/json")
                 .header("token", token)
-                .uri(URI.create(Constants.DEFAULT_PATH + urlSegment))
+                .uri(URI.create(DatabaseRequest.DEFAULT_PATH + urlSegment))
                 .DELETE()
                 .build();
 
