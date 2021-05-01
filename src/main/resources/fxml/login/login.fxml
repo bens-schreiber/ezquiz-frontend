@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane style="-fx-background-color: #E9E9E9;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.login.Login">
+<AnchorPane id="mainPane" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.login.Login">
    <children>
-      <VBox alignment="CENTER" layoutX="4.0" layoutY="7.0" stylesheets="@../css/textfield.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="4.0" layoutY="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox spacing="15.0" style="-fx-border-width: 0;">
+            <VBox spacing="15.0">
                <children>
                   <TextField fx:id="usernameField" promptText="Username" />
                   <PasswordField fx:id="passwordField" promptText="Password">
@@ -24,7 +24,7 @@
                </children>
             </VBox>
             <Label fx:id="errorLabel" minHeight="-Infinity" textFill="RED" wrapText="true" VBox.vgrow="ALWAYS" />
-            <VBox alignment="CENTER" spacing="10.0" style="-fx-border-width: 0;" stylesheets="@../css/button.css">
+            <VBox alignment="CENTER" spacing="10.0">
                <children>
                   <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonClicked" prefWidth="252.0" text="Login" />
                   <Hyperlink onMouseClicked="#registerButtonClicked" text="Register an EZQuiz account" />

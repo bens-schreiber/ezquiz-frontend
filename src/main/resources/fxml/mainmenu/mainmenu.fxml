@@ -11,12 +11,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.mainmenu.MainMenu">
+<AnchorPane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../css/mainmenu.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.mainmenu.MainMenu">
    <children>
       <AnchorPane fx:id="mainDisplay" layoutX="194.0" layoutY="33.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="196.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0" />
-      <VBox fx:id="buttonContainer" layoutX="-1.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="40.0" style="-fx-background-color: #303f9f; -fx-border-color: #9E9E9E;" stylesheets="@../css/mainmenuvboxbutton.css" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="-1.0">
+      <VBox id="mainMenuButtonContainer" fx:id="buttonContainer" layoutX="-1.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="40.0" style="-fx-border-insets: -5;" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="-1.0">
          <children>
-            <HBox alignment="CENTER_LEFT" onMouseClicked="#takeQuizClicked" spacing="10.0">
+            <HBox id="mainMenuButton" alignment="CENTER_LEFT" onMouseClicked="#takeQuizClicked" spacing="10.0">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0">
                      <image>
@@ -127,8 +127,11 @@
          <cursor>
             <Cursor fx:constant="CLOSED_HAND" />
          </cursor>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" height="23.97" radius="10.7425" spread="0.05" />
+         </effect>
       </VBox>
-      <HBox alignment="CENTER_LEFT" layoutX="1074.0" layoutY="-1.0" maxWidth="1.7976931348623157E308" spacing="30.0" style="-fx-background-color: #303f9f;" AnchorPane.rightAnchor="0.0">
+      <HBox id="userInfoBox" alignment="CENTER_LEFT" layoutX="1074.0" layoutY="-1.0" maxWidth="1.7976931348623157E308" spacing="30.0" AnchorPane.rightAnchor="0.0">
          <children>
             <ImageView fitHeight="30.0" fitWidth="30.0">
                <image>

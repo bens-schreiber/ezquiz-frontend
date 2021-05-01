@@ -1,0 +1,27 @@
+@import "general.css";
+
+#mainMenuButtonContainer {
+
+    -fx-background-color: #303f9f;
+    -fx-background-radius: 0 20 20 0;
+    -fx-border-color: #777777;
+    -fx-border-width: 4 5 4 0;
+    -fx-border-radius: 0 30 30 0;
+}
+
+#mainMenuButton {
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 10;
+}
+
+#mainMenuButton:focus{
+    -fx-background-color: rgba(0,0,0, .25);
+}
+
+#mainMenuButton:hover{
+    -fx-background-color: rgba(0,0,0, .25);
+}
+
+#userInfoBox {
+    -fx-background-color: #303f9f;
+}

@@ -8,7 +8,7 @@ import java.util.List;
 
 class MultipleChoice extends TypeNode {
 
-    public MultipleChoice(List<String> options, String directions, String prompt) {
+    MultipleChoice(List<String> options, String directions, String prompt) {
         super(directions, prompt);
 
         //Find how many RadioButtons are needed

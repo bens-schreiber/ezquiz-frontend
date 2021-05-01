@@ -1,0 +1,7 @@
+@import "general.css";
+
+#dividerVBox {
+    -fx-border-color: #777777;
+    -fx-border-width: 2;
+    -fx-border-insets: -10;
+}

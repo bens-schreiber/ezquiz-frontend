@@ -8,7 +8,7 @@ import java.util.Collections;
 
 class TrueOrFalse extends TypeNode {
 
-    public TrueOrFalse(String directions, String prompt) {
+    TrueOrFalse(String directions, String prompt) {
         super(directions, prompt);
 
         //Establish options

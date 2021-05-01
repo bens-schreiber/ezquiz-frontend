@@ -72,7 +72,6 @@ public class FXHelper {
         return stage;
     }
 
-
     //FXML Window names and locations.
     public enum Window {
         MAIN_MENU("/fxml/mainmenu/mainmenu.fxml"),

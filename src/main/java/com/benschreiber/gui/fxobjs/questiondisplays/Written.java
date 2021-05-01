@@ -6,7 +6,8 @@ import javafx.scene.control.TextField;
 import java.util.Collections;
 
 class Written extends TypeNode {
-    public Written(String directions, String prompt) {
+
+    Written(String directions, String prompt) {
         super(directions, prompt);
 
         TextField textField = new TextField();

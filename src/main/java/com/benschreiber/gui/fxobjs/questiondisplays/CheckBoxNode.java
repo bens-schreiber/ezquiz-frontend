@@ -7,7 +7,7 @@ import java.util.List;
 
 class CheckBoxNode extends TypeNode {
 
-    public CheckBoxNode(List<String> options, String directions, String prompt) {
+    CheckBoxNode(List<String> options, String directions, String prompt) {
         super(directions, prompt);
 
         //Get box amount from options size

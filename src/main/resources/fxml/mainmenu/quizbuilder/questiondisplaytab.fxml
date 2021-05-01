@@ -1,29 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<fx:root type="javafx.scene.control.Tab" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <HBox layoutX="6.0" layoutY="6.0" spacing="50.0" stylesheets="@../../css/textfield.css">
-        <VBox alignment="CENTER_LEFT" spacing="30.0"
-              style="-fx-border-radius: 10; -fx-border-color: #303f9f; -fx-border-width: 3; -fx-padding: 15;">
-            <HBox alignment="CENTER_LEFT" spacing="15.0">
-                <Label prefWidth="66.0" text="Question"/>
-                <TextArea fx:id="questionText" prefHeight="200.0" prefWidth="200.0"/>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<fx:root type="javafx.scene.control.Tab" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <HBox spacing="50.0">
+         <children>
+            <HBox>
+               <children>
+                  <VBox alignment="CENTER_LEFT" spacing="15.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                           <children>
+                              <Label text="Question">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Hyperlink text="(?)">
+                                 <tooltip>
+                                    <Tooltip text="The question you are asking the Quiz taker" />
+                                 </tooltip>
+                              </Hyperlink>
+                           </children>
+                        </HBox>
+                        <TextField fx:id="questionText" />
+                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                           <children>
+                              <Label text="Directions">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Hyperlink text="(?)">
+                                 <tooltip>
+                                    <Tooltip text="OPTIONAL: Directions the quiz taker can follow. Default if blank." />
+                                 </tooltip>
+                              </Hyperlink>
+                           </children>
+                        </HBox>
+                        <TextField fx:id="directionsText" />
+                        <HBox alignment="CENTER_LEFT" spacing="5.0">
+                           <children>
+                              <Label text="Type">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Hyperlink text="(?)">
+                                 <tooltip>
+                                    <Tooltip text="The question format the user will answer in." />
+                                 </tooltip>
+                              </Hyperlink>
+                           </children>
+                        </HBox>
+                        <ComboBox fx:id="typeDropDownMenu" prefWidth="205.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" />
+               </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" spacing="15.0">
-                <VBox.margin>
-                    <Insets/>
-                </VBox.margin>
-                <Label text="Directions"/>
-                <TextArea fx:id="directionsText" prefHeight="42.0" prefWidth="205.0"/>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" spacing="15.0">
-                <Label prefWidth="66.0" text="Type"/>
-                <ComboBox fx:id="typeDropDownMenu" prefWidth="205.0"/>
-            </HBox>
-        </VBox>
-        <VBox fx:id="optionsAnswerPane"
-              style="-fx-border-color: #303f9f; -fx-border-radius: 10; -fx-border-width: 3; -fx-padding: 15;"/>
-    </HBox>
+            <VBox fx:id="optionsAnswerPane" />
+         </children>
+      </HBox>
+   </content>
 </fx:root>

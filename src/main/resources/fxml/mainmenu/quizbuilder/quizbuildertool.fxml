@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.mainmenu.questionbuildertool.QuizBuilderTool">
+
+<AnchorPane id="mainPane" stylesheets="@../../css/general.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.mainmenu.questionbuildertool.QuizBuilderTool">
    <children>
-      <AnchorPane fx:id="questionPane" layoutX="15.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="15.0"
-                  AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+      <AnchorPane fx:id="questionPane" layoutX="15.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
          <children>
-            <TabPane fx:id="tabWizard" stylesheets="@../../css/tabwizard.css" tabClosingPolicy="UNAVAILABLE"/>
+            <TabPane fx:id="tabWizard" stylesheets="@../../css/tabwizard.css" tabClosingPolicy="UNAVAILABLE" />
          </children>
       </AnchorPane>
-      <HBox alignment="CENTER" layoutY="293.0" spacing="15.0" stylesheets="@../../css/button.css"
-            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <HBox alignment="CENTER" layoutY="293.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#removeButtonClicked" text="Remove"/>
-            <Button mnemonicParsing="false" onAction="#addNewButtonClicked" text="Add New"/>
-            <Button mnemonicParsing="false" onAction="#submitButtonClicked" text="Submit"/>
+            <Button mnemonicParsing="false" onAction="#removeButtonClicked" text="Remove" />
+            <Button mnemonicParsing="false" onAction="#addNewButtonClicked" text="Add New" />
+            <Button mnemonicParsing="false" onAction="#submitButtonClicked" text="Submit" />
             <HBox alignment="CENTER" spacing="15.0" stylesheets="@../../css/quiznextbackbuttons.css">
                <children>
-                  <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false"
-                          onAction="#backButtonClicked" style="-fx-background-color: #303f9f;">
+                  <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false" onAction="#backButtonClicked" style="-fx-background-color: #303f9f;">
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../pictures/left.png"/>
+                              <Image url="@../../../pictures/left.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonClicked" prefHeight="35.0"
-                          prefWidth="40.0" style="-fx-background-color: #303f9f;">
+                  <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonClicked" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: #303f9f;">
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../../pictures/right.png"/>
+                              <Image url="@../../../pictures/right.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -47,12 +46,12 @@
             </HBox>
             <Label fx:id="displayingPaneLabel" text="#0" textFill="#303f9f">
                <font>
-                  <Font size="22.0"/>
+                  <Font size="22.0" />
                </font>
             </Label>
          </children>
          <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </padding>
       </HBox>
    </children>
