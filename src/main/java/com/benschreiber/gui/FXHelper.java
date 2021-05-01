@@ -84,7 +84,7 @@ public class FXHelper {
         CALCULATOR("/fxml/quiz/tools/calculator.fxml"),
         DRAWING_PAD("/fxml/quiz/tools/drawingpad.fxml"),
         NOTEPAD("/fxml/quiz/tools/notepad.fxml"),
-        PRINT_RESULTS("/fxml/results/printresults.fxml"),
+        PRINT_RESULTS("/fxml/results/results.fxml"),
         ERROR("/fxml/popup/error.fxml"),
         CONFIRM("/fxml/popup/confirm.fxml"),
         ADMIN_MENU("/fxml/mainmenu/creatormenu.fxml"),

@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,127 +14,145 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchor" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #E1E1E1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.quiz.QuizController">
-    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <AnchorPane fx:id="topPane" style="-fx-background-color: #9E9E9E;">
-            <HBox alignment="CENTER_RIGHT" layoutX="828.0" layoutY="14.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
-                <padding>
-                    <Insets right="15.0" />
-                </padding>
-                <ImageView fitHeight="25.0" fitWidth="25.0">
-                    <Image url="@../../pictures/menu/user-circle-solid.png" />
-                </ImageView>
-                <Label fx:id="userLabel" alignment="CENTER_RIGHT" textFill="#c32148">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Label>
-            </HBox>
-         <ImageView layoutY="3.0">
-            <image>
-               <Image url="@../../pictures/4-tiny.png" />
-            </image>
-         </ImageView>
-        </AnchorPane>
-        <HBox alignment="CENTER_LEFT" style="-fx-border-style: hidden hidden solid hidden; -fx-border-color: #303f9f; -fx-border-width: 3; -fx-border-radius: 1;">
-            <Label fx:id="quizName" text="Quiz" textFill="#303f9f">
-                <font>
-                    <Font name="SansSerif Regular" size="30.0" />
-                </font>
+<AnchorPane id="mainPane" stylesheets="@../css/quiz.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.quiz.Quizex">
+   <children>
+      <Region id="quizNameBar" layoutX="5.0" layoutY="39.0" prefHeight="75.0" prefWidth="750.0" />
+      <Region id="topBar" layoutX="5.0" layoutY="2.0" prefHeight="30.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <HBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="7.0" spacing="10.0">
+         <padding>
+            <Insets right="15.0" />
+         </padding>
+         <children>
+            <ImageView fitHeight="25.0" fitWidth="25.0">
+               <image>
+                  <Image url="@../../pictures/menu/user-circle-solid.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="userLabel" alignment="CENTER_RIGHT" textFill="#c32148">
+               <font>
+                  <Font size="18.0" />
+               </font>
             </Label>
-            <Region HBox.hgrow="ALWAYS" />
-            <VBox alignment="CENTER_RIGHT">
-                <Label fx:id="quizTimer" alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="60.0" text="00:00:00" textFill="#c32148" />
-                <Label fx:id="subjAndQuestion" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="18.0" text="Subj.Question" textFill="#303f9f">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label fx:id="currQuestionLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="104.0" text="30 out of 30" textAlignment="CENTER" textFill="#303f9f">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <HBox.margin>
-                    <Insets bottom="5.0" />
-                </HBox.margin>
-            </VBox>
-            <VBox.margin>
-                <Insets left="10.0" right="10.0" top="20.0" />
-            </VBox.margin>
-        </HBox>
-        <AnchorPane fx:id="questionPane" prefHeight="500.0" style="-fx-border-color: #303f9f; -fx-border-radius: 10; -fx-border-insets: 0; -fx-border-width: 1.5;" stylesheets="@../css/textfield.css" VBox.vgrow="ALWAYS">
+         </children>
+      </HBox>
+      <Region id="quizNameBar" layoutX="5.0" layoutY="120.0" prefHeight="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+      <Label fx:id="quizName" layoutX="129.0" layoutY="53.0" text="Quiz Name" textFill="WHITE">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <VBox layoutX="685.0" layoutY="39.0">
+         <children>
+            <Label fx:id="quizTimer" text="00:00:00" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="subjAndQuestion" text="Q #4095" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="currQuestionLabel" text="0 of 5" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <AnchorPane layoutX="5.0" layoutY="531.0" style="-fx-background-color: #e9e9e9; -fx-background-insets: -5 -2; -fx-background-radius: 5;" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+         <effect>
+            <DropShadow />
+         </effect>
+      </AnchorPane>
+      <ImageView fitHeight="75.0" fitWidth="138.0" layoutX="-9.0" layoutY="39.0">
+         <image>
+            <Image url="@../../pictures/ezquiz_logos-04.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="questionPane" layoutX="14.0" layoutY="132.0" prefHeight="388.0" prefWidth="750.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="130.0">
+         <children>
             <TabPane fx:id="tabWizard" stylesheets="@../css/tabwizard.css" tabClosingPolicy="UNAVAILABLE">
-                <padding>
-                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                </padding>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
             </TabPane>
-            <VBox fx:id="addonVBox" spacing="10.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;" stylesheets="@../css/button.css" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
-                <Button fx:id="notePadButton" mnemonicParsing="false" onAction="#notepadButtonClicked" prefHeight="50.0" prefWidth="50.0">
-                    <graphic>
+            <VBox id="toolButtonsBox" layoutX="686.0" layoutY="14.0" spacing="15.0" AnchorPane.rightAnchor="5.0">
+               <children>
+                  <Button fx:id="notePadButton" mnemonicParsing="false" onAction="#notepadButtonClicked" prefHeight="50.0" prefWidth="50.0">
+                     <graphic>
                         <ImageView fitHeight="35.0" fitWidth="30.0">
-                            <Image url="@../../pictures/clipboard-solid.png" />
+                           <image>
+                              <Image url="@../../pictures/clipboard-solid.png" />
+                           </image>
                         </ImageView>
-                    </graphic>
-                </Button>
-                <Button fx:id="calculatorButton" mnemonicParsing="false" onAction="#calculatorButtonClicked" prefHeight="50.0" prefWidth="50.0">
-                    <graphic>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="calculatorButton" mnemonicParsing="false" onAction="#calculatorButtonClicked" prefHeight="50.0" prefWidth="50.0">
+                     <graphic>
                         <ImageView fitHeight="35.0" fitWidth="30.0">
-                            <Image url="@../../pictures/calculator-solid.png" />
+                           <image>
+                              <Image url="@../../pictures/calculator-solid.png" />
+                           </image>
                         </ImageView>
-                    </graphic>
-                </Button>
-                <Button fx:id="drawingPadButton" mnemonicParsing="false" onAction="#drawingPadButtonClicked" prefHeight="50.0" prefWidth="50.0">
-                    <graphic>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="drawingPadButton" mnemonicParsing="false" onAction="#drawingPadButtonClicked" prefHeight="50.0" prefWidth="50.0">
+                     <graphic>
                         <ImageView fitHeight="35.0" fitWidth="30.0">
-                            <Image url="@../../pictures/palette-solid.png" />
+                           <image>
+                              <Image url="@../../pictures/palette-solid.png" />
+                           </image>
                         </ImageView>
-                    </graphic>
-                </Button>
+                     </graphic>
+                  </Button>
+               </children>
+               <effect>
+                  <DropShadow />
+               </effect>
             </VBox>
-            <VBox.margin>
-                <Insets left="10.0" right="10.0" top="50.0" />
-            </VBox.margin>
-        </AnchorPane>
-        <HBox alignment="TOP_CENTER" minHeight="60.0" spacing="5.0" stylesheets="@../css/quiznextbackbuttons.css" VBox.vgrow="NEVER">
-            <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false" onAction="#backButtonClicked" style="-fx-background-color: #303f9f;">
-                <graphic>
-                    <ImageView>
-                        <Image url="@../../pictures/left.png" />
-                    </ImageView>
-                </graphic>
-            </Button>
-            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonClicked" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: #303f9f;">
-                <graphic>
-                    <ImageView>
-                        <Image url="@../../pictures/right.png" />
-                    </ImageView>
-                </graphic>
-            </Button>
-         <ScrollPane style="-fx-background-color: transparent;" stylesheets="@../css/scrollpane.css" vbarPolicy="NEVER" HBox.hgrow="NEVER">
-            <content>
-                  <HBox fx:id="questionHBox" alignment="CENTER" fillHeight="false" maxHeight="35.0" spacing="5.0" stylesheets="@../css/quizflagbutton.css" />
-            </content>
-            <HBox.margin>
-               <Insets />
-            </HBox.margin>
-         </ScrollPane>
-         <VBox.margin>
-            <Insets left="15.0" right="15.0" top="35.0" />
-         </VBox.margin>
-        </HBox>
-        <AnchorPane fx:id="buttonPane" style="-fx-background-color: #9E9E9E;">
-            <HBox alignment="CENTER" fillHeight="false" layoutX="14.0" layoutY="6.0" stylesheets="@../css/button.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <Button mnemonicParsing="false" onAction="#flagButtonClicked" style="-fx-background-color: #fb8804;" text="Flag" />
-                <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonClicked" stylesheets="@../css/button.css" text="Submit" />
-                <padding>
-                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                </padding>
+         </children>
+      </AnchorPane>
+      <HBox id="bottomBar" alignment="CENTER_LEFT" layoutX="5.0" layoutY="528.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#flagButtonClicked" prefHeight="35.0" style="-fx-background-color: #fb8804;" text="Flag" textFill="#777777" />
+            <Region HBox.hgrow="ALWAYS" />
+            <HBox alignment="TOP_CENTER" spacing="5.0" stylesheets="@../css/quiznextbackbuttons.css" HBox.hgrow="SOMETIMES">
+               <children>
+                  <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false" onAction="#backButtonClicked">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@../../pictures/left.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonClicked" prefHeight="35.0" prefWidth="40.0">
+                     <graphic>
+                        <ImageView>
+                           <image>
+                              <Image url="@../../pictures/right.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <ScrollPane style="-fx-background-color: transparent;" stylesheets="@../css/scrollpane.css" vbarPolicy="NEVER" HBox.hgrow="ALWAYS">
+                     <content>
+                        <HBox fx:id="questionHBox" alignment="CENTER" fillHeight="false" maxHeight="35.0" spacing="5.0" stylesheets="@../css/quizflagbutton.css" />
+                     </content>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ScrollPane>
+               </children>
             </HBox>
-            <VBox.margin>
-                <Insets top="35.0" />
-            </VBox.margin>
-        </AnchorPane>
-    </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#submitButtonClicked" prefHeight="35.0" style="-fx-background-color: rgba(86, 234, 99, .5);" text="Submit Quiz" />
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </HBox>
+   </children>
 </AnchorPane>
