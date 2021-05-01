@@ -39,7 +39,8 @@ public class QuizQuestionHelper {
 
             //Create a pool of classes.question id's in the size of how many questions available, randomize order
             List<Integer> idPool = new LinkedList<>();
-            for (int i = 0; i < request.getQuestions().length(); i++) {
+            JSONObject questions = request.getQuestions();
+            for (int i = 0; i < questions.length(); i++) {
                 idPool.add(i);
             }
 
@@ -50,9 +51,11 @@ public class QuizQuestionHelper {
             QuizHelper.initializePreferences(request.getPreferences());
 
             //Initialize questions
+            //If the specified amount is greater than possible, or less than 0, make maximum amount possible.
+            questionNodes = new QuestionNode[amount > questions.length() || amount <= 0 ? questions.length() : amount];
             int i = 0;
-            for (Question question : Question.Factory.arrayFromJSON(request.getQuestions(), amount, idPool)) {
-                questionNodes[i] = new QuestionNode(question);
+            for (Question question : Question.Factory.arrayFromJSON(questions, questionNodes.length, idPool)) {
+                questionNodes[i++] = new QuestionNode(question);
             }
 
         } catch (Exception e) {
@@ -64,9 +67,7 @@ public class QuizQuestionHelper {
     }
 
     public static QuestionNode[] getQuestionNodes() {
-
         return questionNodes;
-
     }
 
     /**

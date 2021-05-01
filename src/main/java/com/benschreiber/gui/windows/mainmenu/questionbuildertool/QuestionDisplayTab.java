@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,7 +29,7 @@ public class QuestionDisplayTab extends Tab implements Initializable {
     VBox optionsAnswerPane;
 
     @FXML
-    TextArea questionText, directionsText;
+    TextField questionText, directionsText;
 
     @FXML
     ComboBox<Question.Type> typeDropDownMenu;

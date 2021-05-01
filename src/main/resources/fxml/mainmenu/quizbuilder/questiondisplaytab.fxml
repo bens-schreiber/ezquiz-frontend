@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root type="javafx.scene.control.Tab" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="javafx.scene.control.Tab" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
    <content>
       <HBox spacing="50.0">
          <children>

@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="mainPane" stylesheets="@../css/quiz.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.quiz.Quizex">
+<AnchorPane id="mainPane" stylesheets="@../css/quiz.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.benschreiber.gui.windows.results.ResultsController">
    <children>
-      <Region id="quizNameBar" layoutX="5.0" layoutY="39.0" prefHeight="75.0" prefWidth="750.0" />
+      <Region id="quizNameBar" layoutX="5.0" layoutY="39.0" prefHeight="75.0" prefWidth="750.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
       <Region id="topBar" layoutX="5.0" layoutY="2.0" prefHeight="30.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
       <HBox alignment="CENTER_RIGHT" layoutX="14.0" layoutY="7.0" spacing="10.0">
          <padding>
@@ -28,7 +28,7 @@
                   <Image url="@../../pictures/menu/user-circle-solid.png" />
                </image>
             </ImageView>
-            <Label fx:id="userLabel" alignment="CENTER_RIGHT" textFill="#c32148">
+            <Label fx:id="userLabel" alignment="CENTER_RIGHT" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -54,7 +54,7 @@
       <AnchorPane fx:id="questionPane" layoutX="14.0" layoutY="132.0" prefHeight="388.0" prefWidth="750.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="130.0">
          <children>
             <HBox alignment="CENTER" layoutX="357.0" layoutY="158.0" />
-            <VBox alignment="CENTER" layoutX="301.0" layoutY="117.0">
+            <VBox alignment="CENTER" layoutX="301.0" layoutY="117.0" AnchorPane.leftAnchor="301.0" AnchorPane.rightAnchor="300.0">
                <children>
                   <Label text="Enter Name" textFill="#303f9f">
                      <font>
@@ -68,7 +68,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox alignment="CENTER" layoutX="311.0" layoutY="7.0">
+            <VBox alignment="CENTER" layoutX="311.0" layoutY="7.0" AnchorPane.leftAnchor="311.0" AnchorPane.rightAnchor="310.0">
                <children>
                   <Label fx:id="outOfLabel" text="0 out of 0" textFill="#303f9f">
                      <font>
@@ -82,14 +82,18 @@
                   </Label>
                </children>
             </VBox>
-            <ScrollPane layoutX="357.0" layoutY="230.0" style="-fx-background-color: #E1E1E1;">
-               <content>
-                  <VBox fx:id="questionsVBox" alignment="CENTER" spacing="30.0" style="-fx-background-color: #E1E1E1;" />
-               </content>
-            </ScrollPane>
+            <HBox alignment="CENTER" layoutX="14.0" layoutY="201.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="200.0">
+               <children>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: #E1E1E1;">
+                     <content>
+                        <VBox fx:id="questionsVBox" alignment="CENTER" spacing="30.0" style="-fx-background-color: #E1E1E1;" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
-      <HBox id="bottomBar" alignment="CENTER" layoutX="5.0" layoutY="528.0" spacing="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <HBox id="bottomBar" alignment="CENTER" layoutX="5.0" layoutY="528.0" spacing="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <effect>
             <DropShadow />
          </effect>

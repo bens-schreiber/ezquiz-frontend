@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../css/mainmenu.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.mainmenu.MainMenu">
+<AnchorPane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../css/mainmenu.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.benschreiber.gui.windows.mainmenu.MainMenu">
    <children>
       <AnchorPane fx:id="mainDisplay" layoutX="194.0" layoutY="33.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="196.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0" />
       <VBox id="mainMenuButtonContainer" fx:id="buttonContainer" layoutX="-1.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="40.0" style="-fx-border-insets: -5;" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="-1.0">
@@ -30,7 +30,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" onMouseClicked="#quizzesButtonClicked" spacing="10.0">
+            <HBox id="mainMenuButton" alignment="CENTER_LEFT" onMouseClicked="#quizzesButtonClicked" spacing="10.0">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0">
                      <image>
@@ -47,7 +47,7 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <HBox fx:id="adminContainer" alignment="CENTER_LEFT" onMouseClicked="#adminButtonClicked" spacing="10.0">
+            <HBox id="mainMenuButton" fx:id="adminContainer" alignment="CENTER_LEFT" onMouseClicked="#adminButtonClicked" spacing="10.0">
                <children>
                   <ImageView fitHeight="35.0" fitWidth="30.0">
                      <image>
@@ -61,7 +61,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" onMouseClicked="#helpButtonClicked" spacing="10.0">
+            <HBox id="mainMenuButton" alignment="CENTER_LEFT" onMouseClicked="#helpButtonClicked" spacing="10.0">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0">
                      <image>
@@ -75,7 +75,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" onMouseClicked="#logoutButtonClicked" spacing="10.0">
+            <HBox id="mainMenuButton" alignment="CENTER_LEFT" onMouseClicked="#logoutButtonClicked" spacing="10.0">
                <children>
                   <ImageView>
                      <image>
@@ -89,7 +89,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" onMouseClicked="#exitButtonClicked" spacing="10.0">
+            <HBox id="mainMenuButton" alignment="CENTER_LEFT" onMouseClicked="#exitButtonClicked" spacing="10.0">
                <children>
                   <ImageView>
                      <image>

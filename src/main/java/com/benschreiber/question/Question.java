@@ -75,9 +75,6 @@ public class Question {
         //Factory Method
         public static Question[] arrayFromJSON(JSONObject json, int amount, List<Integer> ids) throws JSONException {
 
-            //If the amount is greater than possible, or less than 0, make maximum amount possible.
-            if (amount > json.length() || amount <= 0) { amount = json.length(); }
-
             Question[] nodes = new Question[amount];
 
             int i = 0;

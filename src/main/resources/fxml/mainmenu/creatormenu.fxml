@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="740.0" prefWidth="1000.0" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.mainmenu.CreatorMenu">
+<AnchorPane prefHeight="740.0" prefWidth="1000.0" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.benschreiber.gui.windows.mainmenu.CreatorMenu">
     <children>
         <HBox layoutX="398.0" layoutY="81.0" spacing="15.0">
             <children>

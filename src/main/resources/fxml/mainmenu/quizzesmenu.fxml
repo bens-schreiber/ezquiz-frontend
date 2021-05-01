@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.mainmenu.QuizzesMenu">
+<AnchorPane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.benschreiber.gui.windows.mainmenu.QuizzesMenu">
     <children>
         <AnchorPane layoutX="65.0" layoutY="43.0" maxWidth="850.0">
             <children>
@@ -26,7 +26,7 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <HBox spacing="15.0" stylesheets="@../css/button.css">
+                                <HBox spacing="15.0">
                                     <children>
                                         <Button mnemonicParsing="false" onAction="#addKeyClicked" text="Add Key" />
                                         <Button mnemonicParsing="false" onAction="#removeKeyClicked" text="Remove Key" />

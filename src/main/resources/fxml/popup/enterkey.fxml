@@ -2,22 +2,33 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="mainPane" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.alert.quizkey.EnterQuizKeyScreen">
+<AnchorPane stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.alert.quizkey.EnterQuizKeyScreen">
    <children>
       <VBox alignment="CENTER" layoutX="4.0" layoutY="7.0" prefHeight="104.0" prefWidth="202.0" spacing="20.0" stylesheets="@../css/textfield.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Enter a Test Key">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Enter a Quiz Key">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Hyperlink text="(?)">
+                     <tooltip>
+                        <Tooltip text="You can find your quiz keys in the Quiz Creator menu" />
+                     </tooltip>
+                  </Hyperlink>
+               </children>
+            </HBox>
             <TextField fx:id="codeTextField" prefHeight="26.0" prefWidth="146.0" />
             <HBox alignment="CENTER" minWidth="200.0" spacing="15.0">
                <children>
