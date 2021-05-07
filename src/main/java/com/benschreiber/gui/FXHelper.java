@@ -42,8 +42,9 @@ public class FXHelper {
         if (requireResponse) {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
+            stage.setAlwaysOnTop(true);
         }
-        stage.setAlwaysOnTop(true);
+
         stage.setResizable(false);
 
         Scene scene = getScene(window);
@@ -57,16 +58,17 @@ public class FXHelper {
 
         Stage stage = new Stage();
 
-        //Secure the stage
-        stage.setAlwaysOnTop(true);
-        stage.setFullScreen(true);
-        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        stage.setFullScreenExitHint(null);
+        //Take up the entire screen boundaries
         Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
         stage.setHeight(visualBounds.getHeight());
         stage.setWidth(visualBounds.getWidth());
+
+        //Secure the stage
+        stage.setMaximized(true);
+        stage.setFullScreenExitHint(null);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initStyle(StageStyle.UNDECORATED);
+        stage.setAlwaysOnTop(true);
 
         stage.setScene(getScene(window));
         return stage;

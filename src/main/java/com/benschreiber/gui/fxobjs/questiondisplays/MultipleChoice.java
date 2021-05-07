@@ -24,6 +24,7 @@ class MultipleChoice extends TypeNode {
         for (int i = 0; i < buttonAmount; i++) {
 
             RadioButton radioButton = new RadioButton(options.get(i));
+            radioButton.setStyle(fontSize);
 
             radioButtons[i] = radioButton;
 

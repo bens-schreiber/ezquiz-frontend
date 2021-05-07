@@ -50,7 +50,7 @@ public class QuizUpload extends FXController implements Initializable {
             try {
 
                 //Throws ExcelValidateException if invalid
-                excelReader.validateFile();
+                excelReader.initExcelSheet();
 
                 //Assemble json to send to the server. True/False is represented as 1 or 0 bit in SQL.
                 JSONObject quizJSON = excelReader.sheetToJSON()

@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +30,10 @@ class TrueOrFalse extends OptionNode {
 
         //Create a horizontal placement box and put the comboBox inside.
         HBox hBox = new HBox();
-        hBox.getChildren().setAll(new Label("Answer: "), answers);
+        Label l = new Label("Answer: ");
+        hBox.setMinWidth(Region.USE_COMPUTED_SIZE);
+        l.setMinWidth(Region.USE_COMPUTED_SIZE);
+        hBox.getChildren().setAll(l, answers);
 
         this.node = hBox;
 

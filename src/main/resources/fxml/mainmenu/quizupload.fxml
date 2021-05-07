@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="#mainPane" stylesheets="@../css/preferences.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.benschreiber.gui.windows.mainmenu.QuizUpload">
+<AnchorPane id="mainPane" stylesheets="@../css/preferences.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.mainmenu.QuizUpload">
    <children>
       <HBox layoutX="14.0" layoutY="62.0" spacing="30.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0">
          <children>
             <VBox id="dividerVBox" spacing="20.0">
                <children>
-                  <Label text="Quiz Tools">
+                  <Label id="complementLabel" text="Quiz Tools">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -31,7 +31,7 @@
                <children>
                   <VBox spacing="10.0">
                      <children>
-                        <Label text="Quiz Name">
+                        <Label id="complementLabel" text="Quiz Name">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -44,7 +44,7 @@
                   </VBox>
                   <VBox alignment="CENTER_LEFT" spacing="10.0">
                      <children>
-                        <Label text="Timer">
+                        <Label id="complementLabel" text="Timer">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -54,23 +54,23 @@
                   </VBox>
                   <VBox prefWidth="207.0" spacing="10.0">
                      <children>
-                        <Label text="Questions">
+                        <Label id="complementLabel" text="Questions">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
                         <HBox alignment="CENTER_LEFT" fillHeight="false">
                            <children>
-                              <Label fx:id="fileDisplay" maxWidth="172.0">
-                                 <padding>
-                                    <Insets left="5.0" />
-                                 </padding>
-                              </Label>
                               <Button mnemonicParsing="false" onAction="#uploadExcelButtonClicked" text="Upload Excel">
                                  <HBox.margin>
                                     <Insets left="-5.0" />
                                  </HBox.margin>
                               </Button>
+                              <Label id="complementLabel" fx:id="fileDisplay" maxWidth="172.0">
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                              </Label>
                            </children>
                         </HBox>
                      </children>
@@ -86,7 +86,7 @@
          </padding>
       </HBox>
       <Button layoutX="343.0" layoutY="368.0" mnemonicParsing="false" onAction="#submitButtonClicked" text="Submit" AnchorPane.bottomAnchor="-25.0" AnchorPane.rightAnchor="10.0" />
-      <Label layoutX="14.0" layoutY="14.0" text="New Quiz" textFill="#303f9f">
+      <Label id="complementLabel" layoutX="14.0" layoutY="14.0" text="New Quiz" textFill="#303f9f">
          <font>
             <Font size="22.0" />
          </font>

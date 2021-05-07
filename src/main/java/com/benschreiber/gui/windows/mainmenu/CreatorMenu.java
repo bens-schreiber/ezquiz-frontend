@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import org.json.JSONException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.ConnectException;
@@ -174,6 +175,23 @@ public class CreatorMenu extends FXController implements Initializable {
             userNotifier.setText("Please select a created Quiz.").display();
 
         }
+
+    }
+
+    public void downloadBaseExcelSheetClicked() {
+
+        try {
+
+            //Open a DirectoryChooser to choose where to store the excel
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            File selectedDirectory = directoryChooser.showDialog(FXController.getPrimaryStage());
+
+            FileOutputStream outputStream = new FileOutputStream(selectedDirectory.getAbsolutePath() + "/blankquiz.xlsx");
+
+            ExcelReader.getDefaultExcelWorkbook().write(outputStream);
+            outputStream.close();
+
+        } catch (Exception ignore) {}
 
     }
 

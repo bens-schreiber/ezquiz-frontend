@@ -21,6 +21,8 @@ class TrueOrFalse extends TypeNode {
         //Iterate through buttons and init functionality
         for (RadioButton radioButton : Arrays.asList(radio1, radio2)) {
 
+            radioButton.setStyle(fontSize);
+
             radioButton.setToggleGroup(buttons);
             radioButton.setOnMouseClicked(e -> this.response = Collections.singletonList(radioButton.getText()));
         }

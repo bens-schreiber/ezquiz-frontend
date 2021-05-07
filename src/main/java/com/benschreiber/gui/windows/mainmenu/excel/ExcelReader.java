@@ -30,7 +30,7 @@ public class ExcelReader {
         this.json = json;
     }
 
-    //iterate through Excel
+    //iterate through Excel, check for errors
     private boolean validateExcel(Sheet sheet) {
 
         //Format excel data to proper java object.
@@ -42,12 +42,10 @@ public class ExcelReader {
             if (row.getCell(0).toString().toUpperCase().equals(JSONKey.QUESTION.toString())) {
                 continue;
             }
-
             //50 Questions maximum
             if (row.getRowNum() > 50) {
 
                 throw new ExcelValidateException("File exceeds question limit.", row.getRowNum());
-
             }
 
             //required not to be null/empty
@@ -60,13 +58,11 @@ public class ExcelReader {
 
             //if not in possible types
             try {
-
                 Question.Type.valueOf(dataFormatter.formatCellValue(row.getCell(4)).toUpperCase());
 
             } catch (IllegalArgumentException e) {
 
                 throw new ExcelValidateException("Unsupported question type", row.getRowNum(), 4);
-
             }
 
             //if options is empty it must be true or false / written
@@ -77,40 +73,34 @@ public class ExcelReader {
                     case MULTIPLECHOICE -> throw new ExcelValidateException("Options must not be empty for multiple choice", row.getRowNum(), 2);
 
                     case CHECKBOX -> throw new ExcelValidateException("Options must not be empty for checkbox", row.getRowNum(), 2);
-
                 }
             }
-
         }
         return true;
     }
 
     /**
      * If valid, turn into Excel sheet.
-     * @throws ExcelValidateException (at runtime) if not properly formatted for toJSON().
+     * @throws ExcelValidateException if not properly formatted for toJSON().
      */
-    public void validateFile() throws IOException {
+    public void initExcelSheet() throws IOException {
 
         FileInputStream fis = new FileInputStream(file);
 
         try (Workbook workbook = new XSSFWorkbook(fis)) {
 
             Sheet sheet = workbook.getSheetAt(0);
-
             if (validateExcel(sheet)) {
                 this.sheet = sheet;
             }
-
         }
-
         fis.close();
-
     }
 
     /**
-     * @return Excel workbook from a JSONObject.
+     * @return Return Default Excel sheet
      */
-    public XSSFWorkbook jsonToExcel() throws JSONException {
+    public static XSSFWorkbook getDefaultExcelWorkbook() {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Your Quiz");
@@ -121,6 +111,24 @@ public class ExcelReader {
             Cell key = row.createCell(i);
             key.setCellValue(JSONKey.getKeyAtIndex(i).toString());
         }
+
+        //auto size all columns to make it look good
+        for (int i = 0; i < JSONKey.values().length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        return workbook;
+
+    }
+
+    /**
+     * @return Excel workbook from a JSONObject.
+     */
+    public XSSFWorkbook jsonToExcel() throws JSONException {
+
+        XSSFWorkbook workbook = getDefaultExcelWorkbook();
+        XSSFSheet sheet = workbook.getSheet(workbook.getSheetAt(0).getSheetName());
+        Row row;
 
         //Since the JSON comes from the rest server it will always be formatted in this way
         //Set all JSON to Excel in the order of the JSONKey guideline row.
@@ -176,7 +184,7 @@ public class ExcelReader {
                 continue;
             }
 
-            //Initialize internal JSONObject that represents an individual classes.question
+            //Initialize internal JSONObject that represents an individual question
             JSONObject internalJSON = new JSONObject();
 
             for (int cellIndex = 0; cellIndex < 4; cellIndex++) {

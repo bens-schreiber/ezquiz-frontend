@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -70,7 +71,7 @@ public class QuizController extends FXController implements Initializable {
         timer.startTimer();
 
         //Load all questions into the tabWizard
-        for (QuestionNode questionNode : QuizQuestionHelper.getQuestionNodes()) {
+        for (QuestionNode questionNode : QuizHelper.getQuestionNodes()) {
 
             //Add every questionNode to the tab wizard to be displayed.
             tabWizard.getTabs().add(questionNode.getAsTab());
@@ -140,7 +141,7 @@ public class QuizController extends FXController implements Initializable {
     public void submitButtonClicked() {
 
         try {
-            if (!List.of(QuizQuestionHelper.getQuestionNodes()).stream().allMatch(QuestionNode::isAnswered)) {
+            if (!List.of(QuizHelper.getQuestionNodes()).stream().allMatch(QuestionNode::isAnswered)) {
                 if (confirmNotifier.setPrompt("Some answers are unfinished. Are sure you want to submit?").display().getResponse()) {
                     QuizHelper.endQuiz();
                 }
@@ -178,6 +179,8 @@ public class QuizController extends FXController implements Initializable {
             if (!calculator.isShowing()) {
 
                 calculator = FXHelper.getPopupStage(FXHelper.Window.CALCULATOR, false);
+                calculator.initOwner(FXController.getPrimaryStage());
+                calculator.setAlwaysOnTop(true);
 
                 CalculatorController.setStage(calculator);
 
@@ -206,6 +209,8 @@ public class QuizController extends FXController implements Initializable {
             if (!notepad.isShowing()) {
 
                 notepad = FXHelper.getPopupStage(FXHelper.Window.NOTEPAD, false);
+                notepad.initOwner(FXController.getPrimaryStage());
+                notepad.setAlwaysOnTop(true);
 
                 NotePadController.setStage(notepad);
 
@@ -234,10 +239,13 @@ public class QuizController extends FXController implements Initializable {
                 DrawingPadController.setPane(questionPane);
 
                 drawingPad = FXHelper.getPopupStage(FXHelper.Window.DRAWING_PAD, false);
-
                 drawingPad.setOnCloseRequest(e -> questionPane.getChildren().remove(1));
+                drawingPad.initOwner(FXController.getPrimaryStage());
+                drawingPad.setAlwaysOnTop(true);
 
                 DrawingPadController.setStage(drawingPad);
+
+                DrawingPadController.getStage().setAlwaysOnTop(true);
 
                 drawingPad.show();
 
@@ -268,12 +276,12 @@ public class QuizController extends FXController implements Initializable {
 
         //Disable/enable next and back based on position
         backButton.setDisable(currentQuestionIndex == 0);
-        nextButton.setDisable(currentQuestionIndex + 1 == QuizQuestionHelper.getQuestionNodes().length);
+        nextButton.setDisable(currentQuestionIndex + 1 == QuizHelper.getQuestionNodes().length);
 
-        QuestionNode currentQuestionNode = QuizQuestionHelper.getQuestionNodes()[currentQuestionIndex];
+        QuestionNode currentQuestionNode = QuizHelper.getQuestionNodes()[currentQuestionIndex];
 
         //Change top right label to current classes.question num / classes.question amount
-        currQuestionLabel.setText(currentQuestionIndex + 1 + " / " + QuizQuestionHelper.getQuestionNodes().length);
+        currQuestionLabel.setText(currentQuestionIndex + 1 + " / " + QuizHelper.getQuestionNodes().length);
         subjAndQuestion.setText(" QID:" + currentQuestionNode.getID());
 
         highlightSelected();

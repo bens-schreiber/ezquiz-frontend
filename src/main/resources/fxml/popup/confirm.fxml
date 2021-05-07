@@ -7,15 +7,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.alert.confirm.ConfirmScreenController">
+<AnchorPane id="mainPane" stylesheets="@../css/popup.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.alert.confirm.ConfirmScreenController">
    <children>
       <VBox alignment="TOP_CENTER" layoutY="3.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="promptLabel" alignment="CENTER" text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
+            <Label fx:id="promptLabel" alignment="CENTER" text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" textFill="#fcfcfc">
                <padding>
                   <Insets top="10.0" />
                </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
             </Label>
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="200.0" spacing="10.0">
                <children>

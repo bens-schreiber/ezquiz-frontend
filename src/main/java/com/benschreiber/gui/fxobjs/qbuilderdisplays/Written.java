@@ -3,6 +3,7 @@ package com.benschreiber.gui.fxobjs.qbuilderdisplays;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +22,10 @@ class Written extends OptionNode {
 
         //Place text field in hbox with label
         HBox hBox = new HBox();
-        hBox.getChildren().addAll(new Label("Answer: "), answer);
+        Label l = new Label("Answer: ");
+        hBox.setMinWidth(Region.USE_COMPUTED_SIZE);
+        l.setMinWidth(Region.USE_COMPUTED_SIZE);
+        hBox.getChildren().addAll(l, answer);
 
         this.node = hBox;
 

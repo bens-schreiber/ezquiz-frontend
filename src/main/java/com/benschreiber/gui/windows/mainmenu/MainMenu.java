@@ -1,11 +1,9 @@
 package com.benschreiber.gui.windows.mainmenu;
 
 import com.benschreiber.etc.Account;
-import com.benschreiber.gui.Constants;
 import com.benschreiber.gui.FXController;
 import com.benschreiber.gui.FXHelper;
 import com.benschreiber.gui.windows.quiz.QuizHelper;
-import com.benschreiber.gui.windows.quiz.QuizQuestionHelper;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,8 +48,6 @@ public class MainMenu extends FXController implements Initializable {
 
             if (confirmNotifier.setPrompt("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
                 try {
-
-                    QuizQuestionHelper.initializeQuiz(Constants.MAXIMUM_QUESTION_AMOUNT);
 
                     QuizHelper.startQuiz(false);
 

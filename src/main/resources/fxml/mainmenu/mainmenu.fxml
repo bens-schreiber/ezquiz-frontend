@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../css/mainmenu.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.benschreiber.gui.windows.mainmenu.MainMenu">
+<AnchorPane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../css/mainmenu.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.mainmenu.MainMenu">
    <children>
-      <AnchorPane fx:id="mainDisplay" layoutX="194.0" layoutY="33.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="196.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0" />
+      <AnchorPane fx:id="mainDisplay" layoutX="197.0" layoutY="56.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="197.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="56.0" />
       <VBox id="mainMenuButtonContainer" fx:id="buttonContainer" layoutX="-1.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="40.0" style="-fx-border-insets: -5;" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.topAnchor="-1.0">
          <children>
             <HBox id="mainMenuButton" alignment="CENTER_LEFT" onMouseClicked="#takeQuizClicked" spacing="10.0">
@@ -65,7 +65,7 @@
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0">
                      <image>
-                        <Image url="@../../pictures/question-circle-regular.png" />
+                        <Image url="@../../pictures/menu/question-circle-regular.png" />
                      </image>
                   </ImageView>
                   <Label alignment="CENTER" text="Help" textFill="WHITE">
@@ -156,7 +156,7 @@
       </HBox>
       <ImageView fitHeight="112.0" fitWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <image>
-            <Image url="@../../pictures/ezquiz_logos-03.png" />
+            <Image url="@../../pictures/quiz/ezquiz_logos-03.png" />
          </image>
       </ImageView>
    </children>

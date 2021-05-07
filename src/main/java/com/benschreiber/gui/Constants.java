@@ -5,7 +5,7 @@ package com.benschreiber.gui;
  */
 public class Constants {
 
-    public static int DEFAULT_QUESTION_AMOUNT = 5;
+    public static int RANDOM_QUESTION_AMOUNT = 5;
 
     public static int MAXIMUM_QUESTION_AMOUNT = 0;
 

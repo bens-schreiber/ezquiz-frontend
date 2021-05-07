@@ -20,13 +20,14 @@ class CheckBoxNode extends TypeNode {
         for (int i = 0; i < boxAmount; i++) {
 
             CheckBox checkBox = new CheckBox(options.get(i));
+            checkBox.setStyle(fontSize);
 
             boxes[i] = checkBox;
 
             //On mouse clicked, record response to responses
             checkBox.setOnMouseClicked(e -> {
 
-                //Make a new linked list everytime so we donn't need to track removing.
+                //Make a new linked list everytime so we don't need to track removing.
                 LinkedList<String> list = new LinkedList<>();
                 for (CheckBox box : boxes) {
                     if (box.isSelected())

@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import org.json.JSONException;
@@ -57,13 +56,11 @@ public class QuestionDisplayTab extends Tab implements Initializable {
 
         optionsAnswerPane.getChildren().setAll(optionsNode.getNode());
 
-
         typeDropDownMenu.getSelectionModel().select(Question.Type.MULTIPLECHOICE);
 
         typeDropDownMenu.setOnAction(event -> {
 
             optionsNode = OptionNode.Factory.nodeFromType(typeDropDownMenu.getSelectionModel().getSelectedItem());
-
             optionsAnswerPane.getChildren().setAll(optionsNode.getNode());
 
         });

@@ -16,7 +16,7 @@ public class GuiRunner extends Application {
 
             //Set stage title and icon
             primaryStage.setTitle("EZQuiz");
-            Image icon = new Image(getClass().getResourceAsStream("/pictures/ezquiz_logos-04.png"));
+            Image icon = new Image(getClass().getResourceAsStream("/pictures/quiz/ezquiz_logos-04.png"));
             primaryStage.getIcons().add(icon);
 
 

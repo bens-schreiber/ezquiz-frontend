@@ -8,8 +8,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="mainPane" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.benschreiber.gui.windows.login.Login">
+<AnchorPane id="mainPane" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.login.Login">
    <children>
       <VBox alignment="CENTER" layoutX="4.0" layoutY="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -23,11 +24,14 @@
                   </PasswordField>
                </children>
             </VBox>
-            <Label fx:id="errorLabel" minHeight="-Infinity" textFill="RED" wrapText="true" VBox.vgrow="ALWAYS" />
+            <Label id="complementLabel" fx:id="errorLabel" minHeight="-Infinity" textFill="RED" wrapText="true" VBox.vgrow="ALWAYS" />
             <VBox alignment="CENTER" spacing="10.0">
                <children>
                   <Button fx:id="loginButton" mnemonicParsing="false" onAction="#loginButtonClicked" prefWidth="252.0" text="Login" />
-                  <Hyperlink onMouseClicked="#registerButtonClicked" text="Register an EZQuiz account" />
+                  <Hyperlink onMouseClicked="#registerButtonClicked" text="Register an EZQuiz account">
+                     <font>
+                        <Font size="15.0" />
+                     </font></Hyperlink>
                </children>
             </VBox>
          </children>

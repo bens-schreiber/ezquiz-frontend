@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="mainPane" stylesheets="@../css/quiz.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.benschreiber.gui.windows.results.ResultsController">
+<AnchorPane id="mainPane" stylesheets="@../css/quiz.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.results.ResultsController">
    <children>
       <Region id="quizNameBar" layoutX="5.0" layoutY="39.0" prefHeight="75.0" prefWidth="750.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
       <Region id="topBar" layoutX="5.0" layoutY="2.0" prefHeight="30.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
@@ -36,9 +36,9 @@
          </children>
       </HBox>
       <Region id="quizNameBar" layoutX="5.0" layoutY="120.0" prefHeight="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-      <Label fx:id="quizName" layoutX="129.0" layoutY="53.0" text="Your Quiz Results" textFill="WHITE">
+      <Label fx:id="quizName" layoutX="129.0" layoutY="58.0" text="Results" textFill="WHITE">
          <font>
-            <Font size="32.0" />
+            <Font name="Arial Italic" size="32.0" />
          </font>
       </Label>
       <AnchorPane layoutX="5.0" layoutY="531.0" style="-fx-background-color: #e9e9e9; -fx-background-insets: -5 -2; -fx-background-radius: 5;" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
@@ -48,45 +48,40 @@
       </AnchorPane>
       <ImageView fitHeight="75.0" fitWidth="138.0" layoutX="-9.0" layoutY="39.0">
          <image>
-            <Image url="@../../pictures/ezquiz_logos-04.png" />
+            <Image url="@../../pictures/quiz/ezquiz_logos-04.png" />
          </image>
       </ImageView>
       <AnchorPane fx:id="questionPane" layoutX="14.0" layoutY="132.0" prefHeight="388.0" prefWidth="750.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="130.0">
          <children>
             <HBox alignment="CENTER" layoutX="357.0" layoutY="158.0" />
-            <VBox alignment="CENTER" layoutX="301.0" layoutY="117.0" AnchorPane.leftAnchor="301.0" AnchorPane.rightAnchor="300.0">
+            <HBox alignment="CENTER" layoutX="242.0" layoutY="119.0" AnchorPane.leftAnchor="242.0" AnchorPane.rightAnchor="232.0">
                <children>
-                  <Label text="Enter Name" textFill="#303f9f">
+                  <TextField promptText="Enter Your Name...">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="25.0" />
                      </font>
-                  </Label>
-                  <HBox alignment="CENTER">
-                     <children>
-                        <TextField />
-                     </children>
-                  </HBox>
+                  </TextField>
                </children>
-            </VBox>
-            <VBox alignment="CENTER" layoutX="311.0" layoutY="7.0" AnchorPane.leftAnchor="311.0" AnchorPane.rightAnchor="310.0">
+            </HBox>
+            <VBox alignment="CENTER" layoutX="302.0" layoutY="14.0" prefHeight="96.0" prefWidth="156.0" AnchorPane.leftAnchor="302.0" AnchorPane.rightAnchor="292.0">
                <children>
-                  <Label fx:id="outOfLabel" text="0 out of 0" textFill="#303f9f">
+                  <Label id="complementLabel" fx:id="outOfLabel" text="0 out of 0" textFill="#303f9f">
                      <font>
-                        <Font size="30.0" />
+                        <Font name="Arial" size="35.0" />
                      </font>
                   </Label>
-                  <Label fx:id="percentageLabel" text="0%" textFill="#303f9f">
+                  <Label id="complementLabel" fx:id="percentageLabel" text="0%" textFill="#303f9f">
                      <font>
-                        <Font size="30.0" />
+                        <Font name="Arial Bold" size="30.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <HBox alignment="CENTER" layoutX="14.0" layoutY="201.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="200.0">
+            <HBox alignment="CENTER" layoutX="280.0" layoutY="194.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="194.0">
                <children>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: #E1E1E1;">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" style="-fx-background-color: #E1E1E1;" vbarPolicy="ALWAYS">
                      <content>
-                        <VBox fx:id="questionsVBox" alignment="CENTER" spacing="30.0" style="-fx-background-color: #E1E1E1;" />
+                        <VBox fx:id="questionsVBox" alignment="CENTER" spacing="30.0" stylesheets="@../css/tabwizard.css" />
                      </content>
                   </ScrollPane>
                </children>
@@ -98,9 +93,18 @@
             <DropShadow />
          </effect>
          <children>
-            <Button fx:id="screenshotButton" mnemonicParsing="false" onAction="#screenshotButtonClicked" prefHeight="35.0" text="Screenshot" />
-            <Button fx:id="printButton1" mnemonicParsing="false" onAction="#printButtonClicked" prefHeight="35.0" text="Print" />
-            <Button mnemonicParsing="false" onAction="#backToMainMenuClicked" prefHeight="35.0" text="Main Menu" />
+            <Button fx:id="screenshotButton" mnemonicParsing="false" onAction="#screenshotButtonClicked" prefHeight="50.0" text="Screenshot">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Button fx:id="printButton1" mnemonicParsing="false" onAction="#printButtonClicked" prefHeight="50.0" text="Print">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#backToMainMenuClicked" prefHeight="50.0" text="Main Menu">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
          </children>
       </HBox>
    </children>

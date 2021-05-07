@@ -14,7 +14,7 @@ import java.net.http.HttpResponse;
 class Request {
 
     /**
-     * Make HTTP get request to server.
+     * Make HTTP GET
      *
      * @param url   where to send request
      * @param token auth token
@@ -33,7 +33,7 @@ class Request {
 
 
     /**
-     * Make HTTP post to server.
+     * Make HTTP POST
      *
      * @param body       JSONObject of what to send
      * @param urlSegment where to send it
@@ -53,8 +53,6 @@ class Request {
 
 
     /**
-     * Make HTTP post to server.
-     *
      * @param body       JSONObject of what to send
      * @param urlSegment where to send it
      * @param token      auth token
@@ -75,7 +73,7 @@ class Request {
 
 
     /**
-     * Delete Request to the Server.
+     * HTTP DEL Request
      *
      * @param urlSegment where to send it
      * @param token      auth token

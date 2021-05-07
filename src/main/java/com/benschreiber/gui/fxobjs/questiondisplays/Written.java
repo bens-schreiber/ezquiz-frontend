@@ -13,6 +13,7 @@ class Written extends TypeNode {
         TextField textField = new TextField();
         textField.setMaxSize(115, 10);
         Label label = new Label("Answer:");
+        label.setStyle(fontSize);
 
         //Set functionality
         textField.setOnKeyTyped(e -> this.response = Collections.singletonList(textField.getText()));

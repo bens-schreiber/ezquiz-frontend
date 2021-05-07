@@ -1,18 +1,19 @@
 #mainPane {
-    -fx-background-color: #E9E9E9;
+    -fx-background-color: #D4D4D4;
 }
 
 .button{
-    -fx-background-color: #CCCCCC;
-    -fx-text-fill: black;
+    -fx-background-color: #9f9f9f;
+    -fx-text-fill: #3f3f3f;
+    -fx-font-family: "Arial Black";
     -fx-padding: 0.2em 1.4em;
     -fx-background-radius: 10;
-    -fx-font-weight: 400;
 }
 
 .button:hover{
-    -fx-border-color: #7a7a7a;
+    -fx-border-color: black;
     -fx-padding: 0.1em 1.3em;
+    -fx-border-width: 1;
     -fx-border-radius: 10;
 }
 
@@ -24,5 +25,15 @@
 .text-field:focused {
     -fx-background-color: #a9a9a9 , white , white;
     -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+}
+
+.label {
+    -fx-font-family: "Arial";
+    -fx-text-fill: #FAFAFA;
+}
+
+#complementLabel {
+    -fx-font-family: "Arial";
+    -fx-text-fill: #505050;
 }
 

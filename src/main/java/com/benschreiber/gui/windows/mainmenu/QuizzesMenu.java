@@ -1,13 +1,11 @@
 package com.benschreiber.gui.windows.mainmenu;
 
 import com.benschreiber.etc.Account;
-import com.benschreiber.gui.Constants;
 import com.benschreiber.gui.FXController;
 import com.benschreiber.gui.windows.alert.quizkey.EnterQuizKeyNotifier;
 import com.benschreiber.requests.Status;
 import com.benschreiber.etc.Quiz;
 import com.benschreiber.gui.windows.quiz.QuizHelper;
-import com.benschreiber.gui.windows.quiz.QuizQuestionHelper;
 import com.benschreiber.requests.DatabaseRequest;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -39,10 +37,11 @@ public class QuizzesMenu extends FXController implements Initializable {
 
     //Right click menu
     private final ContextMenu contextMenu = new ContextMenu();
-
     {
         MenuItem takeQuiz = new MenuItem("Take Quiz");
         MenuItem takeRandomQuiz = new MenuItem("Take Randomized Quiz");
+        takeQuiz.setStyle("-fx-text-fill: #000000");
+        takeRandomQuiz.setStyle("-fx-text-fill: #000000");
 
         takeQuiz.setOnAction(e -> takeQuizClicked());
         takeRandomQuiz.setOnAction(e -> randomQuizClicked());
@@ -144,8 +143,6 @@ public class QuizzesMenu extends FXController implements Initializable {
 
             if (confirmNotifier.setPrompt("Are you sure you want to take: " + Account.getQuiz().getName()).display().getResponse()) {
                 try {
-
-                    QuizQuestionHelper.initializeQuiz(Constants.MAXIMUM_QUESTION_AMOUNT);
 
                     QuizHelper.startQuiz(false);
 

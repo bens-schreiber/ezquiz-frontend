@@ -1,0 +1,5 @@
+@import "general.css";
+
+#mainPane {
+    -fx-background-color: #777777;
+}

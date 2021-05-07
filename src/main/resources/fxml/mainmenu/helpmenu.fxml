@@ -1,33 +1,333 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label text="General Help / FAQ">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303f9f" height="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1000.0">
-               <VBox.margin>
-                  <Insets top="-30.0" />
-               </VBox.margin>
-            </Rectangle>
-            <Accordion>
-               <VBox.margin>
-                  <Insets left="15.0" right="15.0" />
-               </VBox.margin>
-            </Accordion>
-         </children>
-      </VBox>
+      <Accordion layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="14.0">
+        <panes>
+          <TitledPane animated="false" text="Take a Premade Quiz">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" stylesheets="@../css/general.css">
+                     <children>
+                        <TabPane stylesheets="@../css/general.css" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab text="1.) Navigate to Quiz Menu">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0">
+                                       <children>
+                                          <VBox alignment="CENTER" layoutX="338.0" layoutY="53.0" spacing="15.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="338.0" AnchorPane.rightAnchor="337.0" AnchorPane.topAnchor="53.0">
+                                             <children>
+                                                <Label id="complementLabel" text="Navigate to the My Quizzes Menu">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                </Label>
+                                                <ImageView fitHeight="98.0" fitWidth="195.0">
+                                                   <image>
+                                                      <Image url="@../../pictures/tutorial/myquizzes.PNG" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                            <Tab text="2.) Add Key">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox alignment="CENTER" layoutX="305.0" layoutY="56.0" spacing="15.0">
+                                             <children>
+                                                <Label id="complementLabel" text="Click the &quot;Add Key&quot; button in the top right">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                </Label>
+                                                <ImageView fitHeight="106.0" fitWidth="252.0">
+                                                   <image>
+                                                      <Image url="@../../pictures/tutorial/add%20key%20button.PNG" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                              <Tab text="3.) Enter Key">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="241.0" prefWidth="976.0">
+                                       <children>
+                                          <VBox alignment="CENTER" layoutX="324.0" layoutY="2.0" prefHeight="238.0" prefWidth="328.0" spacing="15.0">
+                                             <children>
+                                                <Label id="complementLabel" text="Enter your Premade Quiz Key" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                </Label>
+                                                <ImageView fitHeight="133.0" fitWidth="200.0">
+                                                   <image>
+                                                      <Image url="@../../pictures/tutorial/enter%20key%20screen.PNG" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label id="complementLabel" prefHeight="69.0" prefWidth="352.0" text="To take the default FBLA Quiz, enter the code 0000" textAlignment="CENTER" wrapText="true">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="4.) Take Quiz">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="976.0">
+                                       <children>
+                                          <VBox alignment="CENTER" layoutX="14.0" layoutY="38.0" spacing="15.0">
+                                             <children>
+                                                <Label id="complementLabel" text="Click Take Quiz to take the Entire Quiz">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                </Label>
+                                                <ImageView fitHeight="91.0" fitWidth="180.0">
+                                                   <image>
+                                                      <Image url="@../../pictures/tutorial/take%20quiz.PNG" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" layoutX="488.0" layoutY="7.0" spacing="15.0">
+                                             <children>
+                                                <Label id="complementLabel" prefHeight="57.0" prefWidth="393.0" text="OR Rightclick the Quiz in the Table and select &quot;Random Quiz&quot; to randomize" wrapText="true">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                </Label>
+                                                <ImageView fitHeight="120.0" fitWidth="298.0">
+                                                   <image>
+                                                      <Image url="@../../pictures/tutorial/rightclick.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Create Questions with Excel">
+               <content>
+                  <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Navigate to Quiz Creator">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox alignment="CENTER" layoutX="339.0" layoutY="22.0" spacing="15.0">
+                                       <children>
+                                          <Label id="complementLabel" text="Navigate to the Quiz Creator Menu">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView>
+                                             <image>
+                                                <Image url="@../../pictures/tutorial/quizcreator.PNG" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                      </Tab>
+                      <Tab text="Download Default Excel">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox alignment="CENTER" layoutX="351.0" layoutY="9.0" spacing="15.0">
+                                       <children>
+                                          <Label id="complementLabel" text="Download the Base Excel Sheet">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView fitHeight="116.0" fitWidth="200.0">
+                                             <image>
+                                                <Image url="@../../pictures/tutorial/default%20excel.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="Excel Guidelines">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ImageView fitHeight="148.0" fitWidth="584.0" layoutX="390.0" layoutY="14.0">
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/excelexample.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label id="complementLabel" layoutX="14.0" layoutY="14.0" prefHeight="51.0" prefWidth="317.0" text="Options should be seperated by the &quot;/&quot; symbol " wrapText="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Label id="complementLabel" layoutX="14.0" layoutY="65.0" prefHeight="109.0" prefWidth="317.0" text="Possible types are MULTIPLECHOICE, CHECKBOX, WRITTEN, TRUEORFALSE" wrapText="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+               </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Create Questions with QuestionBuilder">
+               <content>
+                  <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab text="Navigate to Quiz Creator">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox alignment="CENTER" layoutX="339.0" layoutY="22.0" spacing="15.0">
+                                       <children>
+                                          <Label id="complementLabel" text="Navigate to the Quiz Creator Menu">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView>
+                                             <image>
+                                                <Image url="@../../pictures/tutorial/quizcreator.PNG" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="QuestionBuilder Button">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox alignment="CENTER" layoutX="339.0" layoutY="54.0" spacing="15.0">
+                                       <children>
+                                          <Label id="complementLabel" text="Navigate to the Quiz Builder button">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView>
+                                             <image>
+                                                <Image url="@../../pictures/tutorial/quiz%20builder%20button.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="Question Builder">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0">
+                                 <children>
+                                    <Label id="complementLabel" layoutX="14.0" layoutY="27.0" prefHeight="102.0" prefWidth="571.0" text="Fill out the Question Builder for up to 50 questions, and click &quot;Submit&quot; when finished to download the generated Excel file" wrapText="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="164.0" fitWidth="274.0" layoutX="700.0" layoutY="4.0">
+                                       <image>
+                                          <Image url="@../../pictures/tutorial/questionbuilder.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+               </content>
+          </TitledPane>
+            <TitledPane animated="false" text="Creating your own Quiz">
+               <content>
+                  <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab text="Navigate to Quiz Creator">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox alignment="CENTER" layoutX="339.0" layoutY="22.0" spacing="15.0">
+                                       <children>
+                                          <Label id="complementLabel" text="Navigate to the Quiz Creator Menu">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView>
+                                             <image>
+                                                <Image url="@../../pictures/tutorial/quizcreator.PNG" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                      <Tab text="Upload Quiz">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ImageView fitHeight="169.0" fitWidth="212.0" layoutX="609.0" layoutY="1.0">
+                                       <image>
+                                          <Image url="@../../../../../../../../Users/Work/Pictures/preferences.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label id="complementLabel" layoutX="14.0" layoutY="14.0" prefHeight="130.0" prefWidth="550.0" text="On the Quiz Tools section, check any tools you would like to enable during the Quiz. Leave the Timer blank for a default of 30 minutes. Upload your questions by clicking the &quot;Upload Excel&quot; button" wrapText="true">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               </content>
+            </TitledPane>
+        </panes>
+      </Accordion>
    </children>
 </AnchorPane>

@@ -17,11 +17,18 @@ public abstract class TypeNode {
 
     protected VBox node;
 
+    protected String fontSize = "-fx-font-size: 15";
+
     protected TypeNode(String directions, String prompt) {
 
         VBox vBox = new VBox(15);
 
-        vBox.getChildren().addAll(new Label(directions), new Label(prompt));
+        Label questionDirections = new Label(directions);
+        Label questionPrompt = new Label(prompt);
+        questionDirections.setStyle("-fx-font-size: 20");
+        questionPrompt.setStyle("-fx-font-size: 30");
+
+        vBox.getChildren().addAll(questionDirections, questionPrompt);
 
         this.node = vBox;
     }

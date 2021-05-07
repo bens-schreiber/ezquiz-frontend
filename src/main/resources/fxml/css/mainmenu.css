@@ -1,7 +1,6 @@
 @import "general.css";
 
 #mainMenuButtonContainer {
-
     -fx-background-color: #303f9f;
     -fx-background-radius: 0 20 20 0;
     -fx-border-color: #777777;
@@ -12,6 +11,7 @@
 #mainMenuButton {
     -fx-text-fill: #ffffff;
     -fx-background-radius: 10;
+    -fx-font-size: 18;
 }
 
 #mainMenuButton:focus{

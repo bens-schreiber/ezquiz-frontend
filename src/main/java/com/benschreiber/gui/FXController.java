@@ -12,7 +12,7 @@ import java.io.IOException;
  * Base for all FX Controllers to extend. Contains UserNotifier and ConfirmNotifier for reuse, error handling,
  * and the Primary Stage
  */
-public class FXController {
+public abstract class FXController {
 
     protected FXController() {}
 
@@ -58,7 +58,6 @@ public class FXController {
                     e.printStackTrace();
                 }
                 FXController.getPrimaryStage().show();
-
             }
         }
     }
@@ -72,19 +71,8 @@ public class FXController {
             case NO_CONNECTION -> userNotifier.setText(AlertText.NO_CONNECTION.toString()).display(stage);
 
             //Session expired, log out
-            case UNAUTHORIZED -> {
-                userNotifier.setText(AlertText.EXPIRED_SESSION.toString()).display(stage);
-                Account.logout();
-                FXController.getPrimaryStage().close();
-                try {
-                    FXController.setPrimaryStage(FXHelper.getPopupStage(FXHelper.Window.LOGIN, false));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            case UNAUTHORIZED -> errorHandle(status);
 
-                FXController.getPrimaryStage().show();
-
-            }
         }
     }
 

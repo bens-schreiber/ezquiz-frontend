@@ -8,11 +8,10 @@
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <fx:root type="javafx.scene.control.Tab" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
    <content>
-      <HBox spacing="50.0">
+      <HBox alignment="CENTER_LEFT" spacing="75.0" stylesheets="@../../css/general.css">
          <children>
             <HBox>
                <children>
@@ -20,11 +19,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                            <children>
-                              <Label text="Question">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
+                              <Label text="Question" />
                               <Hyperlink text="(?)">
                                  <tooltip>
                                     <Tooltip text="The question you are asking the Quiz taker" />
@@ -35,11 +30,7 @@
                         <TextField fx:id="questionText" />
                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                            <children>
-                              <Label text="Directions">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
+                              <Label text="Directions" />
                               <Hyperlink text="(?)">
                                  <tooltip>
                                     <Tooltip text="OPTIONAL: Directions the quiz taker can follow. Default if blank." />
@@ -50,11 +41,7 @@
                         <TextField fx:id="directionsText" />
                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                            <children>
-                              <Label text="Type">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
+                              <Label text="Type" />
                               <Hyperlink text="(?)">
                                  <tooltip>
                                     <Tooltip text="The question format the user will answer in." />
@@ -65,10 +52,9 @@
                         <ComboBox fx:id="typeDropDownMenu" prefWidth="205.0" />
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" />
                </children>
             </HBox>
-            <VBox fx:id="optionsAnswerPane" />
+            <VBox fx:id="optionsAnswerPane" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </content>

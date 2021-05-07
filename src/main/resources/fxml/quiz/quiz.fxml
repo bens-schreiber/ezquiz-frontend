@@ -2,7 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.effect.DropShadow?>
@@ -14,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="mainPane" stylesheets="@../css/quiz.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.benschreiber.gui.windows.quiz.QuizController">
+<AnchorPane id="mainPane" stylesheets="@../css/quiz.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.quiz.QuizController">
    <children>
       <Region id="quizNameBar" layoutX="5.0" layoutY="39.0" prefHeight="75.0" prefWidth="750.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
       <Region id="topBar" layoutX="5.0" layoutY="2.0" prefHeight="30.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
@@ -36,12 +38,19 @@
          </children>
       </HBox>
       <Region id="quizNameBar" layoutX="5.0" layoutY="120.0" prefHeight="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-      <Label fx:id="quizName" layoutX="129.0" layoutY="53.0" text="Quiz Name" textFill="WHITE">
+      <Label fx:id="quizName" layoutX="129.0" layoutY="59.0" text="Quiz Name" textFill="WHITE">
          <font>
             <Font size="32.0" />
          </font>
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" text="Benjamin Schreiber was Here" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
       </Label>
-      <VBox layoutX="685.0" layoutY="39.0" AnchorPane.rightAnchor="10.0">
+      <VBox layoutX="664.0" layoutY="47.0" AnchorPane.rightAnchor="14.0">
          <children>
             <Label fx:id="quizTimer" text="00:00:00" textFill="WHITE">
                <font>
@@ -67,41 +76,41 @@
       </AnchorPane>
       <ImageView fitHeight="75.0" fitWidth="138.0" layoutX="-9.0" layoutY="39.0">
          <image>
-            <Image url="@../../pictures/ezquiz_logos-04.png" />
+            <Image url="@../../pictures/quiz/ezquiz_logos-04.png" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="questionPane" layoutX="14.0" layoutY="132.0" prefHeight="388.0" prefWidth="750.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="130.0">
+      <AnchorPane fx:id="questionPane" layoutX="14.0" layoutY="132.0" prefHeight="344.0" prefWidth="750.0" AnchorPane.bottomAnchor="121.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="130.0">
          <children>
             <TabPane fx:id="tabWizard" stylesheets="@../css/tabwizard.css" tabClosingPolicy="UNAVAILABLE">
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
             </TabPane>
-            <VBox id="toolButtonsBox" fx:id="addonVBox" layoutX="686.0" layoutY="14.0" spacing="15.0" AnchorPane.rightAnchor="5.0">
+            <VBox id="toolButtonsBox" fx:id="addonVBox" layoutX="636.0" layoutY="14.0" spacing="15.0" AnchorPane.rightAnchor="14.0">
                <children>
-                  <Button fx:id="notePadButton" mnemonicParsing="false" onAction="#notepadButtonClicked" prefHeight="50.0" prefWidth="50.0">
+                  <Button fx:id="notePadButton" mnemonicParsing="false" onAction="#notepadButtonClicked" prefHeight="70.0" prefWidth="70.0">
                      <graphic>
-                        <ImageView fitHeight="35.0" fitWidth="30.0">
+                        <ImageView fitHeight="45.0" fitWidth="40.0">
                            <image>
-                              <Image url="@../../pictures/clipboard-solid.png" />
+                              <Image url="@../../pictures/quiz/clipboard-solid.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="calculatorButton" mnemonicParsing="false" onAction="#calculatorButtonClicked" prefHeight="50.0" prefWidth="50.0">
+                  <Button fx:id="calculatorButton" mnemonicParsing="false" onAction="#calculatorButtonClicked" prefHeight="70.0" prefWidth="70.0">
                      <graphic>
-                        <ImageView fitHeight="35.0" fitWidth="30.0">
+                        <ImageView fitHeight="45.0" fitWidth="40.0">
                            <image>
-                              <Image url="@../../pictures/calculator-solid.png" />
+                              <Image url="@../../pictures/quiz/calculator-solid.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="drawingPadButton" mnemonicParsing="false" onAction="#drawingPadButtonClicked" prefHeight="50.0" prefWidth="50.0">
+                  <Button fx:id="drawingPadButton" mnemonicParsing="false" onAction="#drawingPadButtonClicked" prefHeight="70.0" prefWidth="70.0">
                      <graphic>
-                        <ImageView fitHeight="35.0" fitWidth="30.0">
+                        <ImageView fitHeight="45.0" fitWidth="40.0">
                            <image>
-                              <Image url="@../../pictures/palette-solid.png" />
+                              <Image url="@../../pictures/quiz/palette-solid.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -113,39 +122,42 @@
             </VBox>
          </children>
       </AnchorPane>
-      <HBox id="bottomBar" alignment="TOP_CENTER" layoutX="5.0" layoutY="528.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+      <HBox id="bottomBar" alignment="CENTER" layoutX="5.0" layoutY="528.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
          <children>
-            <Button minWidth="56.0" mnemonicParsing="false" onAction="#flagButtonClicked" prefHeight="35.0" style="-fx-background-color: #fb8804;" text="Flag" textFill="#777777">
+            <Button minHeight="50.0" minWidth="78.0" mnemonicParsing="false" onAction="#flagButtonClicked" style="-fx-background-color: #fb8804;" text="Flag" textFill="#777777">
                <HBox.margin>
-                  <Insets />
-               </HBox.margin></Button>
+                  <Insets left="5.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
             <Region HBox.hgrow="ALWAYS" />
-            <HBox alignment="TOP_CENTER" fillHeight="false" spacing="5.0" stylesheets="@../css/quiznextbackbuttons.css" HBox.hgrow="SOMETIMES">
+            <HBox id="nextBackButton" alignment="CENTER" fillHeight="false" spacing="5.0" HBox.hgrow="SOMETIMES">
                <children>
-                  <Button fx:id="backButton" maxHeight="35.0" maxWidth="40.0" mnemonicParsing="false" onAction="#backButtonClicked">
+                  <Button fx:id="backButton" minWidth="59.0" mnemonicParsing="false" onAction="#backButtonClicked">
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../pictures/left.png" />
+                              <Image url="@../../pictures/quiz/left.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonClicked" prefHeight="35.0" prefWidth="40.0">
+                  <Button fx:id="nextButton" minWidth="59.0" mnemonicParsing="false" onAction="#nextButtonClicked">
                      <graphic>
                         <ImageView>
                            <image>
-                              <Image url="@../../pictures/right.png" />
+                              <Image url="@../../pictures/quiz/right.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
                   <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="60.0" style="-fx-background-color: transparent;" stylesheets="@../css/scrollpane.css" vbarPolicy="NEVER" HBox.hgrow="ALWAYS">
                      <content>
-                        <HBox fx:id="questionHBox" alignment="CENTER" maxHeight="35.0" spacing="5.0" stylesheets="@../css/quizflagbutton.css" />
+                        <HBox id="flagButton" fx:id="questionHBox" alignment="CENTER" fillHeight="false" spacing="5.0" />
                      </content>
                      <HBox.margin>
-                        <Insets />
+                        <Insets top="5.0" />
                      </HBox.margin>
                   </ScrollPane>
                </children>
@@ -154,10 +166,13 @@
                </HBox.margin>
             </HBox>
             <Region HBox.hgrow="ALWAYS" />
-            <Button minWidth="99.0" mnemonicParsing="false" onAction="#submitButtonClicked" prefHeight="35.0" style="-fx-background-color: rgba(86, 234, 99, .5);" text="Submit Quiz">
+            <Button minWidth="141.0" mnemonicParsing="false" onAction="#submitButtonClicked" prefHeight="50.0" style="-fx-background-color: rgba(86, 234, 99, .5);" text="Submit Quiz">
                <HBox.margin>
-                  <Insets />
-               </HBox.margin></Button>
+                  <Insets right="5.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
          </children>
          <effect>
             <DropShadow />

@@ -1,9 +1,0 @@
-.button{
-  -fx-background-color: #777777;
-  -fx-min-height: 35px;
-  -fx-min-width: 40px;
-}
-
-.button:hover{
-  -fx-border-color: black;
-}

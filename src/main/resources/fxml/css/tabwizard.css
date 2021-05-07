@@ -1,6 +1,14 @@
+.label {
+    -fx-font-family: "Arial";
+    -fx-text-fill: #505050;
+}
+
 .tab-pane {
     -fx-tab-max-height: 0 ;
+    -fx-font-family: "Arial";
+    -fx-text-fill: #505050;
 }
+
 .tab-pane .tab-header-area {
     visibility: hidden ;
     -fx-padding: -20 0 0 0;

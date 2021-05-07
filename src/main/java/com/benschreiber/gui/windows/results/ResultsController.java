@@ -3,7 +3,6 @@ package com.benschreiber.gui.windows.results;
 import com.benschreiber.etc.Account;
 import com.benschreiber.gui.FXController;
 import com.benschreiber.gui.FXHelper;
-import com.benschreiber.gui.windows.quiz.QuizQuestionHelper;
 import com.benschreiber.gui.fxobjs.QuestionNode;
 import com.benschreiber.requests.DatabaseRequest;
 import com.benschreiber.gui.windows.quiz.QuizHelper;
@@ -42,12 +41,12 @@ public class ResultsController extends FXController implements Initializable {
         try {
 
             //Check all answers
-            QuizQuestionHelper.gradeAnswers();
+            QuizHelper.gradeQuestions();
 
             //Create classes.question answers display
             int quizNumber = 1;
             int correctAnswers = 0;
-            for (QuestionNode questionNode : QuizQuestionHelper.getQuestionNodes()) {
+            for (QuestionNode questionNode : QuizHelper.getQuestionNodes()) {
 
                 //Make a container for the answered classes.question, add classes.question to it
                 VBox answeredQuestion = new VBox(15);
@@ -99,8 +98,8 @@ public class ResultsController extends FXController implements Initializable {
             errorHandle(DatabaseRequest.postQuizScore(correctAnswers, Account.getUser(), Account.getQuiz()));
 
             //add how many correct out of possible, percentage, put bitmap to Base64
-            outOfLabel.setText(correctAnswers + " out of " + QuizQuestionHelper.getQuestionNodes().length);
-            percentageLabel.setText(((double) correctAnswers / (double) QuizQuestionHelper.getQuestionNodes().length * 100) + "%");
+            outOfLabel.setText(correctAnswers + " out of " + QuizHelper.getQuestionNodes().length);
+            percentageLabel.setText(((double) correctAnswers / (double) QuizHelper.getQuestionNodes().length * 100) + "%");
 
         } catch (Exception e) {
             e.printStackTrace();

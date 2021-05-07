@@ -6,25 +6,26 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.alert.quizkey.EnterQuizKeyScreen">
+<AnchorPane id="mainPane" stylesheets="@../css/popup.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.alert.quizkey.EnterQuizKeyScreen">
    <children>
       <VBox alignment="CENTER" layoutX="4.0" layoutY="7.0" prefHeight="104.0" prefWidth="202.0" spacing="20.0" stylesheets="@../css/textfield.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label text="Enter a Quiz Key">
+                  <Label text="Enter a Quiz Key" textFill="WHITE">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
                   <Hyperlink text="(?)">
                      <tooltip>
-                        <Tooltip text="You can find your quiz keys in the Quiz Creator menu" />
+                        <Tooltip autoFix="false" text="You can find your quiz keys in the Quiz Creator menu" wrapText="true" />
                      </tooltip>
                   </Hyperlink>
                </children>
@@ -42,4 +43,7 @@
          </padding>
       </VBox>
    </children>
+   <effect>
+      <DropShadow />
+   </effect>
 </AnchorPane>
