@@ -1,137 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/general.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benschreiber.gui.windows.mainmenu.HelpMenu">
    <children>
-      <Accordion layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="14.0">
+      <Accordion layoutX="14.0" layoutY="14.0" stylesheets="@../css/helpmenu.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="14.0">
         <panes>
           <TitledPane animated="false" text="Take a Premade Quiz">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" stylesheets="@../css/general.css">
-                     <children>
-                        <TabPane stylesheets="@../css/general.css" tabClosingPolicy="UNAVAILABLE">
-                          <tabs>
-                            <Tab text="1.) Navigate to Quiz Menu">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0">
+                  <TabPane tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="1.) Navigate to Quiz Menu">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0">
+                                 <children>
+                                    <VBox alignment="CENTER" layoutX="338.0" layoutY="53.0" spacing="15.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="338.0" AnchorPane.rightAnchor="337.0" AnchorPane.topAnchor="53.0">
                                        <children>
-                                          <VBox alignment="CENTER" layoutX="338.0" layoutY="53.0" spacing="15.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="338.0" AnchorPane.rightAnchor="337.0" AnchorPane.topAnchor="53.0">
-                                             <children>
-                                                <Label id="complementLabel" text="Navigate to the My Quizzes Menu">
-                                                   <font>
-                                                      <Font size="20.0" />
-                                                   </font>
-                                                </Label>
-                                                <ImageView fitHeight="98.0" fitWidth="195.0">
-                                                   <image>
-                                                      <Image url="@../../pictures/tutorial/myquizzes.PNG" />
-                                                   </image>
-                                                </ImageView>
-                                             </children>
-                                          </VBox>
+                                          <Label id="complementLabel" text="Navigate to the My Quizzes Menu">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView fitHeight="98.0" fitWidth="195.0">
+                                             <image>
+                                                <Image url="@../../pictures/tutorial/myquizzes.PNG" />
+                                             </image>
+                                          </ImageView>
                                        </children>
-                                    </AnchorPane>
-                              </content>
-                            </Tab>
-                            <Tab text="2.) Add Key">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="2.) Add Key">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox alignment="CENTER" layoutX="305.0" layoutY="56.0" spacing="15.0">
                                        <children>
-                                          <VBox alignment="CENTER" layoutX="305.0" layoutY="56.0" spacing="15.0">
-                                             <children>
-                                                <Label id="complementLabel" text="Click the &quot;Add Key&quot; button in the top right">
-                                                   <font>
-                                                      <Font size="20.0" />
-                                                   </font>
-                                                </Label>
-                                                <ImageView fitHeight="106.0" fitWidth="252.0">
-                                                   <image>
-                                                      <Image url="@../../pictures/tutorial/add%20key%20button.PNG" />
-                                                   </image>
-                                                </ImageView>
-                                             </children>
-                                          </VBox>
+                                          <Label id="complementLabel" text="Click the &quot;Add Key&quot; button in the top right">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView fitHeight="106.0" fitWidth="252.0">
+                                             <image>
+                                                <Image url="@../../pictures/tutorial/add%20key%20button.PNG" />
+                                             </image>
+                                          </ImageView>
                                        </children>
-                                    </AnchorPane>
-                              </content>
-                            </Tab>
-                              <Tab text="3.) Enter Key">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="241.0" prefWidth="976.0">
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                        <Tab text="3.) Enter Key">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="241.0" prefWidth="976.0">
+                                 <children>
+                                    <VBox alignment="CENTER" layoutX="324.0" layoutY="2.0" prefHeight="238.0" prefWidth="328.0" spacing="15.0">
                                        <children>
-                                          <VBox alignment="CENTER" layoutX="324.0" layoutY="2.0" prefHeight="238.0" prefWidth="328.0" spacing="15.0">
-                                             <children>
-                                                <Label id="complementLabel" text="Enter your Premade Quiz Key" textAlignment="CENTER">
-                                                   <font>
-                                                      <Font size="20.0" />
-                                                   </font>
-                                                </Label>
-                                                <ImageView fitHeight="133.0" fitWidth="200.0">
-                                                   <image>
-                                                      <Image url="@../../pictures/tutorial/enter%20key%20screen.PNG" />
-                                                   </image>
-                                                </ImageView>
-                                                <Label id="complementLabel" prefHeight="69.0" prefWidth="352.0" text="To take the default FBLA Quiz, enter the code 0000" textAlignment="CENTER" wrapText="true">
-                                                   <font>
-                                                      <Font size="20.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
+                                          <Label id="complementLabel" text="Enter your Premade Quiz Key" textAlignment="CENTER">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView fitHeight="133.0" fitWidth="200.0">
+                                             <image>
+                                                <Image url="@../../pictures/tutorial/enter%20key%20screen.PNG" />
+                                             </image>
+                                          </ImageView>
+                                          <Label id="complementLabel" prefHeight="69.0" prefWidth="352.0" text="To take the default FBLA Quiz, enter the code 0000" textAlignment="CENTER" wrapText="true">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
                                        </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
-                              <Tab text="4.) Take Quiz">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="976.0">
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab text="4.) Take Quiz">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0">
+                                 <children>
+                                    <VBox alignment="CENTER" layoutX="14.0" layoutY="38.0" spacing="15.0">
                                        <children>
-                                          <VBox alignment="CENTER" layoutX="14.0" layoutY="38.0" spacing="15.0">
-                                             <children>
-                                                <Label id="complementLabel" text="Click Take Quiz to take the Entire Quiz">
-                                                   <font>
-                                                      <Font size="20.0" />
-                                                   </font>
-                                                </Label>
-                                                <ImageView fitHeight="91.0" fitWidth="180.0">
-                                                   <image>
-                                                      <Image url="@../../pictures/tutorial/take%20quiz.PNG" />
-                                                   </image>
-                                                </ImageView>
-                                             </children>
-                                          </VBox>
-                                          <VBox alignment="CENTER" layoutX="488.0" layoutY="7.0" spacing="15.0">
-                                             <children>
-                                                <Label id="complementLabel" prefHeight="57.0" prefWidth="393.0" text="OR Rightclick the Quiz in the Table and select &quot;Random Quiz&quot; to randomize" wrapText="true">
-                                                   <font>
-                                                      <Font size="20.0" />
-                                                   </font>
-                                                </Label>
-                                                <ImageView fitHeight="120.0" fitWidth="298.0">
-                                                   <image>
-                                                      <Image url="@../../pictures/tutorial/rightclick.png" />
-                                                   </image>
-                                                </ImageView>
-                                             </children>
-                                          </VBox>
+                                          <Label id="complementLabel" text="Click Take Quiz to take the Entire Quiz">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView fitHeight="91.0" fitWidth="180.0">
+                                             <image>
+                                                <Image url="@../../pictures/tutorial/take%20quiz.PNG" />
+                                             </image>
+                                          </ImageView>
                                        </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
-                          </tabs>
-                        </TabPane>
-                     </children>
-                  </AnchorPane>
+                                    </VBox>
+                                    <VBox alignment="CENTER" layoutX="488.0" layoutY="7.0" spacing="15.0">
+                                       <children>
+                                          <Label id="complementLabel" prefHeight="57.0" prefWidth="393.0" text="OR Rightclick the Quiz in the Table and select &quot;Random Quiz&quot; to randomize" wrapText="true">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ImageView fitHeight="120.0" fitWidth="298.0">
+                                             <image>
+                                                <Image url="@../../pictures/tutorial/rightclick.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
             </content>
           </TitledPane>
           <TitledPane animated="false" text="Create Questions with Excel">
@@ -191,9 +192,9 @@
                                           <Image url="@../../pictures/tutorial/excelexample.png" />
                                        </image>
                                     </ImageView>
-                                    <Label id="complementLabel" layoutX="14.0" layoutY="14.0" prefHeight="51.0" prefWidth="317.0" text="Options should be seperated by the &quot;/&quot; symbol " wrapText="true">
+                                    <Label id="complementLabel" layoutX="14.0" layoutY="14.0" prefHeight="51.0" prefWidth="462.0" text="Options should be seperated by the &quot;/&quot; symbol " wrapText="true">
                                        <font>
-                                          <Font size="20.0" />
+                                          <Font size="16.0" />
                                        </font>
                                     </Label>
                                     <Label id="complementLabel" layoutX="14.0" layoutY="65.0" prefHeight="109.0" prefWidth="317.0" text="Possible types are MULTIPLECHOICE, CHECKBOX, WRITTEN, TRUEORFALSE" wrapText="true">
@@ -329,5 +330,37 @@
             </TitledPane>
         </panes>
       </Accordion>
+      <VBox id="mainPane" fillWidth="false" layoutX="15.0" layoutY="350.0" spacing="15.0" style="-fx-border-color: #303f9f; -fx-border-radius: 10;" stylesheets="@../css/general.css" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <children>
+            <TextField fx:id="userEmail" promptText="Your Email" VBox.vgrow="SOMETIMES">
+               <VBox.margin>
+                  <Insets left="15.0" top="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="emailHeader" promptText="Brief summary of issue">
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextArea fx:id="supportMessage" prefHeight="181.0" prefWidth="940.0" promptText="Describe your issue in detail">
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </TextArea>
+            <HBox alignment="CENTER" spacing="15.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#sendEmailClicked" text="Send Support Request">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Label id="complementLabel" fx:id="requestSentLabel" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="15.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

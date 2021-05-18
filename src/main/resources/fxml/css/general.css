@@ -6,13 +6,11 @@
     -fx-background-color: #9f9f9f;
     -fx-text-fill: #3f3f3f;
     -fx-font-family: "Arial Black";
-    -fx-padding: 0.2em 1.4em;
     -fx-background-radius: 10;
 }
 
 .button:hover{
     -fx-border-color: black;
-    -fx-padding: 0.1em 1.3em;
     -fx-border-width: 1;
     -fx-border-radius: 10;
 }

@@ -21,6 +21,9 @@ dependencies {
     implementation group: 'org.json', name: 'json', version: '20090211'
     implementation group: 'com.google.guava', name: 'guava', version: '30.0-jre'
     implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.17'
+    // https://mvnrepository.com/artifact/javax.mail/mail
+    implementation group: 'javax.mail', name: 'mail', version: '1.4'
+
 
 }
 

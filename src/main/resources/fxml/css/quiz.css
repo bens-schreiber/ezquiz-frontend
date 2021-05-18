@@ -21,6 +21,10 @@
     -fx-background-radius: 5;
 }
 
+#quizButton {
+   -fx-font-size: 15px;
+}
+
 #flagButton .button {
     -fx-background-color: #303f9f;
     -fx-max-height: 50px;
@@ -40,5 +44,5 @@
 }
 
 #nextBackButton .button:hover{
-  -fx-border-color: D4D4D4;
+  -fx-border-color: black;
 }

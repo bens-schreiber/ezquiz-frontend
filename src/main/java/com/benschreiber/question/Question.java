@@ -68,7 +68,7 @@ public class Question {
     }
 
     /**
-     * Factory
+     * Question Factory
      */
     public static class Factory {
 

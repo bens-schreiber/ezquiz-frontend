@@ -124,13 +124,10 @@
       </AnchorPane>
       <HBox id="bottomBar" alignment="CENTER" layoutX="5.0" layoutY="528.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
          <children>
-            <Button minHeight="50.0" minWidth="78.0" mnemonicParsing="false" onAction="#flagButtonClicked" style="-fx-background-color: #fb8804;" text="Flag" textFill="#777777">
+            <Button id="quizButton" minHeight="50.0" minWidth="78.0" mnemonicParsing="false" onAction="#flagButtonClicked" style="-fx-background-color: #fb8804;" text="Flag" textFill="#777777">
                <HBox.margin>
                   <Insets left="5.0" />
-               </HBox.margin>
-               <font>
-                  <Font size="15.0" />
-               </font></Button>
+               </HBox.margin></Button>
             <Region HBox.hgrow="ALWAYS" />
             <HBox id="nextBackButton" alignment="CENTER" fillHeight="false" spacing="5.0" HBox.hgrow="SOMETIMES">
                <children>
@@ -166,13 +163,10 @@
                </HBox.margin>
             </HBox>
             <Region HBox.hgrow="ALWAYS" />
-            <Button minWidth="141.0" mnemonicParsing="false" onAction="#submitButtonClicked" prefHeight="50.0" style="-fx-background-color: rgba(86, 234, 99, .5);" text="Submit Quiz">
+            <Button id="quizButton" minWidth="141.0" mnemonicParsing="false" onAction="#submitButtonClicked" prefHeight="50.0" style="-fx-background-color: rgba(86, 234, 99, .5);" text="Submit Quiz">
                <HBox.margin>
                   <Insets right="5.0" />
-               </HBox.margin>
-               <font>
-                  <Font size="15.0" />
-               </font></Button>
+               </HBox.margin></Button>
          </children>
          <effect>
             <DropShadow />
